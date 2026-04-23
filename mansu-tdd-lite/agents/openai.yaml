@@ -1,0 +1,4 @@
+interface:
+  display_name: "Mansu TDD Lite"
+  short_description: "Lightweight TDD slice orchestration for Oh My XX + gstack"
+  default_prompt: "Use $mansu-tdd-lite to plan briefly, split the work into practical TDD slices, validate each slice, and keep the plan current without full strict-mode overhead."
