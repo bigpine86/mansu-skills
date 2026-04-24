@@ -18,7 +18,8 @@ then delegates execution to `mansu-tdd-lite` or `mansu-tdd-strict`.
 ## Core promise
 
 - Plan once.
-- Critique the plan before implementation.
+- Critique the plan before implementation with explicit planning roles.
+- Synthesize one accepted plan before any slice starts.
 - Split the work into vertical slices.
 - Choose `mansu-tdd-lite` or `mansu-tdd-strict` for each slice.
 - Record the per-slice mode decision and rationale in `PLAN.md`.
@@ -71,18 +72,53 @@ Before planning, confirm:
 
 If strict prerequisites are missing, still plan the work, but mark would-be strict slices as blocked instead of pretending to run strict mode.
 
+## Planning gate
+
+For non-trivial work, do not treat planning as a single-agent TODO list.
+Planning must pass through explicit roles before slice dispatch.
+
+## Required planning roles
+
+Use these responsibilities before implementation:
+
+- Planner: draft the plan.
+  Examples: `Prometheus`, `gstack-autoplan`, `gstack-plan-eng-review`
+- Critics: challenge the plan.
+  Examples: `Metis`, `Momus`, `gstack-plan-ceo-review`, `gstack-plan-design-review`
+- Synthesizer: merge critique into one accepted plan and remove contradictions.
+
+If exact agent names or tools are unavailable, map available tools, agents, or
+perspectives to these three roles and record the mapping in `PLAN.md`.
+
+Do not proceed to implementation until the accepted plan and slice table are visible.
+
+## Accepted plan requirements
+
+The accepted plan must include:
+
+- goal and user value
+- non-goals and constraints
+- domain language and DDD-style responsibility boundaries
+- architecture and module boundaries
+- source skills or tools to use
+- risks and mitigation
+- test and validation strategy
+- documentation and worklog targets
+- approval status
+
+If any of these are unknown, mark the gap explicitly instead of pretending the plan is complete.
+
 ## Planning loop
 
 1. Clarify the goal, user value, constraints, and references.
-2. Draft the implementation plan.
-   Examples: `Prometheus`, `gstack-autoplan`, `gstack-plan-eng-review`
-3. Critique the plan.
-   Examples: `Metis`, `Momus`, `gstack-plan-ceo-review`, `gstack-plan-design-review`
-4. Synthesize the accepted plan.
-5. Split the work into vertical slices by feature, behavior, or user flow.
-6. Assign each slice a mode: `lite`, `strict`, or `blocked`.
-7. Record the decision in `PLAN.md`.
-8. Ask for approval before implementation starts when the scope is non-trivial.
+2. Map the Planner, Critics, and Synthesizer roles.
+3. Draft the implementation plan through the Planner role.
+4. Critique the plan through the Critics role.
+5. Synthesize the accepted plan, including resolved tradeoffs and remaining gaps.
+6. Split the work into vertical slices by feature, behavior, or user flow.
+7. Assign each slice a mode: `lite`, `strict`, or `blocked`.
+8. Record the role mapping, accepted plan, slice table, and mode decisions in `PLAN.md`.
+9. Ask for approval before implementation starts when the scope is non-trivial.
 
 ## Dispatch rules
 

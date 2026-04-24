@@ -53,6 +53,10 @@ Good Mansu skills are thin where they can be thin and strict where they must be 
 - Thin: 도구별 세부 사용법, 긴 체크리스트, 전문 실행 루틴
 - Strict: 계획, 안전선, scope boundary, 증거, 검증, 완료 조건
 
+For non-trivial work, Mansu planning is a multi-role critique loop:
+Planner drafts, Critics challenge, Synthesizer produces one accepted plan, and only
+then slices are dispatched.
+
 자세한 기준은 [MANSU_PHILOSOPHY.md](./MANSU_PHILOSOPHY.md)를 봅니다.
 
 ## Skills

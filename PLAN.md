@@ -1,5 +1,6 @@
 ## Active Follow-up
 
+- `mansu-tdd-total` planning is now strengthened: Planner, Critics, and Synthesizer roles must be mapped, and implementation cannot start until the accepted plan and slice table are visible.
 - `MANSU_PHILOSOPHY.md` now records the shared Mansu principle: do not reinvent strong workflows; plan, protect, route, verify, and record while delegating specialized craft to the best source skill.
 - `mansu-debug-rootcause` now follows the same pattern with a source skill map and Mansu-owned boundary.
 - `mansu-web-verify` is now framed as a thin orchestrator: Mansu owns the plan, safety boundary, evidence, routing, and report, while specialized browser/QA/performance/security/canary/E2E work is delegated to gstack or Oh My source skills when appropriate.
