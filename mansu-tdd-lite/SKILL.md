@@ -5,17 +5,25 @@ description: Disciplined plan-first, slice-first workflow for work that needs re
 
 # Mansu TDD Lite
 
-Use this skill when full `mansu-tdd-strict` is too test-rigid for the task, but the work still must be planned, sliced, validated, recorded, and committed carefully.
+Use this skill when a slice has already been planned and full `mansu-tdd-strict` is too test-rigid for that slice, but the work still must be validated, recorded, and committed carefully.
 
 ## Core promise
 
-- Plan properly before coding.
+- Plan properly before coding, usually through `mansu-tdd-total`.
 - Break work into meaningful vertical slices by feature, behavior, or user flow.
 - Define the validation path for each slice before implementation.
 - Use test-first when it naturally fits the slice; use explicit verification when a strict RED test would be artificial.
 - Validate each slice before moving on.
 - Keep the active plan current so the next session can resume cleanly.
 - Record completed work in a project worklog when the project uses one.
+
+## Role in the Mansu TDD series
+
+In the normal Mansu TDD flow, `mansu-tdd-total` owns planning, critique, slice decomposition, and mode selection.
+
+This skill executes slices marked `lite`.
+
+If no accepted plan and slice card exists, route to `mansu-tdd-total` before implementation starts.
 
 ## Best fit
 
@@ -51,19 +59,14 @@ If you cannot define a meaningful validation path, checkpoint path, or worklog p
 
 ## Default loop
 
-1. Clarify the goal, user value, limits, and references.
-2. Draft a proper implementation plan.
-   Examples: `Prometheus`, `gstack-autoplan`, `gstack-plan-eng-review`
-3. Critique the plan before implementation.
-   Examples: `Momus`, `Metis`, `gstack-plan-ceo-review`, `gstack-plan-design-review`
-4. Split the work into vertical slices by feature, behavior, or user flow.
-5. Implement one slice at a time.
-6. For each slice, choose the validation path before coding.
+1. Read the accepted slice card from `PLAN.md` or the project planning document.
+2. Confirm the slice is marked `lite`.
+3. Confirm the validation path before coding.
    Examples: failing test, focused tests, `review`, `qa`, visual check, manual verification
-7. Implement the slice.
-8. Run `review -> qa -> checkpoint`.
-9. Commit the slice.
-10. Update `PLAN.md` and the project worklog.
+4. Implement the slice.
+5. Run `review -> qa -> checkpoint`.
+6. Commit the slice.
+7. Update `PLAN.md` and the project worklog.
 
 ## Slice card
 

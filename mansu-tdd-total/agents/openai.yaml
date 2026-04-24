@@ -1,0 +1,4 @@
+interface:
+  display_name: "Mansu TDD Total"
+  short_description: "Planner and dispatcher that chooses lite vs strict per slice"
+  default_prompt: "Use $mansu-tdd-total to plan the work, split it into vertical slices, decide mansu-tdd-lite vs mansu-tdd-strict per slice, record the rationale in PLAN.md, then delegate each slice to the selected skill."

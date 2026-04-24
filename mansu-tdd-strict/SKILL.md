@@ -1,6 +1,6 @@
 ---
 name: mansu-tdd-strict
-description: Strict orchestration workflow for medium-or-larger feature or refactor work that must be planned, critiqued, implemented, and validated as sequential TDD vertical slices with per-slice review, QA, checkpoint, and single-commit gates. Use when the user explicitly wants `mansu-tdd-strict`, a Ralph-style loop, `ralph:` execution, strict slice-by-slice TDD, Prometheus/Metis/Momus plan critique, or a per-slice review/QA/checkpoint/commit workflow with a project plan file (`PLAN.md` or `Plan.md`) as the active source of truth and completed work archived into `개발일지.md`. This skill assumes an Oh My XX orchestration environment (such as Oh My Codex) plus gstack tooling.
+description: Strict orchestration workflow for medium-or-larger feature or refactor work that must be planned, critiqued, implemented, and validated as sequential TDD vertical slices with per-slice review, QA, checkpoint, and single-commit gates. Use when the user explicitly wants `mansu-tdd-strict`, when `mansu-tdd-total` routes a slice to strict mode, a Ralph-style loop, `ralph:` execution, strict slice-by-slice TDD, Prometheus/Metis/Momus plan critique, or a per-slice review/QA/checkpoint/commit workflow with a project plan file (`PLAN.md` or `Plan.md`) as the active source of truth and completed work archived into `개발일지.md`. This skill assumes an Oh My XX orchestration environment (such as Oh My Codex) plus gstack tooling.
 ---
 
 # Mansu TDD Strict
@@ -15,6 +15,16 @@ Use this skill to run a strict, sequential, plan-first delivery loop for non-tri
 - Close each slice in the exact order `review -> qa -> checkpoint -> commit`.
 - Keep the project plan file (`PLAN.md` by default, or `Plan.md` if the project already uses it) for active truth and `개발일지.md` for completed work.
 - Archive the finished loop into `개발일지.md` and trim the plan file back to active follow-up only.
+
+## Role in the Mansu TDD series
+
+In the normal Mansu TDD flow, `mansu-tdd-total` owns planning, critique, slice decomposition, and mode selection.
+
+This skill executes slices marked `strict`.
+
+When invoked from `mansu-tdd-total`, use the accepted plan and slice table as the planning source of truth, then apply this skill's strict execution gates.
+
+When invoked directly without an accepted plan, follow the read order below and produce the final plan before implementation starts.
 
 ## Read order
 
