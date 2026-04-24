@@ -17,6 +17,11 @@ Use this skill when a slice has already been planned and full `mansu-tdd-strict`
 - Keep the active plan current so the next session can resume cleanly.
 - Record completed work in a project worklog when the project uses one.
 
+Lite mode is not a lower-quality mode.
+
+It only relaxes the requirement that every slice must begin with a failing RED test.
+Planning, slicing, review, QA, checkpoint, commit, and work logging still apply.
+
 ## Role in the Mansu TDD series
 
 In the normal Mansu TDD flow, `mansu-tdd-total` owns planning, critique, slice decomposition, and mode selection.

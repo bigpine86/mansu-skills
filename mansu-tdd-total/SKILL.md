@@ -16,6 +16,23 @@ Use this skill as the default entry point for Mansu TDD work when the right exec
 - Record the per-slice mode decision and rationale in `PLAN.md`.
 - Delegate execution details to the selected skill.
 
+## Shared invariants
+
+These rules do not change between `lite` and `strict`:
+
+- Plan properly before implementation.
+- Slice by feature, behavior, or user flow.
+- Define completion conditions, impact files, risks, and validation path for every slice.
+- Run review, QA, checkpoint, and commit for each slice.
+- Keep `PLAN.md` current.
+- Record completed work in `개발일지.md` or the project worklog.
+- Do not use `lite` as permission to lower work quality.
+
+The only core difference is the RED test requirement:
+
+- `strict`: every slice starts with a meaningful failing RED test.
+- `lite`: every slice still defines validation before coding, but does not force an artificial RED test.
+
 ## When to use
 
 Use this skill when:
