@@ -1,6 +1,9 @@
 ## Active Follow-up
 
-- `mansu-debug-rootcause` is now a compact wrapper: embed the mandatory Oh My/gstack-derived gates, load full source skills only for ambiguity, high-risk cases, failed attempts, or specialized branches.
+- `MANSU_PHILOSOPHY.md` now records the shared Mansu principle: do not reinvent strong workflows; plan, protect, route, verify, and record while delegating specialized craft to the best source skill.
+- `mansu-debug-rootcause` now follows the same pattern with a source skill map and Mansu-owned boundary.
+- `mansu-web-verify` is now framed as a thin orchestrator: Mansu owns the plan, safety boundary, evidence, routing, and report, while specialized browser/QA/performance/security/canary/E2E work is delegated to gstack or Oh My source skills when appropriate.
+- `README.md` now gives the repo a clear entry point, install path, routing guide, source skill policy, and validation commands.
 - Next useful follow-up is to decide whether this repository should be pushed as `main` or kept on the current local branch for review.
 - If the repo becomes canonical, add a simple sync/install workflow so repo changes and installed skills do not drift.
 - Future Mansu skill families to consider:

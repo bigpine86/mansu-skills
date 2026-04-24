@@ -12,6 +12,9 @@ This is a compact wrapper around two source ideas:
 - Oh My `debug`: the memorable 6-stage loop.
 - gstack `investigate`: strict gates that stop guessing.
 
+Mansu's role here is orchestration: keep the root-cause gates strict, then load or
+route to specialized source skills only when the bug needs that depth.
+
 ## Core promise
 
 - No fixes before root cause.
@@ -25,21 +28,57 @@ This is a compact wrapper around two source ideas:
 - Prove the original bug is gone and no obvious regression was introduced.
 - Leave behind a debug report and any reusable lesson.
 
-## Source relationship
+## Source skill map
 
-Do not load full source skills by default. This skill embeds the mandatory gates so the
-normal path stays light.
+Do not load every source skill by default. This skill embeds the mandatory gates so
+the normal path stays light, then loads or invokes the narrow source skill when the
+bug needs specialized depth.
 
 Load source skills only when the task is ambiguous, high-risk, already failed once, or
 needs a specialized branch:
 
-- `$HOME/.codex/skills/debug/SKILL.md`
-  Use for the original Oh My loop, common bug patterns, debugging tools, and diagnostic questions.
-- `$HOME/.gstack/repos/gstack/.agents/skills/gstack-investigate/SKILL.md`
-  Use for the full root-cause protocol, exact scope-lock behavior, prior learnings, pattern analysis, 3-hypothesis stop rule, blast-radius handling, verification report, and learn capture.
+| Source skill | Use it for | Load or invoke when |
+| --- | --- | --- |
+| Oh My `debug` (`$HOME/.codex/skills/debug/SKILL.md`) | original 6-stage loop, common bug patterns, diagnostic questions | the bug shape is unclear or the basic loop needs more diagnostic prompts |
+| gstack `investigate` (`$HOME/.gstack/repos/gstack/.agents/skills/gstack-investigate/SKILL.md`) | full root-cause protocol, scope-lock details, prior learnings, pattern analysis, 3-hypothesis stop rule, blast-radius handling, verification report, learn capture | the bug is high-risk, already failed once, or needs the full investigation protocol |
+| Oh My `build-fix` | build, type, lint, import, dependency failures | the primary symptom is a broken build or static check |
+| Oh My `doctor` | tool, install, MCP, PATH, runtime, environment diagnosis | the bug may be environment or toolchain related |
+| Oh My `git-master` | regression start-point discovery and `git bisect` style investigation | the issue worked before but the breaking change is unclear |
+| gstack `browse` / `qa-only` | browser repro evidence, screenshots, snapshots, console, user-flow proof | the symptom is visual, UI, or browser-flow based |
+| gstack `qa` | broad browser test-fix-verify loop | only after root cause is confirmed or the user explicitly asks for full QA fixes |
+| gstack `benchmark` | performance baseline/current metrics and regression judgment | the symptom is slowness, load regression, bundle/resource bloat, or timing instability |
+| Oh My `trace` | agent orchestration, decision-flow, timeline, event evidence | the failure is in agent/tool orchestration rather than app behavior |
+| Oh My `team` | debugger/analyst/tester perspectives | the bug resists focused investigation, while still respecting the 3-hypothesis stop rule |
 
 If a source skill is unavailable, say which source was missing and continue with this
 compact procedure. Do not silently replace missing source skills with memory.
+
+## Mansu-owned boundary
+
+Mansu owns the root-cause discipline:
+
+- decide whether the task is a bug or feature work
+- preserve the no-fix-before-root-cause rule
+- require reproduction evidence or a blocked-repro reason
+- require isolate -> pattern analysis -> hypothesis before editing
+- require scope-lock or a skip reason after the hypothesis
+- require the smallest safe fix
+- require regression proof by default
+- require fresh verification and a debug report
+- route to the right source skill when specialized depth is needed
+
+Source skills own the specialized craft:
+
+- build/type/lint repair mechanics
+- environment/toolchain diagnosis
+- git history and bisect mechanics
+- browser automation and visual evidence
+- broad QA fix loops after root cause is clear
+- performance measurement details
+- agent trace analysis
+
+Do not copy those full workflows into this skill unless a gate is mandatory for every
+debug task. Keep this skill thin where it can be thin and strict where it must be strict.
 
 ## When to use
 

@@ -7,6 +7,14 @@ description: Concise dispatcher and planner for Mansu TDD workflows. Use when th
 
 Use this skill as the default entry point for Mansu TDD work when the right execution mode is not obvious upfront.
 
+## Mansu philosophy
+
+Mansu does not reinvent strong workflows. It plans, separates roles, routes work to
+the right source skill, verifies the result, and records what happened.
+
+Use this skill as the TDD-series orchestrator: it owns planning and mode selection,
+then delegates execution to `mansu-tdd-lite` or `mansu-tdd-strict`.
+
 ## Core promise
 
 - Plan once.

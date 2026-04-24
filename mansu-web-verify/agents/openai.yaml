@@ -1,0 +1,4 @@
+interface:
+  display_name: "Mansu Web Verify"
+  short_description: "Orchestrated real-user web verification"
+  default_prompt: "Use $mansu-web-verify to plan the web verification, delegate specialized checks to the right gstack or Oh My skills, test safely like a real user, and produce a WEB VERIFY REPORT."

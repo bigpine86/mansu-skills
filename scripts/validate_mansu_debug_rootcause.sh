@@ -30,7 +30,8 @@ assert_contains 'Not for planned feature work' "$FILE"
 
 # Required structure.
 assert_contains '^## Core promise$' "$FILE"
-assert_contains '^## Source relationship$' "$FILE"
+assert_contains '^## Source skill map$' "$FILE"
+assert_contains '^## Mansu-owned boundary$' "$FILE"
 assert_contains '^## When to use$' "$FILE"
 assert_contains '^## What this skill does not do$' "$FILE"
 assert_contains '^## Route table$' "$FILE"
@@ -41,10 +42,17 @@ assert_contains '^## Verification and report$' "$FILE"
 assert_contains '^## Escalation$' "$FILE"
 
 # Source relationship and progressive disclosure.
-assert_contains 'Do not load full source skills by default' "$FILE"
+assert_contains 'Do not load every source skill by default' "$FILE"
 assert_contains '\$HOME/.codex/skills/debug/SKILL.md' "$FILE"
 assert_contains '\$HOME/.gstack/repos/gstack/.agents/skills/gstack-investigate/SKILL.md' "$FILE"
 assert_contains 'Load source skills only when' "$FILE"
+assert_contains '| Source skill | Use it for | Load or invoke when |' "$FILE"
+assert_contains 'Oh My `debug`' "$FILE"
+assert_contains 'gstack `investigate`' "$FILE"
+assert_contains 'Source skills own the specialized craft' "$FILE"
+assert_contains 'Keep this skill thin where it can be thin and strict where it must be strict' "$FILE"
+assert_contains 'Mansu owns the root-cause discipline' "$FILE"
+assert_contains 'route to the right source skill when specialized depth is needed' "$FILE"
 
 # Route coverage.
 assert_contains 'build-fix' "$FILE"
