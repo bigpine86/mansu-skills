@@ -7,6 +7,8 @@ Install the skills. Pick the right Mansu route. Finish with evidence.
 ## Quick Start
 Last verified: 2026-04-24
 
+Canonical branch: `main`
+
 ### For Humans
 
 ```bash
@@ -92,6 +94,13 @@ then slices are dispatched.
 4. 모든 작업에 필요한 필수 게이트만 Mansu 스킬에 짧게 내장합니다.
 5. 깊은 실행은 source skill map으로 라우팅합니다.
 6. 검증 결과와 배운 점을 `개발일지.md`에 남깁니다.
+
+## Branch Policy
+
+- `main` is the canonical branch.
+- `codex/*` branches are temporary work branches.
+- Finished skill changes should land on `main` before being treated as installed or shared.
+- If local installed skills in `$HOME/.codex/skills` drift from this repo, sync from `main` first.
 
 ## Validation
 
