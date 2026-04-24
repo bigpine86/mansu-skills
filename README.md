@@ -59,6 +59,9 @@ For non-trivial work, Mansu planning is a multi-role critique loop:
 Planner drafts, Critics challenge, Synthesizer produces one accepted plan, and only
 then slices are dispatched.
 
+Slices are sequential by default: slice N+1 does not start until slice N is validated,
+reviewed, QA'd, checkpointed, logged, and committed or explicitly recorded as not committed.
+
 자세한 기준은 [MANSU_PHILOSOPHY.md](./MANSU_PHILOSOPHY.md)를 봅니다.
 
 ## Skills

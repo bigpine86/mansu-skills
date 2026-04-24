@@ -14,6 +14,7 @@ Use this skill when a slice has already been planned and full `mansu-tdd-strict`
 - Define the validation path for each slice before implementation.
 - Use test-first when it naturally fits the slice; use explicit verification when a strict RED test would be artificial.
 - Validate each slice before moving on.
+- Do not start the next slice until the current lite slice is closed.
 - Keep the active plan current so the next session can resume cleanly.
 - Record completed work in a project worklog when the project uses one.
 
@@ -107,6 +108,9 @@ A lite slice is closed enough to move on only when:
 4. review, QA, and checkpoint are complete
 5. the work is committed, or the reason for not committing yet is stated explicitly
 6. the completed-work log is updated when the project uses one
+
+If any item is missing, do not start the next slice. Record the blocker or finish the
+missing close step first.
 
 Lite mode is flexible about TDD style, not about work quality.
 

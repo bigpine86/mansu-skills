@@ -33,6 +33,7 @@ These rules do not change between `lite` and `strict`:
 - Slice by feature, behavior, or user flow.
 - Define completion conditions, impact files, risks, and validation path for every slice.
 - Run review, QA, checkpoint, and commit for each slice.
+- Do not start the next slice until the current slice is fully closed.
 - Keep `PLAN.md` current.
 - Record completed work in `개발일지.md` or the project worklog.
 - Do not use `lite` as permission to lower work quality.
@@ -164,6 +165,22 @@ For slices marked `lite`, execute with `mansu-tdd-lite`.
 For slices marked `strict`, execute with `mansu-tdd-strict`.
 
 For slices marked `blocked`, stop before implementation and report the missing prerequisite or unresolved plan decision.
+
+## Sequential slice gate
+
+Execute slices in order unless the user explicitly approves a different dependency-free order.
+
+A slice is fully closed only when:
+
+- its delegated skill's close criteria are satisfied
+- validation is complete
+- review, QA, and checkpoint are complete
+- `PLAN.md` reflects the current status and next starting point
+- `개발일지.md` or the project worklog is updated when used
+- the slice is committed, or the no-commit reason is recorded
+
+Do not start slice N+1 while slice N is open, ambiguous, blocked without a recorded decision,
+or missing review/QA/checkpoint evidence.
 
 ## Mode-change rules
 

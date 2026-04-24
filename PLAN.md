@@ -1,6 +1,7 @@
 ## Active Follow-up
 
 - `mansu-tdd-total` planning is now strengthened: Planner, Critics, and Synthesizer roles must be mapped, and implementation cannot start until the accepted plan and slice table are visible.
+- Sequential slice execution is now explicit: slice N+1 cannot start until slice N is fully closed with validation, review, QA, checkpoint, plan/worklog updates, and commit or no-commit reason.
 - `main` is now the canonical branch target for finished Mansu skill changes.
 - `MANSU_PHILOSOPHY.md` now records the shared Mansu principle: do not reinvent strong workflows; plan, protect, route, verify, and record while delegating specialized craft to the best source skill.
 - `mansu-debug-rootcause` now follows the same pattern with a source skill map and Mansu-owned boundary.
