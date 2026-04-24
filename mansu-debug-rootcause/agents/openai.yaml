@@ -1,4 +1,4 @@
 interface:
   display_name: "Mansu Debug Rootcause"
-  short_description: "Root-cause debugging before any fix"
-  default_prompt: "Use $mansu-debug-rootcause to reproduce the bug, isolate the cause, test a hypothesis, apply the minimal fix, verify the original scenario, and leave a DEBUG REPORT."
+  short_description: "Root-cause debugging with verification gates"
+  default_prompt: "Use $mansu-debug-rootcause to reproduce, isolate, prove, minimally fix, verify, and report the root cause of this bug."
