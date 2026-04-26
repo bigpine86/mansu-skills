@@ -24,9 +24,9 @@ This skill executes slices marked `strict`.
 
 Use strict mode when a meaningful failing RED test improves confidence, protects risky behavior, or clarifies the design.
 
-When invoked from `mansu-tdd-total`, use the accepted plan and slice table as the planning source of truth, then apply this skill's strict execution gates.
+When invoked from `mansu-tdd-total`, use the execution-ready plan and slice table as the planning source of truth, then apply this skill's strict execution gates.
 
-When invoked directly without an accepted plan, follow the read order below and produce the final plan before implementation starts.
+When invoked directly without an execution-ready plan, follow the read order below and produce the final plan before implementation starts.
 
 ## Read order
 

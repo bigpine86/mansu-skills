@@ -29,7 +29,7 @@ In the normal Mansu TDD flow, `mansu-tdd-total` owns planning, critique, slice d
 
 This skill executes slices marked `lite`.
 
-If no accepted plan and slice card exists, route to `mansu-tdd-total` before implementation starts.
+If no execution-ready plan and slice card exists, route to `mansu-tdd-total` before implementation starts.
 
 ## Best fit
 
@@ -65,7 +65,7 @@ If you cannot define a meaningful validation path, checkpoint path, or worklog p
 
 ## Default loop
 
-1. Read the accepted slice card from `PLAN.md` or the project planning document.
+1. Read the execution-ready slice card from `PLAN.md` or the project planning document.
 2. Confirm the slice is marked `lite`.
 3. Confirm the validation path before coding.
    Examples: failing test, focused tests, `review`, `qa`, visual check, manual verification
@@ -138,8 +138,12 @@ Use prompts in this spirit:
 
 When the work is complete:
 
+- run the relevant project-level build/test/type/lint suite
+- run final QA or browser verification when user-visible behavior changed
 - keep only active follow-up items in `PLAN.md`
 - move finished multi-slice detail into `개발일지.md` or the project worklog
+- commit after final validation, or record why the final commit is intentionally deferred
+- final report must include verified checks, unverified checks, remaining risks, and follow-up items
 - avoid leaving the same completed work fully expanded in both places
 
 ## Stop and escalate

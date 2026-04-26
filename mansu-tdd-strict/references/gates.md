@@ -85,8 +85,11 @@ The next slice is forbidden until the current slice has:
 
 After the final slice commit, but before declaring the overall loop complete:
 
-1. move completed program detail out of the active plan file
-2. write the completed program into `개발일지.md`
-3. leave only active follow-up items in the plan file
+1. run the relevant project-level build/test/type/lint suite
+2. run final QA or browser verification when user-visible behavior changed
+3. move completed program detail out of the active plan file
+4. write the completed program into `개발일지.md`
+5. leave only active follow-up items in the plan file
+6. report verified checks, unverified checks, remaining risks, and follow-up items
 
 Do not leave a fully completed program as active detail in the plan file.

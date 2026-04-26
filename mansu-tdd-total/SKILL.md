@@ -19,7 +19,7 @@ then delegates execution to `mansu-tdd-lite` or `mansu-tdd-strict`.
 
 - Plan once.
 - Critique the plan before implementation with explicit planning roles.
-- Synthesize one accepted plan before any slice starts.
+- Synthesize one execution-ready plan before any slice starts.
 - Split the work into vertical slices.
 - Choose `mansu-tdd-lite` or `mansu-tdd-strict` for each slice.
 - Record the per-slice mode decision and rationale in `PLAN.md`.
@@ -86,16 +86,29 @@ Use these responsibilities before implementation:
   Examples: `Prometheus`, `gstack-autoplan`, `gstack-plan-eng-review`
 - Critics: challenge the plan.
   Examples: `Metis`, `Momus`, `gstack-plan-ceo-review`, `gstack-plan-design-review`
-- Synthesizer: merge critique into one accepted plan and remove contradictions.
+- Synthesizer: merge critique into one execution-ready plan and remove contradictions.
 
 If exact agent names or tools are unavailable, map available tools, agents, or
 perspectives to these three roles and record the mapping in `PLAN.md`.
 
-Do not proceed to implementation until the accepted plan and slice table are visible.
+## Real critic agent gate
 
-## Accepted plan requirements
+If actual critic sub-agents or external critic tools are started, their outputs become
+planning-gate inputs.
 
-The accepted plan must include:
+- Record the critic names, responsibilities, and status in `PLAN.md`.
+- While critics run, continue only non-overlapping discovery or code reading.
+- Do not lock the execution-ready plan or start implementation while an expected critic is still pending.
+- If a critic fails or times out, record the failure, run an explicit local fallback for that responsibility, and mark any missing high-risk question as `blocked`.
+- Reconcile late critic feedback before starting the next slice, or immediately if it reveals data-contract, security, architecture, or UX-risk issues.
+
+Do not proceed to implementation until the execution-ready plan and slice table are visible.
+Once they are visible, continue automatically unless the user explicitly requested
+a human approval gate, a risky action requires approval, or a plan gap remains unresolved.
+
+## Execution-ready plan requirements
+
+The execution-ready plan must include:
 
 - goal and user value
 - non-goals and constraints
@@ -105,7 +118,7 @@ The accepted plan must include:
 - risks and mitigation
 - test and validation strategy
 - documentation and worklog targets
-- approval status
+- execution readiness status
 
 If any of these are unknown, mark the gap explicitly instead of pretending the plan is complete.
 
@@ -115,11 +128,12 @@ If any of these are unknown, mark the gap explicitly instead of pretending the p
 2. Map the Planner, Critics, and Synthesizer roles.
 3. Draft the implementation plan through the Planner role.
 4. Critique the plan through the Critics role.
-5. Synthesize the accepted plan, including resolved tradeoffs and remaining gaps.
-6. Split the work into vertical slices by feature, behavior, or user flow.
-7. Assign each slice a mode: `lite`, `strict`, or `blocked`.
-8. Record the role mapping, accepted plan, slice table, and mode decisions in `PLAN.md`.
-9. Ask for approval before implementation starts when the scope is non-trivial.
+5. If real critic agents were started, wait for them or record a real failure/timeout fallback.
+6. Synthesize the execution-ready plan, including resolved tradeoffs and remaining gaps.
+7. Split the work into vertical slices by feature, behavior, or user flow.
+8. Assign each slice a mode: `lite`, `strict`, or `blocked`.
+9. Record the role mapping, critic status, execution-ready plan, slice table, and mode decisions in `PLAN.md`.
+10. Start execution automatically after the plan gate passes; pause only for explicit approval gates, risky actions, or unresolved blockers.
 
 ## Dispatch rules
 
@@ -193,7 +207,11 @@ or missing review/QA/checkpoint evidence.
 
 When all slices are complete:
 
+- run the project-level build/test/type/lint suite that is relevant to the repo
+- run final QA or browser verification when user-visible behavior changed
 - keep only active follow-up items in `PLAN.md`
 - move completed multi-slice detail into `개발일지.md` or the project worklog
 - include the final slice modes and validation results in the worklog
+- create the final commit after final validation, or record why a commit was intentionally deferred
+- report what was verified, what could not be verified, remaining risks, and any follow-up checks needed
 - avoid leaving the same completed work fully expanded in both `PLAN.md` and `개발일지.md`

@@ -56,8 +56,12 @@ Good Mansu skills are thin where they can be thin and strict where they must be 
 - Strict: 계획, 안전선, scope boundary, 증거, 검증, 완료 조건
 
 For non-trivial work, Mansu planning is a multi-role critique loop:
-Planner drafts, Critics challenge, Synthesizer produces one accepted plan, and only
-then slices are dispatched.
+Planner drafts, Critics challenge, Synthesizer produces one execution-ready plan,
+and then slices are dispatched automatically unless an explicit approval gate, risky
+action, or unresolved blocker requires a pause.
+
+If real critic agents are started, their feedback is not optional: wait for it, or
+record the timeout/failure and preserve unresolved high-risk questions as blockers.
 
 Slices are sequential by default: slice N+1 does not start until slice N is validated,
 reviewed, QA'd, checkpointed, logged, and committed or explicitly recorded as not committed.

@@ -43,6 +43,17 @@ Good Mansu skills are thin where they can be thin and strict where they must be 
 - Thin: source-specific implementation details, long checklists, tool mechanics.
 - Strict: planning, safety, scope boundaries, evidence, verification, and completion rules.
 
+Planning is a quality gate, not a default waiting room.
+
+For non-trivial work, Mansu should plan through separated roles, critique the plan,
+lock an execution-ready slice table, and then continue automatically. Pause only
+when the user explicitly asks for a human approval gate, the action is risky, or
+the plan still has unresolved blockers.
+
+If real critic agents are started, their outputs are part of the gate. Mansu should
+not ignore pending critics just to move faster; it may only fallback after recording
+the timeout/failure and preserving unresolved high-risk questions as blockers.
+
 ## One sentence
 
 Mansu plans, protects, routes, verifies, and records; specialized skills execute the

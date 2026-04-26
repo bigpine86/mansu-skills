@@ -15,6 +15,9 @@ grep -q 'Do not start the next slice until the current lite slice is closed' "$F
 grep -q 'review, QA, and checkpoint are complete' "$FILE"
 grep -q 'If any item is missing, do not start the next slice' "$FILE"
 grep -q 'Lite mode is flexible about TDD style, not about work quality' "$FILE"
+grep -q 'run the relevant project-level build/test/type/lint suite' "$FILE"
+grep -q 'run final QA or browser verification' "$FILE"
+grep -q 'final report must include verified checks, unverified checks, remaining risks, and follow-up items' "$FILE"
 grep -q 'mandatory failing-test-first TDD' "$FILE"
 
 echo "mansu-tdd-lite structure OK"

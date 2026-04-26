@@ -1,4 +1,4 @@
 interface:
   display_name: "Mansu TDD Lite"
   short_description: "Plan-first slice workflow with lighter RED-test requirements"
-  default_prompt: "Use $mansu-tdd-lite to execute an approved lite slice: confirm the validation path, implement, run review, QA, checkpoint, commit, and update PLAN.md plus the worklog."
+  default_prompt: "Use $mansu-tdd-lite to execute an execution-ready lite slice: confirm the validation path, implement, run review, QA, checkpoint, commit, and update PLAN.md plus the worklog."
