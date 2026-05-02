@@ -5,6 +5,7 @@ ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 MODEL="$ROOT_DIR/mansu-operating-model/SKILL.md"
 OPENAI_YAML="$ROOT_DIR/mansu-operating-model/agents/openai.yaml"
 DOCTRINE_REF="$ROOT_DIR/mansu-operating-model/references/DOCTRINE.md"
+SOURCE_CATALOG="$ROOT_DIR/mansu-operating-model/references/SOURCE_SKILL_CATALOG.md"
 AGENTS_TEMPLATE="$ROOT_DIR/mansu-operating-model/references/AGENTS.md"
 CODING_RULES_TEMPLATE="$ROOT_DIR/mansu-operating-model/references/CODING_RULES.md"
 
@@ -38,6 +39,7 @@ forbid_contains() {
 require_file "$MODEL"
 require_file "$OPENAI_YAML"
 require_file "$DOCTRINE_REF"
+require_file "$SOURCE_CATALOG"
 require_file "$AGENTS_TEMPLATE"
 require_file "$CODING_RULES_TEMPLATE"
 
@@ -55,6 +57,8 @@ require_contains "$MODEL" '^## Evidence and ship readiness$' 'operating model mi
 require_contains "$MODEL" '^## Document authority$' 'operating model missing Document authority section'
 require_contains "$MODEL" '^## Reference map$' 'operating model missing Reference map section'
 require_contains "$MODEL" 'references/DOCTRINE.md' 'operating model should point to DOCTRINE reference'
+require_contains "$MODEL" 'references/SOURCE_SKILL_CATALOG.md' 'operating model should point to source skill catalog'
+require_contains "$MODEL" 'check the source skill catalog' 'operating model lost source catalog doctrine'
 
 # Detailed doctrine sections
 require_contains "$DOCTRINE_REF" '^## Contents$' 'doctrine reference missing Contents section'
@@ -80,6 +84,24 @@ require_contains "$MODEL" 'continues automatically unless the user' 'operating m
 require_contains "$MODEL" 'references/AGENTS.md' 'operating model should point to AGENTS template'
 require_contains "$MODEL" 'references/CODING_RULES.md' 'operating model should point to CODING_RULES template'
 require_contains "$MODEL" 'Project documents specialize the doctrine; they must not weaken it' 'operating model lost local-doc non-weakening rule'
+
+# Source skill catalog essentials
+require_contains "$SOURCE_CATALOG" '^# Mansu Source Skill Catalog$' 'source catalog missing canonical title'
+require_contains "$SOURCE_CATALOG" '^## Layer Model$' 'source catalog missing Layer Model section'
+require_contains "$SOURCE_CATALOG" '^## Freshness Policy$' 'source catalog missing Freshness Policy section'
+require_contains "$SOURCE_CATALOG" '^## gstack Capability Map$' 'source catalog missing gstack map'
+require_contains "$SOURCE_CATALOG" '^## Oh My / OMO / OMC Capability Map$' 'source catalog missing Oh My map'
+require_contains "$SOURCE_CATALOG" '^## Mansu Composition Recipes$' 'source catalog missing composition recipes'
+require_contains "$SOURCE_CATALOG" 'gstack-design-shotgun' 'source catalog lost design-shotgun route'
+require_contains "$SOURCE_CATALOG" 'gstack repo or `gstack-\*` skill set changed' 'source catalog lost gstack freshness check'
+require_contains "$SOURCE_CATALOG" 'Oh My / OMO / OMC adapter or source skill set changed' 'source catalog lost Oh My freshness check'
+require_contains "$SOURCE_CATALOG" 'stale assumptions' 'source catalog lost stale-source warning'
+require_contains "$SOURCE_CATALOG" 'gstack-plan-eng-review' 'source catalog lost eng review route'
+require_contains "$SOURCE_CATALOG" 'gstack-qa' 'source catalog lost QA route'
+require_contains "$SOURCE_CATALOG" 'ultrawork' 'source catalog lost Oh My parallel route'
+require_contains "$SOURCE_CATALOG" 'ralph' 'source catalog lost persistence route'
+require_contains "$SOURCE_CATALOG" 'Mansu does not compete with strong specialist skills' 'source catalog lost orchestration stance'
+require_contains "$SOURCE_CATALOG" 'Do not clone gstack' 'source catalog lost anti-cloning rule'
 
 # Disallowed vague doctrine
 forbid_contains "$MODEL" 'strict-ish|best effort strict|if possible review|review if convenient|QA if needed|probably fine|maybe ship-ready' 'operating model contains vague or weakened doctrine'

@@ -1,6 +1,6 @@
 ---
 name: mansu-start
-description: Runtime-target-aware bootstrap/update workflow for the Mansu skill suite. Use when installing Mansu for the first time, choosing the right runtime target and host such as Hermes, OpenCode, Codex, or Claude Code, syncing `mansu-*` skills into the correct local skill directory, checking source tools like git and gstack, reporting optional adapter compatibility, refreshing gstack skill links, validating the installed skill suite, repairing a broken local skill install, or updating Mansu/gstack/adapter tooling before serious work.
+description: Runtime-target-aware bootstrap/update workflow for the Mansu skill suite. Use when installing Mansu for the first time, choosing the right runtime target and host such as Hermes, OpenCode, Codex, or Claude Code, syncing `mansu-*` skills into the correct local skill directory, checking source tools like git and gstack, checking Oh My / OMO / OMC source skill freshness, reporting optional adapter compatibility, refreshing gstack and Oh My source skill links, validating the installed skill suite, repairing a broken local skill install, or updating Mansu/gstack/Oh My/adapter tooling before serious work.
 ---
 
 # Mansu Start
@@ -14,8 +14,9 @@ after pulling repo changes, or after updating gstack / runtime compatibility too
 - Detect the current runtime target, agent host, and operating system before choosing paths or commands.
 - Sync `mansu-*` skills into the correct runtime skill directory.
 - Check required source tools: runtime skill dir, git, and gstack.
+- Check source skill freshness for both gstack and Oh My / OMO / OMC style skills.
 - Verify optional compatibility adapters when they are installed or when the user explicitly asks.
-- Refresh gstack skill links after a gstack update.
+- Refresh gstack and Oh My source skill links after source updates.
 - Validate the installed Mansu suite.
 - Report versions, missing pieces, compatibility warnings, and the next safe action.
 
@@ -24,6 +25,7 @@ after pulling repo changes, or after updating gstack / runtime compatibility too
 - `check`: report-only preflight; make no changes except harmless reads.
 - `install`: first bootstrap from a local or cloned `mansu-skills` repo.
 - `update`: update Mansu, gstack, and/or installed compatibility adapters when the user asks for updates.
+- `source-check`: report whether gstack and Oh My / OMO / OMC source skills look stale against installed repos/adapters; make no changes unless the user also asked for update.
 - `repair`: fix missing local Mansu copies or stale gstack skill links without changing source repos.
 
 Default behavior:
@@ -121,7 +123,9 @@ Collect this before making changes:
 - matching adapter expectation and whether `omx`, `omo`, or `omc` is actually available
 - `uv tool list` when available
 - gstack repo path, `VERSION`, and installed `gstack-*` skill links
+- Oh My / OMO / OMC source skill locations, installed adapter version when available, and installed source-skill folders
 - whether `gstack-context-save` and `gstack-context-restore` are available
+- whether gstack and Oh My / OMO / OMC source skill names still match the Mansu source catalog
 - result of `scripts/validate_mansu_skills.sh` when the repo is present
 
 ## First install
@@ -150,13 +154,19 @@ When the user asks to update:
 2. Re-detect runtime target, host, OS, and selected skill directory.
 3. Sync all top-level `mansu-*` directories into the selected runtime skill directory.
 4. Check gstack. If the user requested gstack update, use gstack's update flow or a safe `fetch` plus `merge --ff-only`, then run its setup if required.
-5. Refresh gstack skill links from the installed gstack repo into the selected runtime skill directory.
-6. Check compatibility tooling separately from runtime detection: Hermes/OpenCode may use `omo`, Codex may use `omx`, and Claude Code may use `omc`.
-7. If the user requested adapter updates, update only the installed matching adapter; for Codex this may be `uv tool upgrade oh-my-codex` then `omx --update`.
-8. Re-run `scripts/validate_mansu_skills.sh`.
-9. Report version changes and compatibility notes.
+5. Check Oh My / OMO / OMC source skill freshness separately from runtime detection.
+6. Refresh gstack skill links from the installed gstack repo into the selected runtime skill directory.
+7. Refresh Oh My / OMO / OMC source skill links or copies only when the matching source is installed and the selected runtime target expects it.
+8. Check compatibility tooling separately from runtime detection: Hermes/OpenCode may use `omo`, Codex may use `omx`, and Claude Code may use `omc`.
+9. If the user requested adapter updates, update only the installed matching adapter; for Codex this may be `uv tool upgrade oh-my-codex` then `omx --update`.
+10. Re-run `scripts/validate_mansu_skills.sh`.
+11. Report version changes, source skill freshness, and compatibility notes.
 
 If adapter tooling is missing and adapter work was not explicitly requested, continue the Mansu/gstack update path and record that the adapter step was skipped.
+
+If Oh My / OMO / OMC source tooling is missing and source update work was not
+explicitly requested, continue the Mansu/gstack update path and record that the
+Oh My source check was skipped.
 
 ## Repair
 
@@ -164,6 +174,7 @@ Use repair when the source repos look correct but local runtime skills are missi
 
 - Re-copy local `mansu-*` skill folders from the Mansu repo.
 - Recreate missing gstack skill symlinks from the gstack repo if gstack exists.
+- Recreate missing Oh My / OMO / OMC source skill links only when the matching source exists and the runtime target expects it.
 - Verify `gstack-context-save` and `gstack-context-restore` are present after refresh.
 - Re-run Mansu validation.
 - Do not update remote repos during repair unless the user also requested update.
@@ -173,6 +184,7 @@ Use repair when the source repos look correct but local runtime skills are missi
 Always watch for these drift signals:
 
 - Mansu skills mention source skills that are no longer installed.
+- `mansu-operating-model/references/SOURCE_SKILL_CATALOG.md` is older than the installed gstack or Oh My / OMO / OMC source skills.
 - gstack has `context-save` / `context-restore`, but Mansu docs still mention only `checkpoint`.
 - The selected runtime target's adapter package version and CLI printed version disagree.
 - installed `<runtime-skill-dir>/mansu-*` differs from the local repo.
@@ -197,6 +209,8 @@ Skill target:
 Mansu repo:
 Mansu skills synced:
 gstack:
+Oh My / OMO / OMC:
+Source skill freshness:
 Adapter status:
 Validation:
 Skipped checks:

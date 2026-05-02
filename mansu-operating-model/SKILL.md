@@ -25,6 +25,7 @@ This skill owns the universal doctrine:
 - plan before non-trivial execution
 - keep planning, building, review, QA, and ship judgment distinct
 - route work by task character rather than tool fashion
+- check the source skill catalog before inventing a new workflow
 - preserve strictness when strictness is declared
 - accumulate learnings across tasks
 - make ship claims depend on evidence
@@ -107,6 +108,7 @@ Route by task character:
 - Unclear failure or regression: investigate before fixing.
 - High-assurance or strict delivery: verify gates first; block if strict prerequisites are missing.
 - Browser or runtime behavior claim: verify behavior directly and separate report-only from fix-approved modes.
+- Work that overlaps strong Oh My, gstack, or public source skills: read the source skill catalog and delegate specialist execution when it is stronger.
 - Project operating docs: use this skill and the templates in `references/`.
 
 ## Strict mode policy
@@ -148,6 +150,7 @@ interpretation, and ask only if the choice has real consequences.
 ## Reference map
 
 - `references/DOCTRINE.md`: full doctrine text for classification, delivery spine, role model, orchestration, review, QA, debugging, strictness, evidence, authority, and anti-patterns.
+- `references/SOURCE_SKILL_CATALOG.md`: source skill map for gstack, Oh My / OMO / OMC style skills, and Mansu composition recipes.
 - `references/AGENTS.md`: project router template that points contributors toward Mansu doctrine and local rules.
 - `references/CODING_RULES.md`: project-local operating manual template for runtime choices, commands, validation, dangerous surfaces, and ship criteria.
 

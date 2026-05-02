@@ -25,16 +25,26 @@ It does not need to own every specialized technique.
 When a strong source skill already exists, Mansu should delegate to it instead of
 copying the whole workflow into a new skill.
 
+That delegation must be explicit, not vibes-based. Mansu keeps a source skill
+catalog so it can remember what gstack, Oh My / OMO / OMC, and other public skills
+already do well, then compose them intentionally.
+
+Because those source families move, Mansu must keep checking freshness for both
+gstack and Oh My / OMO / OMC. A stale source map is a routing bug, not just old
+documentation.
+
 ## Operating rule
 
 Before creating or expanding a `mansu-*` skill:
 
 1. Find the best existing Oh My, gstack, or other relevant source skills.
-2. Read the source skill enough to understand its purpose, gates, and philosophy.
-3. Decide what Mansu should own and what should stay delegated.
-4. Embed only the mandatory gates that must always hold.
-5. Route specialized execution to the source skill when the task needs depth.
-6. Leave evidence, validation, and a worklog entry.
+2. Check `mansu-operating-model/references/SOURCE_SKILL_CATALOG.md` for existing
+   source skill maps and composition recipes.
+3. Read the source skill enough to understand its purpose, gates, and philosophy.
+4. Decide what Mansu should own and what should stay delegated.
+5. Embed only the mandatory gates that must always hold.
+6. Route specialized execution to the source skill when the task needs depth.
+7. Leave evidence, validation, and a worklog entry.
 
 ## Design principle
 

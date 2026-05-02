@@ -1,4 +1,4 @@
 interface:
   display_name: "Mansu Start"
   short_description: "Runtime-aware Mansu bootstrap and updater"
-  default_prompt: "Use $mansu-start to detect the runtime target, agent host, and OS, choose the right skill directory, sync Mansu skills, verify gstack, report optional adapter compatibility, refresh source skill links when needed, run validation, and report skipped checks or compatibility drift."
+  default_prompt: "Use $mansu-start to detect the runtime target, agent host, and OS, choose the right skill directory, sync Mansu skills, verify gstack and Oh My / OMO / OMC source freshness, report optional adapter compatibility, refresh source skill links when needed, run validation, and report skipped checks or compatibility drift."

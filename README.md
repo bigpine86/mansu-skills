@@ -36,7 +36,7 @@ Use $mansu-start install from this repo. Detect my runtime target, host, and OS 
 업데이트할 때는:
 
 ```text
-Use $mansu-start update. Sync Mansu skills, check gstack, and report adapter compatibility without blocking on missing adapter tooling unless adapter work was requested.
+Use $mansu-start update. Sync Mansu skills, check gstack and Oh My / OMO / OMC source freshness, and report adapter compatibility without blocking on missing adapter tooling unless adapter work was requested.
 ```
 
 ### For Agents
@@ -69,6 +69,8 @@ Mansu가 직접 책임지는 것은 아래입니다.
 - 최종 책임
 
 전문 실행은 가능한 한 더 잘 맞는 source skill에 맡깁니다.
+그 source skill 목록과 조합법은 `mansu-operating-model/references/SOURCE_SKILL_CATALOG.md`에서 관리합니다.
+`mansu-start`는 gstack과 Oh My / OMO / OMC 계열 source skill이 바뀌었는지도 계속 확인해야 합니다.
 
 ## Core Philosophy
 
@@ -124,11 +126,12 @@ reviewed, QA'd, checkpointed, logged, and committed or explicitly recorded as no
 새 `mansu-*` 스킬을 만들거나 확장하기 전에:
 
 1. 관련 Oh My, gstack, 공개 source skill을 먼저 찾습니다.
-2. 그 스킬의 목적, 게이트, 철학을 읽습니다.
-3. Mansu가 맡을 경계와 source skill에 맡길 경계를 나눕니다.
-4. 모든 작업에 필요한 필수 게이트만 Mansu 스킬에 짧게 내장합니다.
-5. 깊은 실행은 source skill map으로 라우팅합니다.
-6. 검증 결과와 배운 점을 `개발일지.md`에 남깁니다.
+2. `mansu-operating-model/references/SOURCE_SKILL_CATALOG.md`에서 기존 조합법을 확인합니다.
+3. 그 스킬의 목적, 게이트, 철학을 읽습니다.
+4. Mansu가 맡을 경계와 source skill에 맡길 경계를 나눕니다.
+5. 모든 작업에 필요한 필수 게이트만 Mansu 스킬에 짧게 내장합니다.
+6. 깊은 실행은 source skill map으로 라우팅합니다.
+7. 검증 결과와 배운 점을 `개발일지.md`에 남깁니다.
 
 ## Branch Policy
 
@@ -159,6 +162,7 @@ scripts/validate_mansu_web_verify.sh
 
 - [MANSU_PHILOSOPHY.md](./MANSU_PHILOSOPHY.md): Mansu 공통 철학
 - [mansu-operating-model](./mansu-operating-model/SKILL.md): canonical doctrine + `AGENTS.md` / `CODING_RULES.md` templates
+- [SOURCE_SKILL_CATALOG.md](./mansu-operating-model/references/SOURCE_SKILL_CATALOG.md): gstack / Oh My / OMO / OMC source skill map and composition recipes
 - [PLAN.md](./PLAN.md): 현재 follow-up과 다음 작업
 - [개발일지.md](./개발일지.md): 시간순 작업 기록
 - [mansu-start](./mansu-start/SKILL.md): 설치/업데이트/복구 진입점

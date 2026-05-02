@@ -107,6 +107,7 @@ START_VALIDATOR="$ROOT_DIR/scripts/validate_mansu_start.sh"
 TDD_SERIES_VALIDATOR="$ROOT_DIR/scripts/validate_mansu_tdd_series.sh"
 DEBUG_FILE="$ROOT_DIR/mansu-debug-rootcause/SKILL.md"
 DEBUG_VALIDATOR="$ROOT_DIR/scripts/validate_mansu_debug_rootcause.sh"
+OPERATING_MODEL_VALIDATOR="$ROOT_DIR/scripts/validate_mansu_operating_model.sh"
 SELF_FILE="$ROOT_DIR/scripts/validate_mansu_runtime_readiness.sh"
 
 for file in "${RUNTIME_FILES[@]}"; do
@@ -161,6 +162,7 @@ check_scoped_pattern \
   'gstack-qa' \
   "$DEBUG_FILE" \
   "$TDD_SERIES_VALIDATOR" \
+  "$OPERATING_MODEL_VALIDATOR" \
   "$SELF_FILE"
 
 check_scoped_pattern \
@@ -179,6 +181,7 @@ check_scoped_pattern \
   "$START_FILE" \
   "$START_YAML" \
   "$START_VALIDATOR" \
+  "$OPERATING_MODEL_VALIDATOR" \
   "$SELF_FILE"
 
 if [ "$failures" -ne 0 ]; then
