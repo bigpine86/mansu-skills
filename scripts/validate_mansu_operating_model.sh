@@ -58,11 +58,13 @@ require_contains "$MODEL" 'Code creation is not evidence of correctness' 'operat
 require_contains "$MODEL" 'strict mode is blocked' 'operating model lost strict blocked rule'
 require_contains "$MODEL" 'Route by task character' 'operating model lost task-character routing'
 require_contains "$MODEL" 'Merged status and shipped status are not assumed to be equivalent' 'operating model lost merged-vs-shipped distinction'
+require_contains "$MODEL" 'continues automatically unless the user explicitly requested a human approval gate' 'operating model lost automatic execution-ready gate rule'
 require_contains "$MODEL" 'references/AGENTS.md' 'operating model should point to AGENTS template'
 require_contains "$MODEL" 'references/CODING_RULES.md' 'operating model should point to CODING_RULES template'
 
 # Disallowed vague doctrine
 forbid_contains "$MODEL" 'strict-ish|best effort strict|if possible review|review if convenient|QA if needed|probably fine|maybe ship-ready' 'operating model contains vague or weakened doctrine'
+forbid_contains "$MODEL" 'approval before build' 'operating model reintroduced mandatory approval before build'
 
 # UI metadata
 require_contains "$OPENAI_YAML" '^interface:$' 'operating model missing interface metadata'
@@ -75,11 +77,16 @@ require_contains "$AGENTS_TEMPLATE" 'CODING_RULES\.md' 'AGENTS template must poi
 require_contains "$AGENTS_TEMPLATE" 'plan before implementation' 'AGENTS template lost plan-first workflow'
 require_contains "$AGENTS_TEMPLATE" 'unmet strict prerequisites block the task' 'AGENTS template lost strict blocked rule'
 require_contains "$AGENTS_TEMPLATE" 'Quick work may compress phases' 'AGENTS template lost quick compression boundary'
+require_contains "$AGENTS_TEMPLATE" 'continue automatically unless the user explicitly requested a human approval gate' 'AGENTS template lost automatic execution-ready rule'
+forbid_contains "$AGENTS_TEMPLATE" 'approval before build' 'AGENTS template reintroduced mandatory approval before build'
 
 # Local rules template essentials
 require_contains "$CODING_RULES_TEMPLATE" '^## Validation Commands$' 'CODING_RULES template missing Validation Commands section'
 require_contains "$CODING_RULES_TEMPLATE" '^## Dangerous Surfaces$' 'CODING_RULES template missing Dangerous Surfaces section'
 require_contains "$CODING_RULES_TEMPLATE" 'An active project is not operationally ready until this section contains runnable commands' 'CODING_RULES template lost runnable-command requirement'
 require_contains "$CODING_RULES_TEMPLATE" 'Merged and shipped are not assumed to be the same state in this project' 'CODING_RULES template lost merged-vs-shipped distinction'
+require_contains "$CODING_RULES_TEMPLATE" 'execution-ready plan gate before build' 'CODING_RULES template lost execution-ready plan gate'
+require_contains "$CODING_RULES_TEMPLATE" 'continue automatically unless the user explicitly requested a human approval gate' 'CODING_RULES template lost automatic execution-ready rule'
+forbid_contains "$CODING_RULES_TEMPLATE" 'approval before build' 'CODING_RULES template reintroduced mandatory approval before build'
 
 echo "mansu operating model structure OK"

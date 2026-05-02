@@ -110,7 +110,7 @@ Work classification determines:
 
 - orchestration intensity
 - gate requirements
-- approval burden
+- planning gate burden
 - verification expectations
 
 It is not a cosmetic label.
@@ -169,7 +169,7 @@ Heavy work requires:
 
 - explicit planning
 - critique
-- approval before build
+- execution-ready decision before build
 - vertical slicing
 - checkpoint control
 - distinct review
@@ -188,7 +188,7 @@ Operationally, this becomes:
 2. classify
 3. plan
 4. critique
-5. approve
+5. decide execution readiness
 6. slice
 7. build
 8. review
@@ -197,6 +197,8 @@ Operationally, this becomes:
 11. retro
 
 This spine is mandatory for heavy work, expected for standard work, and compressible only for quick work.
+
+When the plan is execution-ready, Mansu continues automatically unless the user explicitly requested a human approval gate, the next action is risky, or a blocker remains unresolved.
 
 ## Role model
 
@@ -211,7 +213,7 @@ Responsible for:
 - interpreting goals
 - holding scope and intent
 - choosing orchestration intensity
-- deciding approval boundaries
+- deciding when human approval is actually required
 
 ### Planner
 
@@ -232,7 +234,7 @@ Responsible for:
 
 Responsible for:
 
-- implementing approved slices
+- implementing execution-ready slices
 - staying within scope
 - surfacing unexpected expansion
 

@@ -52,15 +52,15 @@ Preferred window layout:
 6. `shell`
 
 Window responsibilities:
-- `plan`: task classification, scope, plan drafting, approval preparation
-- `build`: approved slice execution only
+- `plan`: task classification, scope, plan drafting, execution-readiness preparation
+- `build`: execution-ready slice execution only
 - `review`: correctness, diff, coupling, and risk review
 - `qa`: runtime validation and user/system-perspective verification
 - `server`: app runtime, logs, watch processes, local serving
 - `shell`: supporting commands and repo utilities
 
 Rules:
-- keep one approved slice per builder flow
+- keep one execution-ready slice per builder flow
 - do not run conflicting implementations in parallel on the same files
 - do not use the `qa` window for implementation work
 - do not treat the `review` window as a continuation of `build`
@@ -70,7 +70,7 @@ Rules:
 
 ## Work Classification in This Project
 
-Classification determines ceremony, approval burden, and validation depth.
+Classification determines ceremony, planning gate burden, and validation depth.
 
 ### Quick
 
@@ -119,12 +119,14 @@ Use heavy when any of the following are true:
 Heavy requires:
 - plan
 - critique
-- approval before build
+- execution-ready plan gate before build
 - vertical slicing
 - milestone control
 - distinct review
 - distinct QA
 - explicit ship-or-hold judgment
+
+Once a plan is execution-ready, continue automatically unless the user explicitly requested a human approval gate, the next action is risky, or a blocker remains unresolved.
 
 If classification is unclear, do not default downward. Escalate to the safer class.
 

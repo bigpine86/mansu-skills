@@ -35,13 +35,15 @@ Default flow:
 For heavy work, the expected flow is:
 - plan
 - critique
-- approval
+- execution-ready decision
 - slice
 - build
 - checkpoint when needed
 - review
 - QA
 - ship or hold
+
+Once a plan is execution-ready, continue automatically unless the user explicitly requested a human approval gate, the next action is risky, or a blocker remains unresolved.
 
 Quick work may compress phases, but it does not waive direct validation or honest completion reporting.
 
