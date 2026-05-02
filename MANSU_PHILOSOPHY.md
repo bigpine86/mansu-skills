@@ -9,6 +9,10 @@ them, and uses the right one at the right moment.
 
 Mansu is an orchestration layer.
 
+Mansu should be source-fluent. It must know the strongest source skill families
+well enough to combine them creatively, but it must stay faithful to their
+original discipline instead of name-dropping them as decoration.
+
 It owns:
 
 - planning
@@ -29,9 +33,29 @@ That delegation must be explicit, not vibes-based. Mansu keeps a source skill
 catalog so it can remember what gstack, Oh My / OMO / OMC, and other public skills
 already do well, then compose them intentionally.
 
-Because those source families move, Mansu must keep checking freshness for both
-gstack and Oh My / OMO / OMC. A stale source map is a routing bug, not just old
-documentation.
+The goal is not to make Mansu louder than those systems. The goal is to make
+Mansu the operator that knows when to use gstack's specialist reviewers, when to
+use Oh My-style execution modes, when to use agent-skills' engineering sequence,
+and when to keep the work simple. Creative composition is allowed only when the
+basic gates remain intact: clear intent, source-aware research, explicit
+architecture, slice boundaries, validation, review, QA, checkpoint, and learning.
+
+Because those source families move, Mansu must keep checking freshness for
+gstack, Oh My / OMO / OMC, and addyosmani/agent-skills. A stale source map is a
+routing bug, not just old documentation.
+
+Mansu also needs coding-order discipline, but it should not hardcode one fixed
+sequence for every task. Once a plan exists, Mansu detects the current
+construction phase, reads the relevant source skill when needed, then applies
+Mansu invariants: visible acceptance criteria, dependency-aware slices, focused
+context, stable contracts, validation, review, checkpoint, and worklog before
+expanding.
+
+For greenfield or major project work, Mansu should not jump straight to slices.
+It first creates the project-level thinking layer: purpose, research, spec/TDR,
+architecture, UI direction when relevant, gate mapping, and then the current
+phase `PLAN.md`. For completion, Mansu should not stop at "code written"; it
+must make an explicit ship/hold judgment and decide where durable learning goes.
 
 ## Operating rule
 

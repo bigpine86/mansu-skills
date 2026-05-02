@@ -59,6 +59,9 @@ Before slice 1, confirm:
 - review, QA, checkpoint, and commit gates are available or have clear project equivalents
 - every planned slice can define a validation path before implementation
 
+An equivalent gate must be separately invoked, produce status/evidence, and be
+distinguishable from the builder's self-summary.
+
 If any of those are unclear, decide them before implementation starts.
 
 If you cannot define a meaningful validation path, checkpoint path, or worklog path, stop and clarify the workflow before implementation.
@@ -67,12 +70,13 @@ If you cannot define a meaningful validation path, checkpoint path, or worklog p
 
 1. Read the execution-ready slice card from `PLAN.md` or the project planning document.
 2. Confirm the slice is marked `lite`.
-3. Confirm the validation path before coding.
+3. Confirm the construction router before coding: current phase, source skill to read or skip, dependency, context pack, contract to lock, and safe-default or rollback concern.
+4. Confirm the validation path before coding.
    Examples: failing test, focused tests, `review`, `qa`, visual check, manual verification
-4. Implement the slice.
-5. Run `review -> qa -> checkpoint`.
-6. Commit the slice.
-7. Update `PLAN.md` and the project worklog.
+5. Implement one logical thing for the slice.
+6. Run `review -> qa -> checkpoint`.
+7. Commit the slice, or record the explicit no-commit reason when project policy or user instruction requires deferring the commit.
+8. Update `PLAN.md` and the project worklog.
 
 ## Slice card
 
@@ -92,11 +96,13 @@ Keep it short, but do not skip the structure.
 - If the project already uses another planning doc, update that instead of forcing a rename.
 - `개발일지.md` is the preferred completed-work log when the project uses Korean worklogs.
 - One commit per slice is the default.
+- Commit-or-explicit-no-commit accounting is mandatory.
 - `RED -> GREEN -> REFACTOR` is required only when strict TDD is useful for the slice.
 - For UI, docs, config, and tiny presentational slices, explicit verification may replace the RED test.
 - `review`, `qa`, and `checkpoint` are required gates unless the project has an explicit equivalent.
 - Choose the validation and checkpoint path before slice 1 rather than improvising them mid-slice.
 - Do not keep growing a giant file when a new responsibility boundary appears.
+- Follow `mansu-operating-model/references/CODE_CONSTRUCTION_ORDER.md` as a dynamic router when a slice touches multiple files or risks turning into a one-pass patch.
 
 ## Minimum slice close
 

@@ -1,11 +1,11 @@
 # Prerequisites
 
-This skill is for a **current Mansu-compatible agent runtime with callable gates**. Treat these as hard prerequisites for the execution loop.
+This skill is for a **current Mansu-compatible agent runtime with callable or independently recorded gates**. Treat these as hard prerequisites for the execution loop.
 
 ## Required environment
 
 - A current Mansu-compatible agent runtime such as Hermes or OpenCode
-- Multi-agent support
+- Multi-agent support or explicit single-runtime role separation with independently recorded gate evidence
 - `git`
 - A repository with write access
 
@@ -20,6 +20,13 @@ This skill is for a **current Mansu-compatible agent runtime with callable gates
 - checkpoint gate support through one of:
   - callable checkpoint gate command or skill in the current runtime
   - a project-standard checkpoint workflow that is explicitly invocable as a gate
+
+Gate-equivalent minimum:
+
+- separately invoked from implementation
+- produces status/evidence
+- distinguishable from the builder's self-summary
+- recorded in the plan, checkpoint, or worklog
 
 ## Required documents
 
@@ -39,13 +46,13 @@ Confirm all of the following before planning or coding:
 - review gate is actually callable in this environment
 - QA gate is actually callable in this environment
 - checkpoint gate is actually callable in this environment
-- multi-agent orchestration is available
+- multi-agent orchestration is available, or single-runtime role separation with independent gate evidence is available
 - `PLAN.md` exists or can be created
 - `개발일지.md` path exists or can be created
 
 ## Hard-fail rule
 
-If current-runtime orchestration, multi-agent support, or any required gate is missing:
+If current-runtime orchestration, independent role separation, or any required gate is missing:
 
 - stop before implementation
 - report the exact missing prerequisite

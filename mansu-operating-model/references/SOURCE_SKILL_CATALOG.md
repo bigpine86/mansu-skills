@@ -6,7 +6,12 @@ workflow.
 Mansu does not compete with strong specialist skills. Mansu classifies the work,
 sets the discipline, and routes to the right source skill at the right moment.
 
-Last local snapshot: 2026-05-02.
+Last local snapshot: 2026-05-03.
+
+Machine-readable freshness evidence lives in `SOURCE_SKILL_LOCK.json`. Treat that
+file as the source-family snapshot for paths, versions, commits, inventory, and
+evidence commands. This catalog explains routing meaning; the lock file records
+what was actually checked.
 
 ## Operating Rule
 
@@ -23,22 +28,42 @@ Before expanding a `mansu-*` skill or starting non-trivial work:
 Source skills can drift. Treat this catalog as a routing map, not a replacement
 for the original skill files.
 
+## Source Mastery Rule
+
+Mansu should know the source skill families well enough to compose them without
+flattening them.
+
+- Use gstack as the specialist team: CEO, design, engineering, DX, browser QA,
+  security, performance, ship, deploy, and learning gates.
+- Use Oh My / OMO / OMC as execution-mode language: autopilot, ultrawork,
+  ralph, TDD, debug, research, build-fix, and lightweight orchestration habits.
+- Use addyosmani/agent-skills as the senior-engineering sequence: idea/spec,
+  task breakdown, context packing, source-driven coding, incremental
+  implementation, TDD, review, simplification, hardening, docs, and ship.
+- Compose creatively only after the basic gates are explicit: intent, scope,
+  research source, architecture, slice boundary, validation, review, QA,
+  checkpoint, and learning.
+- Prefer the original source skill when it is stronger. Mansu's job is to choose,
+  sequence, and hold accountability.
+
 ## Freshness Policy
 
-Mansu must keep watching the two upstream source families that shape this suite:
+Mansu must keep watching the upstream source families that shape this suite:
 
 - gstack specialist skills
 - Oh My / OMO / OMC style execution-mode skills
+- addyosmani/agent-skills production engineering workflow skills
 
 Whenever `mansu-start check`, `mansu-start update`, or serious project bootstrap
 runs, include a source freshness check:
 
 1. Check whether the installed gstack repo or `gstack-*` skill set changed.
 2. Check whether the installed Oh My / OMO / OMC adapter or source skill set changed.
-3. Compare notable added, removed, or renamed skills against this catalog.
-4. If source skills changed in a way that affects routing, read the original
+3. Check whether `addyosmani/agent-skills` changed when it is installed or referenced.
+4. Compare notable added, removed, or renamed skills against this catalog.
+5. If source skills changed in a way that affects routing, read the original
    `SKILL.md` and update this catalog before relying on stale assumptions.
-5. Record the source freshness result in the final report and worklog.
+6. Record the source freshness result in the final report and worklog.
 
 Missing source tooling is not automatically fatal. Report what was unavailable,
 continue with the safe Mansu path, and block only when the requested workflow
@@ -51,6 +76,7 @@ depends on the missing source.
 | Mansu | doctrine, classification, strictness, routing, evidence, checkpoint, worklog, final ship judgment | specialist craft implementation when a stronger source skill exists |
 | gstack | role-based specialist gates, browser QA, design exploration, security, performance, ship/ops, learning | Mansu-specific doctrine or personal operating rules |
 | Oh My / OMO / OMC | execution modes, parallel work patterns, persistence, TDD/debug/research habits, lightweight orchestration language | final Mansu policy, project-specific evidence gates |
+| addyosmani/agent-skills | senior-engineering SDLC sequence, spec-first planning, task breakdown, context packing, incremental implementation, source-driven coding | Mansu-specific strictness, project-local routing, runtime adapters |
 
 ## gstack Capability Map
 
@@ -80,7 +106,7 @@ Use gstack as the specialist team and verification layer.
 | Ship | `gstack-ship`, `gstack-landing-report` | tests, review, version/changelog, commit/push/PR readiness |
 | Deploy | `gstack-setup-deploy`, `gstack-land-and-deploy`, `gstack-canary` | deployment config, merge/deploy, post-deploy monitoring |
 | Documentation | `gstack-document-release`, `gstack-make-pdf` | post-ship docs or polished PDF artifacts |
-| Learning | `gstack-checkpoint`, `gstack-context-save`, `gstack-context-restore`, `gstack-retro`, `gstack-learn` | state handoff, session resume, retro, reusable lessons |
+| Learning | `gstack-context-save`, `gstack-context-restore`, `gstack-retro`, `gstack-learn`; `gstack-checkpoint` only when the installed runtime still exposes it as the checkpoint-family gate | state handoff, session resume, retro, reusable lessons |
 | Browser data work | `gstack-scrape`, `gstack-skillify` | read-only extraction or codifying a repeated browser scrape |
 | Model/tool ops | `gstack-upgrade`, `gstack-benchmark-models`, `gstack-claude`, `gstack-pair-agent`, `gstack-setup-gbrain`, `gstack-plan-tune` | update, compare models, outside voice, pair agent, memory/profile tuning |
 
@@ -108,16 +134,126 @@ with `mansu-start`.
 | Memory/logging | `note`, `learner`, `hud`, `configure-notifications` | session notes, reusable patterns, progress HUD, completion notifications |
 | Fast small work | `eco` | low-risk quick fix where full Mansu spine would be overkill |
 
+## addyosmani/agent-skills Capability Map
+
+Use addyosmani-style skills as the coding-order and engineering-lifecycle
+reference, especially when Mansu knows which slice to build but needs sharper
+rules for how to build it.
+
+| Capability | Source skills | Route when |
+| --- | --- | --- |
+| Idea and spec | `idea-refine`, `spec-driven-development` | vague request, new feature, unclear acceptance criteria |
+| Task ordering | `planning-and-task-breakdown` | plan must become dependency-ordered, verifiable tasks |
+| Context loading | `context-engineering` | session drift, unfamiliar module, or task-specific context is needed |
+| Current docs | `source-driven-development` | framework/library behavior depends on current official docs |
+| Incremental coding | `incremental-implementation` | multi-file change, temptation to code too much before testing |
+| Behavior proof | `test-driven-development` | logic, bug fix, or behavior change benefits from RED/GREEN/REFACTOR |
+| UI implementation | `frontend-ui-engineering` | user-facing UI needs component, accessibility, responsive discipline |
+| API/interface design | `api-and-interface-design` | public or cross-module boundary must be stable and explicit |
+| Runtime verification | `browser-testing-with-devtools`, `debugging-and-error-recovery` | browser behavior, runtime state, or broken behavior needs evidence |
+| Quality gates | `code-review-and-quality`, `code-simplification`, `security-and-hardening`, `performance-optimization` | implementation needs review, simplification, security, or performance work beyond compile/test success |
+| Ship lifecycle | `git-workflow-and-versioning`, `ci-cd-and-automation`, `deprecation-and-migration`, `documentation-and-adrs`, `shipping-and-launch` | commits, CI, deprecation, migration, docs, ADRs, launch, rollback need discipline |
+
 ## Mansu Composition Recipes
+
+### New Project / Zero-To-PLAN
+
+Use `mansu-project-start` when the work starts from an idea, new repo, major
+product direction, architecture choice, UI system, or TDR-level ambiguity.
+
+The route is:
+
+1. Define purpose, user, current workaround, desired outcome, non-goals, and
+   success signal.
+2. Research references using evidence-ranked sources: official/current docs and
+   source files first for technical truth; GitHub, Reddit, and Threads for
+   adoption, pain, taste, and implementation signals with dates recorded.
+3. Analyze relevant projects at code and architecture level when they influence
+   stack, domain model, UI, or delivery sequence.
+4. Create the needed documents through `DOCUMENT_CREATION_ORDER.md`: operating
+   docs, idea/spec, research notes, TDR/architecture, UI design, ADRs, then
+   phase-level `PLAN.md`.
+5. Verify with `gstack-autoplan` and focused `gstack-plan-*` reviewers.
+6. Hand off to `mansu-tdd-total` only after the current phase has ordered slices,
+   gate mapping, validation path, upstream artifacts, and open blockers recorded.
+
+### Source Refresh And Reference Curation
+
+Use `mansu-source-curator` when the issue is not feature delivery, but keeping
+Mansu's knowledge of gstack, Oh My / OMO / OMC, addyosmani/agent-skills, or
+runtime adapters current.
+
+This is an internal maintenance route:
+
+1. Start with `mansu-start source-check` for runtime, adapter, and source-family status.
+2. If the user asked for updates, let `mansu-source-curator` run the safe update path.
+3. Re-read changed source skill files or GitHub source data before editing Mansu references.
+4. Update this catalog, `SOURCE_SKILL_LOCK.json`, `DOCUMENT_CREATION_ORDER.md`,
+   `CODE_CONSTRUCTION_ORDER.md`, affected `mansu-*` skills, validators, and
+   worklog together.
+5. Run `scripts/validate_mansu_skills.sh` and `git diff --check`.
+6. Sync installed local Mansu skills only after validation passes.
+
+Do not use this route to copy whole source workflows into Mansu. The curator
+keeps routing knowledge fresh; source skills still own specialist execution.
+
+### Project Design / TDR / Blueprint Layer
+
+Use this before `PLAN.md` when the work is a new product, major feature family,
+architecture direction, UI system, or technically ambiguous project.
+
+Read `DOCUMENT_CREATION_ORDER.md` for the exact document sequence, source skill
+to use for each artifact, and verification skill to use before handoff.
+
+No source family requires a file literally named `PROJECT_BLUEPRINT.md`. That name
+is a possible Mansu-normalized artifact, not an upstream standard. Prefer the
+project's existing convention when it exists.
+
+Source artifact conventions:
+
+- gstack `office-hours` writes a design document under `~/.gstack/projects/{slug}/`.
+- gstack `plan-ceo-review` can promote a strong vision to `docs/designs/{FEATURE}.md`.
+- gstack `autoplan` reviews a rough plan through CEO, design, engineering, and DX
+  phases, then appends review status to the active plan file.
+- Oh My-style `planner` writes to `.codex/plans/{project-name}.md`; `ralplan`
+  produces an iterative draft / critique / refined plan artifact.
+- addyosmani `idea-refine` writes an idea one-pager to `docs/ideas/{idea-name}.md`
+  when confirmed.
+- addyosmani `spec-driven-development` expects a committed spec as the shared
+  source of truth before implementation.
+- addyosmani `planning-and-task-breakdown` produces an `Implementation Plan`.
+- addyosmani `documentation-and-adrs` stores ADRs in `docs/decisions/`.
+
+Mansu may consolidate those outputs into a blueprint/TDR layer when that helps,
+but it must not pretend the upstream tools all use the same filename.
+
+1. Define the project intent with `gstack-office-hours` and, when useful,
+   addyosmani `idea-refine` or `spec-driven-development`.
+2. Run source-aware research with Oh My `research` / `deepsearch` patterns and
+   addyosmani `source-driven-development`; include GitHub, Reddit, Threads, and
+   official docs when freshness matters.
+3. Draft or update the design/spec/blueprint layer: product shape, feature groups, domain model,
+   architecture, data/API boundaries, technology stack, secret/API-key handling,
+   UI/UX direction, build strategy, phase roadmap, risks, and non-goals.
+4. Review that layer with `gstack-autoplan` so CEO, design, engineering, and
+   DX perspectives all pass over it.
+5. Deepen weak areas with focused `gstack-plan-ceo-review`,
+   `gstack-plan-design-review`, `gstack-plan-eng-review`, or
+   `gstack-plan-devex-review`.
+6. Record major irreversible or architectural choices as ADR-style notes when
+   `documentation-and-adrs` applies.
+7. Only then derive the current phase's `PLAN.md` and vertical slice table.
 
 ### Feature Or Refactor
 
 1. Mansu classifies `Quick / Standard / Heavy`.
 2. For non-trivial work, use `mansu-tdd-total`.
-3. Planning may route through `gstack-office-hours`, `gstack-autoplan`, and
+3. Use `CODE_CONSTRUCTION_ORDER.md` to decide dependency graph, context pack,
+   contract-first boundaries, and slice coding order.
+4. Planning may route through `gstack-office-hours`, `gstack-autoplan`, and
    focused `gstack-plan-*` reviewers.
-4. Slice execution dispatches to `mansu-tdd-lite` or `mansu-tdd-strict`.
-5. Each slice closes with review, validation, checkpoint, worklog, and commit or
+5. Slice execution dispatches to `mansu-tdd-lite` or `mansu-tdd-strict`.
+6. Each slice closes with review, validation, checkpoint, worklog, and commit or
    explicit no-commit reason.
 
 ### UI/UX Work
@@ -150,12 +286,18 @@ with `mansu-start`.
 
 ### Ship And Learn
 
+Use `mansu-ship-release` when implementation is complete enough to judge.
+
 1. Use `gstack-health` before ship judgment.
 2. Use `gstack-review` for diff risk.
-3. Use `gstack-ship` for PR/commit/push workflows when appropriate.
-4. Use `gstack-land-and-deploy` and `gstack-canary` for actual deployment.
-5. Use `gstack-document-release`, `gstack-retro`, and `gstack-learn` so the
+3. Use `mansu-web-verify`, `gstack-qa-only`, or project QA for runtime/user-flow evidence.
+4. Use `gstack-cso` or `gstack-benchmark` when security or performance risk is part of the claim.
+5. Use `gstack-ship` for PR/commit/push workflows when appropriate.
+6. Use `gstack-land-and-deploy` and `gstack-canary` for actual deployment.
+7. Use `gstack-document-release`, `gstack-retro`, and `gstack-learn` so the
    project improves after the task ends.
+8. Record learning closeout target: worklog, `CODING_RULES.md`, ADR, tests,
+   docs/release notes, or source catalog.
 
 ## Anti-Patterns
 

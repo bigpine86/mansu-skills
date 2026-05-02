@@ -25,7 +25,10 @@ This skill owns the universal doctrine:
 - plan before non-trivial execution
 - keep planning, building, review, QA, and ship judgment distinct
 - route work by task character rather than tool fashion
+- understand source skill families deeply enough to compose them intentionally
 - check the source skill catalog before inventing a new workflow
+- use the document creation order before large design/spec/planning work
+- use the code construction order before large implementation bursts
 - preserve strictness when strictness is declared
 - accumulate learnings across tasks
 - make ship claims depend on evidence
@@ -44,6 +47,7 @@ The non-negotiables are:
 - Declared strictness must be operationally true.
 - Harness details are implementation details.
 - Learnings must compound.
+- Equivalent gates must be separately invoked, evidenced, and distinguishable from implementation.
 
 Read `references/DOCTRINE.md` when you need the full doctrine text, when auditing
 a project operating system, or when a conflict cannot be resolved from this
@@ -105,6 +109,7 @@ Implementation is not review. Review is not QA. QA is not ship approval.
 Route by task character:
 
 - New scoped implementation: plan, slice if needed, build, review, validate.
+- Project design / TDR work: combine problem discovery, reference research, product, design, engineering, DX, and source-skill review before phase-level planning.
 - Unclear failure or regression: investigate before fixing.
 - High-assurance or strict delivery: verify gates first; block if strict prerequisites are missing.
 - Browser or runtime behavior claim: verify behavior directly and separate report-only from fix-approved modes.
@@ -151,6 +156,9 @@ interpretation, and ask only if the choice has real consequences.
 
 - `references/DOCTRINE.md`: full doctrine text for classification, delivery spine, role model, orchestration, review, QA, debugging, strictness, evidence, authority, and anti-patterns.
 - `references/SOURCE_SKILL_CATALOG.md`: source skill map for gstack, Oh My / OMO / OMC style skills, and Mansu composition recipes.
+- `references/SOURCE_SKILL_LOCK.json`: machine-readable source-family snapshot for source freshness evidence.
+- `references/DOCUMENT_CREATION_ORDER.md`: document router for idea, design doc, research, spec, TDR, UI design, ADR, PLAN, checkpoint, worklog, verification, and release artifacts.
+- `references/CODE_CONSTRUCTION_ORDER.md`: coding-order reference for dependency graphs, context packing, contracts, vertical slices, safe defaults, and rollback-friendly implementation.
 - `references/AGENTS.md`: project router template that points contributors toward Mansu doctrine and local rules.
 - `references/CODING_RULES.md`: project-local operating manual template for runtime choices, commands, validation, dangerous surfaces, and ship criteria.
 

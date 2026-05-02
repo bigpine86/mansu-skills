@@ -2,12 +2,12 @@
 
 Run this only when `references/prerequisites.md` shows something missing.
 
-## Missing current-runtime orchestration or multi-agent support
+## Missing current-runtime orchestration or independent role separation
 
 - Stop before the implementation loop.
-- Tell the user that this skill requires a Mansu-compatible agent runtime with multi-agent support.
+- Tell the user that this skill requires a Mansu-compatible agent runtime with multi-agent support or explicit single-runtime role separation with independently recorded gate evidence.
 - Ask them to enable or install that environment first.
-- Do not downgrade into a single-agent imitation of the same workflow.
+- Do not downgrade into a single-pass imitation of the same workflow.
 
 ## Missing required gate families
 
@@ -22,7 +22,7 @@ Then:
 - stop before implementation
 - tell the user exactly which gate is unavailable
 - ask them to install, enable, or map the missing gate family before proceeding
-- do not replace the missing gate with an ad-hoc manual step
+- do not replace the missing gate with an ad-hoc manual step that lacks status/evidence
 
 ## Missing repository documents
 

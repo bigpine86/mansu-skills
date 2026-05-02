@@ -1,6 +1,6 @@
 ---
 name: mansu-tdd-strict
-description: Strict orchestration workflow for medium-or-larger feature or refactor work that must be planned, critiqued, implemented, and validated as sequential TDD vertical slices with per-slice review, QA, checkpoint, and single-commit gates. Use when the user explicitly wants `mansu-tdd-strict`, when `mansu-tdd-total` routes a slice to strict mode, a Ralph-style loop, `ralph:` execution, strict slice-by-slice TDD, Prometheus/Metis/Momus plan critique, or a per-slice review/QA/checkpoint/commit workflow with a project plan file (`PLAN.md` or `Plan.md`) as the active source of truth and completed work archived into `개발일지.md`. This skill assumes a current Mansu-compatible agent runtime with multi-agent orchestration and callable review, QA, and checkpoint gates.
+description: Strict orchestration workflow for medium-or-larger feature or refactor work that must be planned, critiqued, implemented, and validated as sequential TDD vertical slices with per-slice review, QA, checkpoint, and single-commit gates. Use when the user explicitly wants `mansu-tdd-strict`, when `mansu-tdd-total` routes a slice to strict mode, a Ralph-style loop, `ralph:` execution, strict slice-by-slice TDD, Prometheus/Metis/Momus plan critique, or a per-slice review/QA/checkpoint/commit workflow with a project plan file (`PLAN.md` or `Plan.md`) as the active source of truth and completed work archived into `개발일지.md`. This skill assumes a current Mansu-compatible agent runtime with independently recorded review, QA, and checkpoint gates. Multi-agent tooling is preferred, but a single runtime may satisfy strictness only when each gate is separately invoked, evidenced, and distinguishable from the builder's implementation summary.
 ---
 
 # Mansu TDD Strict
@@ -44,6 +44,7 @@ When invoked directly without an execution-ready plan, follow the read order bel
 - Do not skip the `review`, `qa`, or `checkpoint` gate families.
 - Do not create more than one git commit per slice.
 - Do not keep appending to a giant file when the work introduces a new responsibility boundary.
+- Before writing the RED test, apply the code construction router: detect the current construction phase, read the relevant source skill when needed, then define dependency, context pack, contract boundary, and rollback-friendly slice shape.
 
 ## Required role mapping
 
@@ -59,7 +60,7 @@ If your environment uses different agent names, map them to those three responsi
 
 Stop instead of improvising if any of these are true:
 
-- The required current-runtime orchestration or multi-agent support is unavailable.
+- The required current-runtime orchestration or independently recorded gate support is unavailable.
 - A callable gate for the required `review`, `qa`, or `checkpoint` stage is unavailable.
 - A meaningful RED test cannot be written.
 - A slice expands beyond its original completion criteria.

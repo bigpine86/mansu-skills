@@ -1,0 +1,4 @@
+interface:
+  display_name: "Mansu Ship Release"
+  short_description: "Release readiness and ship gate"
+  default_prompt: "Use $mansu-ship-release to decide whether this work is ship-ready, run final health/review/QA/docs gates, prepare commit/PR/deploy only when requested, and leave rollback, risk, and learning closeout evidence."

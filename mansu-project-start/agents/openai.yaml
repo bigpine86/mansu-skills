@@ -1,0 +1,4 @@
+interface:
+  display_name: "Mansu Project Start"
+  short_description: "Zero-to-PLAN project kickoff"
+  default_prompt: "Use $mansu-project-start to take this project from idea/research/spec/TDR/design direction into an execution-ready PLAN.md, then hand off to $mansu-tdd-total only after source evidence, critique, gate mapping, and slice planning are clear."

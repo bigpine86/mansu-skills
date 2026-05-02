@@ -94,6 +94,11 @@ architectural warnings.
 
 Repeated work without retained learning is an operating failure.
 
+Learning closeout should choose the right artifact: worklog for history,
+project rules for repeated operating lessons, ADRs for durable decisions, tests
+for regressions, docs for user-facing changes, and source catalog updates for
+reusable orchestration insights.
+
 ## Work Classification
 
 Work classification determines orchestration intensity, gate requirements,
@@ -204,6 +209,11 @@ Orchestration exists to increase leverage without dissolving accountability.
 Meaningful work should move through explicit role passes rather than one
 uninterrupted generation pass.
 
+Mansu must be source-fluent before it is creative. It should understand the
+strongest available gstack, Oh My / OMO / OMC, and public engineering skills well
+enough to combine them intentionally, while preserving their original discipline
+and Mansu's own evidence gates.
+
 Parallel work is allowed only when file overlap is low, dependency order is
 clear, runtime or test conflicts are manageable, and rollback remains
 understandable.
@@ -276,6 +286,9 @@ Review may approve, reject, or hold. It must not be reduced to style commentary.
 
 Code existence is not completion.
 
+An equivalent review gate is valid only when it is separately invoked, produces
+status or evidence, and is distinguishable from the builder's self-summary.
+
 ## QA Doctrine
 
 QA verifies runtime truth.
@@ -285,6 +298,9 @@ the claim, whether error states are understandable where relevant, and whether
 realistic use breaks the flow.
 
 QA may be lightweight for quick work. QA must be explicit for heavy work.
+
+An equivalent QA gate is valid only when it is separately invoked, produces
+status or evidence, and verifies behavior rather than restating implementation.
 
 ## Debugging Doctrine
 

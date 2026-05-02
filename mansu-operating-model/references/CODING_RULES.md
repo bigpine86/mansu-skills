@@ -7,8 +7,10 @@
 - Session Model
 - Work Classification in This Project
 - Validation Commands
+- Gate Mapping
 - Strict Mode Rule
 - Ship Readiness Rule
+- Learning Closeout
 - Dangerous Surfaces
 - Maintenance Rule
 
@@ -178,6 +180,27 @@ Template:
 
 Do not leave this section vague once the project is active.
 
+## Gate Mapping
+
+This section maps Mansu's universal gates to this project's actual tools.
+
+An equivalent gate is valid only when it is:
+- separately invoked from implementation
+- distinguishable from the builder's self-summary
+- able to produce status and evidence
+- recorded in `PLAN.md`, the checkpoint, or the worklog
+
+Template:
+- review gate: `<tool/skill/command/manual protocol>` -> evidence output: `<where status is recorded>`
+- QA gate: `<tool/skill/command/manual protocol>` -> evidence output: `<where status is recorded>`
+- checkpoint gate: `<tool/skill/command/manual protocol>` -> evidence output: `<where next state is recorded>`
+- health gate: `<tool/skill/command/manual protocol>` -> evidence output: `<where result is recorded>`
+- ship gate: `<tool/skill/command/manual protocol>` -> evidence output: `<where ship/hold decision is recorded>`
+- learning gate: `<tool/skill/command/manual protocol>` -> evidence output: `<where reusable lessons go>`
+
+Do not call a casual paragraph a review, QA, or checkpoint gate. If a gate cannot
+be separately invoked and evidenced, mark it missing and choose a fallback mode.
+
 ## Strict Mode Rule
 
 Strict mode is a real delivery contract in this project.
@@ -187,6 +210,8 @@ If work is declared strict:
 - review and QA must remain distinct
 - missing prerequisites block strict execution
 - fallback options may be proposed only if labeled fallback
+- single-runtime execution is allowed only when each gate is separately invoked,
+  evidenced, and distinguishable from the builder's implementation summary
 
 Do not call work strict when:
 - a required gate was skipped
@@ -216,6 +241,21 @@ Use the most honest state.
 Merged and shipped are not assumed to be the same state in this project.
 
 Do not upgrade the state for convenience.
+
+## Learning Closeout
+
+Before ending standard or heavy work, decide where each durable lesson belongs.
+
+Use this router:
+- worklog: what happened, decisions, actual flow, remaining risk
+- `CODING_RULES.md`: repeated project rule, command, danger, or gate mapping
+- ADR: durable architecture or technology tradeoff
+- tests: regression, invariant, contract, or browser flow that should not break again
+- docs/release notes: user-facing behavior, setup, migration, rollback, or known limitation
+- source catalog: reusable source-skill routing insight
+
+Do not leave reusable learning only in chat. If no durable lesson exists, record
+that no learning artifact was needed.
 
 ## Dangerous Surfaces
 

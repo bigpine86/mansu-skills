@@ -73,6 +73,9 @@ Before planning, confirm:
 - `mansu-tdd-lite` is available for lite slices
 - `mansu-tdd-strict` prerequisites are available before assigning strict slices
 
+An equivalent review, QA, or checkpoint gate must be separately invoked, produce
+status/evidence, and be distinguishable from the builder's self-summary.
+
 If strict prerequisites are missing, still plan the work, but mark would-be strict slices as blocked instead of pretending to run strict mode.
 
 ## Planning gate
@@ -116,10 +119,13 @@ a human approval gate, a risky action requires approval, or a plan gap remains u
 The execution-ready plan must include:
 
 - goal and user value
+- upstream source-of-truth artifacts and paths
+- locked decisions and open-question carryover from spec, TDR, ADR, design, or research docs
 - non-goals and constraints
 - domain language and DDD-style responsibility boundaries
 - architecture and module boundaries
 - source skills or tools to use
+- code construction router: current phase, source skill to read, dependency/context/contract notes, and slice coding sequence
 - risks and mitigation
 - test and validation strategy
 - documentation and worklog targets
@@ -135,10 +141,11 @@ If any of these are unknown, mark the gap explicitly instead of pretending the p
 4. Critique the plan through the Critics role.
 5. If real critic agents were started, wait for them or record a real failure/timeout fallback.
 6. Synthesize the execution-ready plan, including resolved tradeoffs and remaining gaps.
-7. Split the work into vertical slices by feature, behavior, or user flow.
-8. Assign each slice a mode: `lite`, `strict`, or `blocked`.
-9. Record the role mapping, critic status, execution-ready plan, slice table, and mode decisions in `PLAN.md`.
-10. Start execution automatically after the plan gate passes; pause only for explicit approval gates, risky actions, or unresolved blockers.
+7. Apply the code construction router from `mansu-operating-model/references/CODE_CONSTRUCTION_ORDER.md`: detect the current construction phase, read the relevant source skill when needed, and extract phase-specific actions.
+8. Split the work into vertical slices by feature, behavior, or user flow.
+9. Assign each slice a mode: `lite`, `strict`, or `blocked`.
+10. Record the role mapping, critic status, execution-ready plan, slice table, and mode decisions in `PLAN.md`.
+11. Start execution automatically after the plan gate passes; pause only for explicit approval gates, risky actions, or unresolved blockers.
 
 ## Dispatch rules
 
@@ -166,6 +173,7 @@ Prefer mixed routing when a single feature has different risk levels by slice.
 Each planned slice should include:
 
 - slice name
+- upstream artifact or decision this slice implements
 - user-visible or behavior-visible outcome
 - completion conditions
 - impact files
@@ -174,6 +182,7 @@ Each planned slice should include:
 - mode: `lite`, `strict`, or `blocked`
 - why this mode
 - delegated skill: `mansu-tdd-lite` or `mansu-tdd-strict`
+- construction router notes: current phase, source skill read or skipped, dependency, context to load, contract to lock, and safe-default/rollback concern
 - close criteria
 - worklog note
 

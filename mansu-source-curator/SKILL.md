@@ -1,0 +1,167 @@
+---
+name: mansu-source-curator
+description: Hidden/internal maintenance workflow for refreshing Mansu's source-skill knowledge. Use when updating or checking gstack, Oh My / OMO / OMC, addyosmani/agent-skills, or runtime adapters; when source skills changed and Mansu references such as SOURCE_SKILL_CATALOG.md, DOCUMENT_CREATION_ORDER.md, CODE_CONSTRUCTION_ORDER.md, mansu-start, validators, or worklogs must be updated; or when a Mansu source map may be stale.
+---
+
+# Mansu Source Curator
+
+This is an internal maintenance skill.
+
+Use it to keep Mansu's source-skill map honest after gstack, Oh My / OMO / OMC,
+addyosmani/agent-skills, or runtime adapter changes.
+
+Do not use this skill for normal feature implementation. It maintains Mansu's
+knowledge of other skills.
+
+## Core promise
+
+- Check source freshness before editing references.
+- Update source tools only when the user asked for update.
+- Read original source skills before changing Mansu routing.
+- Record added, removed, renamed, and semantically changed source skills.
+- Update Mansu references and validators together.
+- Preserve Mansu as an orchestrator, not a clone of source skills.
+- Leave a worklog entry and validation evidence.
+
+## Modes
+
+- `check`: report source freshness and reference drift without changing files.
+- `update`: safely update installed source repos or adapters, then inspect drift.
+- `curate`: update Mansu references and validators after source drift is known.
+- `full-refresh`: update, inspect, curate, validate, and sync local installed Mansu skills.
+- `repair`: fix stale local Mansu copies or broken reference links without updating remote sources.
+
+Default to `check` unless the user says update, refresh, sync, or curate.
+
+## Source families
+
+| Source family | Check | Update when requested | Mansu references to review |
+| --- | --- | --- | --- |
+| gstack | installed repo, `VERSION`, `.agents/skills/gstack-*` names, notable skill docs | `gstack-upgrade` skill or safe `git fetch` + fast-forward path | `SOURCE_SKILL_CATALOG.md`, `DOCUMENT_CREATION_ORDER.md`, `mansu-start`, validators |
+| Oh My / OMO / OMC | installed adapter command, skill directories, execution-mode names | matching adapter update only when installed or requested | `SOURCE_SKILL_CATALOG.md`, TDD/debug/web verify docs, runtime wording |
+| addyosmani/agent-skills | local clone if present, otherwise GitHub contents/API, skill names and phase semantics | safe fast-forward local clone only; do not install into runtime skills by default | `SOURCE_SKILL_CATALOG.md`, `DOCUMENT_CREATION_ORDER.md`, `CODE_CONSTRUCTION_ORDER.md`, TDD docs |
+| Mansu repo | branch, dirty state, validator health, local installed skill copies | `git pull --ff-only` only when clean and requested | README, validators, worklog, local skill cache |
+| Runtime adapters | `omx`, `omo`, `omc`, host/runtime target, optional compatibility status | update only the matching installed adapter when requested | `mansu-start`, runtime target matrix, runtime readiness validator |
+
+## Safety rules
+
+- Never use destructive git commands.
+- Do not pull or merge a dirty repo automatically.
+- Do not install addyosmani/agent-skills into runtime skill directories unless the user explicitly asks.
+- Do not treat missing optional adapters as fatal unless adapter work was requested.
+- Do not update Mansu references from memory. Read source skill files, source directory listings, or official GitHub data first.
+- Do not copy whole source workflows into Mansu. Capture routing, gates, artifacts, and composition insights.
+- Do not make project-delivery claims. This skill only maintains the Mansu suite.
+
+## Phase 0: Preflight
+
+Collect:
+
+- Mansu repo path, branch, remote, dirty state
+- selected runtime target and local skill directory when available
+- gstack repo path and version
+- Oh My / OMO / OMC adapter status and source-skill locations
+- addyosmani/agent-skills source availability: local clone or GitHub
+- current `SOURCE_SKILL_CATALOG.md` snapshot date
+- current `SOURCE_SKILL_LOCK.json` source paths, versions, commits, inventory, and evidence commands
+- current `DOCUMENT_CREATION_ORDER.md` and `CODE_CONSTRUCTION_ORDER.md` coverage
+- validator status before changes when useful
+
+If the Mansu repo is dirty, continue with read-only checks but do not update
+source repos automatically.
+
+## Phase 1: Source freshness check
+
+For each source family:
+
+1. List available source skills or commands.
+2. Compare names against Mansu references.
+3. Identify added, removed, renamed, or split skills.
+4. Identify semantic changes that affect routing, gates, artifact names, or validation.
+5. Record unknowns and skipped checks with reasons.
+
+Use current official or source-of-truth data when the source may have changed.
+For GitHub-hosted sources, prefer GitHub API or raw files over memory.
+
+## Phase 2: Optional source update
+
+Only run this phase when the user asked for update or full refresh.
+
+- gstack: use `gstack-upgrade` when available; otherwise use safe fetch and fast-forward only.
+- Oh My / OMO / OMC: update the matching installed adapter or source repo only when it exists or was explicitly requested.
+- addyosmani/agent-skills: update a local clone with safe fast-forward only; otherwise use read-only GitHub data.
+- Mansu: update with `git pull --ff-only` only when clean and requested.
+
+After updating, repeat Phase 1. Source update without re-inspection is incomplete.
+
+## Phase 3: Curate Mansu references
+
+Update only the Mansu files affected by source drift.
+
+Common targets:
+
+- `mansu-operating-model/references/SOURCE_SKILL_CATALOG.md`
+- `mansu-operating-model/references/SOURCE_SKILL_LOCK.json`
+- `mansu-operating-model/references/DOCUMENT_CREATION_ORDER.md`
+- `mansu-operating-model/references/CODE_CONSTRUCTION_ORDER.md`
+- `mansu-start/SKILL.md`
+- `mansu-tdd-total/SKILL.md`
+- `mansu-tdd-lite/SKILL.md`
+- `mansu-tdd-strict/SKILL.md`
+- `mansu-debug-rootcause/SKILL.md`
+- `mansu-web-verify/SKILL.md`
+- validation scripts under `scripts/`
+- `README.md` only when a user-facing entry point changed
+- `개발일지.md` or `WORKLOG.md`
+
+For each reference change, preserve this shape:
+
+- source family
+- source skill or artifact name
+- what changed
+- how Mansu routes to it
+- what Mansu owns
+- what stays delegated
+- validation added to prevent drift
+
+For Oh My / OMO / OMC, do not treat aggregated runtime skill listings as upstream
+truth. Prefer adapter-owned package/repo roots or adapter-owned skill roots. If
+using `omx --skills`, `omo` output, or `~/.codex/skills` as installed evidence,
+Exclude `mansu-*`, `gstack-*`, project-local skills, and unrelated curated skills
+before recording source drift.
+
+## Phase 4: Validate and sync
+
+Run:
+
+```bash
+scripts/validate_mansu_skills.sh
+git diff --check
+```
+
+When local installed Mansu skills are part of the requested update, sync the
+changed `mansu-*` folders into the active runtime skill directory after validation.
+
+Do not sync if validation fails.
+
+## Required report
+
+End with:
+
+```text
+MANSU SOURCE CURATOR REPORT
+Mode:
+Sources checked:
+Sources updated:
+Added/removed/renamed skills:
+Reference files changed:
+Source lock:
+Validators changed:
+Validation:
+Local skill sync:
+Skipped checks:
+Remaining drift:
+Next action:
+```
+
+If no references changed, say so and include the evidence that they are current.
