@@ -11,8 +11,8 @@
 
 | Runtime target | Host clue | Primary skill target | Adapter expectation | Fallback behavior |
 | --- | --- | --- | --- | --- |
-| Hermes | `hermes`, `.hermes`, tmux + OpenCode session | host-detected Hermes/OpenCode-style skill dir | `omo` optional | Mansu + gstack checks 계속 진행, adapter는 skipped/missing으로 보고 |
-| OpenCode | `opencode`, `.opencode` | host-detected OpenCode skill dir | `omo` optional | skill sync 우선, adapter 상태는 별도 보고 |
+| Hermes | `hermes`, `.hermes`, tmux + OpenCode session | OpenCode global `~/.config/opencode/skills` or project `.opencode/skills` | `omo` optional | Mansu + gstack checks 계속 진행, adapter는 skipped/missing으로 보고 |
+| OpenCode | `opencode`, `.opencode` | OpenCode global `~/.config/opencode/skills` or project `.opencode/skills` | `omo` optional | skill sync 우선, adapter 상태는 별도 보고 |
 | Codex | `codex`, `.codex` | `$HOME/.codex/skills` | `omx` optional | adapter가 없어도 install/update는 계속, adapter 작업만 별도 후속 |
 | Claude Code | `claude`, `.claude` | `$HOME/.claude/skills` when present | `omc` optional | layout가 불명확하면 `check` 모드로 멈추고 manual target 보고 |
 | Unknown | weak or conflicting signals | do not write automatically | none | `check` 모드로 전환, candidate path와 근거만 보고 |

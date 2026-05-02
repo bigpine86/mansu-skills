@@ -58,8 +58,8 @@ Choose the skill target from the detected runtime target and host first:
 
 | Runtime target | Host | Skill target | Adapter expectation | Fallback behavior |
 | --- | --- | --- | --- | --- |
-| Hermes | OpenCode in tmux when detected | host-detected OpenCode skill dir | `omo` optional compatibility tooling | continue with Mansu + gstack checks; report adapter as skipped/missing if unavailable |
-| OpenCode | `opencode` | host-detected OpenCode skill dir | `omo` optional compatibility tooling | continue with Mansu + gstack checks; report adapter status separately |
+| Hermes | OpenCode in tmux when detected | OpenCode global `~/.config/opencode/skills` or project `.opencode/skills` | `omo` optional compatibility tooling | continue with Mansu + gstack checks; report adapter as skipped/missing if unavailable |
+| OpenCode | `opencode` | OpenCode global `~/.config/opencode/skills` or project `.opencode/skills` | `omo` optional compatibility tooling | continue with Mansu + gstack checks; report adapter status separately |
 | Codex | `codex` | `$HOME/.codex/skills` | `omx` optional compatibility tooling | continue with Mansu + gstack checks; only block adapter work if explicitly requested |
 | Claude Code | `claude-code` | `$HOME/.claude/skills` when present | `omc` optional compatibility tooling | continue with Mansu + gstack checks; report manual follow-up if layout is unclear |
 | Unknown | `unknown` | do not write automatically | none | run `check`, report manual target, and avoid guessing |

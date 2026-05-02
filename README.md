@@ -19,12 +19,13 @@ Canonical branch: `main`
 git clone https://github.com/bigpine86/mansu-skills.git
 cd mansu-skills
 
-# Example: Hermes + tmux + OpenCode runtime on the default OpenCode-style skill path.
-mkdir -p "$HOME/.opencode/skills/mansu-start"
-cp -R mansu-start/. "$HOME/.opencode/skills/mansu-start"/
+# Example: Hermes + tmux + OpenCode runtime using OpenCode's global skill path.
+mkdir -p "$HOME/.config/opencode/skills/mansu-start"
+cp -R mansu-start/. "$HOME/.config/opencode/skills/mansu-start"/
 ```
 
-다른 runtime target이면 해당 local skill directory에 같은 방식으로 복사합니다.
+프로젝트 전용 OpenCode 설치가 필요하면 `.opencode/skills/mansu-start`에 같은 방식으로 복사합니다.
+다른 runtime target이면 해당 local/global skill directory에 맞춰 복사합니다.
 
 그 다음 agent runtime에서:
 
