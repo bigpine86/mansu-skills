@@ -38,6 +38,9 @@ Before creating or expanding a `mansu-*` skill:
 
 ## Design principle
 
+`mansu-operating-model` is the canonical doctrine for this repo.
+It defines the universal delivery spine, strictness, evidence rules, and the boundary between project `AGENTS.md` router docs and project `CODING_RULES.md` local operating manuals.
+
 Good Mansu skills are thin where they can be thin and strict where they must be strict.
 
 - Thin: source-specific implementation details, long checklists, tool mechanics.

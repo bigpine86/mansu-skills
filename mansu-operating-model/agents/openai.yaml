@@ -1,0 +1,4 @@
+interface:
+  display_name: "Mansu Operating Model"
+  short_description: "Canonical doctrine for Mansu project operating rules"
+  default_prompt: "Use $mansu-operating-model to define or audit a project's operating doctrine, work classification, role separation, strictness, evidence standards, and the structure of project AGENTS.md and CODING_RULES.md before non-trivial implementation work begins."
