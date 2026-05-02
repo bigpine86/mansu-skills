@@ -10,6 +10,7 @@ RUNTIME_FILES=(
   "$ROOT_DIR/mansu-start/agents/openai.yaml"
   "$ROOT_DIR/mansu-operating-model/SKILL.md"
   "$ROOT_DIR/mansu-operating-model/agents/openai.yaml"
+  "$ROOT_DIR/mansu-operating-model/references/DOCTRINE.md"
   "$ROOT_DIR/mansu-operating-model/references/AGENTS.md"
   "$ROOT_DIR/mansu-operating-model/references/CODING_RULES.md"
   "$ROOT_DIR/mansu-debug-rootcause/SKILL.md"
@@ -178,9 +179,6 @@ check_scoped_pattern \
   "$START_FILE" \
   "$START_YAML" \
   "$START_VALIDATOR" \
-  "$ROOT_DIR/mansu-operating-model/SKILL.md" \
-  "$ROOT_DIR/scripts/validate_mansu_operating_model.sh" \
-  "$ROOT_DIR/scripts/validate_mansu_doc_system.sh" \
   "$SELF_FILE"
 
 if [ "$failures" -ne 0 ]; then

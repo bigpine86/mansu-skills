@@ -1,5 +1,17 @@
 # CODING_RULES.md
 
+## Contents
+
+- Purpose and Authority
+- Runtime Model
+- Session Model
+- Work Classification in This Project
+- Validation Commands
+- Strict Mode Rule
+- Ship Readiness Rule
+- Dangerous Surfaces
+- Maintenance Rule
+
 ## Purpose and Authority
 
 This document is the local operating manual for coding work in this project.
@@ -16,34 +28,42 @@ Use this file to answer project-local questions such as:
 
 If this file conflicts with generic examples elsewhere, follow this file for project-local execution.
 
-Authority order:
-1. explicit user instruction
-2. this `CODING_RULES.md`
-3. this project's `AGENTS.md`
-4. Mansu canonical doctrine
-5. generic examples or historical habits
+Authority works by subject:
+- explicit user instruction controls the requested outcome and immediate constraints unless unsafe or impossible
+- this `CODING_RULES.md` controls project-specific commands, paths, runtimes, validation commands, and dangerous surfaces
+- this project's `AGENTS.md` controls local routing and entry instructions
+- Mansu canonical doctrine controls universal workflow gates, role separation, strictness, evidence, and ship-readiness rules
+
+Project-local rules may specialize the doctrine. They must not weaken it.
+If this file appears to contradict a non-negotiable Mansu doctrine rule, report the conflict and use the safer interpretation.
 
 ## Runtime Model
 
-Default coding runtime for this project:
+Fill in the actual runtime target for this project:
 
-- `tmux` for persistent project-scoped session management
-- `OpenCode` / `oMo` as the execution worker layer
-- `GPT` as the primary implementation and reasoning engine
-- `Gemini` as the support engine for visual, multimodal, writing, and alternative exploration work
+- runtime target: `<Hermes | OpenCode | Codex | Claude Code | other>`
+- session manager: `<tmux | terminal tabs | IDE workspace | CI runner | none>`
+- execution worker layer: `<OpenCode | Codex | Claude Code | gstack | other>`
+- primary implementation model/tool: `<fill in>`
+- support model/tooling: `<fill in>`
 
-Default interpretation:
-- GPT leads implementation, debugging, and architectural reasoning
-- Gemini supports UI direction, screenshots, multimodal analysis, documentation polish, and creative option generation
-- work should be routed by task character, not by model novelty
+Example only:
+- Hermes + tmux + OpenCode may use `tmux` for persistent sessions and OpenCode as the worker layer.
+- A Codex-only project may use the current Codex workspace and omit tmux entirely.
+
+Interpretation rule:
+- work should be routed by task character, not by model novelty or runtime fashion
 
 This project does not treat one agent pass as a sufficient delivery workflow for non-trivial work.
 
 ## Session Model
 
-Use one named `tmux` session per project or worktree.
+Describe the active session layout for this project.
 
-Preferred window layout:
+If using `tmux`, prefer one named session per project or worktree.
+If not using `tmux`, map the same responsibilities to tabs, workspaces, or explicit workflow stages.
+
+Suggested responsibility layout:
 1. `plan`
 2. `build`
 3. `review`
@@ -124,6 +144,8 @@ Heavy requires:
 - milestone control
 - distinct review
 - distinct QA
+- commit or explicit no-commit reason
+- worklog update
 - explicit ship-or-hold judgment
 
 Once a plan is execution-ready, continue automatically unless the user explicitly requested a human approval gate, the next action is risky, or a blocker remains unresolved.

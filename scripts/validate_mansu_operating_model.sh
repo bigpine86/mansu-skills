@@ -4,6 +4,7 @@ set -euo pipefail
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 MODEL="$ROOT_DIR/mansu-operating-model/SKILL.md"
 OPENAI_YAML="$ROOT_DIR/mansu-operating-model/agents/openai.yaml"
+DOCTRINE_REF="$ROOT_DIR/mansu-operating-model/references/DOCTRINE.md"
 AGENTS_TEMPLATE="$ROOT_DIR/mansu-operating-model/references/AGENTS.md"
 CODING_RULES_TEMPLATE="$ROOT_DIR/mansu-operating-model/references/CODING_RULES.md"
 
@@ -36,35 +37,55 @@ forbid_contains() {
 
 require_file "$MODEL"
 require_file "$OPENAI_YAML"
+require_file "$DOCTRINE_REF"
 require_file "$AGENTS_TEMPLATE"
 require_file "$CODING_RULES_TEMPLATE"
 
-# Core doctrine sections
+model_lines="$(wc -l < "$MODEL" | tr -d ' ')"
+[ "$model_lines" -lt 500 ] || fail "operating model SKILL.md should stay under 500 lines; move detail into references"
+
+# Skill entry sections
 require_contains "$MODEL" '^## Purpose$' 'operating model missing Purpose section'
 require_contains "$MODEL" '^## Core doctrine$' 'operating model missing Core doctrine section'
-require_contains "$MODEL" '^## Work classification$' 'operating model missing Work classification section'
+require_contains "$MODEL" '^## Work classes$' 'operating model missing Work classes section'
 require_contains "$MODEL" '^## Delivery spine$' 'operating model missing Delivery spine section'
 require_contains "$MODEL" '^## Role model$' 'operating model missing Role model section'
-require_contains "$MODEL" '^## Orchestration model$' 'operating model missing Orchestration model section'
 require_contains "$MODEL" '^## Strict mode policy$' 'operating model missing Strict mode policy section'
 require_contains "$MODEL" '^## Evidence and ship readiness$' 'operating model missing Evidence and ship readiness section'
-require_contains "$MODEL" '^## Anti-patterns$' 'operating model missing Anti-patterns section'
 require_contains "$MODEL" '^## Document authority$' 'operating model missing Document authority section'
+require_contains "$MODEL" '^## Reference map$' 'operating model missing Reference map section'
+require_contains "$MODEL" 'references/DOCTRINE.md' 'operating model should point to DOCTRINE reference'
+
+# Detailed doctrine sections
+require_contains "$DOCTRINE_REF" '^## Contents$' 'doctrine reference missing Contents section'
+require_contains "$DOCTRINE_REF" '^## Work Classification$' 'doctrine reference missing Work Classification section'
+require_contains "$DOCTRINE_REF" '^## Delivery Spine$' 'doctrine reference missing Delivery Spine section'
+require_contains "$DOCTRINE_REF" '^## Role Model$' 'doctrine reference missing Role Model section'
+require_contains "$DOCTRINE_REF" '^## Orchestration Model$' 'doctrine reference missing Orchestration Model section'
+require_contains "$DOCTRINE_REF" '^## Strict Mode Policy$' 'doctrine reference missing Strict Mode Policy section'
+require_contains "$DOCTRINE_REF" '^## Evidence And Ship Readiness$' 'doctrine reference missing Evidence And Ship Readiness section'
+require_contains "$DOCTRINE_REF" '^## Anti-Patterns$' 'doctrine reference missing Anti-Patterns section'
+require_contains "$DOCTRINE_REF" '^## Document Authority$' 'doctrine reference missing Document Authority section'
 
 # Required concepts
-require_contains "$MODEL" 'non-trivial work starts with planning' 'operating model lost plan-first doctrine'
-require_contains "$MODEL" 'Planning and execution are separate phases' 'operating model lost planning/execution separation'
-require_contains "$MODEL" 'Code creation is not evidence of correctness' 'operating model lost evidence doctrine'
-require_contains "$MODEL" 'strict mode is blocked' 'operating model lost strict blocked rule'
-require_contains "$MODEL" 'Route by task character' 'operating model lost task-character routing'
-require_contains "$MODEL" 'Merged status and shipped status are not assumed to be equivalent' 'operating model lost merged-vs-shipped distinction'
-require_contains "$MODEL" 'continues automatically unless the user explicitly requested a human approval gate' 'operating model lost automatic execution-ready gate rule'
+require_contains "$DOCTRINE_REF" 'Non-trivial work starts with planning' 'doctrine reference lost plan-first doctrine'
+require_contains "$DOCTRINE_REF" 'Planning and execution are separate phases' 'doctrine reference lost planning/execution separation'
+require_contains "$DOCTRINE_REF" 'Code creation is not evidence of correctness' 'doctrine reference lost evidence doctrine'
+require_contains "$DOCTRINE_REF" 'strict mode is blocked' 'doctrine reference lost strict blocked rule'
+require_contains "$DOCTRINE_REF" 'Route by task character' 'doctrine reference lost task-character routing'
+require_contains "$DOCTRINE_REF" 'commit or explicit no-commit reason' 'doctrine reference lost commit/no-commit discipline'
+require_contains "$DOCTRINE_REF" 'worklog update' 'doctrine reference lost worklog discipline'
+require_contains "$DOCTRINE_REF" 'Merged status and shipped status are not assumed to be equivalent' 'doctrine reference lost merged-vs-shipped distinction'
+require_contains "$MODEL" 'continues automatically unless the user' 'operating model lost automatic execution-ready gate rule'
 require_contains "$MODEL" 'references/AGENTS.md' 'operating model should point to AGENTS template'
 require_contains "$MODEL" 'references/CODING_RULES.md' 'operating model should point to CODING_RULES template'
+require_contains "$MODEL" 'Project documents specialize the doctrine; they must not weaken it' 'operating model lost local-doc non-weakening rule'
 
 # Disallowed vague doctrine
 forbid_contains "$MODEL" 'strict-ish|best effort strict|if possible review|review if convenient|QA if needed|probably fine|maybe ship-ready' 'operating model contains vague or weakened doctrine'
-forbid_contains "$MODEL" 'approval before build' 'operating model reintroduced mandatory approval before build'
+forbid_contains "$DOCTRINE_REF" 'strict-ish|best effort strict|if possible review|review if convenient|QA if needed|probably fine|maybe ship-ready' 'doctrine reference contains vague or weakened doctrine'
+forbid_contains "$MODEL" '(mandatory|required|human|manual)[[:space:]-]+approval before build|approval before build is required|requires approval before build' 'operating model reintroduced mandatory approval before build'
+forbid_contains "$DOCTRINE_REF" '(mandatory|required|human|manual)[[:space:]-]+approval before build|approval before build is required|requires approval before build' 'doctrine reference reintroduced mandatory approval before build'
 
 # UI metadata
 require_contains "$OPENAI_YAML" '^interface:$' 'operating model missing interface metadata'
@@ -78,15 +99,28 @@ require_contains "$AGENTS_TEMPLATE" 'plan before implementation' 'AGENTS templat
 require_contains "$AGENTS_TEMPLATE" 'unmet strict prerequisites block the task' 'AGENTS template lost strict blocked rule'
 require_contains "$AGENTS_TEMPLATE" 'Quick work may compress phases' 'AGENTS template lost quick compression boundary'
 require_contains "$AGENTS_TEMPLATE" 'continue automatically unless the user explicitly requested a human approval gate' 'AGENTS template lost automatic execution-ready rule'
-forbid_contains "$AGENTS_TEMPLATE" 'approval before build' 'AGENTS template reintroduced mandatory approval before build'
+require_contains "$AGENTS_TEMPLATE" 'critic' 'AGENTS template lost critic role'
+require_contains "$AGENTS_TEMPLATE" 'checkpoint' 'AGENTS template lost checkpoint role'
+require_contains "$AGENTS_TEMPLATE" 'shipper' 'AGENTS template lost shipper role'
+require_contains "$AGENTS_TEMPLATE" 'commit or record explicit no-commit reason' 'AGENTS template lost commit/no-commit discipline'
+require_contains "$AGENTS_TEMPLATE" 'worklog update' 'AGENTS template lost worklog discipline'
+require_contains "$AGENTS_TEMPLATE" 'must not weaken it' 'AGENTS template lost local-doc non-weakening rule'
+forbid_contains "$AGENTS_TEMPLATE" '(mandatory|required|human|manual)[[:space:]-]+approval before build|approval before build is required|requires approval before build' 'AGENTS template reintroduced mandatory approval before build'
 
 # Local rules template essentials
+require_contains "$CODING_RULES_TEMPLATE" '^## Contents$' 'CODING_RULES template missing Contents section'
 require_contains "$CODING_RULES_TEMPLATE" '^## Validation Commands$' 'CODING_RULES template missing Validation Commands section'
 require_contains "$CODING_RULES_TEMPLATE" '^## Dangerous Surfaces$' 'CODING_RULES template missing Dangerous Surfaces section'
+require_contains "$CODING_RULES_TEMPLATE" 'runtime target: `<Hermes \| OpenCode \| Codex \| Claude Code \| other>`' 'CODING_RULES template lost runtime target placeholder'
+require_contains "$CODING_RULES_TEMPLATE" 'session manager: `<tmux \| terminal tabs \| IDE workspace \| CI runner \| none>`' 'CODING_RULES template lost session manager placeholder'
+require_contains "$CODING_RULES_TEMPLATE" 'Example only' 'CODING_RULES template lost example-only runtime framing'
 require_contains "$CODING_RULES_TEMPLATE" 'An active project is not operationally ready until this section contains runnable commands' 'CODING_RULES template lost runnable-command requirement'
 require_contains "$CODING_RULES_TEMPLATE" 'Merged and shipped are not assumed to be the same state in this project' 'CODING_RULES template lost merged-vs-shipped distinction'
 require_contains "$CODING_RULES_TEMPLATE" 'execution-ready plan gate before build' 'CODING_RULES template lost execution-ready plan gate'
 require_contains "$CODING_RULES_TEMPLATE" 'continue automatically unless the user explicitly requested a human approval gate' 'CODING_RULES template lost automatic execution-ready rule'
-forbid_contains "$CODING_RULES_TEMPLATE" 'approval before build' 'CODING_RULES template reintroduced mandatory approval before build'
+require_contains "$CODING_RULES_TEMPLATE" 'commit or explicit no-commit reason' 'CODING_RULES template lost commit/no-commit discipline'
+require_contains "$CODING_RULES_TEMPLATE" 'worklog update' 'CODING_RULES template lost worklog discipline'
+require_contains "$CODING_RULES_TEMPLATE" 'must not weaken it' 'CODING_RULES template lost local-doc non-weakening rule'
+forbid_contains "$CODING_RULES_TEMPLATE" '(mandatory|required|human|manual)[[:space:]-]+approval before build|approval before build is required|requires approval before build' 'CODING_RULES template reintroduced mandatory approval before build'
 
 echo "mansu operating model structure OK"
