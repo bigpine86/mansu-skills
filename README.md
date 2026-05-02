@@ -140,6 +140,7 @@ scripts/validate_mansu_skills.sh
 
 ```bash
 scripts/validate_mansu_start.sh
+scripts/validate_mansu_runtime_readiness.sh
 scripts/validate_mansu_tdd_series.sh
 scripts/validate_mansu_debug_rootcause.sh
 scripts/validate_mansu_web_verify.sh
