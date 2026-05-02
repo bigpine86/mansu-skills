@@ -1,0 +1,41 @@
+Slice 3 objective: Port mansu-tdd-total for Hermes + tmux + OpenCode runtime while preserving its planning/router role.
+
+Working directory: /Users/odeci/Desktop/odeci/project/mansu-skills_260502
+Branch: refactor/hermes-opencode-port
+
+Execution mode constraints:
+- Do NOT launch background tasks.
+- Do NOT spawn subagents.
+- Do NOT do extra research outside the repo.
+- Work only from existing repo files and current instructions.
+- Make the edits directly and finish this slice in one bounded pass.
+
+Files allowed to modify in this slice:
+- mansu-tdd-total/SKILL.md
+- mansu-tdd-total/agents/openai.yaml only if needed
+- scripts/validate_mansu_tdd_total.sh
+- scripts/validate_mansu_tdd_series.sh if needed
+- PLAN.md only if you must update active status minimally
+- docs/plans/2026-05-02-hermes-opencode-port-plan.md only if needed for cross-reference
+
+Do not modify other skills yet.
+
+Required outcomes:
+1. Preserve mansu-tdd-total as the planner/router for lite vs strict slices.
+2. Keep Planner/Critics/Synthesizer role discipline, but make wording fit Hermes + tmux + OpenCode orchestration.
+3. Remove unnecessary dependence on historical tool naming when generic role mapping is enough.
+4. Keep blocked behavior explicit when strict prerequisites are unavailable.
+5. Update validators so the new wording passes without forcing stale execution terminology.
+6. Make the smallest clean changes that establish the new direction.
+
+Verification required before finishing:
+- run scripts/validate_mansu_tdd_total.sh
+- run scripts/validate_mansu_tdd_series.sh if needed
+- run scripts/validate_mansu_skills.sh if needed
+- run targeted search proving the skill now explicitly fits current runtime wording
+
+Final response format:
+- Files changed
+- Key wording shifts
+- Validation results
+- Remaining risks / follow-up

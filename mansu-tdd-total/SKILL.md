@@ -7,6 +7,8 @@ description: Concise dispatcher and planner for Mansu TDD workflows. Use when th
 
 Use this skill as the default entry point for Mansu TDD work when the right execution mode is not obvious upfront.
 
+For the current runtime, read this as Hermes/OpenCode orchestration that may run inside a tmux session: keep the planning roles explicit, keep slice routing explicit, and avoid pretending legacy tool names are required when equivalent current-runtime roles are available.
+
 ## Mansu philosophy
 
 Mansu does not reinvent strong workflows. It plans, separates roles, routes work to
@@ -83,17 +85,18 @@ Planning must pass through explicit roles before slice dispatch.
 Use these responsibilities before implementation:
 
 - Planner: draft the plan.
-  Examples: `Prometheus`, `gstack-autoplan`, `gstack-plan-eng-review`
+  Example mapping: the main planning pass in the current Hermes + OpenCode session, or a dedicated planning tool when one exists.
 - Critics: challenge the plan.
-  Examples: `Metis`, `Momus`, `gstack-plan-ceo-review`, `gstack-plan-design-review`
+  Example mapping: one or more critique passes, reviewer sessions, or critic tools that challenge scope, risk, and design.
 - Synthesizer: merge critique into one execution-ready plan and remove contradictions.
 
-If exact agent names or tools are unavailable, map available tools, agents, or
-perspectives to these three roles and record the mapping in `PLAN.md`.
+In Hermes + tmux + OpenCode workflows, the mapping may be a mix of the current session, tmux-backed helper sessions, OpenCode subagents, or local review passes.
+
+If exact historical agent names or tools are unavailable, map the available runtime roles, tools, sessions, or perspectives to these three responsibilities and record the mapping in `PLAN.md`.
 
 ## Real critic agent gate
 
-If actual critic sub-agents or external critic tools are started, their outputs become
+If actual critic sub-agents, helper sessions, or external critic tools are started, their outputs become
 planning-gate inputs.
 
 - Record the critic names, responsibilities, and status in `PLAN.md`.
@@ -101,6 +104,8 @@ planning-gate inputs.
 - Do not lock the execution-ready plan or start implementation while an expected critic is still pending.
 - If a critic fails or times out, record the failure, run an explicit local fallback for that responsibility, and mark any missing high-risk question as `blocked`.
 - Reconcile late critic feedback before starting the next slice, or immediately if it reveals data-contract, security, architecture, or UX-risk issues.
+
+If a slice would require `mansu-tdd-strict` but the strict prerequisites are unavailable in the current runtime, do not substitute a looser execution path under the same label. Keep the slice status `blocked`, record the missing prerequisite, and either re-route only after re-planning or stop for user-visible follow-up.
 
 Do not proceed to implementation until the execution-ready plan and slice table are visible.
 Once they are visible, continue automatically unless the user explicitly requested

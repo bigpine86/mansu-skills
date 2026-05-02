@@ -1,4 +1,4 @@
 interface:
   display_name: "Mansu TDD Total"
   short_description: "Planner and dispatcher that chooses lite vs strict per slice"
-  default_prompt: "Use $mansu-tdd-total to plan the work, split it into vertical slices, decide mansu-tdd-lite vs mansu-tdd-strict per slice, record the rationale in PLAN.md, then delegate each slice to the selected skill."
+  default_prompt: "Use $mansu-tdd-total to map Planner/Critics/Synthesizer roles for the current runtime, split the work into vertical slices, decide mansu-tdd-lite vs mansu-tdd-strict per slice, record the rationale in PLAN.md, and keep strict slices blocked when their prerequisites are unavailable."

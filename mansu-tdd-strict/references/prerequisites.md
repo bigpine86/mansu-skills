@@ -1,10 +1,10 @@
 # Prerequisites
 
-This skill is for an **Oh My XX + gstack** environment. Treat these as hard prerequisites for the execution loop.
+This skill is for a **current Mansu-compatible agent runtime with callable gates**. Treat these as hard prerequisites for the execution loop.
 
 ## Required environment
 
-- An Oh My XX orchestration environment such as `Oh My Codex`
+- A current Mansu-compatible agent runtime such as Hermes or OpenCode
 - Multi-agent support
 - `git`
 - A repository with write access
@@ -12,14 +12,14 @@ This skill is for an **Oh My XX + gstack** environment. Treat these as hard prer
 ## Required gate tools
 
 - review gate support through one of:
-  - callable `gstack-review`
-  - equivalent Codex/gstack review skill or workflow
+  - callable review gate command or skill in the current runtime
+  - a project-standard review workflow that is explicitly invocable as a gate
 - QA gate support through one of:
-  - callable `gstack-qa`
-  - equivalent Codex/gstack QA skill or workflow
+  - callable QA gate command or skill in the current runtime
+  - a project-standard QA workflow that is explicitly invocable as a gate
 - checkpoint gate support through one of:
-  - callable `gstack-checkpoint`
-  - equivalent Codex/gstack checkpoint skill or workflow
+  - callable checkpoint gate command or skill in the current runtime
+  - a project-standard checkpoint workflow that is explicitly invocable as a gate
 
 ## Required documents
 
@@ -45,7 +45,7 @@ Confirm all of the following before planning or coding:
 
 ## Hard-fail rule
 
-If Oh My XX orchestration, multi-agent support, or any required gate is missing:
+If current-runtime orchestration, multi-agent support, or any required gate is missing:
 
 - stop before implementation
 - report the exact missing prerequisite

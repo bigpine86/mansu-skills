@@ -12,28 +12,31 @@ Canonical branch: `main`
 ### For Humans
 
 처음 설치할 때는 `mansu-start`만 먼저 부트스트랩한 뒤, 그 스킬로 전체 설치를 맡깁니다.
-Codex가 아닌 OpenCode나 Claude Code에서도 `mansu-start`가 host와 OS를 먼저 감지해
-맞는 skill directory와 Oh My adapter를 고르게 합니다.
+`mansu-start`는 먼저 runtime target(Hermes, OpenCode, Codex, Claude Code), host, OS를 감지해
+맞는 skill directory를 고르고, adapter tooling은 optional compatibility check로 따로 다룹니다.
 
 ```bash
 git clone https://github.com/bigpine86/mansu-skills.git
 cd mansu-skills
 
-# Codex example. Other hosts should copy mansu-start into that host's skill directory.
-mkdir -p "$HOME/.codex/skills/mansu-start"
-cp -R mansu-start/. "$HOME/.codex/skills/mansu-start"/
+# Example: Hermes + tmux + OpenCode runtime using OpenCode's global skill path.
+mkdir -p "$HOME/.config/opencode/skills/mansu-start"
+cp -R mansu-start/. "$HOME/.config/opencode/skills/mansu-start"/
 ```
 
-그 다음 Codex에서:
+프로젝트 전용 OpenCode 설치가 필요하면 `.opencode/skills/mansu-start`에 같은 방식으로 복사합니다.
+다른 runtime target이면 해당 local/global skill directory에 맞춰 복사합니다.
+
+그 다음 agent runtime에서:
 
 ```text
-Use $mansu-start install from this repo. Detect my host and OS before choosing paths.
+Use $mansu-start install from this repo. Detect my runtime target, host, and OS before choosing paths or compatibility checks.
 ```
 
 업데이트할 때는:
 
 ```text
-Use $mansu-start update. Check Mansu, gstack, and the matching Oh My adapter, then sync local skills.
+Use $mansu-start update. Sync Mansu skills, check gstack, and report adapter compatibility without blocking on missing adapter tooling unless adapter work was requested.
 ```
 
 ### For Agents
@@ -87,7 +90,7 @@ reviewed, QA'd, checkpointed, logged, and committed or explicitly recorded as no
 
 | Skill | Use when | Core idea |
 | --- | --- | --- |
-| `mansu-start` | Mansu를 처음 설치하거나, host/OS별 skill directory와 Oh My adapter를 고르고 gstack/Oh My/Mansu 스킬을 업데이트/복구할 때 | host-aware bootstrap and update gate |
+| `mansu-start` | Mansu를 처음 설치하거나, runtime target/host/OS별 skill directory를 고르고 gstack/Mansu 스킬을 업데이트/복구하며 optional adapter compatibility를 점검할 때 | runtime-target bootstrap and update gate |
 | `mansu-tdd-total` | 기능/리팩토링 작업을 먼저 계획하고 slice별로 `lite`/`strict`를 나눌 때 | planning dispatcher |
 | `mansu-tdd-strict` | RED 테스트가 의미 있고 위험도가 높은 slice를 엄격한 TDD로 진행할 때 | strict TDD slice loop |
 | `mansu-tdd-lite` | 계획, slice, review, QA, checkpoint는 유지하되 RED 테스트를 강제하지 않을 때 | relaxed RED, not relaxed quality |
@@ -96,7 +99,7 @@ reviewed, QA'd, checkpointed, logged, and committed or explicitly recorded as no
 
 ## Recommended Routing
 
-- 처음 설치, 업데이트, 스킬 동기화, gstack/Oh My adapter 상태 확인:
+- 처음 설치, 업데이트, 스킬 동기화, runtime target 감지, optional adapter compatibility 상태 확인:
   `mansu-start`
 - 새 기능 또는 리팩토링:
   `mansu-tdd-total`
@@ -123,9 +126,9 @@ reviewed, QA'd, checkpointed, logged, and committed or explicitly recorded as no
 ## Branch Policy
 
 - `main` is the canonical branch.
-- `codex/*` branches are temporary work branches.
+- Non-`main` branches are temporary work branches.
 - Finished skill changes should land on `main` before being treated as installed or shared.
-- If local installed skills in `$HOME/.codex/skills` drift from this repo, sync from `main` first.
+- If local installed skills in the active runtime skill directory drift from this repo, sync from `main` first.
 
 ## Validation
 

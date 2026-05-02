@@ -1,0 +1,43 @@
+Slice 4 objective: Port mansu-tdd-strict for Hermes + tmux + OpenCode runtime while preserving strict slice discipline.
+
+Working directory: /Users/odeci/Desktop/odeci/project/mansu-skills_260502
+Branch: refactor/hermes-opencode-port
+
+Execution mode constraints:
+- Do NOT launch background tasks.
+- Do NOT spawn subagents.
+- Do NOT do extra research outside the repo.
+- Work only from existing repo files and current instructions.
+- Make the edits directly and finish this slice in one bounded pass.
+
+Files allowed to modify in this slice:
+- mansu-tdd-strict/SKILL.md
+- mansu-tdd-strict/references/prerequisites.md
+- mansu-tdd-strict/references/bootstrap.md
+- mansu-tdd-strict/references/gates.md
+- mansu-tdd-strict/agents/openai.yaml only if needed
+- scripts/validate_mansu_tdd_series.sh
+- scripts/validate_mansu_skills.sh only if needed
+- PLAN.md only if you must update active status minimally
+
+Do not modify other skills yet.
+
+Required outcomes:
+1. Preserve strict mode as the high-discipline executor for risky slices.
+2. Replace `Oh My XX` wording with explicit current-runtime wording.
+3. Reframe `gstack-review`, `gstack-qa`, and `gstack-checkpoint` as required gate families or current-runtime equivalents, not frozen historical tool names.
+4. Keep the non-negotiable rules: final plan before implementation, no next slice before current closes, failing RED test, review/qa/checkpoint, one commit per slice.
+5. Keep stop conditions and prerequisites explicit, but current-runtime compatible.
+6. Update validators so the new wording passes without enforcing stale execution terminology.
+7. Make the smallest clean changes that establish the new direction.
+
+Verification required before finishing:
+- run scripts/validate_mansu_tdd_series.sh
+- run scripts/validate_mansu_skills.sh if needed
+- run targeted search proving `Oh My XX` is gone from mansu-tdd-strict files
+
+Final response format:
+- Files changed
+- Key wording shifts
+- Validation results
+- Remaining risks / follow-up

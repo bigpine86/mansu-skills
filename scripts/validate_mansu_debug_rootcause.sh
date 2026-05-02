@@ -11,6 +11,12 @@ assert_contains() {
   grep -q "$pattern" "$file"
 }
 
+assert_not_contains() {
+  local pattern="$1"
+  local file="$2"
+  ! grep -q "$pattern" "$file"
+}
+
 line_equals() {
   local line_no="$1"
   local expected="$2"
@@ -43,8 +49,10 @@ assert_contains '^## Escalation$' "$FILE"
 
 # Source relationship and progressive disclosure.
 assert_contains 'Do not load every source skill by default' "$FILE"
-assert_contains '\$HOME/.codex/skills/debug/SKILL.md' "$FILE"
-assert_contains '\$HOME/.gstack/repos/gstack/.agents/skills/gstack-investigate/SKILL.md' "$FILE"
+assert_contains 'optional runtime-aware' "$FILE"
+assert_contains 'runtime-local if available' "$FILE"
+assert_contains 'installed gstack skill if available' "$FILE"
+assert_not_contains '\$HOME/.codex/skills' "$FILE"
 assert_contains 'Load source skills only when' "$FILE"
 assert_contains '| Source skill | Use it for | Load or invoke when |' "$FILE"
 assert_contains 'Oh My `debug`' "$FILE"
@@ -53,6 +61,7 @@ assert_contains 'Source skills own the specialized craft' "$FILE"
 assert_contains 'Keep this skill thin where it can be thin and strict where it must be strict' "$FILE"
 assert_contains 'Mansu owns the root-cause discipline' "$FILE"
 assert_contains 'route to the right source skill when specialized depth is needed' "$FILE"
+assert_contains 'If a source skill is unavailable in the current runtime' "$FILE"
 
 # Route coverage.
 assert_contains 'build-fix' "$FILE"
@@ -61,7 +70,8 @@ assert_contains 'git bisect' "$FILE"
 assert_contains 'browse' "$FILE"
 assert_contains 'qa-only' "$FILE"
 assert_contains 'gstack `qa`, only after root cause is confirmed' "$FILE"
-assert_contains 'gstack-benchmark' "$FILE"
+assert_contains 'runtime-local skill handles or installed equivalents instead of hardcoded paths' "$FILE"
+assert_contains 'gstack `benchmark` or installed equivalent benchmark workflow' "$FILE"
 assert_contains 'trace' "$FILE"
 
 # Mandatory debug gates.
@@ -84,6 +94,7 @@ assert_contains 'automated regression proof is not feasible' "$FILE"
 assert_contains 'manual verification path' "$FILE"
 assert_contains 'DEBUG REPORT' "$FILE"
 assert_contains 'Source skills loaded:' "$FILE"
+assert_contains 'runtime handles / installed skills and why' "$FILE"
 assert_contains 'Pattern check:' "$FILE"
 assert_contains 'Scope lock:' "$FILE"
 assert_contains 'Suite:' "$FILE"

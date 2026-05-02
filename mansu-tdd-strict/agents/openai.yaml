@@ -1,4 +1,4 @@
 interface:
   display_name: "Mansu TDD Strict"
-  short_description: "Strict TDD slice orchestration for Oh My XX + gstack"
+  short_description: "Strict TDD slice orchestration for current-runtime review, QA, and checkpoint gates"
   default_prompt: "Use $mansu-tdd-strict to run this feature through plan-first, sequential TDD slices with review, QA, checkpoint, and commit gates."

@@ -31,16 +31,16 @@ route to specialized source skills only when the bug needs that depth.
 ## Source skill map
 
 Do not load every source skill by default. This skill embeds the mandatory gates so
-the normal path stays light, then loads or invokes the narrow source skill when the
-bug needs specialized depth.
+the normal path stays light, then treats source skills as optional runtime-aware
+enrichments when the bug needs specialized depth.
 
 Load source skills only when the task is ambiguous, high-risk, already failed once, or
 needs a specialized branch:
 
 | Source skill | Use it for | Load or invoke when |
 | --- | --- | --- |
-| Oh My `debug` (`$HOME/.codex/skills/debug/SKILL.md`) | original 6-stage loop, common bug patterns, diagnostic questions | the bug shape is unclear or the basic loop needs more diagnostic prompts |
-| gstack `investigate` (`$HOME/.gstack/repos/gstack/.agents/skills/gstack-investigate/SKILL.md`) | full root-cause protocol, scope-lock details, prior learnings, pattern analysis, 3-hypothesis stop rule, blast-radius handling, verification report, learn capture | the bug is high-risk, already failed once, or needs the full investigation protocol |
+| Oh My `debug` (runtime-local if available) | original 6-stage loop, common bug patterns, diagnostic questions | the bug shape is unclear or the basic loop needs more diagnostic prompts |
+| gstack `investigate` (installed gstack skill if available) | full root-cause protocol, scope-lock details, prior learnings, pattern analysis, 3-hypothesis stop rule, blast-radius handling, verification report, learn capture | the bug is high-risk, already failed once, or needs the full investigation protocol |
 | Oh My `build-fix` | build, type, lint, import, dependency failures | the primary symptom is a broken build or static check |
 | Oh My `doctor` | tool, install, MCP, PATH, runtime, environment diagnosis | the bug may be environment or toolchain related |
 | Oh My `git-master` | regression start-point discovery and `git bisect` style investigation | the issue worked before but the breaking change is unclear |
@@ -50,8 +50,9 @@ needs a specialized branch:
 | Oh My `trace` | agent orchestration, decision-flow, timeline, event evidence | the failure is in agent/tool orchestration rather than app behavior |
 | Oh My `team` | debugger/analyst/tester perspectives | the bug resists focused investigation, while still respecting the 3-hypothesis stop rule |
 
-If a source skill is unavailable, say which source was missing and continue with this
-compact procedure. Do not silently replace missing source skills with memory.
+If a source skill is unavailable in the current runtime, say which source was missing
+and continue with this compact procedure. Do not silently replace missing source
+skills with memory.
 
 ## Mansu-owned boundary
 
@@ -103,18 +104,19 @@ If the work is a planned feature or refactor, use the `mansu-tdd-*` series inste
 
 ## Route table
 
-Choose one route before editing. Load only the relevant branch source when needed.
+Choose one route before editing. Load only the relevant branch source when needed,
+using runtime-local skill handles or installed equivalents instead of hardcoded paths.
 
 | Trigger | Optional source to load | Required artifact |
 |---|---|---|
 | App/runtime bug | None by default | Repro, code path, root-cause hypothesis |
-| Build/type/lint/import/dependency failure | `$HOME/.codex/skills/build-fix/SKILL.md` | Error category, fix order, build/type/lint output |
-| Oh My/Codex/tooling/install/config/MCP/runtime failure | `$HOME/.codex/skills/doctor/SKILL.md` | Environment/config/runtime health result |
-| Regression with unclear start point | `$HOME/.codex/skills/git-master/SKILL.md` if `git bisect` is needed | Recent-change evidence or known good/bad commits |
+| Build/type/lint/import/dependency failure | Oh My `build-fix` or runtime-equivalent build repair skill | Error category, fix order, build/type/lint output |
+| Oh My/Codex/tooling/install/config/MCP/runtime failure | Oh My `doctor` or runtime-equivalent environment diagnosis skill | Environment/config/runtime health result |
+| Regression with unclear start point | Oh My `git-master` or runtime-equivalent git investigation skill if `git bisect` is needed | Recent-change evidence or known good/bad commits |
 | Browser/UI/user-flow bug | gstack `browse` or `qa-only` procedures | Screenshot/snapshot/console/repro evidence |
 | Confirmed browser/UI fix needing broad QA | gstack `qa`, only after root cause is confirmed or the user explicitly asks for full QA | Before/after QA evidence |
-| Performance regression | `$HOME/.gstack/repos/gstack/.agents/skills/gstack-benchmark/SKILL.md` | Baseline/current metrics and regression judgment |
-| Agent orchestration or decision-flow bug | `$HOME/.codex/skills/trace/SKILL.md` | Timeline or event evidence |
+| Performance regression | gstack `benchmark` or installed equivalent benchmark workflow | Baseline/current metrics and regression judgment |
+| Agent orchestration or decision-flow bug | Oh My `trace` or runtime-equivalent trace workflow | Timeline or event evidence |
 | Resistant bug needing multiple perspectives | Oh My `team` idea | Debugger/analyst/tester perspectives, still capped by 3-hypothesis stop |
 
 ## Six-stage loop with gstack gates
@@ -174,7 +176,7 @@ Leave this report:
 
 ```markdown
 DEBUG REPORT
-Source skills loaded: {none | paths and why}
+Source skills loaded: {none | runtime handles / installed skills and why}
 Symptom:              {what the user observed}
 Reproduction:         {exact steps or why reproduction was blocked}
 Pattern check:        {known pattern, TODO, recurring fix, or external source result}
