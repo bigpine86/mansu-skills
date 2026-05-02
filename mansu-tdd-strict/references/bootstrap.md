@@ -2,14 +2,14 @@
 
 Run this only when `references/prerequisites.md` shows something missing.
 
-## Missing Oh My XX orchestration or multi-agent support
+## Missing current-runtime orchestration or multi-agent support
 
 - Stop before the implementation loop.
-- Tell the user that this skill requires an Oh My XX orchestration environment with multi-agent support.
+- Tell the user that this skill requires a Mansu-compatible agent runtime with multi-agent support.
 - Ask them to enable or install that environment first.
 - Do not downgrade into a single-agent imitation of the same workflow.
 
-## Missing gstack gates
+## Missing required gate families
 
 If any of these are missing:
 
@@ -21,7 +21,7 @@ Then:
 
 - stop before implementation
 - tell the user exactly which gate is unavailable
-- ask them to install or link `gstack` before proceeding
+- ask them to install, enable, or map the missing gate family before proceeding
 - do not replace the missing gate with an ad-hoc manual step
 
 ## Missing repository documents

@@ -1,0 +1,39 @@
+Slice 2 objective: Port mansu-debug-rootcause for Hermes + tmux + OpenCode runtime while preserving the root-cause-first discipline.
+
+Working directory: /Users/odeci/Desktop/odeci/project/mansu-skills_260502
+Branch: refactor/hermes-opencode-port
+
+Execution mode constraints:
+- Do NOT launch background tasks.
+- Do NOT spawn subagents.
+- Do NOT do extra research outside the repo.
+- Work only from existing repo files and current instructions.
+- Make the edits directly and finish this slice in one bounded pass.
+
+Files allowed to modify in this slice:
+- mansu-debug-rootcause/SKILL.md
+- mansu-debug-rootcause/agents/openai.yaml only if needed
+- scripts/validate_mansu_debug_rootcause.sh
+- PLAN.md only if you must update active status minimally
+- docs/plans/2026-05-02-hermes-opencode-port-plan.md only if needed for cross-reference
+
+Do not modify other skills yet.
+
+Required outcomes:
+1. Remove hardcoded `$HOME/.codex/skills/...` path assumptions from mansu-debug-rootcause.
+2. Preserve the root-cause-first invariants: no fixes before root cause, reproduce/isolate/hypothesize/test/fix/verify, 3 hypotheses stop rule, scope-lock, regression proof.
+3. Reframe source skills as optional runtime-aware enrichments rather than Codex-path-bound dependencies.
+4. Keep gstack/Oh My references where useful, but make them path-neutral and compatibility-aware.
+5. Update validate_mansu_debug_rootcause.sh so the new wording passes validation without relying on Codex-path exact strings.
+6. Make the smallest clean changes that establish the new direction.
+
+Verification required before finishing:
+- run scripts/validate_mansu_debug_rootcause.sh
+- run scripts/validate_mansu_skills.sh if needed
+- run targeted search proving `$HOME/.codex/skills` is gone from mansu-debug-rootcause/SKILL.md
+
+Final response format:
+- Files changed
+- Key wording shifts
+- Validation results
+- Remaining risks / follow-up

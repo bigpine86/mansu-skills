@@ -1,0 +1,24 @@
+Follow-up micro-slice.
+
+Working directory: /Users/odeci/Desktop/odeci/project/mansu-skills_260502
+Branch: refactor/hermes-opencode-port
+
+Do NOT spawn background tasks or subagents.
+
+Modify only README.md.
+
+Goal:
+- Clean up the remaining Codex-default branch/install drift wording in Branch Policy.
+
+Required changes:
+1. Replace `codex/* branches are temporary work branches.` with runtime-neutral wording.
+2. Replace `If local installed skills in $HOME/.codex/skills drift from this repo, sync from main first.` with runtime-neutral wording that refers to the active runtime skill directory.
+3. Do not change anything else unless absolutely necessary.
+
+Verification:
+- run a targeted search in README.md proving the old branch/install drift wording is gone.
+- report exact lines changed.
+
+Final response format:
+- Lines changed
+- Validation result

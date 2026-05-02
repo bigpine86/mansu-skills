@@ -1,6 +1,6 @@
 ---
 name: mansu-tdd-strict
-description: Strict orchestration workflow for medium-or-larger feature or refactor work that must be planned, critiqued, implemented, and validated as sequential TDD vertical slices with per-slice review, QA, checkpoint, and single-commit gates. Use when the user explicitly wants `mansu-tdd-strict`, when `mansu-tdd-total` routes a slice to strict mode, a Ralph-style loop, `ralph:` execution, strict slice-by-slice TDD, Prometheus/Metis/Momus plan critique, or a per-slice review/QA/checkpoint/commit workflow with a project plan file (`PLAN.md` or `Plan.md`) as the active source of truth and completed work archived into `개발일지.md`. This skill assumes an Oh My XX orchestration environment (such as Oh My Codex) plus gstack tooling.
+description: Strict orchestration workflow for medium-or-larger feature or refactor work that must be planned, critiqued, implemented, and validated as sequential TDD vertical slices with per-slice review, QA, checkpoint, and single-commit gates. Use when the user explicitly wants `mansu-tdd-strict`, when `mansu-tdd-total` routes a slice to strict mode, a Ralph-style loop, `ralph:` execution, strict slice-by-slice TDD, Prometheus/Metis/Momus plan critique, or a per-slice review/QA/checkpoint/commit workflow with a project plan file (`PLAN.md` or `Plan.md`) as the active source of truth and completed work archived into `개발일지.md`. This skill assumes a current Mansu-compatible agent runtime with multi-agent orchestration and callable review, QA, and checkpoint gates.
 ---
 
 # Mansu TDD Strict
@@ -41,7 +41,7 @@ When invoked directly without an execution-ready plan, follow the read order bel
 - Do not start implementation before the final plan and slice table are shown.
 - Do not start the next slice before the current slice is fully closed.
 - Do not implement without a failing RED test.
-- Do not skip `review`, `qa`, or `checkpoint`.
+- Do not skip the `review`, `qa`, or `checkpoint` gate families.
 - Do not create more than one git commit per slice.
 - Do not keep appending to a giant file when the work introduces a new responsibility boundary.
 
@@ -59,8 +59,8 @@ If your environment uses different agent names, map them to those three responsi
 
 Stop instead of improvising if any of these are true:
 
-- Oh My XX orchestration or multi-agent support is unavailable.
-- `gstack-review`, `gstack-qa`, or `gstack-checkpoint` is unavailable.
+- The required current-runtime orchestration or multi-agent support is unavailable.
+- A callable gate for the required `review`, `qa`, or `checkpoint` stage is unavailable.
 - A meaningful RED test cannot be written.
 - A slice expands beyond its original completion criteria.
 - You cannot update `PLAN.md` or the project’s `개발일지.md`.

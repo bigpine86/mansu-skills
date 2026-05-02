@@ -2,16 +2,16 @@
 
 Each slice closes in this exact order:
 
-1. `gstack-review`
-2. `gstack-qa`
-3. `gstack-checkpoint`
+1. `review`
+2. `qa`
+3. `checkpoint`
 4. `git commit`
 
 Do not change the order.
 
 ## Gate 1: review
 
-Use `gstack-review` after REFACTOR is complete.
+Run the required `review` gate after REFACTOR is complete.
 
 The review gate checks for:
 
@@ -24,7 +24,7 @@ Do not continue if review finds a blocking issue.
 
 ## Gate 2: qa
 
-Use `gstack-qa` after review is clean.
+Run the required `qa` gate after review is clean.
 
 The QA gate must verify the contracts relevant to the slice.
 
@@ -42,7 +42,7 @@ If QA fails:
 
 ## Gate 3: checkpoint
 
-Use `gstack-checkpoint` only after QA passes.
+Run the required `checkpoint` gate only after QA passes.
 
 The checkpoint must capture:
 

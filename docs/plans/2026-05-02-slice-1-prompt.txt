@@ -1,0 +1,47 @@
+Slice 1 objective: Port README.md and mansu-start/SKILL.md for Hermes + tmux + OpenCode runtime, while preserving Mansu philosophy.
+
+Working directory: /Users/odeci/Desktop/odeci/project/mansu-skills_260502
+Branch: refactor/hermes-opencode-port
+
+Execution mode constraints:
+- Do NOT launch background tasks.
+- Do NOT spawn subagents.
+- Do NOT do extra research outside the repo.
+- Work only from existing repo files and current instructions.
+- Make the edits directly and finish this slice in one bounded pass.
+
+Files allowed to modify in this slice:
+- README.md
+- mansu-start/SKILL.md
+- mansu-start/agents/openai.yaml
+- scripts/validate_mansu_start.sh
+- PLAN.md only if you must update active status minimally
+- docs/runtime-target-matrix.md if needed for this slice
+
+Do not modify other skills yet.
+
+Required outcomes:
+1. README Quick Start is no longer operationally Codex-first.
+2. mansu-start treats Hermes as a first-class runtime target.
+3. mansu-start separates runtime/host detection from adapter detection.
+4. Adapters (omx/omo/omc) are framed as optional compatibility tooling, not mandatory foundations.
+5. validate_mansu_start.sh is updated so the new wording passes validation without relying on the old Codex-centric exact strings.
+6. Preserve compatibility for Codex/OpenCode/Claude Code rather than deleting them.
+
+Important constraints:
+- Keep the Mansu philosophy intact.
+- Prefer runtime-target matrix language over host-adapter-centric wording.
+- Include graceful behavior when adapter tooling is missing.
+- Do not over-edit unrelated sections.
+- Make the smallest clean set of changes that establishes the new direction.
+
+Verification required before finishing:
+- run scripts/validate_mansu_start.sh
+- run scripts/validate_mansu_skills.sh if your changes could affect suite validation
+- run targeted search proving major Codex-first phrases were removed or reframed from README and mansu-start
+
+Final response format:
+- Files changed
+- Key wording shifts
+- Validation results
+- Remaining risks / follow-up for later slices
