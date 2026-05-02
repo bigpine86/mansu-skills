@@ -26,5 +26,5 @@
 
 ## 현재 남은 follow-up
 - Hermes의 canonical skill target path를 완전히 고정할지 결정
-- broader runtime-readiness validator 추가 여부 검토
+- runtime-readiness validator를 fixture/project-doc 수준까지 확장할지 검토
 - 남은 skill들(`mansu-web-verify` 등)의 runtime wording drift 점검

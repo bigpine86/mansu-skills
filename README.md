@@ -53,6 +53,10 @@ Do not invent a new workflow before checking the source skill map.
 Mansu는 모든 것을 직접 발명하지 않습니다.
 이미 잘 만든 스킬과 도구를 먼저 읽고, 그 안에 담긴 철학과 게이트를 존중합니다.
 
+Mansu의 canonical doctrine은 `mansu-operating-model`이 맡습니다.
+프로젝트별 `AGENTS.md`는 그 doctrine으로 라우팅하는 계약 문서이고,
+프로젝트별 `CODING_RULES.md`는 실제 runtime/검증/ship 기준을 적는 로컬 운영 매뉴얼입니다.
+
 Mansu가 직접 책임지는 것은 아래입니다.
 
 - 계획
@@ -91,6 +95,7 @@ reviewed, QA'd, checkpointed, logged, and committed or explicitly recorded as no
 | Skill | Use when | Core idea |
 | --- | --- | --- |
 | `mansu-start` | Mansu를 처음 설치하거나, runtime target/host/OS별 skill directory를 고르고 gstack/Mansu 스킬을 업데이트/복구하며 optional adapter compatibility를 점검할 때 | runtime-target bootstrap and update gate |
+| `mansu-operating-model` | 프로젝트의 개발 행동양식, role separation, strictness, evidence, 그리고 `AGENTS.md` / `CODING_RULES.md` 구조를 정할 때 | canonical doctrine and project-document templates |
 | `mansu-tdd-total` | 기능/리팩토링 작업을 먼저 계획하고 slice별로 `lite`/`strict`를 나눌 때 | planning dispatcher |
 | `mansu-tdd-strict` | RED 테스트가 의미 있고 위험도가 높은 slice를 엄격한 TDD로 진행할 때 | strict TDD slice loop |
 | `mansu-tdd-lite` | 계획, slice, review, QA, checkpoint는 유지하되 RED 테스트를 강제하지 않을 때 | relaxed RED, not relaxed quality |
@@ -101,6 +106,8 @@ reviewed, QA'd, checkpointed, logged, and committed or explicitly recorded as no
 
 - 처음 설치, 업데이트, 스킬 동기화, runtime target 감지, optional adapter compatibility 상태 확인:
   `mansu-start`
+- 프로젝트의 운영 doctrine, `AGENTS.md`, `CODING_RULES.md` 구조를 잡거나 drift를 점검:
+  `mansu-operating-model`
 - 새 기능 또는 리팩토링:
   `mansu-tdd-total`
 - slice가 위험하고 RED 테스트가 도움이 됨:
@@ -140,6 +147,8 @@ scripts/validate_mansu_skills.sh
 
 ```bash
 scripts/validate_mansu_start.sh
+scripts/validate_mansu_operating_model.sh
+scripts/validate_mansu_doc_system.sh
 scripts/validate_mansu_runtime_readiness.sh
 scripts/validate_mansu_tdd_series.sh
 scripts/validate_mansu_debug_rootcause.sh
@@ -149,6 +158,7 @@ scripts/validate_mansu_web_verify.sh
 ## Repo Map
 
 - [MANSU_PHILOSOPHY.md](./MANSU_PHILOSOPHY.md): Mansu 공통 철학
+- [mansu-operating-model](./mansu-operating-model/SKILL.md): canonical doctrine + `AGENTS.md` / `CODING_RULES.md` templates
 - [PLAN.md](./PLAN.md): 현재 follow-up과 다음 작업
 - [개발일지.md](./개발일지.md): 시간순 작업 기록
 - [mansu-start](./mansu-start/SKILL.md): 설치/업데이트/복구 진입점
