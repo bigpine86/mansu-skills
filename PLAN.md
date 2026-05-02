@@ -1,9 +1,8 @@
 ## Active Follow-up
 
-- Runtime-readiness validator follow-up is active on branch `feat/runtime-readiness-validator`.
+- Runtime-readiness validator follow-up is ready for merge.
 - Reference documents:
   - `docs/runtime-target-matrix.md`
-  - `docs/plans/2026-05-02-next-pr-scope.md`
 - Remaining high-value follow-up after this validator slice:
   - review `mansu-web-verify` and any remaining docs for older runtime mental models
   - decide whether Hermes should eventually use a fully fixed canonical skill-target path instead of host-detected wording
