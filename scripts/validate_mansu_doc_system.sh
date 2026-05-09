@@ -10,6 +10,7 @@ DOCTRINE_REF="$ROOT_DIR/mansu-operating-model/references/DOCTRINE.md"
 SOURCE_CATALOG="$ROOT_DIR/mansu-operating-model/references/SOURCE_SKILL_CATALOG.md"
 DOC_ORDER="$ROOT_DIR/mansu-operating-model/references/DOCUMENT_CREATION_ORDER.md"
 CODE_ORDER="$ROOT_DIR/mansu-operating-model/references/CODE_CONSTRUCTION_ORDER.md"
+FUTURE_BKIT="$ROOT_DIR/mansu-operating-model/references/FUTURE_BKIT_IDEAS.md"
 
 fail() {
   echo "FAIL: $1" >&2
@@ -30,6 +31,7 @@ contains() {
 [ -f "$SOURCE_CATALOG" ] || fail "missing SOURCE_SKILL_CATALOG reference"
 [ -f "$DOC_ORDER" ] || fail "missing DOCUMENT_CREATION_ORDER reference"
 [ -f "$CODE_ORDER" ] || fail "missing CODE_CONSTRUCTION_ORDER reference"
+[ -f "$FUTURE_BKIT" ] || fail "missing FUTURE_BKIT_IDEAS reference"
 
 contains "$README_FILE" 'mansu-operating-model' || fail 'README should mention mansu-operating-model'
 contains "$README_FILE" 'validate_mansu_operating_model\.sh' || fail 'README should mention validate_mansu_operating_model.sh'
@@ -39,13 +41,24 @@ contains "$DOCTRINE_REF" '^# Mansu Doctrine Reference$' || fail 'DOCTRINE refere
 contains "$SOURCE_CATALOG" '^# Mansu Source Skill Catalog$' || fail 'SOURCE_SKILL_CATALOG should have canonical title'
 contains "$DOC_ORDER" '^# Mansu Document Creation Router$' || fail 'DOCUMENT_CREATION_ORDER should have canonical router title'
 contains "$CODE_ORDER" '^# Mansu Code Construction Router$' || fail 'CODE_CONSTRUCTION_ORDER should have canonical router title'
+contains "$FUTURE_BKIT" '^# Future bkit Ideas For Mansu$' || fail 'FUTURE_BKIT_IDEAS should have canonical title'
+contains "$FUTURE_BKIT" 'not an active routing catalog' || fail 'FUTURE_BKIT_IDEAS should stay outside active routing'
+contains "$FUTURE_BKIT" 'Mansu aims for maximum autonomy by default' || fail 'FUTURE_BKIT_IDEAS should preserve full-autonomy stance'
 contains "$README_FILE" 'SOURCE_SKILL_CATALOG\.md' || fail 'README should mention source skill catalog'
 contains "$README_FILE" 'SOURCE_SKILL_LOCK\.json' || fail 'README should mention source skill lock'
 contains "$README_FILE" 'DOCUMENT_CREATION_ORDER\.md' || fail 'README should mention document creation order'
 contains "$README_FILE" 'CODE_CONSTRUCTION_ORDER\.md' || fail 'README should mention code construction order'
 contains "$README_FILE" 'mansu-project-start' || fail 'README should mention mansu-project-start'
 contains "$README_FILE" 'mansu-ship-release' || fail 'README should mention mansu-ship-release'
-contains "$README_FILE" 'gstack, Oh My / OMO / OMC, and addyosmani/agent-skills source freshness' || fail 'README should mention source freshness checks'
+contains "$README_FILE" '^## Big Picture$' || fail 'README should include big picture model'
+contains "$README_FILE" 'Lifecycle phase spine' || fail 'README should mention lifecycle phase spine layer'
+contains "$README_FILE" 'Project definition / memory source' || fail 'README should mention project definition and memory layer'
+contains "$README_FILE" 'Implementation actor' || fail 'README should mention implementation actor layer'
+contains "$README_FILE" '프로젝트 로드맵/phase order' || fail 'README should preserve project roadmap/phase order boundary'
+contains "$README_FILE" '큰 기능 순서, phase `PLAN.md`' || fail 'README should preserve large-grain order before phase PLAN'
+contains "$README_FILE" '대표 route이지 고정 의존성이 아닙니다' || fail 'README should keep source routes representative, not mandatory'
+contains "$README_FILE" 'Ouroboros, gstack, Oh My / OMO / OMC, and addyosmani/agent-skills source freshness' || fail 'README should mention source freshness checks'
+contains "$README_FILE" 'install/update Ouroboros, gstack, and the matching Oh My adapter' || fail 'README should mention source tool install/update checks'
 
 contains "$PHILOSOPHY_FILE" 'mansu-operating-model' || fail 'MANSU_PHILOSOPHY should mention mansu-operating-model'
 contains "$PHILOSOPHY_FILE" 'canonical doctrine' || fail 'MANSU_PHILOSOPHY should describe canonical doctrine role'
@@ -54,6 +67,9 @@ contains "$PHILOSOPHY_FILE" 'stale source map is a' || fail 'MANSU_PHILOSOPHY sh
 contains "$PHILOSOPHY_FILE" 'routing bug, not just old documentation' || fail 'MANSU_PHILOSOPHY should treat stale source maps as routing bugs'
 contains "$PHILOSOPHY_FILE" 'addyosmani/agent-skills' || fail 'MANSU_PHILOSOPHY should mention addyosmani source freshness'
 contains "$PHILOSOPHY_FILE" 'detects the current' || fail 'MANSU_PHILOSOPHY should mention dynamic coding-order routing'
-contains "$PHILOSOPHY_FILE" 'construction phase' || fail 'MANSU_PHILOSOPHY should mention construction phase routing'
+contains "$PHILOSOPHY_FILE" 'current phase' || fail 'MANSU_PHILOSOPHY should mention current phase routing'
+contains "$PHILOSOPHY_FILE" 'project roadmap/phase order' || fail 'MANSU_PHILOSOPHY should preserve roadmap before phase PLAN boundary'
+contains "$PHILOSOPHY_FILE" '^## Mansu stack model$' || fail 'MANSU_PHILOSOPHY should include stack model'
+contains "$PHILOSOPHY_FILE" 'The source names are representative, not mandatory' || fail 'MANSU_PHILOSOPHY should keep source names representative'
 
 echo "mansu doc system references OK"

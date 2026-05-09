@@ -33,13 +33,17 @@ for the original skill files.
 Mansu should know the source skill families well enough to compose them without
 flattening them.
 
+- Use addyosmani/agent-skills as the broad SDLC phase spine: idea/spec,
+  planning, context, source-driven coding, incremental implementation, testing,
+  review, simplification, hardening, docs, and launch.
+- Use Ouroboros inside the early definition/spec phases when an idea must become
+  a durable purpose, Seed/Ledger, project definition, or source-of-truth artifact
+  before Mansu turns it into phases and slices.
+- Use Oh My / OMO / OMC as execution-mode language inside a phase: autopilot,
+  ultrawork, ralph, TDD, debug, research, build-fix, and lightweight
+  orchestration habits.
 - Use gstack as the specialist team: CEO, design, engineering, DX, browser QA,
   security, performance, ship, deploy, and learning gates.
-- Use Oh My / OMO / OMC as execution-mode language: autopilot, ultrawork,
-  ralph, TDD, debug, research, build-fix, and lightweight orchestration habits.
-- Use addyosmani/agent-skills as the senior-engineering sequence: idea/spec,
-  task breakdown, context packing, source-driven coding, incremental
-  implementation, TDD, review, simplification, hardening, docs, and ship.
 - Compose creatively only after the basic gates are explicit: intent, scope,
   research source, architecture, slice boundary, validation, review, QA,
   checkpoint, and learning.
@@ -51,19 +55,21 @@ flattening them.
 Mansu must keep watching the upstream source families that shape this suite:
 
 - gstack specialist skills
+- Ouroboros project-definition, Seed, Ledger, and runtime setup flows
 - Oh My / OMO / OMC style execution-mode skills
 - addyosmani/agent-skills production engineering workflow skills
 
-Whenever `mansu-start check`, `mansu-start update`, or serious project bootstrap
+Whenever `mansu-setting check`, `mansu-setting update`, or serious project bootstrap
 runs, include a source freshness check:
 
-1. Check whether the installed gstack repo or `gstack-*` skill set changed.
-2. Check whether the installed Oh My / OMO / OMC adapter or source skill set changed.
-3. Check whether `addyosmani/agent-skills` changed when it is installed or referenced.
-4. Compare notable added, removed, or renamed skills against this catalog.
-5. If source skills changed in a way that affects routing, read the original
+1. Check whether the installed Ouroboros CLI/package, setup status, or project-definition artifacts changed.
+2. Check whether the installed gstack repo or `gstack-*` skill set changed.
+3. Check whether the installed Oh My / OMO / OMC adapter or source skill set changed.
+4. Check whether `addyosmani/agent-skills` changed when it is installed or referenced.
+5. Compare notable added, removed, or renamed skills against this catalog.
+6. If source skills changed in a way that affects routing, read the original
    `SKILL.md` and update this catalog before relying on stale assumptions.
-6. Record the source freshness result in the final report and worklog.
+7. Record the source freshness result in the final report and worklog.
 
 Missing source tooling is not automatically fatal. Report what was unavailable,
 continue with the safe Mansu path, and block only when the requested workflow
@@ -73,10 +79,58 @@ depends on the missing source.
 
 | Layer | Owns | Does not own |
 | --- | --- | --- |
+| Lifecycle phase spine | broad SDLC phases: define, plan, build, verify, review, harden, document, ship | Mansu-specific strictness, project-local routing, runtime adapters |
+| Project definition / memory source | durable project purpose, Seed/Ledger/spec artifacts, long-horizon direction, continuity | Mansu-specific gate ownership, source selection, final accountability |
 | Mansu | doctrine, classification, strictness, routing, evidence, checkpoint, worklog, final ship judgment | specialist craft implementation when a stronger source skill exists |
+| Ouroboros | project-definition interview, PM/Seed/Ledger artifacts, early acceptance criteria, spec source of truth | Mansu-specific routing, source comparison, role critique, slice gates, final implementation discipline |
 | gstack | role-based specialist gates, browser QA, design exploration, security, performance, ship/ops, learning | Mansu-specific doctrine or personal operating rules |
 | Oh My / OMO / OMC | execution modes, parallel work patterns, persistence, TDD/debug/research habits, lightweight orchestration language | final Mansu policy, project-specific evidence gates |
-| addyosmani/agent-skills | senior-engineering SDLC sequence, spec-first planning, task breakdown, context packing, incremental implementation, source-driven coding | Mansu-specific strictness, project-local routing, runtime adapters |
+| addyosmani/agent-skills | senior-engineering SDLC sequence and phase skills across define, plan, build, verify, review, and ship | Mansu-specific strictness, project-local routing, runtime adapters |
+| Implementation actor | file edits, tests, integration, commits, concrete code changes | replacing Mansu's planning/routing/evidence responsibility |
+
+Representative mapping:
+
+- Lifecycle phase spine: addyosmani/agent-skills or equivalent.
+- Project definition / memory source: Ouroboros or equivalent.
+- Execution-mode source: Oh My / OMO / OMC or equivalent.
+- Specialist team source: gstack or equivalent.
+- Implementation actor: Codex or the active coding agent.
+
+## Source Philosophy Checksums
+
+Before Mansu composes source skills, preserve each family in its native role:
+
+- addyosmani/agent-skills: phase map and engineering discipline; do not turn it
+  into a fixed universal script when the current task needs a smaller route.
+- Ouroboros: definition, Seed/Ledger, and continuity; do not reduce it to a
+  generic planning prompt or let it execute autonomously unless the user asked.
+- Oh My / OMO / OMC: execution mode and persistence language; do not use
+  parallelism when slices have sequential dependencies or shared write scope.
+- gstack: independent specialist gates; do not treat builder self-review as a
+  substitute for review, QA, security, performance, or ship gates.
+- Codex / active agent: implementation actor; do not let implementation replace
+  Mansu's route decision, evidence, or final ship/hold judgment.
+
+## Ouroboros Capability Map
+
+Use Ouroboros before implementation when the raw idea still needs to become a
+project definition that Mansu can critique and slice.
+
+| Capability | Source route | Route when |
+| --- | --- | --- |
+| Setup/help | `setup`, `welcome`, `help`, `update` | Ouroboros readiness, runtime setup, or version is unclear |
+| Brownfield scan | `brownfield` | an existing repo should answer factual/codebase questions before the user is asked |
+| Project interview | `interview` | purpose, user, constraints, and acceptance criteria are still fuzzy |
+| PM / PRD definition | `pm` | product requirements or PM-style project definition is the needed artifact |
+| Seed / source-of-truth creation | `seed` or `auto --skip-run` | the project needs a durable definition before spec/TDR/PLAN |
+| Ledger / session continuity | Ouroboros Ledger/session artifacts | decisions and unanswered questions must survive across sessions |
+| Runtime integration | `ouroboros setup --runtime <target>` | Mansu-setting prepares the host before project-start uses Ouroboros |
+| Execution from Seed | `run` | user explicitly wants Ouroboros to execute a Seed after Mansu has mapped gates/risks into PLAN |
+| Execution verdict | `evaluate`, `qa` | an Ouroboros execution or artifact needs independent quality evidence |
+| Stuck recovery | `unstuck` | the project is looping, blocked, or needs lateral alternatives |
+| Session resume/status | `status`, `resume-session`, `cancel` | an existing Ouroboros session must be inspected, resumed, or stopped |
+| Autonomous continuation | `evolve`, `ralph`, non-`--skip-run` `auto` | only when the user explicitly wants Ouroboros to continue beyond definition; otherwise Mansu translates the output into phases and slices first |
+| Team publishing | `publish` | a Seed should become GitHub Issues after Mansu confirms boundaries |
 
 ## gstack Capability Map
 
@@ -114,7 +168,7 @@ Use gstack as the specialist team and verification layer.
 
 Use Oh My-style skills as execution-mode vocabulary and lightweight workflow
 patterns. Names may differ by runtime target; verify the installed skill path
-with `mansu-start`.
+with `mansu-setting`.
 
 | Capability | Source skills | Route when |
 | --- | --- | --- |
@@ -136,9 +190,9 @@ with `mansu-start`.
 
 ## addyosmani/agent-skills Capability Map
 
-Use addyosmani-style skills as the coding-order and engineering-lifecycle
-reference, especially when Mansu knows which slice to build but needs sharper
-rules for how to build it.
+Use addyosmani-style skills as the broad development lifecycle and coding-order
+reference. The phase spine is Define -> Plan -> Build -> Verify -> Review ->
+Ship, but Mansu still chooses the smallest safe route for the current work.
 
 | Capability | Source skills | Route when |
 | --- | --- | --- |
@@ -165,27 +219,32 @@ The route is:
 
 1. Define purpose, user, current workaround, desired outcome, non-goals, and
    success signal.
-2. Research references using evidence-ranked sources: official/current docs and
+2. Use the addyosmani lifecycle as the phase map: define/spec first, then plan,
+   build, verify, review, and ship only when the previous phase has enough
+   evidence.
+3. If Ouroboros is prepared by `mansu-setting` and the project is still fuzzy,
+   use its PM/interview/Seed/Ledger route to create upstream definition artifacts.
+4. Research references using evidence-ranked sources: official/current docs and
    source files first for technical truth; GitHub, Reddit, and Threads for
    adoption, pain, taste, and implementation signals with dates recorded.
-3. Analyze relevant projects at code and architecture level when they influence
+5. Analyze relevant projects at code and architecture level when they influence
    stack, domain model, UI, or delivery sequence.
-4. Create the needed documents through `DOCUMENT_CREATION_ORDER.md`: operating
+6. Create the needed documents through `DOCUMENT_CREATION_ORDER.md`: operating
    docs, idea/spec, research notes, TDR/architecture, UI design, ADRs, then
    phase-level `PLAN.md`.
-5. Verify with `gstack-autoplan` and focused `gstack-plan-*` reviewers.
-6. Hand off to `mansu-tdd-total` only after the current phase has ordered slices,
+7. Verify with `gstack-autoplan` and focused `gstack-plan-*` reviewers.
+8. Hand off to `mansu-tdd-total` only after the current phase has ordered slices,
    gate mapping, validation path, upstream artifacts, and open blockers recorded.
 
 ### Source Refresh And Reference Curation
 
 Use `mansu-source-curator` when the issue is not feature delivery, but keeping
-Mansu's knowledge of gstack, Oh My / OMO / OMC, addyosmani/agent-skills, or
-runtime adapters current.
+Mansu's knowledge of Ouroboros, gstack, Oh My / OMO / OMC,
+addyosmani/agent-skills, or runtime adapters current.
 
 This is an internal maintenance route:
 
-1. Start with `mansu-start source-check` for runtime, adapter, and source-family status.
+1. Start with `mansu-setting source-check` for runtime, adapter, and source-family status.
 2. If the user asked for updates, let `mansu-source-curator` run the safe update path.
 3. Re-read changed source skill files or GitHub source data before editing Mansu references.
 4. Update this catalog, `SOURCE_SKILL_LOCK.json`, `DOCUMENT_CREATION_ORDER.md`,
@@ -227,22 +286,28 @@ Source artifact conventions:
 Mansu may consolidate those outputs into a blueprint/TDR layer when that helps,
 but it must not pretend the upstream tools all use the same filename.
 
-1. Define the project intent with `gstack-office-hours` and, when useful,
-   addyosmani `idea-refine` or `spec-driven-development`.
-2. Run source-aware research with Oh My `research` / `deepsearch` patterns and
+1. Start from the addyosmani lifecycle phase map. Use `idea-refine` and
+   `spec-driven-development` to decide whether the work is still in Define, is
+   ready for Plan, or needs more source context before Build.
+2. Use Ouroboros `interview`, `pm`, `seed`, or `brownfield` when the early
+   definition phase needs durable purpose, Seed/Ledger continuity, or existing
+   repo understanding.
+3. Shape product intent with `gstack-office-hours` when demand, wedge, MVP, or
+   scope needs founder-style pressure testing.
+4. Run source-aware research with Oh My `research` / `deepsearch` patterns and
    addyosmani `source-driven-development`; include GitHub, Reddit, Threads, and
    official docs when freshness matters.
-3. Draft or update the design/spec/blueprint layer: product shape, feature groups, domain model,
+5. Draft or update the design/spec/blueprint layer: product shape, feature groups, domain model,
    architecture, data/API boundaries, technology stack, secret/API-key handling,
    UI/UX direction, build strategy, phase roadmap, risks, and non-goals.
-4. Review that layer with `gstack-autoplan` so CEO, design, engineering, and
+6. Review that layer with `gstack-autoplan` so CEO, design, engineering, and
    DX perspectives all pass over it.
-5. Deepen weak areas with focused `gstack-plan-ceo-review`,
+7. Deepen weak areas with focused `gstack-plan-ceo-review`,
    `gstack-plan-design-review`, `gstack-plan-eng-review`, or
    `gstack-plan-devex-review`.
-6. Record major irreversible or architectural choices as ADR-style notes when
+8. Record major irreversible or architectural choices as ADR-style notes when
    `documentation-and-adrs` applies.
-7. Only then derive the current phase's `PLAN.md` and vertical slice table.
+9. Only then derive the current phase's `PLAN.md` and vertical slice table.
 
 ### Feature Or Refactor
 

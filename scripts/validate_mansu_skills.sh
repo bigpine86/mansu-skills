@@ -3,7 +3,9 @@ set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 
-"$ROOT_DIR/scripts/validate_mansu_start.sh"
+"$ROOT_DIR/scripts/validate_mansu_setting.sh"
+"$ROOT_DIR/scripts/validate_mansu_help.sh"
+"$ROOT_DIR/scripts/validate_mansu_manual.sh"
 "$ROOT_DIR/scripts/validate_mansu_source_curator.sh"
 "$ROOT_DIR/scripts/validate_mansu_source_lock.sh"
 "$ROOT_DIR/scripts/validate_mansu_project_start.sh"

@@ -4,7 +4,7 @@ set -euo pipefail
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 FILE="$ROOT_DIR/mansu-source-curator/SKILL.md"
 OPENAI_YAML="$ROOT_DIR/mansu-source-curator/agents/openai.yaml"
-START_FILE="$ROOT_DIR/mansu-start/SKILL.md"
+SETTING_FILE="$ROOT_DIR/mansu-setting/SKILL.md"
 SOURCE_CATALOG="$ROOT_DIR/mansu-operating-model/references/SOURCE_SKILL_CATALOG.md"
 
 assert_contains() {
@@ -28,6 +28,7 @@ line_equals 1 '---' "$FILE"
 line_equals 4 '---' "$FILE"
 assert_contains '^name: mansu-source-curator$' "$FILE"
 assert_contains '^description: Hidden/internal maintenance workflow' "$FILE"
+assert_contains 'Ouroboros' "$FILE"
 assert_contains 'SOURCE_SKILL_CATALOG.md' "$FILE"
 assert_contains 'SOURCE_SKILL_LOCK.json' "$FILE"
 assert_contains 'DOCUMENT_CREATION_ORDER.md' "$FILE"
@@ -47,6 +48,7 @@ assert_contains '^## Required report$' "$FILE"
 
 # Source coverage.
 assert_contains 'gstack' "$FILE"
+assert_contains 'Ouroboros' "$FILE"
 assert_contains 'Oh My / OMO / OMC' "$FILE"
 assert_contains 'addyosmani/agent-skills' "$FILE"
 assert_contains 'Runtime adapters' "$FILE"
@@ -61,21 +63,30 @@ assert_contains 'Do not pull or merge a dirty repo automatically' "$FILE"
 assert_contains 'Do not install addyosmani/agent-skills into runtime skill directories' "$FILE"
 assert_contains 'Do not update Mansu references from memory' "$FILE"
 assert_contains 'Do not copy whole source workflows into Mansu' "$FILE"
+assert_contains "Keep the HTML manual's agent guide and catalog in sync with source-skill routing" "$FILE"
 assert_contains 'Source update without re-inspection is incomplete' "$FILE"
 assert_contains 'Do not sync if validation fails' "$FILE"
+assert_contains 'do not start a project from the curator' "$FILE"
 
 # Reference and validator integration.
-assert_contains 'mansu-source-curator' "$START_FILE"
+assert_contains 'mansu-source-curator' "$SETTING_FILE"
 assert_contains 'mansu-source-curator' "$SOURCE_CATALOG"
+assert_contains 'docs/mansu-manual.html' "$FILE"
+assert_contains 'mansu-manual/SKILL.md' "$FILE"
+assert_contains 'scripts/validate_mansu_manual.sh' "$FILE"
+assert_contains 'mansu-manual/docs/mansu-manual.html' "$FILE"
 assert_contains 'scripts/validate_mansu_skills.sh' "$FILE"
 assert_contains 'git diff --check' "$FILE"
 assert_contains '개발일지.md' "$FILE"
+assert_contains 'Manual updated:' "$FILE"
 
 # UI metadata alignment.
 assert_contains '^interface:$' "$OPENAI_YAML"
 assert_contains 'display_name: "Mansu Source Curator"' "$OPENAI_YAML"
 assert_contains 'short_description: "Internal source-skill freshness curator"' "$OPENAI_YAML"
 assert_contains 'default_prompt: "Use \$mansu-source-curator' "$OPENAI_YAML"
+assert_contains 'check or update Ouroboros, gstack' "$OPENAI_YAML"
+assert_contains 'HTML manual agent guide/catalog' "$OPENAI_YAML"
 assert_contains 'update Mansu references, validators, worklog' "$OPENAI_YAML"
 
 short_description="$(

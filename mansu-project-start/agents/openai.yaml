@@ -1,4 +1,4 @@
 interface:
   display_name: "Mansu Project Start"
   short_description: "Zero-to-PLAN project kickoff"
-  default_prompt: "Use $mansu-project-start to take this project from idea/research/spec/TDR/design direction into an execution-ready PLAN.md, then hand off to $mansu-tdd-total only after source evidence, critique, gate mapping, and slice planning are clear."
+  default_prompt: "Use $mansu-project-start as a thin project-start orchestrator: choose the best source route for the situation across Ouroboros, gstack, Oh My, addyosmani, and project-local docs; avoid duplicating selected source logic; ask the user only for decisions that materially change direction; keep source artifacts, research, spec, TDR, design direction, and project roadmap outside PLAN.md; derive only the current phase execution-ready PLAN.md before handing off to $mansu-tdd-total."

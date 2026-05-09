@@ -6,8 +6,8 @@ ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 RUNTIME_FILES=(
   "$ROOT_DIR/README.md"
   "$ROOT_DIR/docs/runtime-target-matrix.md"
-  "$ROOT_DIR/mansu-start/SKILL.md"
-  "$ROOT_DIR/mansu-start/agents/openai.yaml"
+  "$ROOT_DIR/mansu-setting/SKILL.md"
+  "$ROOT_DIR/mansu-setting/agents/openai.yaml"
   "$ROOT_DIR/mansu-operating-model/SKILL.md"
   "$ROOT_DIR/mansu-operating-model/agents/openai.yaml"
   "$ROOT_DIR/mansu-operating-model/references/DOCTRINE.md"
@@ -25,7 +25,7 @@ RUNTIME_FILES=(
   "$ROOT_DIR/mansu-tdd-lite/agents/openai.yaml"
   "$ROOT_DIR/mansu-web-verify/SKILL.md"
   "$ROOT_DIR/mansu-web-verify/agents/openai.yaml"
-  "$ROOT_DIR/scripts/validate_mansu_start.sh"
+  "$ROOT_DIR/scripts/validate_mansu_setting.sh"
   "$ROOT_DIR/scripts/validate_mansu_tdd_lite.sh"
   "$ROOT_DIR/scripts/validate_mansu_tdd_series.sh"
   "$ROOT_DIR/scripts/validate_mansu_tdd_total.sh"
@@ -101,9 +101,9 @@ check_scoped_pattern() {
 
 README_FILE="$ROOT_DIR/README.md"
 MATRIX_FILE="$ROOT_DIR/docs/runtime-target-matrix.md"
-START_FILE="$ROOT_DIR/mansu-start/SKILL.md"
-START_YAML="$ROOT_DIR/mansu-start/agents/openai.yaml"
-START_VALIDATOR="$ROOT_DIR/scripts/validate_mansu_start.sh"
+SETTING_FILE="$ROOT_DIR/mansu-setting/SKILL.md"
+SETTING_YAML="$ROOT_DIR/mansu-setting/agents/openai.yaml"
+SETTING_VALIDATOR="$ROOT_DIR/scripts/validate_mansu_setting.sh"
 TDD_SERIES_VALIDATOR="$ROOT_DIR/scripts/validate_mansu_tdd_series.sh"
 DEBUG_FILE="$ROOT_DIR/mansu-debug-rootcause/SKILL.md"
 DEBUG_VALIDATOR="$ROOT_DIR/scripts/validate_mansu_debug_rootcause.sh"
@@ -116,15 +116,15 @@ done
 
 # Runtime-first contract must remain visible in the canonical docs.
 assert_contains 'runtime target(Hermes, OpenCode, Codex, Claude Code), host, OS' "$README_FILE"
-assert_contains 'optional compatibility check' "$README_FILE"
+assert_contains 'compatibility check' "$README_FILE"
 assert_contains '^# Runtime Target Matrix$' "$MATRIX_FILE"
 assert_contains 'runtime target을 먼저 고르고, adapter는 그 다음에 본다' "$MATRIX_FILE"
 assert_contains 'validator는 wording뿐 아니라 stale runtime assumptions도 잡아야 한다' "$MATRIX_FILE"
-assert_contains 'Treat adapters as optional compatibility tooling layered on top of the runtime target' "$START_FILE"
-assert_contains 'Do not infer adapter requirements from runtime target detection alone' "$START_FILE"
-assert_contains 'If compatibility tooling is missing, continue with Mansu and gstack checks' "$START_FILE"
-assert_contains 'report optional adapter compatibility' "$START_YAML"
-note_pass 'runtime-first adapter contract remains anchored in README, matrix, and mansu-start'
+assert_contains 'Treat adapters as runtime-matched compatibility tooling layered on top of the runtime target' "$SETTING_FILE"
+assert_contains 'Do not infer adapter requirements from runtime target detection alone' "$SETTING_FILE"
+assert_contains 'missing compatibility tooling for the detected runtime should be installed' "$SETTING_FILE"
+assert_contains 'report optional adapter compatibility' "$SETTING_YAML"
+note_pass 'runtime-first adapter contract remains anchored in README, matrix, and mansu-setting'
 
 # Hardcoded host/runtime path wording should stay inside explicit runtime-target docs and validators.
 check_scoped_pattern \
@@ -132,8 +132,8 @@ check_scoped_pattern \
   '\$HOME/\.codex/skills|\$HOME/\.claude/skills|~/.config/opencode/skills|\.opencode/skills' \
   "$README_FILE" \
   "$MATRIX_FILE" \
-  "$START_FILE" \
-  "$START_VALIDATOR" \
+  "$SETTING_FILE" \
+  "$SETTING_VALIDATOR" \
   "$DEBUG_VALIDATOR" \
   "$SELF_FILE"
 
@@ -141,7 +141,7 @@ check_scoped_pattern \
 check_scoped_pattern \
   'legacy OpenCode home path stays absent from runtime-facing files' \
   '\$HOME/\.opencode/skills' \
-  "$START_VALIDATOR" \
+  "$SETTING_VALIDATOR" \
   "$SELF_FILE"
 
 # Historical tool names are allowed only in explicit compatibility/reference zones.
@@ -168,7 +168,7 @@ check_scoped_pattern \
 check_scoped_pattern \
   'gstack-checkpoint stays restricted to compatibility or validator zones' \
   'gstack-checkpoint' \
-  "$START_FILE" \
+  "$SETTING_FILE" \
   "$TDD_SERIES_VALIDATOR" \
   "$SELF_FILE"
 
@@ -178,9 +178,10 @@ check_scoped_pattern \
   'adapter' \
   "$README_FILE" \
   "$MATRIX_FILE" \
-  "$START_FILE" \
-  "$START_YAML" \
-  "$START_VALIDATOR" \
+  "$SETTING_FILE" \
+  "$SETTING_YAML" \
+  "$SETTING_VALIDATOR" \
+  "$ROOT_DIR/scripts/validate_mansu_doc_system.sh" \
   "$OPERATING_MODEL_VALIDATOR" \
   "$SELF_FILE"
 

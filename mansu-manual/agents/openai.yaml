@@ -1,0 +1,4 @@
+interface:
+  display_name: "Mansu Manual"
+  short_description: "Open prebuilt Mansu HTML manual"
+  default_prompt: "Use $mansu-manual to show docs/mansu-manual.html, the prebuilt beginner-friendly Korean HTML guide with lifecycle flow, agent guidance, family-first skill catalog, when-to-use notes, and basic route examples."

@@ -1,14 +1,14 @@
 ---
 name: mansu-source-curator
-description: Hidden/internal maintenance workflow for refreshing Mansu's source-skill knowledge. Use when updating or checking gstack, Oh My / OMO / OMC, addyosmani/agent-skills, or runtime adapters; when source skills changed and Mansu references such as SOURCE_SKILL_CATALOG.md, DOCUMENT_CREATION_ORDER.md, CODE_CONSTRUCTION_ORDER.md, mansu-start, validators, or worklogs must be updated; or when a Mansu source map may be stale.
+description: Hidden/internal maintenance workflow for refreshing Mansu's source-skill knowledge. Use when updating or checking Ouroboros, gstack, Oh My / OMO / OMC, addyosmani/agent-skills, or runtime adapters; when source skills changed and Mansu references such as SOURCE_SKILL_CATALOG.md, DOCUMENT_CREATION_ORDER.md, CODE_CONSTRUCTION_ORDER.md, mansu-setting, validators, or worklogs must be updated; or when a Mansu source map may be stale.
 ---
 
 # Mansu Source Curator
 
 This is an internal maintenance skill.
 
-Use it to keep Mansu's source-skill map honest after gstack, Oh My / OMO / OMC,
-addyosmani/agent-skills, or runtime adapter changes.
+Use it to keep Mansu's source-skill map honest after Ouroboros, gstack, Oh My /
+OMO / OMC, addyosmani/agent-skills, or runtime adapter changes.
 
 Do not use this skill for normal feature implementation. It maintains Mansu's
 knowledge of other skills.
@@ -21,6 +21,7 @@ knowledge of other skills.
 - Record added, removed, renamed, and semantically changed source skills.
 - Update Mansu references and validators together.
 - Preserve Mansu as an orchestrator, not a clone of source skills.
+- Keep the HTML manual's agent guide and catalog in sync with source-skill routing.
 - Leave a worklog entry and validation evidence.
 
 ## Modes
@@ -37,11 +38,12 @@ Default to `check` unless the user says update, refresh, sync, or curate.
 
 | Source family | Check | Update when requested | Mansu references to review |
 | --- | --- | --- | --- |
-| gstack | installed repo, `VERSION`, `.agents/skills/gstack-*` names, notable skill docs | `gstack-upgrade` skill or safe `git fetch` + fast-forward path | `SOURCE_SKILL_CATALOG.md`, `DOCUMENT_CREATION_ORDER.md`, `mansu-start`, validators |
+| Ouroboros | installed `ouroboros` / `ooo` commands, package version, runtime setup status, Seed/Ledger/project-definition docs or skills | official installer or safe Python tool update, then `ouroboros setup --runtime <target>` when supported | `SOURCE_SKILL_CATALOG.md`, `mansu-setting`, `mansu-project-start`, document-order references, validators |
+| gstack | installed repo, `VERSION`, `.agents/skills/gstack-*` names, notable skill docs | `gstack-upgrade` skill or safe `git fetch` + fast-forward path | `SOURCE_SKILL_CATALOG.md`, `DOCUMENT_CREATION_ORDER.md`, `mansu-setting`, validators |
 | Oh My / OMO / OMC | installed adapter command, skill directories, execution-mode names | matching adapter update only when installed or requested | `SOURCE_SKILL_CATALOG.md`, TDD/debug/web verify docs, runtime wording |
 | addyosmani/agent-skills | local clone if present, otherwise GitHub contents/API, skill names and phase semantics | safe fast-forward local clone only; do not install into runtime skills by default | `SOURCE_SKILL_CATALOG.md`, `DOCUMENT_CREATION_ORDER.md`, `CODE_CONSTRUCTION_ORDER.md`, TDD docs |
 | Mansu repo | branch, dirty state, validator health, local installed skill copies | `git pull --ff-only` only when clean and requested | README, validators, worklog, local skill cache |
-| Runtime adapters | `omx`, `omo`, `omc`, host/runtime target, optional compatibility status | update only the matching installed adapter when requested | `mansu-start`, runtime target matrix, runtime readiness validator |
+| Runtime adapters | `omx`, `omo`, `omc`, host/runtime target, optional compatibility status | update only the matching installed adapter when requested | `mansu-setting`, runtime target matrix, runtime readiness validator |
 
 ## Safety rules
 
@@ -59,12 +61,14 @@ Collect:
 
 - Mansu repo path, branch, remote, dirty state
 - selected runtime target and local skill directory when available
+- Ouroboros CLI/package version, setup status, and relevant project-definition artifacts or skills
 - gstack repo path and version
 - Oh My / OMO / OMC adapter status and source-skill locations
 - addyosmani/agent-skills source availability: local clone or GitHub
 - current `SOURCE_SKILL_CATALOG.md` snapshot date
 - current `SOURCE_SKILL_LOCK.json` source paths, versions, commits, inventory, and evidence commands
 - current `DOCUMENT_CREATION_ORDER.md` and `CODE_CONSTRUCTION_ORDER.md` coverage
+- current `docs/mansu-manual.html` agent guide, catalog grouping, runtime adapter mapping, and validator status
 - validator status before changes when useful
 
 If the Mansu repo is dirty, continue with read-only checks but do not update
@@ -88,6 +92,7 @@ For GitHub-hosted sources, prefer GitHub API or raw files over memory.
 Only run this phase when the user asked for update or full refresh.
 
 - gstack: use `gstack-upgrade` when available; otherwise use safe fetch and fast-forward only.
+- Ouroboros: use the official installer/package-manager update path when safe, then rerun runtime setup; do not start a project from the curator.
 - Oh My / OMO / OMC: update the matching installed adapter or source repo only when it exists or was explicitly requested.
 - addyosmani/agent-skills: update a local clone with safe fast-forward only; otherwise use read-only GitHub data.
 - Mansu: update with `git pull --ff-only` only when clean and requested.
@@ -104,7 +109,10 @@ Common targets:
 - `mansu-operating-model/references/SOURCE_SKILL_LOCK.json`
 - `mansu-operating-model/references/DOCUMENT_CREATION_ORDER.md`
 - `mansu-operating-model/references/CODE_CONSTRUCTION_ORDER.md`
-- `mansu-start/SKILL.md`
+- `docs/mansu-manual.html`
+- `mansu-manual/SKILL.md`
+- `mansu-setting/SKILL.md`
+- `mansu-project-start/SKILL.md`
 - `mansu-tdd-total/SKILL.md`
 - `mansu-tdd-lite/SKILL.md`
 - `mansu-tdd-strict/SKILL.md`
@@ -135,12 +143,15 @@ before recording source drift.
 Run:
 
 ```bash
+scripts/validate_mansu_manual.sh
 scripts/validate_mansu_skills.sh
 git diff --check
 ```
 
 When local installed Mansu skills are part of the requested update, sync the
 changed `mansu-*` folders into the active runtime skill directory after validation.
+If `docs/mansu-manual.html` changed, also copy it into the installed
+`mansu-manual/docs/mansu-manual.html` artifact path.
 
 Do not sync if validation fails.
 
@@ -155,6 +166,7 @@ Sources checked:
 Sources updated:
 Added/removed/renamed skills:
 Reference files changed:
+Manual updated:
 Source lock:
 Validators changed:
 Validation:

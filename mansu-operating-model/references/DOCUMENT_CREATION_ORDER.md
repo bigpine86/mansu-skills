@@ -81,12 +81,18 @@ For a new project or major feature family, use `mansu-project-start` as the
 orchestrator over this document flow. It should create only the needed artifacts,
 then hand off to `mansu-tdd-total` with a phase-level `PLAN.md`.
 
+Large-grain feature order is decided before `PLAN.md`. For example, a web app may
+need a roadmap that orders menu structure, data model/API contracts, login,
+board, admin, UI system, deployment, and verification. That order belongs in the
+spec/TDR/design layer. `PLAN.md` is created from that roadmap for the active
+phase only.
+
 ## Document Matrix
 
 | Artifact | Use when | Create with | Verify with | Exit criteria |
 | --- | --- | --- | --- | --- |
 | `AGENTS.md` | A repo needs an agent router | `mansu-operating-model` templates | `mansu-operating-model`, local review | Routes to doctrine, local rules, and strict gates without duplicating everything |
-| `CODING_RULES.md` | A repo needs runnable local rules | `mansu-operating-model` templates, `mansu-start` checks | `gstack-health`, local commands, `mansu-operating-model` | Commands, runtimes, dangerous surfaces, validation, and ship criteria are concrete |
+| `CODING_RULES.md` | A repo needs runnable local rules | `mansu-operating-model` templates, `mansu-setting` checks | `gstack-health`, local commands, `mansu-operating-model` | Commands, runtimes, dangerous surfaces, validation, and ship criteria are concrete |
 | Idea one-pager | The idea is still raw or too broad | addyosmani `idea-refine`, Oh My `planner` | `gstack-office-hours`, Oh My `ralplan` | User, problem, MVP, assumptions, not-doing list, and open questions are explicit |
 | gstack design doc | The problem or wedge needs shaping | `gstack-office-hours` | `gstack-plan-ceo-review`, `gstack-autoplan` when plan exists | Problem, status quo, target user, constraints, approaches, recommended direction, and success criteria exist |
 | Research notes | Tech, market, reference, or library choice depends on outside facts | Oh My `research` / `deepsearch`, addyosmani `source-driven-development` | `gstack-plan-eng-review`, `gstack-plan-design-review`, `gstack-plan-devex-review` depending on domain | Sources are named, freshness is checked, tradeoffs are compared, and recommendations are actionable |
@@ -143,6 +149,9 @@ blocker remains unresolved.
 
 `PLAN.md` is the active phase execution document, not the whole project memory.
 
+Use the project roadmap or TDR for the whole feature sequence. Use `PLAN.md` for
+the phase currently being executed.
+
 Put into `PLAN.md`:
 
 - current phase goal
@@ -154,6 +163,14 @@ Put into `PLAN.md`:
 
 Do not keep fully completed history expanded in `PLAN.md`. Move completed flow,
 decisions, and lessons into the worklog, release docs, ADRs, or design/spec docs.
+
+Example:
+
+- `docs/specs/app.md`: product requirements and feature groups.
+- `docs/technical/app-tdr.md`: architecture, stack, data/API boundaries, and
+  phase order such as login -> board -> admin -> deployment.
+- `DESIGN.md`: navigation, screens, states, and visual direction.
+- `PLAN.md`: current phase only, such as login slices.
 
 ## When To Skip Documents
 

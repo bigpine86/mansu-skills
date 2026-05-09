@@ -1,0 +1,4 @@
+interface:
+  display_name: "Mansu Help"
+  short_description: "Beginner-friendly Mansu route helper"
+  default_prompt: "Use $mansu-help to diagnose my current situation, explain it in beginner-friendly Korean, recommend the safest next Mansu route, and give me a copy-paste prompt for the next step."

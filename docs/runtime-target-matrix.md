@@ -3,7 +3,7 @@
 이 문서는 Mansu를 현재 런타임에 설치/동기화할 때 어떤 skill target과 fallback을 써야 하는지 정리한 운영 기준입니다.
 
 ## 목적
-- `mansu-start`가 어떤 runtime/host를 먼저 식별해야 하는지 명확히 한다.
+- `mansu-setting`가 어떤 runtime/host를 먼저 식별해야 하는지 명확히 한다.
 - adapter(`omx`/`omo`/`omc`)를 필수 기반이 아니라 optional compatibility tooling으로 다룬다.
 - skill install/update 시 잘못된 경로 추측을 줄인다.
 

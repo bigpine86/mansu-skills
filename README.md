@@ -1,8 +1,36 @@
 # mansu-skills
 
 AI 코딩이 빨라질수록, 좋은 스킬을 고르는 일보다 `어떻게 조합하고 끝까지 검증할지`가 더 중요해집니다.
-Mansu는 좋은 Oh My, gstack, 공개 스킬을 해부하고, 필요한 순간에 정확히 라우팅하는 개인 작업 운영체계입니다.
+Mansu는 좋은 Ouroboros, Oh My, gstack, 공개 스킬을 해부하고, 필요한 순간에 정확히 라우팅하는 개인 작업 운영체계입니다.
 Install the skills. Pick the right Mansu route. Finish with evidence.
+
+## Big Picture
+
+Mansu는 하나의 만능 스킬이 아니라, 프로젝트 운영체계입니다.
+
+```text
+Lifecycle phase spine
+= addyosmani/agent-skills or equivalent: Define -> Plan -> Build -> Verify -> Review -> Ship
+
+Project definition / memory source
+= Ouroboros or equivalent: purpose, Seed, Ledger, spec, long-horizon direction
+
+Mansu
+= orchestrator, judge, router, doctrine, gates, final accountability
+
+Execution-mode source
+= Oh My / OMO / OMC or equivalent: research, ultrawork, ralph, tdd, debug inside a phase
+
+Specialist team source
+= gstack or equivalent: CEO, design, eng, QA, CSO, benchmark, ship
+
+Implementation actor
+= Codex or the active coding agent: edits files, runs tests, integrates, commits
+```
+
+이 이름들은 대표 route이지 고정 의존성이 아닙니다. Mansu의 역할은 지금 순간에
+어떤 source route를 쓸지 고르고, 중복 구현을 피하고, 산출물을 phase/slice/gate로
+연결하는 것입니다.
 
 ## Quick Start
 Last verified: 2026-05-03
@@ -11,38 +39,39 @@ Canonical branch: `main`
 
 ### For Humans
 
-처음 설치할 때는 `mansu-start`만 먼저 부트스트랩한 뒤, 그 스킬로 전체 설치를 맡깁니다.
-`mansu-start`는 먼저 runtime target(Hermes, OpenCode, Codex, Claude Code), host, OS를 감지해
-맞는 skill directory를 고르고, adapter tooling은 optional compatibility check로 따로 다룹니다.
+처음 설치할 때는 `mansu-setting`만 먼저 부트스트랩한 뒤, 그 스킬로 전체 설치를 맡깁니다.
+`mansu-setting`은 먼저 runtime target(Hermes, OpenCode, Codex, Claude Code), host, OS를 감지해
+맞는 skill directory를 고르고, Ouroboros, gstack, 현재 runtime에 맞는 Oh My adapter를 설치/업데이트한 뒤
+adapter tooling을 compatibility check로 검증합니다.
 
 ```bash
 git clone https://github.com/bigpine86/mansu-skills.git
 cd mansu-skills
 
 # Example: Hermes + tmux + OpenCode runtime using OpenCode's global skill path.
-mkdir -p "$HOME/.config/opencode/skills/mansu-start"
-cp -R mansu-start/. "$HOME/.config/opencode/skills/mansu-start"/
+mkdir -p "$HOME/.config/opencode/skills/mansu-setting"
+cp -R mansu-setting/. "$HOME/.config/opencode/skills/mansu-setting"/
 ```
 
-프로젝트 전용 OpenCode 설치가 필요하면 `.opencode/skills/mansu-start`에 같은 방식으로 복사합니다.
+프로젝트 전용 OpenCode 설치가 필요하면 `.opencode/skills/mansu-setting`에 같은 방식으로 복사합니다.
 다른 runtime target이면 해당 local/global skill directory에 맞춰 복사합니다.
 
 그 다음 agent runtime에서:
 
 ```text
-Use $mansu-start install from this repo. Detect my runtime target, host, and OS before choosing paths or compatibility checks.
+Use $mansu-setting install from this repo. Detect my runtime target, host, and OS, install/update Ouroboros, gstack, and the matching Oh My adapter when needed, then choose paths and run compatibility checks.
 ```
 
 업데이트할 때는:
 
 ```text
-Use $mansu-start update. Sync Mansu skills, check gstack, Oh My / OMO / OMC, and addyosmani/agent-skills source freshness, and report adapter compatibility without blocking on missing adapter tooling unless adapter work was requested.
+Use $mansu-setting update. Update Mansu, install/update Ouroboros, gstack, and the matching Oh My adapter when needed, sync Mansu skills, check Ouroboros, gstack, Oh My / OMO / OMC, and addyosmani/agent-skills source freshness, and report adapter compatibility with any blocked install steps.
 ```
 
 ### For Agents
 
 ```text
-If Mansu is not installed or may be stale, run mansu-start first.
+If Mansu is not installed or may be stale, run mansu-setting first.
 Read MANSU_PHILOSOPHY.md first.
 Then choose the correct mansu-* skill for the task.
 Do not invent a new workflow before checking the source skill map.
@@ -70,8 +99,9 @@ Mansu가 직접 책임지는 것은 아래입니다.
 
 전문 실행은 가능한 한 더 잘 맞는 source skill에 맡깁니다.
 그 source skill 목록과 조합법은 `mansu-operating-model/references/SOURCE_SKILL_CATALOG.md`에서 관리합니다.
-`mansu-start`는 gstack, Oh My / OMO / OMC, addyosmani/agent-skills 계열 source skill이 바뀌었는지도 계속 확인해야 합니다.
-실제 코딩 순서는 하드코딩하지 않고, `mansu-operating-model/references/CODE_CONSTRUCTION_ORDER.md`가 현재 개발 단계를 판단한 뒤 `addyosmani/agent-skills` 같은 source skill로 라우팅합니다.
+`mansu-setting`은 Ouroboros, gstack, Oh My / OMO / OMC, addyosmani/agent-skills 계열 source skill이 바뀌었는지도 계속 확인해야 합니다.
+전체 개발 흐름은 addyosmani/agent-skills의 Define → Plan → Build → Verify → Review → Ship phase를 큰 지도로 삼습니다. 다만 Mansu는 이 순서를 딱딱하게 복사하지 않고, 현재 단계와 위험도에 맞춰 필요한 source skill을 고릅니다.
+실제 코딩 순서는 하드코딩하지 않고, `mansu-operating-model/references/CODE_CONSTRUCTION_ORDER.md`가 현재 개발 단계를 판단한 뒤 필요한 `addyosmani/agent-skills` phase skill과 gstack/Oh My/Ouroboros 보조 route로 라우팅합니다.
 
 ## Core Philosophy
 
@@ -97,9 +127,11 @@ reviewed, QA'd, checkpointed, logged, and committed or explicitly recorded as no
 
 | Skill | Use when | Core idea |
 | --- | --- | --- |
-| `mansu-start` | Mansu를 처음 설치하거나, runtime target/host/OS별 skill directory를 고르고 gstack/Mansu 스킬을 업데이트/복구하며 optional adapter compatibility를 점검할 때 | runtime-target bootstrap and update gate |
-| `mansu-source-curator` | gstack, Oh My / OMO / OMC, addyosmani/agent-skills 같은 원천 스킬이 바뀌었고 Mansu 레퍼런스/validator/worklog까지 다시 맞춰야 할 때 | hidden source-reference maintenance |
-| `mansu-project-start` | 새 제품, 앱, 레포, 큰 기능군을 아이디어/리서치/spec/TDR/UI 방향에서 실행 가능한 `PLAN.md`까지 끌고 갈 때 | zero-to-PLAN kickoff |
+| `mansu-help` | 초보자이거나 지금 뭐부터 해야 할지 모르겠고, 현재 상황 진단과 다음 Mansu route 추천, 바로 쓸 프롬프트가 필요할 때 | beginner-friendly route helper |
+| `mansu-manual` | 브라우저에서 볼 수 있는 초보자용 HTML 사용 설명서가 필요할 때. 정적 문서인 `docs/mansu-manual.html`을 보여준다 | beginner-friendly HTML manual |
+| `mansu-setting` | Mansu를 시작하기 전 기본 세팅으로 runtime target/host/OS별 skill directory를 고르고, Ouroboros/gstack/현재 runtime의 Oh My adapter를 설치/업데이트하고, Mansu 스킬을 동기화/복구하며 adapter compatibility를 점검할 때 | runtime-target bootstrap, source-tool install, and update gate |
+| `mansu-source-curator` | Ouroboros, gstack, Oh My / OMO / OMC, addyosmani/agent-skills 같은 원천 스킬이 바뀌었고 Mansu 레퍼런스/validator/worklog까지 다시 맞춰야 할 때 | hidden source-reference maintenance |
+| `mansu-project-start` | 새 제품, 앱, 레포, 큰 기능군을 아이디어/리서치/spec/TDR/UI 방향, 프로젝트 로드맵/phase order, 현재 phase `PLAN.md`까지 끌고 갈 때. Mansu는 이 시점에 Ouroboros, gstack, Oh My, addyosmani 중 어떤 source route를 쓸지 고르고 산출물 변환, gate mapping, phase/slice handoff를 맡는다 | zero-to-PLAN kickoff |
 | `mansu-operating-model` | 프로젝트의 개발 행동양식, role separation, strictness, evidence, 그리고 `AGENTS.md` / `CODING_RULES.md` 구조를 정할 때 | canonical doctrine and project-document templates |
 | `mansu-tdd-total` | 기능/리팩토링 작업을 먼저 계획하고 slice별로 `lite`/`strict`를 나눌 때 | planning dispatcher |
 | `mansu-tdd-strict` | RED 테스트가 의미 있고 위험도가 높은 slice를 엄격한 TDD로 진행할 때 | strict TDD slice loop |
@@ -110,11 +142,15 @@ reviewed, QA'd, checkpointed, logged, and committed or explicitly recorded as no
 
 ## Recommended Routing
 
+- 초보자이거나 지금 뭐부터 해야 할지 모르겠음:
+  `mansu-help`
+- HTML로 된 전체 사용 설명서를 보고 싶음:
+  `mansu-manual` 또는 [docs/mansu-manual.html](./docs/mansu-manual.html)
 - 처음 설치, 업데이트, 스킬 동기화, runtime target 감지, optional adapter compatibility 상태 확인:
-  `mansu-start`
+  `mansu-setting`
 - 원천 스킬 업데이트 후 `SOURCE_SKILL_CATALOG.md`, 문서/코드 순서 레퍼런스, validator, worklog까지 같이 갱신:
   `mansu-source-curator`
-- 새 프로젝트 또는 큰 기능군을 아이디어에서 research/spec/TDR/UI 방향과 phase `PLAN.md`까지 설계:
+- 새 프로젝트 또는 큰 기능군을 아이디어에서 research/spec/TDR/UI 방향, 큰 기능 순서, phase `PLAN.md`까지 설계:
   `mansu-project-start`
 - 프로젝트의 운영 doctrine, `AGENTS.md`, `CODING_RULES.md` 구조를 잡거나 drift를 점검:
   `mansu-operating-model`
@@ -135,7 +171,7 @@ reviewed, QA'd, checkpointed, logged, and committed or explicitly recorded as no
 
 새 `mansu-*` 스킬을 만들거나 확장하기 전에:
 
-1. 관련 Oh My, gstack, 공개 source skill을 먼저 찾습니다.
+1. 관련 Ouroboros, Oh My, gstack, 공개 source skill을 먼저 찾습니다.
 2. `mansu-operating-model/references/SOURCE_SKILL_CATALOG.md`에서 기존 조합법을 확인합니다.
 3. 그 스킬의 목적, 게이트, 철학을 읽습니다.
 4. Mansu가 맡을 경계와 source skill에 맡길 경계를 나눕니다.
@@ -159,7 +195,9 @@ scripts/validate_mansu_skills.sh
 개별 검증:
 
 ```bash
-scripts/validate_mansu_start.sh
+scripts/validate_mansu_setting.sh
+scripts/validate_mansu_help.sh
+scripts/validate_mansu_manual.sh
 scripts/validate_mansu_source_curator.sh
 scripts/validate_mansu_source_lock.sh
 scripts/validate_mansu_project_start.sh
@@ -176,13 +214,16 @@ scripts/validate_mansu_ship_release.sh
 
 - [MANSU_PHILOSOPHY.md](./MANSU_PHILOSOPHY.md): Mansu 공통 철학
 - [mansu-operating-model](./mansu-operating-model/SKILL.md): canonical doctrine + `AGENTS.md` / `CODING_RULES.md` templates
-- [SOURCE_SKILL_CATALOG.md](./mansu-operating-model/references/SOURCE_SKILL_CATALOG.md): gstack / Oh My / OMO / OMC source skill map and composition recipes
+- [SOURCE_SKILL_CATALOG.md](./mansu-operating-model/references/SOURCE_SKILL_CATALOG.md): Ouroboros / gstack / Oh My / OMO / OMC source skill map and composition recipes
 - [SOURCE_SKILL_LOCK.json](./mansu-operating-model/references/SOURCE_SKILL_LOCK.json): source-family freshness snapshot and evidence
 - [DOCUMENT_CREATION_ORDER.md](./mansu-operating-model/references/DOCUMENT_CREATION_ORDER.md): which document to create, which source skill to use, and which verification skill to run
 - [CODE_CONSTRUCTION_ORDER.md](./mansu-operating-model/references/CODE_CONSTRUCTION_ORDER.md): current phase detection and dynamic routing to coding-order source skills
 - [PLAN.md](./PLAN.md): 현재 follow-up과 다음 작업
 - [개발일지.md](./개발일지.md): 시간순 작업 기록
-- [mansu-start](./mansu-start/SKILL.md): 설치/업데이트/복구 진입점
+- [mansu-help](./mansu-help/SKILL.md): 초보자용 상황 진단과 다음 route 추천
+- [mansu-manual](./mansu-manual/SKILL.md): 정적 HTML 매뉴얼 안내
+- [mansu-manual.html](./docs/mansu-manual.html): 초보자용 HTML 사용 설명서
+- [mansu-setting](./mansu-setting/SKILL.md): 설치/업데이트/복구 진입점
 - [mansu-source-curator](./mansu-source-curator/SKILL.md): 원천 스킬 업데이트 후 Mansu 레퍼런스/validator/worklog를 맞추는 내부 관리 스킬
 - [mansu-project-start](./mansu-project-start/SKILL.md): 새 프로젝트를 아이디어/리서치/spec/TDR에서 실행 가능한 PLAN으로 넘기는 진입점
 - [mansu-tdd-total](./mansu-tdd-total/SKILL.md): TDD 시리즈 진입점

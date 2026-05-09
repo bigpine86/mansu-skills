@@ -30,38 +30,61 @@ When a strong source skill already exists, Mansu should delegate to it instead o
 copying the whole workflow into a new skill.
 
 That delegation must be explicit, not vibes-based. Mansu keeps a source skill
-catalog so it can remember what gstack, Oh My / OMO / OMC, and other public skills
+catalog so it can remember what Ouroboros, gstack, Oh My / OMO / OMC, and other public skills
 already do well, then compose them intentionally.
 
 The goal is not to make Mansu louder than those systems. The goal is to make
-Mansu the operator that knows when to use gstack's specialist reviewers, when to
-use Oh My-style execution modes, when to use agent-skills' engineering sequence,
-and when to keep the work simple. Creative composition is allowed only when the
+Mansu the operator that knows how to follow addyosmani/agent-skills as the broad
+software delivery phase map, when to deepen the early definition phase through
+Ouroboros, when to use Oh My-style execution modes inside a phase, when to use
+gstack's specialist gates, and when to keep the work simple. Creative composition
+is allowed only when the
 basic gates remain intact: clear intent, source-aware research, explicit
 architecture, slice boundaries, validation, review, QA, checkpoint, and learning.
 
 Because those source families move, Mansu must keep checking freshness for
-gstack, Oh My / OMO / OMC, and addyosmani/agent-skills. A stale source map is a
+Ouroboros, gstack, Oh My / OMO / OMC, and addyosmani/agent-skills. A stale source map is a
 routing bug, not just old documentation.
 
-Mansu also needs coding-order discipline, but it should not hardcode one fixed
-sequence for every task. Once a plan exists, Mansu detects the current
-construction phase, reads the relevant source skill when needed, then applies
-Mansu invariants: visible acceptance criteria, dependency-aware slices, focused
-context, stable contracts, validation, review, checkpoint, and worklog before
-expanding.
+## Mansu stack model
+
+Mansu is not a replacement for the systems it uses. It is the layer that knows
+how to combine them.
+
+The default mental model is:
+
+| Layer | Typical role |
+| --- | --- |
+| Lifecycle phase spine | addyosmani/agent-skills or an equivalent source route provides the broad SDLC map: define, plan, build, verify, review, harden, document, and ship. |
+| Project definition / memory source | Ouroboros or an equivalent source route deepens the early definition phase with durable project purpose, Seed/Ledger/spec artifacts, long-horizon direction, and continuity. |
+| Mansu | Orchestrator, judge, router, doctrine, gate owner, source selector, and final accountable operator. |
+| Execution-mode source | Oh My / OMO / OMC or an equivalent source route provides modes inside a phase, such as research, ultrawork, ralph, TDD, debug, parallelism, and persistence. |
+| Specialist team source | gstack or an equivalent source route provides specialist review and verification gates such as CEO, design, engineering, QA, security, performance, ship, deploy, and learning. |
+| Implementation actor | Codex or the active coding agent edits files, runs tests, integrates changes, and produces commits. |
+
+The source names are representative, not mandatory. Mansu's job is to decide
+which source route best fits the moment, avoid duplicating that route, and then
+turn the returned artifacts into Mansu-owned gates, phases, slices, evidence, and
+handoff.
+
+Mansu uses the addyosmani-style lifecycle as a phase map, not as a rigid script.
+Once a plan exists, Mansu detects the current phase, reads the relevant source
+skill when needed, then applies Mansu invariants: visible acceptance criteria,
+dependency-aware slices, focused context, stable contracts, validation, review,
+checkpoint, and worklog before expanding.
 
 For greenfield or major project work, Mansu should not jump straight to slices.
-It first creates the project-level thinking layer: purpose, research, spec/TDR,
-architecture, UI direction when relevant, gate mapping, and then the current
-phase `PLAN.md`. For completion, Mansu should not stop at "code written"; it
+It first uses the early lifecycle phases to create the project-level thinking
+layer: purpose, research, spec/TDR, architecture, UI direction when relevant,
+project roadmap/phase order, gate mapping, and then the current phase `PLAN.md`.
+For completion, Mansu should not stop at "code written"; it
 must make an explicit ship/hold judgment and decide where durable learning goes.
 
 ## Operating rule
 
 Before creating or expanding a `mansu-*` skill:
 
-1. Find the best existing Oh My, gstack, or other relevant source skills.
+1. Find the best existing Ouroboros, Oh My, gstack, or other relevant source skills.
 2. Check `mansu-operating-model/references/SOURCE_SKILL_CATALOG.md` for existing
    source skill maps and composition recipes.
 3. Read the source skill enough to understand its purpose, gates, and philosophy.

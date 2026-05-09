@@ -1,0 +1,1982 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mansu Manual</title>
+  <style>
+    @import url("https://cdn.jsdelivr.net/gh/sunn-us/SUIT/fonts/variable/woff2/SUIT-Variable.css");
+    @import url("https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&display=swap");
+
+    :root {
+      --ink: #17201d;
+      --soft-ink: #44514c;
+      --muted: #718078;
+      --cream: #f8efe0;
+      --paper: #fffaf1;
+      --card: rgba(255, 252, 245, 0.9);
+      --line: rgba(65, 78, 72, 0.16);
+      --moss: #2f6f54;
+      --forest: #123c32;
+      --clay: #b86735;
+      --sun: #edc46f;
+      --blue: #284b63;
+      --shadow: 0 24px 70px rgba(25, 32, 30, 0.14);
+      --font-body: "SUIT Variable", "SUIT", "Pretendard Variable", "Apple SD Gothic Neo", sans-serif;
+      --font-display: "Gowun Batang", "Nanum Myeongjo", "AppleMyungjo", serif;
+      --font-code: "SFMono-Regular", Menlo, Consolas, monospace;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        linear-gradient(90deg, rgba(18, 60, 50, 0.035) 1px, transparent 1px),
+        linear-gradient(0deg, rgba(18, 60, 50, 0.035) 1px, transparent 1px),
+        radial-gradient(circle at 14% 8%, rgba(237, 196, 111, 0.38), transparent 26rem),
+        radial-gradient(circle at 92% 10%, rgba(47, 111, 84, 0.2), transparent 28rem),
+        linear-gradient(135deg, #fff8ea 0%, #efe2cc 100%);
+      background-size: 34px 34px, 34px 34px, auto, auto, auto;
+      font-family: var(--font-body);
+      line-height: 1.65;
+      word-break: keep-all;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background: linear-gradient(120deg, rgba(255, 255, 255, 0.5), transparent 34%, rgba(18, 60, 50, 0.08));
+      mix-blend-mode: soft-light;
+    }
+
+    header, .tabs, section, footer {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding-inline: 24px;
+      position: relative;
+    }
+
+    header {
+      padding-top: 42px;
+      padding-bottom: 18px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+      padding: 7px 12px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 250, 241, 0.78);
+      color: var(--forest);
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: var(--moss);
+      box-shadow: 0 0 0 5px rgba(47, 111, 84, 0.12);
+    }
+
+    h1 {
+      margin: 14px 0 12px;
+      max-width: 760px;
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: clamp(34px, 5.6vw, 62px);
+      line-height: 1.06;
+      letter-spacing: -0.065em;
+    }
+
+    .lead {
+      max-width: 720px;
+      margin: 0;
+      color: #33413c;
+      font-weight: 560;
+      font-size: clamp(16px, 1.65vw, 20px);
+      letter-spacing: -0.025em;
+    }
+
+    .tabs {
+      padding-top: 10px;
+      padding-bottom: 34px;
+    }
+
+    .tab-input {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .tab-labels {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      padding: 12px;
+      margin-bottom: 24px;
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      background: rgba(255, 250, 241, 0.78);
+      backdrop-filter: blur(16px);
+      box-shadow: 0 16px 44px rgba(25, 32, 30, 0.08);
+    }
+
+    .tab-labels label {
+      cursor: pointer;
+      padding: 10px 16px;
+      border-radius: 999px;
+      color: var(--forest);
+      font-weight: 900;
+      transition: 180ms ease;
+    }
+
+    #tab-lifecycle:checked ~ .tab-labels label[for="tab-lifecycle"],
+    #tab-mansu-skill:checked ~ .tab-labels label[for="tab-mansu-skill"],
+    #tab-catalog:checked ~ .tab-labels label[for="tab-catalog"],
+    #tab-agents:checked ~ .tab-labels label[for="tab-agents"] {
+      background: var(--forest);
+      color: #fff9ea;
+      box-shadow: inset 0 -1px rgba(255, 255, 255, 0.2);
+    }
+
+    .tab-panel { display: none; }
+
+    #tab-lifecycle:checked ~ .tab-content #panel-lifecycle,
+    #tab-mansu-skill:checked ~ .tab-content #panel-mansu-skill,
+    #tab-catalog:checked ~ .tab-content #panel-catalog,
+    #tab-agents:checked ~ .tab-content #panel-agents {
+      display: block;
+    }
+
+    .intro-card, .phase, .skill-card, .catalog-card, .agent-card {
+      border: 1px solid var(--line);
+      background: var(--card);
+      border-radius: 30px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(14px);
+    }
+
+    .intro-card {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(250px, 0.85fr);
+      gap: 18px;
+      padding: 28px;
+      margin-bottom: 22px;
+    }
+
+    .intro-card h2 {
+      margin: 0 0 12px;
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: clamp(28px, 4vw, 46px);
+      letter-spacing: -0.055em;
+      line-height: 1.08;
+    }
+
+    .intro-note {
+      display: grid;
+      align-content: center;
+      padding: 22px;
+      border-radius: 24px;
+      color: #fff9ea;
+      background:
+        radial-gradient(circle at 15% 15%, rgba(237, 196, 111, 0.45), transparent 12rem),
+        linear-gradient(135deg, var(--forest), #244f40);
+    }
+
+    .intro-note strong {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--sun);
+    }
+
+    .lifecycle {
+      display: grid;
+      gap: 18px;
+      counter-reset: phase;
+    }
+
+    .workbench {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(320px, 0.42fr);
+      gap: 20px;
+      align-items: start;
+    }
+
+    .phase {
+      display: grid;
+      grid-template-columns: 82px minmax(0, 1fr) minmax(260px, 0.86fr);
+      gap: 18px;
+      align-items: stretch;
+      padding: 20px;
+      overflow: hidden;
+      position: relative;
+      cursor: pointer;
+      transition:
+        border-color 160ms ease,
+        box-shadow 160ms ease,
+        transform 160ms ease,
+        background 160ms ease;
+    }
+
+    .phase:hover,
+    .phase.is-active {
+      border-color: rgba(18, 60, 50, 0.32);
+      background:
+        radial-gradient(circle at 0% 0%, rgba(237, 196, 111, 0.22), transparent 15rem),
+        rgba(255, 255, 255, 0.84);
+      box-shadow: 0 22px 60px rgba(18, 60, 50, 0.11);
+      transform: translateY(-1px);
+    }
+
+    .phase:focus-visible {
+      outline: 3px solid rgba(184, 103, 53, 0.44);
+      outline-offset: 4px;
+    }
+
+    .phase::before {
+      counter-increment: phase;
+      content: counter(phase, decimal-leading-zero);
+      display: grid;
+      place-items: center;
+      min-height: 100%;
+      border-radius: 24px;
+      background:
+        linear-gradient(160deg, rgba(237, 196, 111, 0.95), rgba(184, 103, 53, 0.95));
+      color: #2a2118;
+      font-size: 24px;
+      font-weight: 1000;
+      letter-spacing: -0.05em;
+    }
+
+    .phase h3 {
+      margin: 8px 0 10px;
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: clamp(23px, 3vw, 34px);
+      line-height: 1.12;
+      letter-spacing: -0.055em;
+    }
+
+    .phase p {
+      margin: 0 0 10px;
+      color: var(--soft-ink);
+    }
+
+    .phase-command {
+      display: grid;
+      gap: 10px;
+      padding: 18px;
+      border-radius: 24px;
+      background: rgba(255, 255, 255, 0.66);
+      border: 1px solid var(--line);
+    }
+
+    .phase-command span {
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .inspector {
+      position: sticky;
+      top: 92px;
+      border: 1px solid var(--line);
+      border-radius: 30px;
+      padding: 20px;
+      background:
+        radial-gradient(circle at 0% 0%, rgba(237, 196, 111, 0.32), transparent 14rem),
+        rgba(255, 252, 245, 0.94);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(16px);
+    }
+
+    .inspector-kicker {
+      margin: 0 0 8px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 1000;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .detail-card,
+    .mansu-detail-card {
+      display: none;
+      animation: fadeIn 180ms ease;
+    }
+
+    .detail-card.is-active,
+    .mansu-detail-card.is-active {
+      display: block;
+    }
+
+    .detail-card h3,
+    .mansu-detail-card h3 {
+      margin-top: 0;
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 28px;
+      letter-spacing: -0.055em;
+    }
+
+    .detail-card ul,
+    .mansu-detail-card ul {
+      margin: 10px 0 16px;
+      padding-left: 20px;
+      color: var(--soft-ink);
+    }
+
+    .detail-card li + li,
+    .mansu-detail-card li + li {
+      margin-top: 7px;
+    }
+
+    .artifact-list {
+      display: grid;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+	    .artifact-list span {
+	      display: block;
+	      padding: 9px 11px;
+	      border-radius: 14px;
+	      background: rgba(47, 111, 84, 0.08);
+      color: var(--forest);
+      font-size: 14px;
+	      font-weight: 800;
+	    }
+
+	    .source-routes {
+	      display: grid;
+	      gap: 8px;
+	      margin: 14px 0 16px;
+	      padding: 12px;
+	      border-radius: 18px;
+	      background: rgba(23, 32, 29, 0.055);
+	      border: 1px dashed rgba(18, 60, 50, 0.22);
+	    }
+
+	    .source-routes strong {
+	      color: var(--forest);
+	      font-size: 13px;
+	      letter-spacing: 0.06em;
+	      text-transform: uppercase;
+	    }
+
+	    .source-routes p {
+	      margin: 0;
+	      color: var(--soft-ink);
+	      font-size: 14px;
+	      line-height: 1.55;
+	    }
+
+	    .route-list {
+	      display: grid;
+	      gap: 8px;
+	      margin: 0;
+	      padding: 0;
+	      list-style: none;
+	    }
+
+	    .route-list li {
+	      display: grid;
+	      gap: 2px;
+	      padding: 8px 10px;
+	      border-radius: 14px;
+	      background: rgba(255, 250, 241, 0.68);
+	    }
+
+	    .route-list em {
+	      color: var(--muted);
+	      font-style: normal;
+	      font-size: 13px;
+	      line-height: 1.45;
+	    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    pre {
+      margin: 0;
+      overflow-x: auto;
+      padding: 15px;
+      border-radius: 16px;
+      background: #17201d;
+      color: #fff4d7;
+      white-space: pre-wrap;
+      font-family: var(--font-code);
+      font-size: 13px;
+      line-height: 1.55;
+    }
+
+    code {
+      color: var(--blue);
+      font-weight: 900;
+      font-family: var(--font-code);
+      white-space: nowrap;
+    }
+
+    .pill {
+      display: inline-flex;
+      width: fit-content;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: #e7f0e9;
+      color: var(--moss);
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .micro {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .catalog-card {
+      padding: 30px;
+    }
+
+    .catalog-card h2, .agent-card h2 {
+      margin: 0 0 12px;
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: clamp(28px, 4vw, 46px);
+      letter-spacing: -0.055em;
+      line-height: 1.08;
+    }
+
+    .catalog-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 18px 0 22px;
+    }
+
+    .catalog-meta span {
+      padding: 8px 11px;
+      border-radius: 999px;
+      background: rgba(47, 111, 84, 0.1);
+      color: var(--forest);
+      font-size: 13px;
+      font-weight: 900;
+    }
+
+    .catalog-family {
+      margin-top: 18px;
+      padding: 18px;
+      border-radius: 24px;
+      border: 1px solid var(--line);
+      background: rgba(255, 250, 241, 0.72);
+    }
+
+    .catalog-family h3 {
+      margin: 0 0 6px;
+      color: var(--forest);
+      font-size: 24px;
+      letter-spacing: -0.04em;
+    }
+
+    .catalog-family p {
+      margin: 0 0 12px;
+      color: var(--soft-ink);
+    }
+
+    .catalog-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(300px, 0.4fr);
+      gap: 20px;
+      align-items: start;
+    }
+
+    .catalog-list {
+      display: grid;
+      gap: 18px;
+    }
+
+    .catalog-family-block {
+      display: grid;
+      gap: 12px;
+      padding: 18px;
+      border: 1px solid rgba(18, 60, 50, 0.18);
+      border-radius: 30px;
+      background:
+        radial-gradient(circle at 100% 0%, rgba(237, 196, 111, 0.22), transparent 13rem),
+        rgba(255, 250, 241, 0.52);
+    }
+
+    .catalog-family-block > h3 {
+      margin: 0;
+      font-family: var(--font-display);
+      color: var(--forest);
+      font-size: 30px;
+      letter-spacing: -0.055em;
+    }
+
+    .catalog-family-block > p {
+      margin: -6px 0 4px;
+      color: var(--soft-ink);
+      font-size: 14px;
+    }
+
+    .catalog-section {
+      display: grid;
+      gap: 10px;
+      padding: 16px;
+      border-radius: 24px;
+      border: 1px solid var(--line);
+      background: rgba(255, 250, 241, 0.72);
+    }
+
+    .catalog-section h3 {
+      margin: 0;
+      color: var(--forest);
+      font-size: 21px;
+      letter-spacing: -0.04em;
+    }
+
+    .catalog-section p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .catalog-items {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 8px;
+    }
+
+    .source-family {
+      display: grid;
+      gap: 14px;
+      padding: 18px;
+      border-radius: 28px;
+      border: 1px solid rgba(18, 60, 50, 0.2);
+      background:
+        linear-gradient(135deg, rgba(255, 250, 241, 0.9), rgba(224, 238, 219, 0.5)),
+        rgba(255, 250, 241, 0.82);
+      box-shadow: 0 18px 34px rgba(18, 60, 50, 0.07);
+    }
+
+    .source-family > h3 {
+      margin: 0;
+      color: var(--forest);
+      font-size: 24px;
+      letter-spacing: -0.05em;
+    }
+
+    .source-family > p {
+      margin: -8px 0 0;
+      color: var(--soft-ink);
+      font-size: 14px;
+    }
+
+    .source-groups {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(245px, 1fr));
+      gap: 10px;
+    }
+
+    .source-group {
+      display: grid;
+      gap: 8px;
+      padding: 12px;
+      border-radius: 20px;
+      border: 1px solid rgba(18, 60, 50, 0.12);
+      background: rgba(255, 255, 255, 0.52);
+    }
+
+    .source-group h4 {
+      margin: 0;
+      color: var(--cedar);
+      font-size: 15px;
+      letter-spacing: -0.02em;
+    }
+
+    .catalog-item {
+      appearance: none;
+      cursor: pointer;
+      display: grid;
+      gap: 3px;
+      min-height: 74px;
+      padding: 10px 11px;
+      border: 1px solid rgba(18, 60, 50, 0.13);
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.72);
+      color: var(--soft-ink);
+      font: inherit;
+      text-align: left;
+      transition: 160ms ease;
+    }
+
+    .catalog-item:hover,
+    .catalog-item.is-active {
+      border-color: rgba(18, 60, 50, 0.35);
+      background: rgba(47, 111, 84, 0.1);
+      transform: translateY(-1px);
+    }
+
+    .catalog-item code {
+      color: var(--forest);
+      font-size: 13px;
+    }
+
+    .catalog-item small {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.35;
+    }
+
+    .catalog-inspector {
+      position: sticky;
+      top: 92px;
+      display: grid;
+      gap: 12px;
+      padding: 20px;
+      border: 1px solid var(--line);
+      border-radius: 30px;
+      background:
+        radial-gradient(circle at 0% 0%, rgba(237, 196, 111, 0.28), transparent 13rem),
+        rgba(255, 252, 245, 0.94);
+      box-shadow: var(--shadow);
+    }
+
+    .catalog-inspector h3 {
+      margin: 0;
+      font-family: var(--font-display);
+      font-size: 30px;
+      letter-spacing: -0.055em;
+    }
+
+    .catalog-inspector p {
+      margin: 0;
+      color: var(--soft-ink);
+    }
+
+    .catalog-inspector dl {
+      display: grid;
+      gap: 10px;
+      margin: 0;
+    }
+
+    .catalog-inspector dt {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 1000;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .catalog-inspector dd {
+      margin: 0;
+      color: var(--soft-ink);
+    }
+
+    .agent-card {
+      padding: 30px;
+    }
+
+    .agent-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+      gap: 14px;
+      margin-top: 20px;
+    }
+
+    .agent-note {
+      padding: 18px;
+      border-radius: 24px;
+      border: 1px solid var(--line);
+      background: rgba(255, 250, 241, 0.76);
+    }
+
+    .agent-note h3 {
+      margin: 0 0 8px;
+      color: var(--forest);
+      font-size: 21px;
+      letter-spacing: -0.04em;
+    }
+
+    .agent-note p,
+    .agent-note li {
+      color: var(--soft-ink);
+      font-size: 14px;
+    }
+
+    .agent-note ul,
+    .agent-note ol {
+      margin: 10px 0 0;
+      padding-left: 20px;
+    }
+
+    .inventory-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 8px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .inventory-grid li {
+      padding: 8px 10px;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.68);
+      color: var(--soft-ink);
+      font-size: 14px;
+    }
+
+    .inventory-grid code {
+      white-space: normal;
+    }
+
+    .skill-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 14px;
+    }
+
+    .skill-card {
+      padding: 18px;
+      box-shadow: none;
+    }
+
+    .mansu-layout {
+      margin-top: 18px;
+    }
+
+    .mansu-skill-card {
+      cursor: pointer;
+      transition:
+        border-color 160ms ease,
+        background 160ms ease,
+        transform 160ms ease,
+        box-shadow 160ms ease;
+    }
+
+    .mansu-skill-card:hover,
+    .mansu-skill-card.is-active {
+      border-color: rgba(18, 60, 50, 0.35);
+      background: rgba(47, 111, 84, 0.08);
+      transform: translateY(-1px);
+      box-shadow: 0 14px 30px rgba(18, 60, 50, 0.08);
+    }
+
+    .mansu-skill-card:focus-visible {
+      outline: 3px solid rgba(184, 103, 53, 0.34);
+      outline-offset: 4px;
+    }
+
+    .skill-card strong {
+      display: block;
+      margin-bottom: 6px;
+      color: var(--forest);
+    }
+
+    .skill-card p {
+      margin: 0;
+      color: var(--soft-ink);
+      font-size: 14px;
+    }
+
+    footer {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 0 24px 70px;
+      color: var(--muted);
+    }
+
+    @media (max-width: 820px) {
+      header { padding-top: 34px; }
+      .intro-card, .phase, .layer, .workbench, .catalog-layout {
+        grid-template-columns: 1fr;
+      }
+      .inspector, .catalog-inspector {
+        position: static;
+      }
+      .phase::before {
+        min-height: 52px;
+        width: 82px;
+      }
+      .tab-labels {
+        position: static;
+      }
+    }
+  </style>
+</head>
+<body data-manual-purpose="lifecycle-route-map" data-manual-version="2026-05-09">
+  <header data-manual-section="hero">
+    <span class="eyebrow">Mansu Skill</span>
+    <h1>Mansu Skill Manual</h1>
+    <p class="lead">Mansu Skill은 모두가 agentic coding을 하기 위한 오케스트레이션 시스템입니다.</p>
+  </header>
+
+  <div class="tabs">
+    <input class="tab-input" type="radio" id="tab-lifecycle" name="manual-tab" checked>
+    <input class="tab-input" type="radio" id="tab-mansu-skill" name="manual-tab">
+    <input class="tab-input" type="radio" id="tab-catalog" name="manual-tab">
+    <input class="tab-input" type="radio" id="tab-agents" name="manual-tab">
+    <div class="tab-labels" role="tablist" aria-label="Mansu manual sections">
+      <label for="tab-lifecycle" role="tab">개발 생애주기</label>
+      <label for="tab-mansu-skill" role="tab">Mansu Skill</label>
+      <label for="tab-catalog" role="tab">스킬 카탈로그</label>
+      <label for="tab-agents" role="tab">에이전트 안내</label>
+    </div>
+
+    <div class="tab-content">
+      <section class="tab-panel" id="panel-lifecycle" data-manual-panel="lifecycle">
+        <div class="intro-card">
+          <div>
+            <h2>개발 생애주기</h2>
+            <p>addyosmani의 Define → Plan → Build → Verify → Review → Ship 큰 phase를 Mansu 흐름으로 연결합니다.</p>
+          </div>
+          <div class="intro-note">
+            <strong>시작점</strong>
+            <pre>mansu-help</pre>
+          </div>
+        </div>
+
+        <div class="workbench">
+        <div class="lifecycle" aria-label="Mansu development lifecycle">
+          <article class="phase is-active" data-detail="help" role="button" tabindex="0" aria-pressed="true">
+            <div>
+              <span class="pill">시작</span>
+              <h3>현재 작업을 분류한다</h3>
+              <p>설치, 기획, 구현, 디버그, 검증, 출하 중 어디에 있는지 잡습니다.</p>
+              <p><strong>사용:</strong> <code>$mansu-help</code></p>
+            </div>
+            <div class="phase-command">
+	              <span>Mansu Skill</span>
+	              <pre>mansu-help</pre>
+            </div>
+          </article>
+
+          <article class="phase" data-detail="setting" role="button" tabindex="0" aria-pressed="false">
+            <div>
+              <span class="pill">준비</span>
+              <h3>도구와 스킬을 준비한다</h3>
+              <p>Mansu, Ouroboros, gstack, Oh My 계열 도구를 현재 환경에 맞춥니다.</p>
+              <p><strong>사용:</strong> <code>$mansu-setting</code></p>
+            </div>
+            <div class="phase-command">
+	              <span>Mansu Skill</span>
+	              <pre>mansu-setting</pre>
+            </div>
+          </article>
+
+          <article class="phase" data-detail="project-start" role="button" tabindex="0" aria-pressed="false">
+            <div>
+              <span class="pill">프로젝트 시작</span>
+              <h3>큰 방향을 설계한다</h3>
+              <p>목적, 사용자, 리서치, spec, TDR, UI 방향, 큰 기능 순서, 현재 phase PLAN을 정리합니다.</p>
+              <p><strong>사용:</strong> <code>$mansu-project-start</code></p>
+            </div>
+            <div class="phase-command">
+	              <span>Mansu Skill</span>
+	              <pre>mansu-project-start</pre>
+            </div>
+          </article>
+
+          <article class="phase" data-detail="operating-model" role="button" tabindex="0" aria-pressed="false">
+            <div>
+              <span class="pill">운영 원칙</span>
+              <h3>프로젝트에서 어떻게 일할지 정한다</h3>
+              <p>AGENTS.md, CODING_RULES.md, 게이트, 문서 규칙, 검증 기준을 프로젝트에 맞게 정리합니다.</p>
+              <p><strong>사용:</strong> <code>$mansu-operating-model</code></p>
+            </div>
+            <div class="phase-command">
+	              <span>Mansu Skill</span>
+	              <pre>mansu-operating-model</pre>
+            </div>
+          </article>
+
+          <article class="phase" data-detail="tdd-total" role="button" tabindex="0" aria-pressed="false">
+            <div>
+              <span class="pill">구현</span>
+              <h3>기능을 slice로 실행한다</h3>
+              <p><code>$mansu-tdd-total</code>이 계획을 검토하고 slice별 실행 방식을 고릅니다.</p>
+              <p><strong>사용:</strong> <code>$mansu-tdd-total</code></p>
+            </div>
+            <div class="phase-command">
+	              <span>Mansu Skill</span>
+	              <pre>mansu-tdd-total</pre>
+            </div>
+          </article>
+
+          <article class="phase" data-detail="debug" role="button" tabindex="0" aria-pressed="false">
+            <div>
+              <span class="pill">문제 발생</span>
+              <h3>버그는 원인부터 찾는다</h3>
+              <p>에러, 회귀, 이상 동작이 나오면 바로 고치기보다 재현, 격리, 근본 원인, 최소 수정, 회귀 검증 순서로 봅니다.</p>
+              <p><strong>사용:</strong> <code>$mansu-debug-rootcause</code></p>
+            </div>
+            <div class="phase-command">
+	              <span>Mansu Skill</span>
+	              <pre>mansu-debug-rootcause</pre>
+            </div>
+          </article>
+
+          <article class="phase" data-detail="web-verify" role="button" tabindex="0" aria-pressed="false">
+            <div>
+              <span class="pill">사용자 검증</span>
+              <h3>웹앱은 실제 사용자처럼 눌러본다</h3>
+              <p>페이지, 버튼, 폼, 반응형, 콘솔, 성능, 기본 보안을 수정 없이 점검합니다.</p>
+              <p><strong>사용:</strong> <code>$mansu-web-verify</code></p>
+            </div>
+            <div class="phase-command">
+	              <span>Mansu Skill</span>
+	              <pre>mansu-web-verify</pre>
+            </div>
+          </article>
+
+          <article class="phase" data-detail="ship" role="button" tabindex="0" aria-pressed="false">
+            <div>
+              <span class="pill">출하</span>
+              <h3>출하 가능 상태를 판단한다</h3>
+              <p>health, review, QA, docs, PR, 배포 감시, 학습 기록까지 확인합니다.</p>
+              <p><strong>사용:</strong> <code>$mansu-ship-release</code></p>
+            </div>
+            <div class="phase-command">
+	              <span>Mansu Skill</span>
+	              <pre>mansu-ship-release</pre>
+            </div>
+          </article>
+
+          <article class="phase" data-detail="maintenance" role="button" tabindex="0" aria-pressed="false">
+            <div>
+              <span class="pill">관리</span>
+              <h3>원천 스킬과 매뉴얼을 갱신한다</h3>
+              <p>원천 도구가 바뀌면 Mansu의 스킬 지도와 매뉴얼도 함께 맞춥니다.</p>
+              <p><strong>사용:</strong> <code>$mansu-source-curator</code> / <code>$mansu-manual</code></p>
+            </div>
+            <div class="phase-command">
+	              <span>Mansu Skill</span>
+	              <pre>mansu-source-curator</pre>
+            </div>
+          </article>
+        </div>
+
+        <aside class="inspector" aria-live="polite">
+          <p class="inspector-kicker">내부 흐름</p>
+
+	          <div class="detail-card is-active" data-detail-card="help">
+	            <h3>$mansu-help</h3>
+	            <p>현재 작업을 분류하고 바로 쓸 Mansu 스킬을 고릅니다.</p>
+		            <div class="source-routes">
+		              <strong>조합하는 원천</strong>
+		              <ul class="route-list">
+		                <li><code>Mansu selector</code><em>현재 작업을 분류하고 맞는 Mansu 스킬로 연결합니다.</em></li>
+		                <li><code>mansu-setting</code> / <code>mansu-project-start</code> / <code>mansu-tdd-total</code><em>세팅, 프로젝트 시작, 구현으로 이어지는 대표 실행 루트입니다.</em></li>
+		              </ul>
+		            </div>
+	            <ul>
+              <li>현재 작업 상태를 분류합니다.</li>
+              <li>필요하면 질문을 1~3개만 합니다.</li>
+              <li>바로 쓸 Mansu 스킬을 추천합니다.</li>
+              <li>다음 실행 항목을 짧게 정리합니다.</li>
+            </ul>
+            <div class="artifact-list"><span>산출물: 현재 작업 요약</span><span>산출물: 추천 Mansu 스킬</span></div>
+          </div>
+
+	          <div class="detail-card" data-detail-card="setting">
+	            <h3>$mansu-setting</h3>
+	            <p>필요한 도구와 스킬을 현재 런타임에 맞게 준비합니다.</p>
+		            <div class="source-routes">
+		              <strong>조합하는 원천</strong>
+		              <ul class="route-list">
+		                <li>Ouroboros <code>setup/help</code><em>프로젝트 생명주기 도구를 현재 런타임에서 쓸 수 있게 준비합니다.</em></li>
+		                <li>gstack <code>setup/update</code><em>전문가 역할, QA, 리뷰, 배포 게이트 스킬을 설치하거나 갱신합니다.</em></li>
+		                <li>Oh My adapter <code>omx</code>/<code>omo</code>/<code>omc</code><em>Codex, OpenCode, Claude Code 같은 실행 환경에 맞는 Oh My 계열 호출 방식을 맞춥니다.</em></li>
+		                <li>addyosmani/agent-skills reference check<em>코딩 순서와 문서/품질 흐름에 참고할 공개 스킬 원천을 최신으로 봅니다.</em></li>
+		              </ul>
+		            </div>
+	            <ul>
+	              <li>런타임, OS, 스킬 경로를 감지합니다.</li>
+	              <li>Ouroboros, gstack, Oh My 계열 준비 상태를 봅니다.</li>
+              <li>필요하면 설치, 업데이트, 동기화를 진행합니다.</li>
+              <li>검증 스크립트로 설치 상태를 확인합니다.</li>
+            </ul>
+            <div class="artifact-list"><span>산출물: 준비 상태 리포트</span><span>산출물: 설치/업데이트 목록</span></div>
+          </div>
+
+	          <div class="detail-card" data-detail-card="project-start">
+	            <h3>$mansu-project-start</h3>
+	            <p>큰 작업을 시작하기 전에 방향, 근거, 현재 phase를 잡습니다.</p>
+		            <div class="source-routes">
+		              <strong>조합하는 원천</strong>
+		              <ul class="route-list">
+		                <li>addyosmani lifecycle <code>Define → Plan</code><em>전체 개발 생애주기의 큰 phase를 잡고, 현재 작업이 정의/계획/구현 중 어디인지 판단합니다.</em></li>
+		                <li>Ouroboros <code>interview</code>/<code>pm</code>/<code>seed</code>/<code>brownfield</code><em>초기 정의 phase 안에서 목적, 제품 정의, 장기 기억, 기존 코드베이스 파악을 깊게 만듭니다.</em></li>
+		                <li><code>gstack-office-hours</code><em>사용자, 문제, wedge, MVP가 진짜인지 창업자 관점으로 압축합니다.</em></li>
+		                <li><code>gstack-autoplan</code> / <code>gstack-plan-*</code><em>제품, 디자인, 엔지니어링, DX 관점으로 계획을 비평합니다.</em></li>
+		                <li>Oh My <code>research</code>/<code>deepsearch</code><em>해당 phase 안에서 Threads, Reddit, GitHub, 실제 레포를 뒤져 참고 프로젝트와 인사이트를 찾습니다.</em></li>
+		                <li>addyosmani <code>spec-driven-development</code><em>요구사항과 성공 기준을 구현 가능한 spec으로 정리합니다.</em></li>
+		              </ul>
+		            </div>
+	            <ul>
+	              <li>현재 작업이 addyosmani 생애주기상 어느 phase인지 먼저 잡습니다.</li>
+	              <li>상황에 맞는 원천 스킬을 고릅니다.</li>
+	              <li>필요한 리서치, spec, TDR, UI 방향을 정리합니다.</li>
+	              <li>메뉴, 데이터 연결, 로그인, 게시판, 관리자 같은 큰 기능 순서와 phase roadmap을 잡습니다.</li>
+              <li>제품/디자인/엔지니어링/DX 관점으로 계획을 비평합니다.</li>
+              <li>현재 phase의 PLAN.md로 넘깁니다.</li>
+            </ul>
+            <div class="artifact-list"><span>산출물: spec/TDR/design 방향</span><span>산출물: project roadmap / phase order</span><span>산출물: phase PLAN.md</span></div>
+          </div>
+
+	          <div class="detail-card" data-detail-card="operating-model">
+	            <h3>$mansu-operating-model</h3>
+	            <p>프로젝트 안에서 에이전트가 따를 작업 원칙을 정합니다.</p>
+		            <div class="source-routes">
+		              <strong>조합하는 원천</strong>
+		              <ul class="route-list">
+		                <li>Mansu doctrine/templates<em>프로젝트가 어떤 원칙으로 일할지 정하는 기준 문서입니다.</em></li>
+		                <li><code>SOURCE_SKILL_CATALOG.md</code><em>상황별로 어떤 외부/원천 스킬을 가져올지 보는 지도입니다.</em></li>
+		                <li><code>DOCUMENT_CREATION_ORDER.md</code><em>README, spec, TDR, DESIGN, PLAN 같은 문서를 언제 만들지 정합니다.</em></li>
+		                <li><code>CODE_CONSTRUCTION_ORDER.md</code><em>코드를 어떤 순서로 읽고, 나누고, 검증할지 정하는 구현 순서 지도입니다.</em></li>
+		                <li><code>gstack-health</code><em>프로젝트의 현재 타입/린트/테스트/품질 상태를 확인합니다.</em></li>
+		              </ul>
+		            </div>
+	            <ul>
+	              <li>Mansu doctrine을 프로젝트에 맞게 적용합니다.</li>
+	              <li>AGENTS.md와 CODING_RULES.md 구조를 잡습니다.</li>
+              <li>review, QA, checkpoint, commit 기준을 명확히 합니다.</li>
+            </ul>
+            <div class="artifact-list"><span>산출물: AGENTS.md</span><span>산출물: CODING_RULES.md</span></div>
+          </div>
+
+	          <div class="detail-card" data-detail-card="tdd-total">
+	            <h3>$mansu-tdd-total</h3>
+	            <p>구현 목표를 작은 slice로 자르고 실행 방식을 고릅니다.</p>
+		            <div class="source-routes">
+		              <strong>조합하는 원천</strong>
+		              <ul class="route-list">
+		                <li><code>mansu-tdd-lite</code> / <code>mansu-tdd-strict</code><em>각 slice를 가벼운 검증 중심으로 갈지, RED 테스트부터 잠글지 실행 방식을 맡습니다.</em></li>
+		                <li>addyosmani <code>planning-and-task-breakdown</code><em>큰 작업을 실행 가능한 작은 작업 단위로 쪼개는 관점을 보강합니다.</em></li>
+		                <li><code>CODE_CONSTRUCTION_ORDER.md</code><em>현재 slice의 구현 단계와 참고할 원천 스킬을 고릅니다.</em></li>
+		                <li><code>gstack-autoplan</code> / <code>gstack-plan-*</code><em>구현 전 계획을 제품/디자인/아키/DX 관점에서 비평합니다.</em></li>
+		              </ul>
+		            </div>
+	            <ul>
+	              <li>계획을 여러 역할 관점으로 검토합니다.</li>
+	              <li>작업을 순차 vertical slice로 나눕니다.</li>
+              <li>각 slice의 완료 조건, 영향 파일, 테스트 기준, 위험 요소를 정합니다.</li>
+              <li>필요하면 내부적으로 strict/lite 방식을 선택합니다.</li>
+            </ul>
+            <div class="artifact-list"><span>산출물: slice table</span><span>산출물: 구현/검증 기록</span></div>
+          </div>
+
+	          <div class="detail-card" data-detail-card="debug">
+	            <h3>$mansu-debug-rootcause</h3>
+	            <p>증상만 덮지 않고, 다시 깨지지 않게 원인을 잠급니다.</p>
+		            <div class="source-routes">
+		              <strong>조합하는 원천</strong>
+		              <ul class="route-list">
+		                <li>Oh My <code>debug</code><em>버그를 증상, 재현, 원인, 수정, 검증으로 밀고 가는 기본 디버그 루프입니다.</em></li>
+		                <li>Oh My <code>doctor</code> / <code>build-fix</code> / <code>git-master</code><em>환경 문제, 빌드 실패, 회귀 시작점 추적처럼 특수한 문제를 맡습니다.</em></li>
+		                <li><code>gstack-investigate</code><em>근본 원인, scope lock, 패턴 분석, 회귀 증거를 강하게 요구하는 조사 게이트입니다.</em></li>
+		                <li><code>gstack-browse</code> / <code>gstack-qa-only</code><em>브라우저에서 재현 증거, 스크린샷, 콘솔, 사용자 플로우를 수집합니다.</em></li>
+		                <li><code>gstack-benchmark</code><em>느림, 성능 회귀, 리소스 증가가 의심될 때 기준선을 잡습니다.</em></li>
+		              </ul>
+		            </div>
+	            <ul>
+	              <li>재현 경로와 증거를 먼저 확보합니다.</li>
+	              <li>원인을 격리하고 가설을 세웁니다.</li>
+              <li>최소 수정으로 고칩니다.</li>
+              <li>회귀 테스트 또는 수동 검증 증거를 남깁니다.</li>
+            </ul>
+            <div class="artifact-list"><span>산출물: 근본 원인</span><span>산출물: 수정 + 회귀 증거</span></div>
+          </div>
+
+	          <div class="detail-card" data-detail-card="web-verify">
+	            <h3>$mansu-web-verify</h3>
+	            <p>웹앱을 실제 사용자처럼 눌러보고 수정 없이 리포트합니다.</p>
+		            <div class="source-routes">
+		              <strong>조합하는 원천</strong>
+		              <ul class="route-list">
+		                <li><code>gstack-browse</code><em>실제 브라우저를 열어 버튼, 폼, 화면 상태, 콘솔을 확인합니다.</em></li>
+		                <li><code>gstack-qa-only</code><em>수정 없이 QA 리포트, 재현 단계, 위험도를 남깁니다.</em></li>
+		                <li><code>gstack-benchmark</code><em>로드 속도, 체감 지연, 리소스 크기를 성능 관점으로 봅니다.</em></li>
+		                <li><code>gstack-cso</code><em>입력 검증, 권한, 비밀정보, 공급망 같은 보안 리스크를 봅니다.</em></li>
+		                <li>Oh My <code>playwright</code> / <code>ultraqa</code> / <code>security-review</code><em>검증을 반복 가능한 E2E, 넓은 QA, 간단 보안 체크로 확장할 때 씁니다.</em></li>
+		              </ul>
+		            </div>
+	            <ul>
+	              <li>페이지와 주요 버튼/폼을 탐색합니다.</li>
+	              <li>반응형, 콘솔 에러, 성능, 기본 보안을 확인합니다.</li>
+              <li>문제를 재현 가능한 형태로 정리합니다.</li>
+            </ul>
+            <div class="artifact-list"><span>산출물: 웹 QA 리포트</span><span>산출물: 재현 단계와 위험도</span></div>
+          </div>
+
+	          <div class="detail-card" data-detail-card="ship">
+	            <h3>$mansu-ship-release</h3>
+	            <p>코드 작성 완료와 출하 가능 상태를 분리해서 판단합니다.</p>
+		            <div class="source-routes">
+		              <strong>조합하는 원천</strong>
+		              <ul class="route-list">
+		                <li><code>gstack-health</code><em>출하 전 테스트, 타입, 린트, 품질 신호를 종합 점검합니다.</em></li>
+		                <li><code>gstack-review</code><em>diff 관점에서 회귀, 누락 테스트, 위험한 side effect를 찾습니다.</em></li>
+		                <li><code>gstack-ship</code><em>커밋, 푸시, PR, changelog 같은 출하 루틴을 맡습니다.</em></li>
+		                <li><code>gstack-document-release</code><em>README, CHANGELOG, 아키텍처 문서가 실제 변경과 맞는지 동기화합니다.</em></li>
+		                <li><code>gstack-land-and-deploy</code> / <code>gstack-canary</code><em>머지, 배포, 배포 직후 감시를 담당합니다.</em></li>
+		                <li><code>gstack-retro</code> / <code>gstack-learn</code><em>이번 작업의 교훈과 재사용할 패턴을 남깁니다.</em></li>
+		              </ul>
+		            </div>
+	            <ul>
+	              <li>health, review, QA, docs 상태를 확인합니다.</li>
+	              <li>보안/성능/배포 리스크가 있으면 추가 게이트를 겁니다.</li>
+              <li>출하/보류 판단과 남은 리스크를 정리합니다.</li>
+            </ul>
+            <div class="artifact-list"><span>산출물: 출하/보류 판단</span><span>산출물: 릴리스 노트 / 남은 리스크</span></div>
+          </div>
+
+	          <div class="detail-card" data-detail-card="maintenance">
+	            <h3>$mansu-source-curator / $mansu-manual</h3>
+	            <p>Mansu가 쓰는 원천 도구와 매뉴얼이 낡지 않게 유지합니다.</p>
+		            <div class="source-routes">
+		              <strong>조합하는 원천</strong>
+		              <ul class="route-list">
+		                <li>Ouroboros / gstack / Oh My / addyosmani freshness check<em>Mansu가 의존하는 원천 도구의 버전과 스킬 목록이 바뀌었는지 확인합니다.</em></li>
+		                <li><code>SOURCE_SKILL_LOCK.json</code><em>현재 Mansu가 알고 있는 원천 스킬 스냅샷을 기계가 읽을 수 있게 저장합니다.</em></li>
+		                <li><code>SOURCE_SKILL_CATALOG.md</code><em>사람이 읽는 원천 스킬 지도와 사용 기준을 갱신합니다.</em></li>
+		                <li>validators / manual<em>문서와 실제 스킬 설명이 서로 어긋나지 않게 검증 기준과 매뉴얼을 같이 고칩니다.</em></li>
+		              </ul>
+		            </div>
+	            <ul>
+	              <li>원천 스킬 변경 여부를 확인합니다.</li>
+	              <li>source catalog, lock, validator를 갱신합니다.</li>
+              <li>새 스킬이 생기면 HTML 매뉴얼도 같이 고칩니다.</li>
+            </ul>
+            <div class="artifact-list"><span>산출물: 갱신된 원천 지도</span><span>산출물: 갱신된 매뉴얼</span></div>
+          </div>
+        </aside>
+        </div>
+      </section>
+
+      <section class="tab-panel" id="panel-mansu-skill" data-manual-panel="mansu-skill" data-manual-section="top-level-routes">
+        <div class="catalog-card">
+          <h2>Mansu Skill</h2>
+          <p class="micro">사용자가 직접 부르는 최상위 Mansu 스킬입니다. 카드를 누르면 목적, 내부 흐름, 산출물을 자세히 볼 수 있습니다.</p>
+          <div class="catalog-layout mansu-layout">
+            <div class="catalog-list">
+              <div class="catalog-family-block">
+                <h3>직접 호출하는 스킬</h3>
+                <p>각 스킬이 무엇을 위해 존재하는지, 내부에서 무엇을 조합하는지, 어떤 결과를 남기는지 확인합니다.</p>
+                <div class="skill-grid">
+                  <article class="skill-card mansu-skill-card is-active" id="mansu-help" data-mansu-detail="mansu-help" role="button" tabindex="0" aria-pressed="true"><strong><code>$mansu-help</code></strong><p>현재 작업을 분류하고 바로 쓸 Mansu 스킬을 고릅니다.</p></article>
+                  <article class="skill-card mansu-skill-card" id="mansu-manual" data-mansu-detail="mansu-manual" role="button" tabindex="0" aria-pressed="false"><strong><code>$mansu-manual</code></strong><p>이 HTML 매뉴얼 위치를 알려주고 내용을 설명합니다.</p></article>
+                  <article class="skill-card mansu-skill-card" id="mansu-setting" data-mansu-detail="mansu-setting" role="button" tabindex="0" aria-pressed="false"><strong><code>$mansu-setting</code></strong><p>설치, 업데이트, 런타임, 원천 도구 준비 상태를 확인합니다.</p></article>
+                  <article class="skill-card mansu-skill-card" id="mansu-source-curator" data-mansu-detail="mansu-source-curator" role="button" tabindex="0" aria-pressed="false"><strong><code>$mansu-source-curator</code></strong><p>원천 스킬과 Mansu 레퍼런스 지도를 최신으로 맞춥니다.</p></article>
+                  <article class="skill-card mansu-skill-card" id="mansu-project-start" data-mansu-detail="mansu-project-start" role="button" tabindex="0" aria-pressed="false"><strong><code>$mansu-project-start</code></strong><p>새 프로젝트나 큰 기능군을 기획과 현재 phase PLAN까지 연결합니다.</p></article>
+                  <article class="skill-card mansu-skill-card" id="mansu-operating-model" data-mansu-detail="mansu-operating-model" role="button" tabindex="0" aria-pressed="false"><strong><code>$mansu-operating-model</code></strong><p>AGENTS.md, CODING_RULES.md, 운영 원칙과 게이트를 잡습니다.</p></article>
+                  <article class="skill-card mansu-skill-card" id="mansu-tdd-total" data-mansu-detail="mansu-tdd-total" role="button" tabindex="0" aria-pressed="false"><strong><code>$mansu-tdd-total</code></strong><p>구현 목표를 slice로 나누고 필요한 실행 방식을 내부에서 판단합니다.</p></article>
+                  <article class="skill-card mansu-skill-card" id="mansu-tdd-strict" data-mansu-detail="mansu-tdd-strict" role="button" tabindex="0" aria-pressed="false"><strong><code>$mansu-tdd-strict</code></strong><p>고위험 slice에서 필요할 때 Mansu가 선택할 수 있는 엄격 모드입니다.</p></article>
+                  <article class="skill-card mansu-skill-card" id="mansu-tdd-lite" data-mansu-detail="mansu-tdd-lite" role="button" tabindex="0" aria-pressed="false"><strong><code>$mansu-tdd-lite</code></strong><p>RED 테스트가 인위적인 작업에서 Mansu가 선택할 수 있는 가벼운 모드입니다.</p></article>
+                  <article class="skill-card mansu-skill-card" id="mansu-debug-rootcause" data-mansu-detail="mansu-debug-rootcause" role="button" tabindex="0" aria-pressed="false"><strong><code>$mansu-debug-rootcause</code></strong><p>버그를 재현, 격리, 원인 증명, 최소 수정, 회귀 검증으로 다룹니다.</p></article>
+                  <article class="skill-card mansu-skill-card" id="mansu-web-verify" data-mansu-detail="mansu-web-verify" role="button" tabindex="0" aria-pressed="false"><strong><code>$mansu-web-verify</code></strong><p>웹앱을 실제 사용자처럼 눌러 수정 없이 검증합니다.</p></article>
+                  <article class="skill-card mansu-skill-card" id="mansu-ship-release" data-mansu-detail="mansu-ship-release" role="button" tabindex="0" aria-pressed="false"><strong><code>$mansu-ship-release</code></strong><p>구현 완료 후 출하 가능한 상태인지 판단합니다.</p></article>
+                </div>
+              </div>
+            </div>
+            <aside class="catalog-inspector" aria-live="polite">
+              <p class="inspector-kicker">Mansu Skill Detail</p>
+              <div class="mansu-detail-card is-active" data-mansu-detail-card="mansu-help">
+                <h3>$mansu-help</h3>
+                <p>지금 무엇을 해야 할지 막연할 때 쓰는 입구 스킬입니다.</p>
+                <div class="source-routes">
+                  <strong>내부에서 하는 일</strong>
+                  <ul class="route-list">
+                    <li>현재 작업 분류<em>설치, 기획, 구현, 디버그, 검증, 출하 중 어디에 있는지 잡습니다.</em></li>
+                    <li>질문 최소화<em>필요할 때만 1~3개의 짧은 질문으로 다음 판단에 필요한 정보만 모읍니다.</em></li>
+                    <li>다음 스킬 추천<em><code>mansu-setting</code>, <code>mansu-project-start</code>, <code>mansu-tdd-total</code> 같은 다음 루트로 연결합니다.</em></li>
+                  </ul>
+                </div>
+                <ul>
+                  <li>목적: 현재 상태를 분류하고 다음 실행 지점을 정합니다.</li>
+                  <li>언제: 어디서 시작할지 모르거나 현재 phase가 헷갈릴 때 씁니다.</li>
+                  <li>주요 결과: 지금 해야 할 일과 다음 Mansu 스킬을 짧게 정리합니다.</li>
+                </ul>
+                <div class="artifact-list"><span>산출물: 현재 작업 요약</span><span>산출물: 추천 Mansu 스킬</span><span>산출물: 다음 실행 문장</span></div>
+              </div>
+              <div class="mansu-detail-card" data-mansu-detail-card="mansu-manual">
+                <h3>$mansu-manual</h3>
+                <p>Mansu 전체 흐름과 스킬 지도를 한 화면으로 보여주는 시각 매뉴얼 스킬입니다.</p>
+                <div class="source-routes">
+                  <strong>내부에서 하는 일</strong>
+                  <ul class="route-list">
+                    <li>정적 매뉴얼 안내<em><code>docs/mansu-manual.html</code> 위치와 주요 탭 구성을 알려줍니다.</em></li>
+                    <li>현재 구조 확인<em>생애주기, Mansu Skill, 스킬 카탈로그, 에이전트 안내가 맞는지 확인합니다.</em></li>
+                    <li>변경 동기화<em>새 스킬이나 구조 변경이 있으면 validator와 함께 갱신합니다.</em></li>
+                  </ul>
+                </div>
+                <ul>
+                  <li>목적: Mansu를 빠르게 훑고 지금 필요한 스킬을 찾게 돕습니다.</li>
+                  <li>언제: 시각 매뉴얼이 필요하거나 문서가 낡았는지 점검할 때 씁니다.</li>
+                  <li>주요 결과: 매뉴얼 경로, 구조 요약, 문서 갱신 여부를 남깁니다.</li>
+                </ul>
+                <div class="artifact-list"><span>산출물: 매뉴얼 경로</span><span>산출물: 매뉴얼 구조 요약</span><span>산출물: 갱신 필요 여부</span></div>
+              </div>
+              <div class="mansu-detail-card" data-mansu-detail-card="mansu-setting">
+                <h3>$mansu-setting</h3>
+                <p>현재 실행 환경에 맞게 Mansu와 원천 도구를 준비시키는 부트스트랩 스킬입니다.</p>
+                <div class="source-routes">
+                  <strong>내부에서 하는 일</strong>
+                  <ul class="route-list">
+                    <li>환경 감지<em>런타임, 호스트, OS, 스킬 경로를 확인합니다.</em></li>
+                    <li>어댑터 매핑<em>Codex는 <code>omx</code>, OpenCode/Hermes는 <code>omo</code>, Claude Code는 <code>omc</code>를 맞춥니다.</em></li>
+                    <li>설치/업데이트 점검<em>Ouroboros, gstack, Oh My, agent-skills의 준비 상태를 확인하고 필요한 작업을 진행합니다.</em></li>
+                  </ul>
+                </div>
+                <ul>
+                  <li>목적: 스킬이 실제로 작동할 수 있는 준비 상태를 만듭니다.</li>
+                  <li>언제: 새 환경, 업데이트 직후, 스킬 누락 의심, 런타임 변경 시 씁니다.</li>
+                  <li>주요 결과: 준비 상태와 필요한 설치/업데이트 작업을 정리합니다.</li>
+                </ul>
+                <div class="artifact-list"><span>산출물: readiness report</span><span>산출물: adapter target</span><span>산출물: 설치/업데이트 목록</span></div>
+              </div>
+              <div class="mansu-detail-card" data-mansu-detail-card="mansu-source-curator">
+                <h3>$mansu-source-curator</h3>
+                <p>Mansu가 의존하는 원천 스킬 지식을 최신으로 유지하는 내부 관리 스킬입니다.</p>
+                <div class="source-routes">
+                  <strong>내부에서 하는 일</strong>
+                  <ul class="route-list">
+                    <li>원천 변경 확인<em>Ouroboros, gstack, Oh My, agent-skills의 버전과 스킬 구성을 다시 읽습니다.</em></li>
+                    <li>참조 파일 갱신<em><code>SOURCE_SKILL_LOCK.json</code>, 카탈로그, validator, manual을 함께 맞춥니다.</em></li>
+                    <li>설치본 동기화<em>변경된 manual/skill을 실제 설치 경로로 복사합니다.</em></li>
+                  </ul>
+                </div>
+                <ul>
+                  <li>목적: Mansu가 오래된 원천 정보를 바탕으로 잘못 라우팅하는 일을 막습니다.</li>
+                  <li>언제: 원천 도구 업데이트를 확인하거나 새 스킬을 반영할 때 씁니다.</li>
+                  <li>주요 결과: 원천 스냅샷과 문서/validator가 같이 업데이트됩니다.</li>
+                </ul>
+                <div class="artifact-list"><span>산출물: updated source lock</span><span>산출물: updated catalog</span><span>산출물: updated manual / validator</span></div>
+              </div>
+              <div class="mansu-detail-card" data-mansu-detail-card="mansu-project-start">
+                <h3>$mansu-project-start</h3>
+                <p>코드보다 먼저 프로젝트의 목적, 범위, 리서치, 큰 기능 순서, 현재 phase 계획을 잡는 시작 스킬입니다.</p>
+                <div class="source-routes">
+                  <strong>내부에서 하는 일</strong>
+                  <ul class="route-list">
+                    <li>큰 그림 정리<em>Ouroboros interview/pm/seed로 사용자, 문제, 방향, 장기 기억을 잡습니다.</em></li>
+                    <li>로드맵 정리<em>메뉴, 데이터/API, 로그인, 게시판, 관리자, 배포 같은 큰 기능군의 순서를 spec/TDR/design layer에 둡니다.</em></li>
+                    <li>계획 비평<em>gstack office-hours/autoplan과 plan-*로 제품, 디자인, 엔지니어링, DX 관점 비평을 거칩니다.</em></li>
+                    <li>문서화<em>전체 로드맵은 spec/TDR/design layer에 두고, 현재 phase만 <code>PLAN.md</code>로 넘깁니다.</em></li>
+                  </ul>
+                </div>
+                <ul>
+                  <li>목적: 무엇을 왜 만들지 흔들리지 않게 정의합니다.</li>
+                  <li>언제: 새 프로젝트, 큰 기능군, 아키텍처 전환, UI 방향 설정 때 씁니다.</li>
+                  <li>주요 결과: 구현으로 들어가기 전에 읽을 기준 문서가 생깁니다.</li>
+                </ul>
+                <div class="artifact-list"><span>산출물: research notes</span><span>산출물: spec / TDR / design direction</span><span>산출물: project roadmap / phase order</span><span>산출물: phase PLAN.md</span></div>
+              </div>
+              <div class="mansu-detail-card" data-mansu-detail-card="mansu-operating-model">
+                <h3>$mansu-operating-model</h3>
+                <p>프로젝트 안에서 에이전트가 어떤 규칙으로 일할지 잠그는 운영 원칙 스킬입니다.</p>
+                <div class="source-routes">
+                  <strong>내부에서 하는 일</strong>
+                  <ul class="route-list">
+                    <li>운영 기준 선택<em>Mansu doctrine, 문서 생성 순서, 코드 구성 순서 같은 기준 문서를 고릅니다.</em></li>
+                    <li>프로젝트 규칙화<em><code>AGENTS.md</code>, <code>CODING_RULES.md</code>, 게이트 기준을 프로젝트 현실에 맞게 적습니다.</em></li>
+                    <li>검증 기준 명시<em>review, QA, checkpoint, commit, 문서 갱신 타이밍을 정리합니다.</em></li>
+                  </ul>
+                </div>
+                <ul>
+                  <li>목적: 프로젝트마다 일하는 방식이 흔들리지 않도록 기준을 남깁니다.</li>
+                  <li>언제: 새 프로젝트 시작, 운영 규칙 재정비, 문서 체계 정리 때 씁니다.</li>
+                  <li>주요 결과: 이후 구현/출하에서 참조할 운영 문서가 생깁니다.</li>
+                </ul>
+                <div class="artifact-list"><span>산출물: AGENTS.md</span><span>산출물: CODING_RULES.md</span><span>산출물: 게이트 / 문서 규칙</span></div>
+              </div>
+              <div class="mansu-detail-card" data-mansu-detail-card="mansu-tdd-total">
+                <h3>$mansu-tdd-total</h3>
+                <p>구현 작업의 기본 진입점으로, slice 전략과 실행 모드를 자동으로 고르는 오케스트레이터입니다.</p>
+                <div class="source-routes">
+                  <strong>내부에서 하는 일</strong>
+                  <ul class="route-list">
+                    <li>계획 게이트<em>multi-role planning critique와 승인 가능한 실행 계획을 먼저 만듭니다.</em></li>
+                    <li>slice 분해<em>작업을 순차 vertical slice로 나누고 완료 조건, 영향 파일, 테스트 기준, 위험 요소를 적습니다.</em></li>
+                    <li>모드 선택<em>각 slice를 <code>mansu-tdd-lite</code> 또는 <code>mansu-tdd-strict</code>로 연결하고 review, QA, checkpoint, commit 루프를 강제합니다.</em></li>
+                  </ul>
+                </div>
+                <ul>
+                  <li>목적: 아무 구현이나 바로 시작하지 않고, 계획과 slice를 기준으로 안전하게 진행합니다.</li>
+                  <li>언제: 실제 코딩을 시작할 때 기본값으로 씁니다.</li>
+                  <li>주요 결과: slice table과 실행 로그가 남고, 어떤 모드로 갔는지도 추적됩니다.</li>
+                </ul>
+                <div class="artifact-list"><span>산출물: planning gate summary</span><span>산출물: slice table</span><span>산출물: execution log / worklog</span></div>
+              </div>
+              <div class="mansu-detail-card" data-mansu-detail-card="mansu-tdd-strict">
+                <h3>$mansu-tdd-strict</h3>
+                <p>계약, 회귀, 데이터 무결성처럼 실수 비용이 큰 slice에 쓰는 엄격 모드입니다.</p>
+                <div class="source-routes">
+                  <strong>내부에서 하는 일</strong>
+                  <ul class="route-list">
+                    <li>RED 우선<em>실패 테스트나 계약 증거를 먼저 세우고 현재 결함을 고정합니다.</em></li>
+                    <li>slice 루프 강화<em>구현 뒤 review, QA, checkpoint, commit을 slice마다 닫습니다.</em></li>
+                    <li>회귀 증거 확보<em>고친 뒤 같은 문제가 다시 안 나는지 테스트나 검증 증거를 남깁니다.</em></li>
+                  </ul>
+                </div>
+                <ul>
+                  <li>목적: 위험한 변경을 테스트와 증거로 잠그면서 진행합니다.</li>
+                  <li>언제: 권한, 계약, 데이터 모델, 수출입, 계산 로직 같은 고위험 slice에서 씁니다.</li>
+                  <li>주요 결과: 실패 증거, 통과 증거, slice별 검증 흔적이 남습니다.</li>
+                </ul>
+                <div class="artifact-list"><span>산출물: failing proof</span><span>산출물: passing proof</span><span>산출물: per-slice review / QA record</span></div>
+              </div>
+              <div class="mansu-detail-card" data-mansu-detail-card="mansu-tdd-lite">
+                <h3>$mansu-tdd-lite</h3>
+                <p>계획과 slice discipline은 유지하되, 인위적인 RED-first를 강제하지 않는 가벼운 모드입니다.</p>
+                <div class="source-routes">
+                  <strong>내부에서 하는 일</strong>
+                  <ul class="route-list">
+                    <li>계획 유지<em>승인된 plan과 slice table을 기준으로만 구현합니다.</em></li>
+                    <li>검증 중심 진행<em>의미 있는 테스트는 추가하되 모든 작업에 억지 RED를 만들지는 않습니다.</em></li>
+                    <li>게이트 유지<em>review, QA, checkpoint, commit, worklog는 strict와 동일하게 남깁니다.</em></li>
+                  </ul>
+                </div>
+                <ul>
+                  <li>목적: 문서, wiring, UI polish 같은 작업도 흐트러지지 않게 관리합니다.</li>
+                  <li>언제: RED를 만들기 부자연스러운 slice, 하지만 대충하면 안 되는 작업에서 씁니다.</li>
+                  <li>주요 결과: slice discipline은 유지하면서 속도를 잃지 않습니다.</li>
+                </ul>
+                <div class="artifact-list"><span>산출물: slice validation record</span><span>산출물: review / QA / checkpoint log</span><span>산출물: updated worklog</span></div>
+              </div>
+              <div class="mansu-detail-card" data-mansu-detail-card="mansu-debug-rootcause">
+                <h3>$mansu-debug-rootcause</h3>
+                <p>바로 고치기보다 왜 깨졌는지부터 밝히는 근본 원인 디버그 스킬입니다.</p>
+                <div class="source-routes">
+                  <strong>내부에서 하는 일</strong>
+                  <ul class="route-list">
+                    <li>재현과 증거 수집<em>증상, 재현 경로, 브라우저/로그 증거를 먼저 확보합니다.</em></li>
+                    <li>격리와 가설<em>scope lock, pattern analysis, root cause hypothesis를 세웁니다.</em></li>
+                    <li>최소 수정과 회귀 증명<em>필요 최소한만 고치고 같은 문제가 재발하지 않는 증거를 남깁니다.</em></li>
+                  </ul>
+                </div>
+                <ul>
+                  <li>목적: 원인 없는 임시 봉합을 막고, 다시 깨질 확률을 낮춥니다.</li>
+                  <li>언제: 버그, 회귀, stack trace, 이상 동작, 환경/빌드 문제를 다룰 때 씁니다.</li>
+                  <li>주요 결과: root cause와 수정 근거, 회귀 증거가 남습니다.</li>
+                </ul>
+                <div class="artifact-list"><span>산출물: root cause</span><span>산출물: minimal fix</span><span>산출물: regression proof</span></div>
+              </div>
+              <div class="mansu-detail-card" data-mansu-detail-card="mansu-web-verify">
+                <h3>$mansu-web-verify</h3>
+                <p>웹앱을 실제 사용자처럼 훑고, 수정 없이 검증 결과만 리포트하는 스킬입니다.</p>
+                <div class="source-routes">
+                  <strong>내부에서 하는 일</strong>
+                  <ul class="route-list">
+                    <li>플로우 탐색<em>페이지, 버튼, 폼, 반응형, 콘솔 상태를 실제 브라우저에서 확인합니다.</em></li>
+                    <li>품질 점검<em>성능, 기본 보안, 빈 상태, 에러 상태를 같이 살핍니다.</em></li>
+                    <li>리포트 정리<em>수정 없이 재현 단계, 위험도, 추가 확인 포인트를 남깁니다.</em></li>
+                  </ul>
+                </div>
+                <ul>
+                  <li>목적: 구현이 끝난 뒤 사용자 관점에서 어떤 문제가 남았는지 드러냅니다.</li>
+                  <li>언제: 웹 기능 검증, 디자인 확인, QA 보고서가 필요할 때 씁니다.</li>
+                  <li>주요 결과: 재현 가능한 QA 보고서와 위험 요약이 생깁니다.</li>
+                </ul>
+                <div class="artifact-list"><span>산출물: web QA report</span><span>산출물: repro steps</span><span>산출물: risk summary</span></div>
+              </div>
+              <div class="mansu-detail-card" data-mansu-detail-card="mansu-ship-release">
+                <h3>$mansu-ship-release</h3>
+                <p>코드를 썼다는 사실과 출하해도 된다는 판단을 분리해서 다루는 마감 스킬입니다.</p>
+                <div class="source-routes">
+                  <strong>내부에서 하는 일</strong>
+                  <ul class="route-list">
+                    <li>최종 게이트<em>health, review, QA, docs를 보고 현재 상태를 종합합니다.</em></li>
+                    <li>출하 루프 연결<em>필요하면 ship, deploy, canary, retro, learn까지 이어갑니다.</em></li>
+                    <li>판단 문서화<em>ship/hold, 남은 리스크, 추가 확인이 필요한 점을 짧게 남깁니다.</em></li>
+                  </ul>
+                </div>
+                <ul>
+                  <li>목적: 커밋/PR/배포 전에 정말 내보낼 수 있는 상태인지 판단합니다.</li>
+                  <li>언제: 구현 완료 뒤, PR 전, 배포 전, 마감 체크리스트가 필요할 때 씁니다.</li>
+                  <li>주요 결과: 출하 판단과 남은 리스크, 다음 액션이 정리됩니다.</li>
+                </ul>
+                <div class="artifact-list"><span>산출물: ship / hold verdict</span><span>산출물: remaining risks</span><span>산출물: release / follow-up note</span></div>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </section>
+
+      <section class="tab-panel" id="panel-agents" data-manual-panel="agents" data-agent-guide="routing-map-not-execution-instruction">
+        <div class="agent-card">
+          <h2>에이전트를 위한 Mansu 사용법</h2>
+          <p class="micro">Mansu는 모든 걸 직접 구현하는 스킬이 아니라, 현재 작업에 맞는 원천 스킬을 고르고 조합하는 오케스트레이터입니다.</p>
+
+          <div class="agent-grid">
+            <div class="agent-note" data-agent-rule="manual-is-route-map">
+              <h3>0. 매뉴얼은 실행 지침이 아니라 루트 지도다</h3>
+              <p>특정 Mansu 스킬이 이미 선택됐으면 그 스킬의 <code>SKILL.md</code>가 실행 기준입니다. 이 탭은 모든 스킬이 매번 읽는 필수 문서가 아니라, 어떤 Mansu 루트를 골라야 할지 애매할 때 보는 지도입니다.</p>
+              <p>주로 <code>mansu-help</code>, <code>mansu-setting</code>, <code>mansu-manual</code>, <code>mansu-source-curator</code> 같은 입구/세팅/관리 흐름에서 참고합니다.</p>
+            </div>
+
+            <div class="agent-note" data-agent-rule="route-selection">
+              <h3>1. 먼저 상황을 분류한다</h3>
+              <p>사용자가 막연하면 바로 구현하지 말고 <code>mansu-help</code> 관점으로 현재 상황을 분류합니다.</p>
+              <ul>
+                <li>설치/업데이트: <code>mansu-setting</code></li>
+                <li>새 프로젝트/큰 기능군: <code>mansu-project-start</code></li>
+                <li>구현: <code>mansu-tdd-total</code></li>
+                <li>버그: <code>mansu-debug-rootcause</code></li>
+                <li>웹 검증: <code>mansu-web-verify</code></li>
+                <li>출하 판단: <code>mansu-ship-release</code></li>
+              </ul>
+            </div>
+
+            <div class="agent-note" data-agent-rule="route-source-skills">
+              <h3>2. 직접 흉내 내지 말고 연결한다</h3>
+              <p>Mansu의 핵심은 좋은 원천 스킬을 재구현하지 않는 것입니다. 강한 원천 루트가 있으면 그 루트를 읽거나 호출하고, Mansu는 판단과 연결을 맡습니다.</p>
+              <ul>
+                <li>전체 phase spine: addyosmani/agent-skills</li>
+                <li>초기 정의/기억/seed: Ouroboros 계열</li>
+                <li>phase 안 실행 모드: Oh My 계열</li>
+                <li>전문가 비평/QA/출하 게이트: gstack 계열</li>
+              </ul>
+            </div>
+
+            <div class="agent-note" data-agent-rule="runtime-aware-setup">
+              <h3>3. 설치는 실행 환경에 맞춘다</h3>
+              <p><code>mansu-setting</code>은 런타임, 에이전트 호스트, OS를 먼저 확인합니다. Codex는 <code>omx</code>, OpenCode/Hermes는 <code>omo</code>, Claude Code는 <code>omc</code>를 맞는 adapter로 봅니다.</p>
+              <p>확신이 낮으면 추측 설치하지 말고 check/report 또는 사용자 확인으로 멈춥니다.</p>
+            </div>
+
+            <div class="agent-note" data-agent-rule="project-start-before-code">
+              <h3>4. 프로젝트 시작은 큰 설계부터</h3>
+              <p><code>mansu-project-start</code>는 코드부터 쓰는 스킬이 아닙니다. addyosmani phase spine 위에서 목적, 사용자, 리서치, reference project, spec/TDR, UI 방향, project roadmap/phase order, phase PLAN을 만든 뒤 구현으로 넘깁니다.</p>
+              <p>초기 정의는 Ouroboros interview/pm/seed로 깊게 만들고, phase 안 리서치는 Oh My research, 비평과 검증은 gstack office-hours/autoplan/plan-*로 조합합니다.</p>
+              <p>전체 기능 순서는 spec/TDR/design layer에 남기고, <code>PLAN.md</code>는 현재 phase의 slice 실행 문서로 둡니다.</p>
+            </div>
+
+            <div class="agent-note" data-agent-rule="total-before-implementation">
+              <h3>5. 구현은 total에서 시작한다</h3>
+              <p>사용자가 구현을 원하면 기본은 <code>mansu-tdd-total</code>입니다. total은 계획을 비평하고 순차 vertical slice를 만든 뒤 각 slice를 lite/strict로 연결합니다.</p>
+              <ul>
+                <li>다음 slice는 이전 slice가 닫힌 뒤 시작합니다.</li>
+                <li>각 slice는 완료 조건, 영향 파일, 테스트 기준, 위험 요소를 가져야 합니다.</li>
+                <li>작업 기록은 <code>PLAN.md</code>와 worklog에 남깁니다.</li>
+              </ul>
+            </div>
+
+            <div class="agent-note" data-agent-rule="root-cause-before-fix">
+              <h3>6. 버그는 원인 전 수정 금지</h3>
+              <p>버그/회귀/stack trace는 <code>mansu-debug-rootcause</code>로 다룹니다. 재현, 격리, 패턴 분석, 가설, 최소 수정, 회귀 증거가 기본 순서입니다.</p>
+              <p>UI 증거는 gstack browse/qa-only를 쓰고, 수정 포함 QA는 근본 원인 확인 뒤 또는 사용자가 명시적으로 원할 때만 씁니다.</p>
+            </div>
+
+            <div class="agent-note" data-agent-rule="user-language-report">
+              <h3>7. 마지막 보고는 사용자 언어로</h3>
+              <p>최종 보고는 사용자의 언어 또는 프로젝트의 기본 언어를 따릅니다. 무엇을 바꿨는지, 어떤 검증을 했는지, 남은 리스크나 추가 확인이 필요한지를 짧게 남깁니다.</p>
+              <p>구현 작업은 slice가 닫힐 때마다 checkpoint와 커밋을 남기는 것이 기본입니다. 단, 도움말/점검/매뉴얼 표시처럼 변경 없는 작업은 커밋하지 않고, push/PR/deploy는 사용자가 요청했거나 출하 흐름이 명확할 때만 진행합니다.</p>
+            </div>
+
+            <div class="agent-note" data-agent-rule="manual-is-maintenance-artifact">
+              <h3>8. 에이전트/관리자용: 매뉴얼도 산출물이다</h3>
+              <p>이 규칙은 Mansu를 유지보수하는 에이전트와 관리자에게 적용됩니다. Mansu 스킬, 원천 스킬, 버전, 날짜, 루트 의미가 바뀌면 이 HTML 매뉴얼과 validator도 같이 갱신합니다.</p>
+              <p>매뉴얼은 사람용 UI이면서 입구/관리 흐름에서 참고하는 에이전트용 루트 맵입니다.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="tab-panel" id="panel-catalog" data-manual-panel="catalog">
+        <div class="catalog-card">
+          <h2>스킬 카탈로그</h2>
+          <p class="micro">Mansu가 현재 조합할 수 있는 스킬 지도입니다. gstack, Ouroboros, Oh My, agent-skills를 원천별로 묶고, 그 안에서 역할별로 다시 나눴습니다. <code>mansu-setting</code>은 런타임/호스트/OS를 확인한 뒤 Codex는 <code>omx</code>, OpenCode/Hermes는 <code>omo</code>, Claude Code는 <code>omc</code>를 맞는 adapter로 준비합니다.</p>
+          <div class="catalog-meta">
+            <span>Mansu 매뉴얼 스냅샷: 2026-05-09</span>
+            <span>Source lock checked: 2026-05-08</span>
+            <span>gstack: 1.21.1.0 / 454423a</span>
+            <span>Ouroboros: 55e700e</span>
+          </div>
+
+          <div class="catalog-layout">
+            <div class="catalog-list">
+              <div class="catalog-family-block">
+                <h3>패밀리별 지도</h3>
+                <p>먼저 큰 원천 패밀리를 고르고, 그 안의 역할 박스에서 실제 세부 스킬을 고릅니다. 예: <code>gstack</code> → <code>계획/비평</code> → <code>gstack-autoplan</code>.</p>
+
+                <div class="source-family" data-source-family="ouroboros">
+                  <h3>Ouroboros</h3>
+                  <p>큰 프로젝트의 생명주기, seed, 장기 기억, 기존 repo 재진입을 맡습니다.</p>
+                  <div class="source-groups">
+                    <div class="source-group">
+                      <h4>프로젝트 정의</h4>
+                      <div class="catalog-items">
+                        <button class="catalog-item is-active" type="button" data-catalog-name="Ouroboros skills/interview" data-catalog-family="Ouroboros > 프로젝트 정의" data-catalog-role="모호한 아이디어를 질문으로 풀어 사용자, 문제, 범위, 제약을 정리합니다." data-catalog-when="사용자가 하고 싶은 말은 있는데 아직 프로젝트 정의가 흐릴 때 씁니다."><code>skills/interview</code><small>질문 기반 정리</small></button>
+                        <button class="catalog-item" type="button" data-catalog-name="Ouroboros skills/pm" data-catalog-family="Ouroboros > 프로젝트 정의" data-catalog-role="제품/PRD 관점에서 목적, 사용자, 성공 기준, 범위를 정리합니다." data-catalog-when="기술보다 제품 방향을 먼저 잡아야 할 때 씁니다."><code>skills/pm</code><small>제품 정의</small></button>
+                        <button class="catalog-item" type="button" data-catalog-name="Ouroboros skills/seed" data-catalog-family="Ouroboros > 프로젝트 정의" data-catalog-role="프로젝트 source-of-truth seed를 만들어 장기 방향과 기억의 기준을 세웁니다." data-catalog-when="프로젝트가 길어질 것 같고, 기준 문서가 필요할 때 씁니다."><code>skills/seed</code><small>기준 seed</small></button>
+                      </div>
+                    </div>
+                    <div class="source-group">
+                      <h4>재진입 / 복구</h4>
+                      <div class="catalog-items">
+                        <button class="catalog-item" type="button" data-catalog-name="Ouroboros skills/brownfield" data-catalog-family="Ouroboros > 재진입" data-catalog-role="이미 있는 repo를 읽고 현재 구조, 위험, 진입점을 파악합니다." data-catalog-when="새 프로젝트가 아니라 기존 프로젝트에서 다시 시작할 때 씁니다."><code>skills/brownfield</code><small>기존 repo 파악</small></button>
+                        <button class="catalog-item" type="button" data-catalog-name="Ouroboros skills/status / skills/resume-session" data-catalog-family="Ouroboros > 재진입" data-catalog-role="현재 session 상태를 확인하고 이전 session을 이어갑니다." data-catalog-when="이전 작업 맥락을 복구해야 할 때 씁니다."><code>skills/status</code> / <code>skills/resume-session</code><small>상태 복구</small></button>
+                        <button class="catalog-item" type="button" data-catalog-name="Ouroboros skills/unstuck" data-catalog-family="Ouroboros > 복구" data-catalog-role="막힌 프로젝트의 가정, 방향, 다음 행동을 재정렬합니다." data-catalog-when="계속 돌고 있거나 어디서 막혔는지 모르겠을 때 씁니다."><code>skills/unstuck</code><small>막힘 해소</small></button>
+                      </div>
+                    </div>
+                    <div class="source-group">
+                      <h4>자율 루프</h4>
+                      <div class="catalog-items">
+                        <button class="catalog-item" type="button" data-catalog-name="Ouroboros auto/run/qa/evaluate/evolve/ralph" data-catalog-family="Ouroboros > 자율 루프" data-catalog-role="auto, run, qa, evaluate, evolve, ralph로 장기 실행과 평가 루프를 구성합니다." data-catalog-when="사용자가 큰 자율 진행을 명시적으로 원할 때만 조심해서 씁니다."><code>auto / run / qa / evolve / ralph</code><small>장기 자율</small></button>
+                      </div>
+                    </div>
+                    <div class="source-group">
+                      <h4>설치 / 문서 / 출판</h4>
+                      <div class="catalog-items">
+                        <button class="catalog-item" type="button" data-catalog-name="Ouroboros commands/setup + runtime guides" data-catalog-family="Ouroboros > 세팅" data-catalog-role="runtime별 setup과 Codex/OpenCode/Hermes 가이드를 확인합니다." data-catalog-when="새 환경에서 Ouroboros를 준비하거나 runtime별 차이를 확인할 때 씁니다." data-catalog-process="commands/setup과 runtime guide를 확인해 현재 host에 맞는 준비 경로를 고릅니다." data-catalog-output="runtime별 setup 메모, 필요한 설치/업데이트 작업, blocker 목록"><code>commands/setup</code><small>runtime 준비</small></button>
+                        <button class="catalog-item" type="button" data-catalog-name="Ouroboros docs/guides/seed-authoring" data-catalog-family="Ouroboros > 문서" data-catalog-role="장기 기억의 기준이 되는 seed 문서를 어떻게 써야 하는지 안내합니다." data-catalog-when="프로젝트 시작 문서를 seed/ledger 중심으로 정리해야 할 때 씁니다." data-catalog-process="seed-authoring guide를 읽고 프로젝트 목적, 제약, 결정, 다음 phase를 seed에 반영합니다." data-catalog-output="seed 작성 기준, 장기 기억 항목, 다음 phase 기준"><code>seed-authoring</code><small>seed 작성법</small></button>
+                        <button class="catalog-item" type="button" data-catalog-name="Ouroboros skills/publish" data-catalog-family="Ouroboros > 출판" data-catalog-role="정리된 프로젝트 상태나 산출물을 공유 가능한 형태로 내보내는 흐름입니다." data-catalog-when="큰 프로젝트의 현재 상태를 외부/다음 세션에 전달해야 할 때 씁니다." data-catalog-process="현재 seed, ledger, 진행 상태를 모아 공유 가능한 요약으로 정리합니다." data-catalog-output="publish summary, 공유용 상태 요약, 다음 작업 진입점"><code>skills/publish</code><small>상태 출판</small></button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="source-family" data-source-family="gstack">
+                  <h3>gstack</h3>
+                  <p>스타트업 전문가 팀처럼 계획 비평, 디자인, QA, 보안, 배포, 회고 게이트를 맡습니다.</p>
+                  <div class="source-groups">
+                    <div class="source-group">
+                      <h4>계획 / 비평</h4>
+                      <div class="catalog-items">
+                        <button class="catalog-item" type="button" data-catalog-name="gstack-autoplan" data-catalog-family="gstack > 계획/비평" data-catalog-role="CEO, design, engineering, DX 리뷰를 한 번에 돌려 계획을 비평하고 정리합니다." data-catalog-when="계획을 빠르게 종합 검증하고 싶을 때 기본으로 씁니다."><code>gstack-autoplan</code><small>통합 계획 비평</small></button>
+                        <button class="catalog-item" type="button" data-catalog-name="gstack-office-hours" data-catalog-family="gstack > 계획/비평" data-catalog-role="사용자, 문제, status quo, wedge를 창업자/제품 관점으로 압축합니다." data-catalog-when="정말 만들 가치가 있는지, 가장 작은 시작점이 뭔지 보고 싶을 때 씁니다."><code>gstack-office-hours</code><small>문제/wedge</small></button>
+                        <button class="catalog-item" type="button" data-catalog-name="gstack-plan-ceo-review" data-catalog-family="gstack > 계획/비평" data-catalog-role="제품 방향, MVP 범위, 빼야 할 것과 남길 것을 CEO 관점으로 봅니다." data-catalog-when="스코프와 제품 가치가 흔들릴 때 씁니다."><code>gstack-plan-ceo-review</code><small>제품/범위</small></button>
+                        <button class="catalog-item" type="button" data-catalog-name="gstack-plan-design-review" data-catalog-family="gstack > 계획/비평" data-catalog-role="UX 흐름, 정보 위계, 상태, 모바일/데스크톱 대응을 디자인 관점으로 검토합니다." data-catalog-when="사용자 화면이나 디자인 결정이 중요할 때 씁니다."><code>gstack-plan-design-review</code><small>UX 계획</small></button>
+                        <button class="catalog-item" type="button" data-catalog-name="gstack-plan-eng-review" data-catalog-family="gstack > 계획/비평" data-catalog-role="아키텍처, 데이터 흐름, 모듈 경계, 에러 처리, 테스트 전략을 검토합니다." data-catalog-when="기술 구조나 데이터 계약이 중요할 때 씁니다."><code>gstack-plan-eng-review</code><small>아키텍처</small></button>
+                        <button class="catalog-item" type="button" data-catalog-name="gstack-plan-devex-review" data-catalog-family="gstack > 계획/비평" data-catalog-role="설치, 온보딩, API 사용성, 문서 흐름, 첫 성공 경험을 점검합니다." data-catalog-when="개발자용 도구나 SDK, 내부 플랫폼을 만들 때 씁니다."><code>gstack-plan-devex-review</code><small>DX 계획</small></button>
+                        <button class="catalog-item" type="button" data-catalog-name="gstack-devex-review" data-catalog-family="gstack > DX 검증" data-catalog-role="문서와 getting started를 실제로 따라가며 개발자 경험을 검증합니다." data-catalog-when="계획이 아니라 실제 온보딩/문서/CLI 흐름이 잘 되는지 확인할 때 씁니다."><code>gstack-devex-review</code><small>실사용 DX</small></button>
+                      </div>
+                    </div>
+                    <div class="source-group">
+                      <h4>디자인 / UI</h4>
+                      <div class="catalog-items">
+                        <button class="catalog-item" type="button" data-catalog-name="gstack-design-consultation" data-catalog-family="gstack > 디자인/UI" data-catalog-role="제품 맥락을 이해하고 디자인 시스템 방향, 색, 타이포, 레이아웃, 모션을 제안합니다." data-catalog-when="아직 UI 톤과 디자인 시스템이 정해지지 않았을 때 씁니다."><code>gstack-design-consultation</code><small>디자인 방향</small></button>
+                        <button class="catalog-item" type="button" data-catalog-name="gstack-design-shotgun" data-catalog-family="gstack > 디자인/UI" data-catalog-role="4~6개 디자인 시안을 병렬로 만들어 비교하고 피드백을 모읍니다." data-catalog-when="한 가지 디자인으로 바로 가기보다 여러 방향을 보고 싶을 때 씁니다."><code>gstack-design-shotgun</code><small>시안 비교</small></button>
+                        <button class="catalog-item" type="button" data-catalog-name="gstack-design-html" data-catalog-family="gstack > 디자인/UI" data-catalog-role="승인된 디자인을 구현 가능한 HTML/CSS 수준으로 내립니다." data-catalog-when="디자인을 실제 프론트엔드 구현으로 넘길 때 씁니다."><code>gstack-design-html</code><small>HTML/CSS 구체화</small></button>
+                        <button class="catalog-item" type="button" data-catalog-name="gstack-design-review" data-catalog-family="gstack > 디자인/UI" data-catalog-role="spacing, hierarchy, AI slop, visual polish, 느린 상호작용을 찾아 고칩니다." data-catalog-when="UI가 동작은 하지만 완성도가 아쉬울 때 씁니다."><code>gstack-design-review</code><small>시각 QA</small></button>
+                      </div>
+                    </div>
+                    <div class="source-group">
+                      <h4>검증 / QA / 보안 / 성능</h4>
+                      <div class="catalog-items">
+                        <button class="catalog-item" type="button" data-catalog-name="gstack-browse" data-catalog-family="gstack > 검증/QA" data-catalog-role="브라우저를 열어 페이지, 버튼, 폼, 콘솔, 스크린샷을 확인합니다." data-catalog-when="실제 화면에서 증거를 수집해야 할 때 씁니다."><code>gstack-browse</code><small>브라우저 조작</small></button>
+                        <button class="catalog-item" type="button" data-catalog-name="gstack-investigate" data-catalog-family="gstack > 디버그" data-catalog-role="원인 없이 고치지 못하게 막고, 재현/패턴/가설/회귀 증거를 요구합니다." data-catalog-when="버그가 위험하거나 이미 한 번 실패했거나 원인이 불명확할 때 씁니다."><code>gstack-investigate</code><small>근본 원인</small></button>
+                        <button class="catalog-item" type="button" data-catalog-name="gstack-qa-only" data-catalog-family="gstack > 검증/QA" data-catalog-role="수정하지 않고 QA 리포트, 재현 단계, 위험도를 남깁니다." data-catalog-when="먼저 문제를 보고만 받고 싶을 때 씁니다."><code>gstack-qa-only</code><small>리포트 전용 QA</small></button>
+                        <button class="catalog-item" type="button" data-catalog-name="gstack-qa" data-catalog-family="gstack > 검증/QA" data-catalog-role="QA로 발견한 문제를 test-fix-verify 루프로 고칩니다." data-catalog-when="사용자가 수정까지 승인했거나 근본 원인이 확인된 뒤 씁니다."><code>gstack-qa</code><small>수정 포함 QA</small></button>
+                        <button class="catalog-item" type="button" data-catalog-name="gstack-benchmark" data-catalog-family="gstack > 성능" data-catalog-role="성능 baseline, Core Web Vitals, 리소스 크기, 전후 비교를 봅니다." data-catalog-when="느려졌거나 성능 리스크가 있는 변경에서 씁니다."><code>gstack-benchmark</code><small>성능 검증</small></button>
+                        <button class="catalog-item" type="button" data-catalog-name="gstack-cso" data-catalog-family="gstack > 보안" data-catalog-role="보안, secrets, dependency, CI/CD, LLM 경계, 공급망을 점검합니다." data-catalog-when="인증/권한/비밀정보/보안 민감 변경에서 씁니다."><code>gstack-cso</code><small>보안 점검</small></button>
+                        <button class="catalog-item" type="button" data-catalog-name="gstack-canary" data-catalog-family="gstack > 배포 후 검증" data-catalog-role="배포 직후 에러, 성능 저하, 주요 페이지 이상을 감시합니다." data-catalog-when="배포 후 실제 서비스 상태를 확인할 때 씁니다."><code>gstack-canary</code><small>배포 후 감시</small></button>
+                      </div>
+                    </div>
+                    <div class="source-group">
+                      <h4>리뷰 / 출하 / 문서 / 학습</h4>
+                      <div class="catalog-items">
+                        <button class="catalog-item" type="button" data-catalog-name="gstack-health" data-catalog-family="gstack > 출하/품질" data-catalog-role="타입, 린트, 테스트, dead code 등 프로젝트 체력을 점수화합니다." data-catalog-when="시작 전/출하 전 품질 상태를 확인할 때 씁니다."><code>gstack-health</code><small>품질 대시보드</small></button>
+                        <button class="catalog-item" type="button" data-catalog-name="gstack-review" data-catalog-family="gstack > 리뷰" data-catalog-role="diff를 머지 전 관점으로 보고 회귀, 누락 테스트, side effect를 찾습니다." data-catalog-when="slice나 PR을 닫기 전에 씁니다."><code>gstack-review</code><small>diff 리뷰</small></button>
+                        <button class="catalog-item" type="button" data-catalog-name="gstack-ship" data-catalog-family="gstack > 출하" data-catalog-role="테스트, 커밋, 푸시, PR, changelog 같은 출하 루틴을 맡습니다." data-catalog-when="실제로 PR/푸시까지 진행할 때 씁니다."><code>gstack-ship</code><small>PR/출하</small></button>
+                        <button class="catalog-item" type="button" data-catalog-name="gstack-land-and-deploy" data-catalog-family="gstack > 출하" data-catalog-role="PR 머지, 배포, 기본 production health check까지 이어갑니다." data-catalog-when="PR 이후 실제 배포와 확인까지 연결할 때 씁니다."><code>gstack-land-and-deploy</code><small>머지/배포</small></button>
+                        <button class="catalog-item" type="button" data-catalog-name="gstack-document-release" data-catalog-family="gstack > 문서" data-catalog-role="README, CHANGELOG, ARCHITECTURE 등 문서를 실제 변경과 맞춥니다." data-catalog-when="기능/설정/아키 변경 후 문서 드리프트를 막을 때 씁니다."><code>gstack-document-release</code><small>문서 동기화</small></button>
+                        <button class="catalog-item" type="button" data-catalog-name="gstack-retro / gstack-learn" data-catalog-family="gstack > 학습" data-catalog-role="작업 회고와 재사용 가능한 패턴/함정/결정을 저장합니다." data-catalog-when="작업이 끝나고 다음번에 더 잘하기 위한 기록을 남길 때 씁니다."><code>gstack-retro</code> / <code>gstack-learn</code><small>회고/학습</small></button>
+                      </div>
+                    </div>
+                    <div class="source-group">
+                      <h4>안전 / 컨텍스트 / 유틸리티</h4>
+                      <div class="catalog-items">
+                        <button class="catalog-item" type="button" data-catalog-name="gstack-careful / gstack-freeze / gstack-guard / gstack-unfreeze" data-catalog-family="gstack > 안전" data-catalog-role="위험 명령 경고, 수정 범위 제한, 안전모드 해제를 담당합니다." data-catalog-when="삭제/DB/force push/넓은 파일 수정처럼 위험이 있을 때 씁니다."><code>gstack-guard</code> family<small>안전장치</small></button>
+                        <button class="catalog-item" type="button" data-catalog-name="gstack-context-save / gstack-context-restore / gstack-checkpoint" data-catalog-family="gstack > 컨텍스트" data-catalog-role="작업 상태, 결정, 남은 일을 저장하고 이어갑니다." data-catalog-when="긴 작업을 멈추거나 다음 세션으로 넘길 때 씁니다."><code>gstack-context-save</code> family<small>상태 저장</small></button>
+                        <button class="catalog-item" type="button" data-catalog-name="gstack-setup-browser-cookies / gstack-open-gstack-browser" data-catalog-family="gstack > 브라우저" data-catalog-role="인증 쿠키를 가져오거나 사용자가 볼 수 있는 브라우저를 엽니다." data-catalog-when="로그인이 필요한 QA나 시각적으로 따라보는 브라우저 검증이 필요할 때 씁니다."><code>gstack-browser</code> family<small>인증/브라우저</small></button>
+                        <button class="catalog-item" type="button" data-catalog-name="gstack-scrape / gstack-skillify" data-catalog-family="gstack > 유틸리티" data-catalog-role="웹 데이터 추출과 성공한 browser/scrape 흐름의 스킬화를 담당합니다." data-catalog-when="레퍼런스 페이지 수집이나 반복 웹 수집이 필요할 때 씁니다."><code>gstack-scrape</code> / <code>gstack-skillify</code><small>웹 수집</small></button>
+                        <button class="catalog-item" type="button" data-catalog-name="gstack-claude / gstack-benchmark-models" data-catalog-family="gstack > 모델/비평" data-catalog-role="다른 모델의 독립 리뷰를 받거나 여러 모델의 비용/속도/품질을 비교합니다." data-catalog-when="계획이나 diff에 독립 비평이 필요하거나 모델 선택 근거가 필요할 때 씁니다."><code>gstack-claude</code> / models<small>모델 비교</small></button>
+                        <button class="catalog-item" type="button" data-catalog-name="gstack-upgrade / gstack-setup-deploy / gstack-setup-gbrain" data-catalog-family="gstack > 세팅" data-catalog-role="gstack 업데이트, 배포 설정, gbrain 초기화를 맡습니다." data-catalog-when="gstack 원천이나 운영 보조 시스템을 준비할 때 씁니다."><code>gstack-upgrade</code> / setup<small>세팅</small></button>
+                        <button class="catalog-item" type="button" data-catalog-name="gstack-make-pdf / gstack-pair-agent / gstack-landing-report / gstack-plan-tune" data-catalog-family="gstack > 운영 보조" data-catalog-role="PDF 생성, 원격 에이전트 페어링, landing queue 확인, 질문 민감도 조정을 맡습니다." data-catalog-when="문서 공유, 멀티 에이전트 협업, 작업 큐, 질문 정책을 다룰 때 씁니다."><code>gstack-ops</code> family<small>운영 보조</small></button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="source-family" data-source-family="oh-my">
+                  <h3>Oh My / OMO / OMC</h3>
+                  <p>런타임별 adapter와 research, ralph, ultrawork, debug 같은 실행 패턴을 제공합니다.</p>
+                  <div class="source-groups">
+                    <div class="source-group">
+                      <h4>런타임 adapter</h4>
+                      <div class="catalog-items">
+                        <button class="catalog-item" type="button" data-catalog-name="Oh My adapters" data-catalog-family="Oh My / OMO / OMC > adapter" data-catalog-role="Codex는 omx, OpenCode/Hermes는 omo, Claude Code는 omc로 맞는 adapter를 준비합니다." data-catalog-when="mansu-setting이 runtime을 감지한 뒤 필요한 adapter를 설치/업데이트할 때 씁니다."><code>omx / omo / omc</code><small>런타임 어댑터</small></button>
+                      </div>
+                    </div>
+                    <div class="source-group">
+                      <h4>리서치 / 디버그 / 실행 패턴</h4>
+                      <div class="catalog-items">
+                        <button class="catalog-item" type="button" data-catalog-name="Oh My research / deepsearch" data-catalog-family="Oh My / OMO / OMC > research" data-catalog-role="GitHub, Threads, Reddit, 문서, 레퍼런스 프로젝트를 찾아 인사이트와 코드 패턴을 뽑습니다." data-catalog-when="기술 선택, 유사 프로젝트 분석, UI/UX 레퍼런스가 필요할 때 씁니다."><code>research</code> / <code>deepsearch</code><small>외부 조사</small></button>
+                        <button class="catalog-item" type="button" data-catalog-name="Oh My debug / doctor / build-fix / git-master" data-catalog-family="Oh My / OMO / OMC > debug" data-catalog-role="디버그, 환경 진단, 빌드 수리, 회귀 추적 흐름을 제공합니다." data-catalog-when="일반 디버그, 설치 문제, 빌드 실패, 회귀 추적이 필요할 때 씁니다."><code>debug</code> / <code>doctor</code> / <code>build-fix</code><small>진단/수리</small></button>
+                        <button class="catalog-item" type="button" data-catalog-name="Oh My ralph / ultrawork / playwright / ultraqa" data-catalog-family="Oh My / OMO / OMC > execution" data-catalog-role="끈질긴 자율 실행, 병렬 분해, E2E/QA 확장 흐름을 제공합니다." data-catalog-when="긴 작업을 끝까지 밀거나 독립 작업을 병렬로 탐색할 때 참고합니다."><code>ralph</code> / <code>ultrawork</code> / <code>ultraqa</code><small>자율/병렬/QA</small></button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="source-family" data-source-family="agent-skills">
+                  <h3>addyosmani/agent-skills</h3>
+                  <p>Define → Plan → Build → Verify → Review → Ship 전체 phase spine과 각 단계의 엔지니어링 기본기를 제공하는 공개 레퍼런스입니다.</p>
+                  <div class="source-groups">
+                    <div class="source-group">
+                      <h4>기획 / 문맥 / spec</h4>
+                      <div class="catalog-items">
+                        <button class="catalog-item" type="button" data-catalog-name="idea-refine / spec-driven-development / planning-and-task-breakdown / context-engineering" data-catalog-family="addyosmani/agent-skills > 기획" data-catalog-role="초기 아이디어, spec, task breakdown, repo context 수집을 보강합니다." data-catalog-when="구현 전 문제, spec, task breakdown, repo context가 필요할 때 씁니다."><code>idea / spec / planning / context</code><small>기획과 문맥</small></button>
+                        <button class="catalog-item" type="button" data-catalog-name="source-driven-development" data-catalog-family="addyosmani/agent-skills > 리서치" data-catalog-role="실제 오픈소스/레퍼런스 코드를 읽고 구현 방향을 근거 있게 잡습니다." data-catalog-when="남들이 이미 잘 푼 문제를 참고해야 할 때 씁니다."><code>source-driven-development</code><small>소스 기반</small></button>
+                        <button class="catalog-item" type="button" data-catalog-name="using-agent-skills" data-catalog-family="addyosmani/agent-skills > 스킬 선택" data-catalog-role="현재 작업에 어떤 agent skill을 읽고 적용해야 하는지 판단하는 기준입니다." data-catalog-when="원천 스킬이 많아서 무엇을 참고해야 할지 애매할 때 씁니다."><code>using-agent-skills</code><small>스킬 선택법</small></button>
+                      </div>
+                    </div>
+                    <div class="source-group">
+                      <h4>구현 / 테스트 / 리뷰</h4>
+                      <div class="catalog-items">
+                        <button class="catalog-item" type="button" data-catalog-name="incremental-implementation / test-driven-development" data-catalog-family="addyosmani/agent-skills > 구현" data-catalog-role="점진 구현과 TDD 원칙을 보강합니다." data-catalog-when="코드를 작은 단계로 쓰고 테스트로 행동을 잠글 때 씁니다."><code>incremental-implementation</code> / <code>test-driven-development</code><small>구현/TDD</small></button>
+                        <button class="catalog-item" type="button" data-catalog-name="frontend-ui-engineering / api-and-interface-design / code-review-and-quality" data-catalog-family="addyosmani/agent-skills > 품질" data-catalog-role="프론트엔드, API/인터페이스, 코드 리뷰 품질을 보강합니다." data-catalog-when="UI/API/리뷰 품질 기준이 필요할 때 씁니다."><code>frontend</code> / <code>API</code> / <code>review</code><small>구현 품질</small></button>
+                        <button class="catalog-item" type="button" data-catalog-name="browser-testing-with-devtools / debugging-and-error-recovery / code-simplification" data-catalog-family="addyosmani/agent-skills > 검증/정리" data-catalog-role="브라우저 검증, 에러 복구, 복잡도 낮추기 원칙을 보강합니다." data-catalog-when="UI 런타임 증거, 디버그 순서, 리팩토링 기준이 필요할 때 씁니다."><code>browser / debug / simplify</code><small>검증/정리</small></button>
+                      </div>
+                    </div>
+                    <div class="source-group">
+                      <h4>운영 / 출하 / 문서</h4>
+                      <div class="catalog-items">
+                        <button class="catalog-item" type="button" data-catalog-name="security / performance / git / CI/CD / deprecation / documentation / shipping" data-catalog-family="addyosmani/agent-skills > 운영/출하" data-catalog-role="보안, 성능, git/versioning, CI/CD, deprecation/migration, 문서, shipping 흐름을 보강합니다." data-catalog-when="출하 전후 보안, 성능, 문서, 마이그레이션, 런칭 기준이 필요할 때 씁니다."><code>security</code> / <code>performance</code> / <code>docs</code> / <code>launch</code><small>운영과 출하</small></button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="catalog-family-block" data-catalog-mode="secondary-shortcuts">
+                <h3>용도별 빠른 찾기</h3>
+                <p>같은 스킬들을 상황 중심으로 다시 찾는 보조 지도입니다. 원천 패밀리를 모를 때 여기서 시작하세요.</p>
+
+              <div class="catalog-section">
+              <h3>보조: 상황별 빠른 찾기</h3>
+              <p>위의 패밀리별 지도가 기본입니다. 이 영역은 원천 패밀리를 모를 때만 빠르게 되찾는 보조 shortcut입니다.</p>
+                <div class="catalog-items">
+                </div>
+              </div>
+
+              <div class="catalog-section">
+                <h3>프로젝트 정의 / 큰 그림</h3>
+                <p>아이디어를 프로젝트로 만들고, 큰 방향과 장기 기억을 잡습니다.</p>
+                <div class="catalog-items">
+                  <button class="catalog-item" type="button" data-catalog-name="Ouroboros skills/interview" data-catalog-family="Ouroboros routes" data-catalog-role="모호한 아이디어를 질문으로 풀어 사용자, 문제, 범위, 제약을 정리합니다." data-catalog-when="사용자가 하고 싶은 말은 있는데 아직 프로젝트 정의가 흐릴 때 씁니다."><code>skills/interview</code><small>질문 기반 정리</small></button>
+                  <button class="catalog-item" type="button" data-catalog-name="Ouroboros skills/pm" data-catalog-family="Ouroboros routes" data-catalog-role="제품/PRD 관점에서 목적, 사용자, 성공 기준, 범위를 정리합니다." data-catalog-when="기술보다 제품 방향을 먼저 잡아야 할 때 씁니다."><code>skills/pm</code><small>제품 정의</small></button>
+                  <button class="catalog-item" type="button" data-catalog-name="Ouroboros skills/seed" data-catalog-family="Ouroboros routes" data-catalog-role="프로젝트 source-of-truth seed를 만들어 장기 방향과 기억의 기준을 세웁니다." data-catalog-when="프로젝트가 길어질 것 같고, 기준 문서가 필요할 때 씁니다."><code>skills/seed</code><small>기준 seed</small></button>
+                  <button class="catalog-item" type="button" data-catalog-name="Ouroboros skills/brownfield" data-catalog-family="Ouroboros routes" data-catalog-role="이미 있는 repo를 읽고 현재 구조, 위험, 진입점을 파악합니다." data-catalog-when="새 프로젝트가 아니라 기존 프로젝트에서 다시 시작할 때 씁니다."><code>skills/brownfield</code><small>기존 repo 파악</small></button>
+                  <button class="catalog-item" type="button" data-catalog-name="gstack-office-hours" data-catalog-family="gstack planning" data-catalog-role="사용자, 문제, status quo, wedge를 창업자/제품 관점으로 압축합니다." data-catalog-when="정말 만들 가치가 있는지, 가장 작은 시작점이 뭔지 보고 싶을 때 씁니다."><code>gstack-office-hours</code><small>문제/wedge</small></button>
+                  <button class="catalog-item" type="button" data-catalog-name="addyosmani idea-refine" data-catalog-family="agent-skills planning" data-catalog-role="초기 아이디어를 명확한 문제, 사용자, MVP, 가정으로 정리합니다." data-catalog-when="아이디어가 넓고 아직 spec으로 가기 전일 때 씁니다."><code>idea-refine</code><small>아이디어 정제</small></button>
+                  <button class="catalog-item" type="button" data-catalog-name="Ouroboros skills/status / skills/resume-session" data-catalog-family="Ouroboros routes" data-catalog-role="현재 session 상태를 확인하고 이전 session을 이어갑니다." data-catalog-when="이전 작업 맥락을 복구해야 할 때 씁니다."><code>skills/status</code> / <code>skills/resume-session</code><small>상태 복구</small></button>
+                  <button class="catalog-item" type="button" data-catalog-name="Ouroboros skills/unstuck" data-catalog-family="Ouroboros routes" data-catalog-role="막힌 프로젝트의 가정, 방향, 다음 행동을 재정렬합니다." data-catalog-when="계속 돌고 있거나 어디서 막혔는지 모르겠을 때 씁니다."><code>skills/unstuck</code><small>막힘 해소</small></button>
+                </div>
+              </div>
+
+              <div class="catalog-section">
+                <h3>런타임 / 어댑터 준비</h3>
+                <p>내 컴퓨터가 Codex인지, OpenCode/Hermes인지, Claude Code인지 확인하고 맞는 Oh My adapter를 준비합니다.</p>
+                <div class="catalog-items">
+                  <button class="catalog-item" type="button" data-catalog-name="Runtime detection" data-catalog-family="mansu-setting" data-catalog-role="런타임, 에이전트 호스트, OS를 먼저 확인합니다. 증거가 부족하면 함부로 추측하지 않고 점검 리포트 또는 사용자 확인으로 빠집니다." data-catalog-when="처음 설치, 업데이트, 다른 도구 환경으로 옮겼을 때 가장 먼저 작동합니다."><code>runtime/host/OS detect</code><small>환경 확인</small></button>
+                  <button class="catalog-item" type="button" data-catalog-name="Codex adapter: omx" data-catalog-family="Oh My adapter" data-catalog-role="Codex runtime에서는 Oh My Codex, 즉 omx를 맞는 adapter로 준비합니다." data-catalog-when="Codex에서 Mansu와 Oh My 계열 실행 패턴을 같이 쓰고 싶을 때 준비됩니다."><code>Codex -> omx</code><small>Oh My Codex</small></button>
+                  <button class="catalog-item" type="button" data-catalog-name="OpenCode/Hermes adapter: omo" data-catalog-family="Oh My adapter" data-catalog-role="OpenCode 또는 Hermes runtime에서는 Oh My OpenCode, 즉 omo를 맞는 adapter로 준비합니다." data-catalog-when="OpenCode/Hermes에서 Oh My 계열 스킬을 쓰고 싶을 때 준비됩니다."><code>OpenCode/Hermes -> omo</code><small>Oh My OpenCode</small></button>
+                  <button class="catalog-item" type="button" data-catalog-name="Claude Code adapter: omc" data-catalog-family="Oh My adapter" data-catalog-role="Claude Code runtime에서는 Oh My Claude, 즉 omc를 맞는 adapter로 봅니다. 설치법이 불확실하면 package 이름을 추측하지 않고 blocker로 보고합니다." data-catalog-when="Claude Code에서 Mansu를 쓰거나 Claude용 Oh My 경로가 필요할 때 확인합니다."><code>Claude Code -> omc</code><small>Oh My Claude</small></button>
+                </div>
+              </div>
+
+              <div class="catalog-section">
+                <h3>계획 / 아키텍처 / 비평</h3>
+                <p>구현 전에 제품, 디자인, 엔지니어링, DX 관점으로 계획을 검증합니다.</p>
+                <div class="catalog-items">
+                  <button class="catalog-item" type="button" data-catalog-name="gstack-autoplan" data-catalog-family="gstack planning" data-catalog-role="CEO, design, engineering, DX 리뷰를 한 번에 돌려 계획을 비평하고 정리합니다." data-catalog-when="계획을 빠르게 종합 검증하고 싶을 때 기본으로 씁니다."><code>gstack-autoplan</code><small>통합 계획 비평</small></button>
+                  <button class="catalog-item" type="button" data-catalog-name="gstack-plan-ceo-review" data-catalog-family="gstack planning" data-catalog-role="제품 방향, MVP 범위, 빼야 할 것과 남길 것을 CEO 관점으로 봅니다." data-catalog-when="스코프와 제품 가치가 흔들릴 때 씁니다."><code>gstack-plan-ceo-review</code><small>제품/범위</small></button>
+                  <button class="catalog-item" type="button" data-catalog-name="gstack-plan-design-review" data-catalog-family="gstack planning" data-catalog-role="UX 흐름, 정보 위계, 상태, 모바일/데스크톱 대응을 디자인 관점으로 검토합니다." data-catalog-when="사용자 화면이나 디자인 결정이 중요할 때 씁니다."><code>gstack-plan-design-review</code><small>UX 계획</small></button>
+                  <button class="catalog-item" type="button" data-catalog-name="gstack-plan-eng-review" data-catalog-family="gstack planning" data-catalog-role="아키텍처, 데이터 흐름, 모듈 경계, 에러 처리, 테스트 전략을 검토합니다." data-catalog-when="기술 구조나 데이터 계약이 중요할 때 씁니다."><code>gstack-plan-eng-review</code><small>아키텍처</small></button>
+                  <button class="catalog-item" type="button" data-catalog-name="gstack-plan-devex-review" data-catalog-family="gstack planning" data-catalog-role="설치, 온보딩, API 사용성, 문서 흐름, 첫 성공 경험을 점검합니다." data-catalog-when="개발자용 도구나 SDK, 내부 플랫폼을 만들 때 씁니다."><code>gstack-plan-devex-review</code><small>DX 계획</small></button>
+                  <button class="catalog-item" type="button" data-catalog-name="spec-driven-development" data-catalog-family="addyosmani/agent-skills" data-catalog-role="요구사항, 성공 기준, 범위, 테스트 전략을 구현 가능한 spec으로 잠급니다." data-catalog-when="작업이 여러 파일/모듈을 건드리거나 요구사항이 애매할 때 씁니다."><code>spec-driven-development</code><small>spec 작성</small></button>
+                  <button class="catalog-item" type="button" data-catalog-name="planning-and-task-breakdown" data-catalog-family="addyosmani/agent-skills" data-catalog-role="큰 계획을 실행 가능한 단계와 작업 단위로 분해합니다." data-catalog-when="PLAN.md나 slice table을 만들 때 참고합니다."><code>planning-and-task-breakdown</code><small>작업 분해</small></button>
+                  <button class="catalog-item" type="button" data-catalog-name="api-and-interface-design" data-catalog-family="addyosmani/agent-skills" data-catalog-role="API, 모듈 인터페이스, 데이터 계약을 설계합니다." data-catalog-when="프론트/백엔드 경계나 공개 API가 중요할 때 씁니다."><code>api-and-interface-design</code><small>인터페이스</small></button>
+                </div>
+              </div>
+
+              <div class="catalog-section">
+                <h3>리서치 / 레퍼런스</h3>
+                <p>외부 사례, 최신 반응, 실제 코드 구조를 조사합니다.</p>
+                <div class="catalog-items">
+                  <button class="catalog-item" type="button" data-catalog-name="Oh My research / deepsearch" data-catalog-family="Oh My / OMO / OMC routes" data-catalog-role="GitHub, Threads, Reddit, 문서, 레퍼런스 프로젝트를 찾아 인사이트와 코드 패턴을 뽑습니다." data-catalog-when="기술 선택, 유사 프로젝트 분석, UI/UX 레퍼런스가 필요할 때 씁니다."><code>research</code> / <code>deepsearch</code><small>외부 조사</small></button>
+                  <button class="catalog-item" type="button" data-catalog-name="source-driven-development" data-catalog-family="addyosmani/agent-skills" data-catalog-role="실제 오픈소스/레퍼런스 코드를 읽고 구현 방향을 근거 있게 잡습니다." data-catalog-when="남들이 이미 잘 푼 문제를 참고해야 할 때 씁니다."><code>source-driven-development</code><small>소스 기반 개발</small></button>
+                  <button class="catalog-item" type="button" data-catalog-name="context-engineering" data-catalog-family="addyosmani/agent-skills" data-catalog-role="코딩 전에 필요한 repo 문맥, 파일, 계약, 제약을 모읍니다." data-catalog-when="기존 코드가 크고 어디부터 읽어야 할지 모를 때 씁니다."><code>context-engineering</code><small>문맥 수집</small></button>
+                  <button class="catalog-item" type="button" data-catalog-name="gstack-scrape" data-catalog-family="gstack utility" data-catalog-role="웹페이지에서 필요한 데이터를 브라우저 기반으로 추출합니다." data-catalog-when="레퍼런스 페이지나 문서에서 구조화된 정보를 가져와야 할 때 씁니다."><code>gstack-scrape</code><small>웹 수집</small></button>
+                  <button class="catalog-item" type="button" data-catalog-name="gstack-skillify" data-catalog-family="gstack utility" data-catalog-role="성공한 scrape/browser 흐름을 재사용 가능한 스킬로 고정합니다." data-catalog-when="같은 웹 수집 작업을 반복할 것 같을 때 씁니다."><code>gstack-skillify</code><small>흐름 스킬화</small></button>
+                </div>
+              </div>
+
+              <div class="catalog-section">
+                <h3>디자인 / UI</h3>
+                <p>디자인 방향, 시안, HTML 구현, 시각 QA를 담당합니다.</p>
+                <div class="catalog-items">
+                  <button class="catalog-item" type="button" data-catalog-name="gstack-design-consultation" data-catalog-family="gstack design" data-catalog-role="제품 맥락을 이해하고 디자인 시스템 방향, 색, 타이포, 레이아웃, 모션을 제안합니다." data-catalog-when="아직 UI 톤과 디자인 시스템이 정해지지 않았을 때 씁니다."><code>gstack-design-consultation</code><small>디자인 방향</small></button>
+                  <button class="catalog-item" type="button" data-catalog-name="gstack-design-shotgun" data-catalog-family="gstack design" data-catalog-role="4~6개 디자인 시안을 병렬로 만들어 비교하고 피드백을 모읍니다." data-catalog-when="한 가지 디자인으로 바로 가기보다 여러 방향을 보고 싶을 때 씁니다."><code>gstack-design-shotgun</code><small>시안 비교</small></button>
+                  <button class="catalog-item" type="button" data-catalog-name="gstack-design-html" data-catalog-family="gstack design" data-catalog-role="승인된 디자인을 구현 가능한 HTML/CSS 수준으로 내립니다." data-catalog-when="디자인을 실제 프론트엔드 구현으로 넘길 때 씁니다."><code>gstack-design-html</code><small>HTML/CSS 구체화</small></button>
+                  <button class="catalog-item" type="button" data-catalog-name="gstack-design-review" data-catalog-family="gstack design" data-catalog-role="spacing, hierarchy, AI slop, visual polish, 느린 상호작용을 찾아 고칩니다." data-catalog-when="UI가 동작은 하지만 완성도가 아쉬울 때 씁니다."><code>gstack-design-review</code><small>시각 QA</small></button>
+                  <button class="catalog-item" type="button" data-catalog-name="frontend-ui-engineering" data-catalog-family="addyosmani/agent-skills" data-catalog-role="프론트엔드 컴포넌트, 상태, 접근성, 반응형 구현 흐름을 보강합니다." data-catalog-when="UI 구현 자체의 엔지니어링 품질을 잡고 싶을 때 씁니다."><code>frontend-ui-engineering</code><small>프론트 구현</small></button>
+                </div>
+              </div>
+
+              <div class="catalog-section">
+                <h3>구현 / 코드 작성</h3>
+                <p>계획을 실제 코드로 바꾸는 순서와 검증 방식을 보강합니다.</p>
+                <div class="catalog-items">
+                  <button class="catalog-item" type="button" data-catalog-name="incremental-implementation" data-catalog-family="addyosmani/agent-skills" data-catalog-role="작은 단계로 구현하고 각 단계마다 동작을 확인하는 흐름입니다." data-catalog-when="한 번에 큰 파일을 만들지 않고 안전하게 진행하고 싶을 때 씁니다."><code>incremental-implementation</code><small>점진 구현</small></button>
+                  <button class="catalog-item" type="button" data-catalog-name="test-driven-development" data-catalog-family="addyosmani/agent-skills" data-catalog-role="실패 테스트를 먼저 만들고 구현 후 통과시키는 TDD 원칙을 보강합니다." data-catalog-when="행동을 테스트로 잠그는 게 의미 있는 slice에서 씁니다."><code>test-driven-development</code><small>TDD 원칙</small></button>
+                  <button class="catalog-item" type="button" data-catalog-name="Oh My ralph / ultrawork" data-catalog-family="Oh My / OMO / OMC routes" data-catalog-role="ralph는 끈질긴 자율 실행, ultrawork는 병렬 분해와 빠른 실행 흐름을 제공합니다." data-catalog-when="긴 작업을 끝까지 밀거나 독립 slice를 병렬로 탐색할 때 참고합니다."><code>ralph</code> / <code>ultrawork</code><small>자율/병렬 실행</small></button>
+                  <button class="catalog-item" type="button" data-catalog-name="code-simplification" data-catalog-family="addyosmani/agent-skills" data-catalog-role="복잡한 코드를 더 작고 읽기 쉬운 구조로 정리합니다." data-catalog-when="파일이 너무 길어졌거나 리팩토링이 필요할 때 씁니다."><code>code-simplification</code><small>단순화</small></button>
+                  <button class="catalog-item" type="button" data-catalog-name="using-agent-skills" data-catalog-family="addyosmani/agent-skills" data-catalog-role="현재 작업에 어떤 agent skill을 읽고 적용해야 하는지 판단합니다." data-catalog-when="어떤 원천 스킬을 참고해야 할지 애매할 때 씁니다."><code>using-agent-skills</code><small>스킬 선택법</small></button>
+                  <button class="catalog-item" type="button" data-catalog-name="gstack-claude" data-catalog-family="gstack utility" data-catalog-role="Claude CLI를 독립 리뷰/챌린지/상담 용도로 호출합니다." data-catalog-when="다른 모델의 독립 의견으로 계획이나 diff를 검토하고 싶을 때 씁니다."><code>gstack-claude</code><small>외부 모델 의견</small></button>
+                </div>
+              </div>
+
+              <div class="catalog-section">
+                <h3>디버그 / 조사</h3>
+                <p>문제가 생겼을 때 근본 원인과 증거를 확보합니다.</p>
+                <div class="catalog-items">
+                  <button class="catalog-item" type="button" data-catalog-name="gstack-investigate" data-catalog-family="gstack debug" data-catalog-role="원인 없이 고치지 못하게 막고, 가설/패턴/회귀 증거를 요구합니다." data-catalog-when="버그가 위험하거나 이미 한 번 실패했거나 원인이 불명확할 때 씁니다."><code>gstack-investigate</code><small>근본 원인</small></button>
+                  <button class="catalog-item" type="button" data-catalog-name="Oh My debug" data-catalog-family="Oh My / OMO / OMC routes" data-catalog-role="증상부터 검증까지 이어지는 기본 디버그 루프입니다." data-catalog-when="일반적인 버그 조사 흐름이 필요할 때 씁니다."><code>debug</code><small>디버그 루프</small></button>
+                  <button class="catalog-item" type="button" data-catalog-name="Oh My doctor" data-catalog-family="Oh My / OMO / OMC routes" data-catalog-role="환경, PATH, MCP, 런타임, 설치 문제를 진단합니다." data-catalog-when="코드 문제가 아니라 도구/환경 문제 같을 때 씁니다."><code>doctor</code><small>환경 진단</small></button>
+                  <button class="catalog-item" type="button" data-catalog-name="Oh My build-fix" data-catalog-family="Oh My / OMO / OMC routes" data-catalog-role="빌드, 타입, 린트, import, dependency 실패를 고칩니다." data-catalog-when="정적 검사나 빌드가 깨졌을 때 씁니다."><code>build-fix</code><small>빌드 수리</small></button>
+                  <button class="catalog-item" type="button" data-catalog-name="Oh My git-master" data-catalog-family="Oh My / OMO / OMC routes" data-catalog-role="git history를 보고 회귀 시작점과 변경 흐름을 추적합니다." data-catalog-when="예전엔 됐는데 언제 깨졌는지 모를 때 씁니다."><code>git-master</code><small>회귀 추적</small></button>
+                  <button class="catalog-item" type="button" data-catalog-name="debugging-and-error-recovery" data-catalog-family="addyosmani/agent-skills" data-catalog-role="에러 복구와 디버깅 순서를 보강합니다." data-catalog-when="Mansu debug 흐름에 일반 디버깅 원칙을 더하고 싶을 때 씁니다."><code>debugging-and-error-recovery</code><small>에러 복구</small></button>
+                </div>
+              </div>
+
+              <div class="catalog-section">
+                <h3>검증 / QA / 브라우저</h3>
+                <p>사용자처럼 눌러보고, 리포트하고, 성능과 보안을 확인합니다.</p>
+                <div class="catalog-items">
+                  <button class="catalog-item" type="button" data-catalog-name="gstack-browse" data-catalog-family="gstack QA" data-catalog-role="브라우저를 열어 페이지, 버튼, 폼, 콘솔, 스크린샷을 확인합니다." data-catalog-when="실제 화면에서 증거를 수집해야 할 때 씁니다."><code>gstack-browse</code><small>브라우저 조작</small></button>
+                  <button class="catalog-item" type="button" data-catalog-name="gstack-qa-only" data-catalog-family="gstack QA" data-catalog-role="수정하지 않고 QA 리포트, 재현 단계, 위험도를 남깁니다." data-catalog-when="먼저 문제를 보고만 받고 싶을 때 씁니다."><code>gstack-qa-only</code><small>리포트 전용 QA</small></button>
+                  <button class="catalog-item" type="button" data-catalog-name="gstack-qa" data-catalog-family="gstack QA" data-catalog-role="QA로 발견한 문제를 test-fix-verify 루프로 고칩니다." data-catalog-when="사용자가 수정까지 승인했거나 근본 원인이 확인된 뒤 씁니다."><code>gstack-qa</code><small>수정 포함 QA</small></button>
+                  <button class="catalog-item" type="button" data-catalog-name="gstack-benchmark" data-catalog-family="gstack QA" data-catalog-role="성능 baseline, Core Web Vitals, 리소스 크기, 전후 비교를 봅니다." data-catalog-when="느려졌거나 성능 리스크가 있는 변경에서 씁니다."><code>gstack-benchmark</code><small>성능 검증</small></button>
+                  <button class="catalog-item" type="button" data-catalog-name="gstack-cso" data-catalog-family="gstack security" data-catalog-role="보안, secrets, dependency, CI/CD, LLM 경계, 공급망을 점검합니다." data-catalog-when="인증/권한/비밀정보/보안 민감 변경에서 씁니다."><code>gstack-cso</code><small>보안 점검</small></button>
+                  <button class="catalog-item" type="button" data-catalog-name="gstack-canary" data-catalog-family="gstack QA" data-catalog-role="배포 직후 에러, 성능 저하, 주요 페이지 이상을 감시합니다." data-catalog-when="배포 후 실제 서비스 상태를 확인할 때 씁니다."><code>gstack-canary</code><small>배포 후 감시</small></button>
+                  <button class="catalog-item" type="button" data-catalog-name="browser-testing-with-devtools" data-catalog-family="addyosmani/agent-skills" data-catalog-role="브라우저와 DevTools를 활용한 검증 관점을 보강합니다." data-catalog-when="런타임 화면/콘솔/네트워크 근거가 필요할 때 씁니다."><code>browser-testing-with-devtools</code><small>DevTools 검증</small></button>
+                  <button class="catalog-item" type="button" data-catalog-name="Oh My playwright / ultraqa / security-review" data-catalog-family="Oh My / OMO / OMC routes" data-catalog-role="반복 가능한 E2E, 넓은 QA, 가벼운 보안 체크를 제공합니다." data-catalog-when="검증을 자동화하거나 QA 범위를 넓힐 때 씁니다."><code>playwright</code> / <code>ultraqa</code> / <code>security-review</code><small>검증 확장</small></button>
+                </div>
+              </div>
+
+              <div class="catalog-section">
+                <h3>출하 / 문서 / 학습</h3>
+                <p>마지막 품질 게이트, 커밋/PR, 배포, 회고와 학습을 담당합니다.</p>
+                <div class="catalog-items">
+                  <button class="catalog-item" type="button" data-catalog-name="gstack-health" data-catalog-family="gstack ship" data-catalog-role="타입, 린트, 테스트, dead code 등 프로젝트 체력을 점수화합니다." data-catalog-when="시작 전/출하 전 품질 상태를 확인할 때 씁니다."><code>gstack-health</code><small>품질 대시보드</small></button>
+                  <button class="catalog-item" type="button" data-catalog-name="gstack-review" data-catalog-family="gstack ship" data-catalog-role="diff를 머지 전 관점으로 보고 회귀, 누락 테스트, side effect를 찾습니다." data-catalog-when="slice나 PR을 닫기 전에 씁니다."><code>gstack-review</code><small>diff 리뷰</small></button>
+                  <button class="catalog-item" type="button" data-catalog-name="gstack-ship" data-catalog-family="gstack ship" data-catalog-role="테스트, 커밋, 푸시, PR, changelog 같은 출하 루틴을 맡습니다." data-catalog-when="실제로 PR/푸시까지 진행할 때 씁니다."><code>gstack-ship</code><small>PR/출하</small></button>
+                  <button class="catalog-item" type="button" data-catalog-name="gstack-land-and-deploy" data-catalog-family="gstack ship" data-catalog-role="PR 머지, 배포, 기본 production health check를 이어갑니다." data-catalog-when="PR 이후 실제 배포까지 갈 때 씁니다."><code>gstack-land-and-deploy</code><small>머지/배포</small></button>
+                  <button class="catalog-item" type="button" data-catalog-name="gstack-document-release" data-catalog-family="gstack docs" data-catalog-role="README, CHANGELOG, ARCHITECTURE 등 문서를 실제 변경과 맞춥니다." data-catalog-when="기능/설정/아키 변경 후 문서 드리프트를 막을 때 씁니다."><code>gstack-document-release</code><small>문서 동기화</small></button>
+                  <button class="catalog-item" type="button" data-catalog-name="gstack-retro / gstack-learn" data-catalog-family="gstack learning" data-catalog-role="작업 회고와 재사용 가능한 패턴/함정/결정을 저장합니다." data-catalog-when="작업이 끝나고 다음번에 더 잘하기 위한 기록을 남길 때 씁니다."><code>gstack-retro</code> / <code>gstack-learn</code><small>회고/학습</small></button>
+                  <button class="catalog-item" type="button" data-catalog-name="documentation-and-adrs / shipping-and-launch" data-catalog-family="addyosmani/agent-skills" data-catalog-role="ADR, 문서, release note, launch checklist 관점을 보강합니다." data-catalog-when="의사결정과 릴리스 기록이 중요할 때 씁니다."><code>documentation-and-adrs</code> / <code>shipping-and-launch</code><small>문서/런칭</small></button>
+                </div>
+              </div>
+
+              <div class="catalog-section">
+                <h3>안전 / 컨텍스트 / 설치 / 유틸리티</h3>
+                <p>작업 범위 보호, 컨텍스트 저장/복구, 배포 설정, 브라우저 쿠키 등 보조 흐름입니다.</p>
+                <div class="catalog-items">
+                  <button class="catalog-item" type="button" data-catalog-name="gstack-careful / gstack-freeze / gstack-guard / gstack-unfreeze" data-catalog-family="gstack safety" data-catalog-role="위험 명령 경고, 수정 범위 제한, 안전모드 해제를 담당합니다." data-catalog-when="삭제/DB/force push/넓은 파일 수정처럼 위험이 있을 때 씁니다."><code>gstack-guard</code> family<small>안전장치</small></button>
+                  <button class="catalog-item" type="button" data-catalog-name="gstack-context-save / gstack-context-restore / gstack-checkpoint" data-catalog-family="gstack context" data-catalog-role="작업 상태, 결정, 남은 일을 저장하고 이어갑니다." data-catalog-when="긴 작업을 멈추거나 다음 세션으로 넘길 때 씁니다."><code>gstack-context-save</code> family<small>상태 저장</small></button>
+                  <button class="catalog-item" type="button" data-catalog-name="gstack-setup-browser-cookies / gstack-open-gstack-browser" data-catalog-family="gstack browser" data-catalog-role="인증 쿠키를 가져오거나 눈으로 볼 수 있는 브라우저를 엽니다." data-catalog-when="로그인이 필요한 QA나 사용자가 브라우저 과정을 보고 싶을 때 씁니다."><code>gstack-setup-browser-cookies</code><small>인증/브라우저</small></button>
+                  <button class="catalog-item" type="button" data-catalog-name="gstack-setup-deploy / gstack-setup-gbrain" data-catalog-family="gstack setup" data-catalog-role="배포 설정이나 gbrain 같은 보조 시스템을 초기화합니다." data-catalog-when="프로젝트 운영 환경을 처음 세팅할 때 씁니다."><code>gstack-setup-deploy</code> / <code>gstack-setup-gbrain</code><small>운영 세팅</small></button>
+                  <button class="catalog-item" type="button" data-catalog-name="gstack-upgrade" data-catalog-family="gstack setup" data-catalog-role="gstack 자체를 최신 버전으로 업데이트하고 변경점을 확인합니다." data-catalog-when="gstack 원천을 최신으로 맞출 때 씁니다."><code>gstack-upgrade</code><small>gstack 업데이트</small></button>
+                  <button class="catalog-item" type="button" data-catalog-name="gstack-benchmark-models" data-catalog-family="gstack utility" data-catalog-role="여러 모델로 같은 prompt를 돌려 속도, 비용, 품질을 비교합니다." data-catalog-when="어떤 모델/호스트가 더 적합한지 실험할 때 씁니다."><code>gstack-benchmark-models</code><small>모델 비교</small></button>
+                  <button class="catalog-item" type="button" data-catalog-name="gstack-make-pdf" data-catalog-family="gstack utility" data-catalog-role="Markdown 문서를 보기 좋은 PDF로 만듭니다." data-catalog-when="문서를 공유 가능한 PDF 산출물로 만들 때 씁니다."><code>gstack-make-pdf</code><small>PDF 생성</small></button>
+                  <button class="catalog-item" type="button" data-catalog-name="gstack-pair-agent / gstack-landing-report / gstack-plan-tune" data-catalog-family="gstack utility" data-catalog-role="원격 에이전트 페어링, landing queue 확인, 질문 민감도 조정 같은 보조 운영을 맡습니다." data-catalog-when="멀티 에이전트/작업 큐/질문 정책을 다룰 때 씁니다."><code>gstack-pair-agent</code> family<small>운영 보조</small></button>
+                  <button class="catalog-item" type="button" data-catalog-name="ci-cd-and-automation / git-workflow-and-versioning / performance-optimization / security-and-hardening / deprecation-and-migration" data-catalog-family="addyosmani/agent-skills" data-catalog-role="CI/CD, git/versioning, 성능, 보안, 마이그레이션 같은 운영 엔지니어링 원칙을 보강합니다." data-catalog-when="출하 이후 운영 품질이나 전환 작업이 중요할 때 씁니다."><code>ci-cd-and-automation</code> etc.<small>운영 엔지니어링</small></button>
+                </div>
+              </div>
+              </div>
+            </div>
+
+            <aside class="catalog-inspector" aria-live="polite">
+              <p class="inspector-kicker">Skill detail</p>
+              <h3 id="catalog-detail-name">Ouroboros skills/interview</h3>
+              <dl>
+                <div>
+                  <dt>패밀리</dt>
+                  <dd id="catalog-detail-family">Ouroboros &gt; 프로젝트 정의</dd>
+                </div>
+                <div>
+                  <dt>역할</dt>
+                  <dd id="catalog-detail-role">모호한 아이디어를 질문으로 풀어 사용자, 문제, 범위, 제약을 정리합니다.</dd>
+                </div>
+                <div>
+                  <dt>언제 쓰나</dt>
+                  <dd id="catalog-detail-when">사용자가 하고 싶은 말은 있는데 아직 프로젝트 정의가 흐릴 때 씁니다.</dd>
+                </div>
+                <div>
+                  <dt>내부 흐름</dt>
+                  <dd id="catalog-detail-process">질문으로 현재 의도와 제약을 모으고, 다음 프로젝트 정의 루트나 PLAN 작성으로 넘깁니다.</dd>
+                </div>
+                <div>
+                  <dt>산출물</dt>
+                  <dd id="catalog-detail-output">정리된 문제 정의, 사용자/범위/제약, 다음에 읽을 원천 스킬 또는 문서</dd>
+                </div>
+              </dl>
+            </aside>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <footer>
+    Mansu static manual. Update this file whenever a mansu-* skill is added, renamed, or materially changes purpose.
+  </footer>
+  <script>
+    const detailTriggers = document.querySelectorAll(".phase[data-detail]");
+    const detailCards = document.querySelectorAll("[data-detail-card]");
+    const mansuDetailTriggers = document.querySelectorAll(".mansu-skill-card[data-mansu-detail]");
+    const mansuDetailCards = document.querySelectorAll("[data-mansu-detail-card]");
+    const catalogItems = document.querySelectorAll("[data-catalog-name]");
+    const catalogName = document.querySelector("#catalog-detail-name");
+    const catalogFamily = document.querySelector("#catalog-detail-family");
+    const catalogRole = document.querySelector("#catalog-detail-role");
+    const catalogWhen = document.querySelector("#catalog-detail-when");
+    const catalogProcess = document.querySelector("#catalog-detail-process");
+    const catalogOutput = document.querySelector("#catalog-detail-output");
+
+    function selectDetail(trigger) {
+      const selected = trigger.dataset.detail;
+
+      detailTriggers.forEach((item) => {
+        const isActive = item === trigger;
+        item.classList.toggle("is-active", isActive);
+        item.setAttribute("aria-pressed", String(isActive));
+      });
+
+      detailCards.forEach((card) => {
+        card.classList.toggle("is-active", card.dataset.detailCard === selected);
+      });
+    }
+
+    detailTriggers.forEach((trigger) => {
+      trigger.addEventListener("click", () => selectDetail(trigger));
+      trigger.addEventListener("keydown", (event) => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          selectDetail(trigger);
+        }
+      });
+    });
+
+    function selectMansuDetail(trigger) {
+      const selected = trigger.dataset.mansuDetail;
+
+      mansuDetailTriggers.forEach((item) => {
+        const isActive = item === trigger;
+        item.classList.toggle("is-active", isActive);
+        item.setAttribute("aria-pressed", String(isActive));
+      });
+
+      mansuDetailCards.forEach((card) => {
+        card.classList.toggle("is-active", card.dataset.mansuDetailCard === selected);
+      });
+    }
+
+    mansuDetailTriggers.forEach((trigger) => {
+      trigger.addEventListener("click", () => selectMansuDetail(trigger));
+      trigger.addEventListener("keydown", (event) => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          selectMansuDetail(trigger);
+        }
+      });
+    });
+
+    function catalogProcessFor(item) {
+      if (item.dataset.catalogProcess) return item.dataset.catalogProcess;
+
+      const name = item.dataset.catalogName || "";
+      const family = item.dataset.catalogFamily || "";
+      const haystack = `${name} ${family}`.toLowerCase();
+
+      if (haystack.includes("ouroboros")) return "프로젝트 상태를 먼저 읽고, 필요한 route를 선택한 뒤 seed, session 상태, 다음 phase 기준으로 넘깁니다.";
+      if (haystack.includes("autoplan") || haystack.includes("plan-") || haystack.includes("office-hours") || haystack.includes("planning")) return "현재 계획을 제품, 디자인, 엔지니어링, DX 관점으로 나눠 비평하고 실행 가능한 결정으로 합칩니다.";
+      if (haystack.includes("design")) return "제품 맥락을 읽고 디자인 방향, 시안, 구현 가능한 HTML/CSS, 시각 QA 중 필요한 단계로 연결합니다.";
+      if (haystack.includes("qa") || haystack.includes("browse") || haystack.includes("browser")) return "실제 화면이나 런타임 증거를 수집하고, 리포트 전용인지 수정 포함인지에 따라 QA 게이트를 나눕니다.";
+      if (haystack.includes("investigate") || haystack.includes("debug") || haystack.includes("doctor") || haystack.includes("build-fix")) return "증상을 재현하고 scope를 좁힌 뒤 원인 가설, 최소 수정, 회귀 검증 순서로 진행합니다.";
+      if (haystack.includes("ship") || haystack.includes("deploy") || haystack.includes("release") || haystack.includes("canary")) return "최종 품질 신호를 모아 ship/hold를 판단하고, PR, 배포, canary, 문서 업데이트로 이어갑니다.";
+      if (haystack.includes("research") || haystack.includes("source-driven") || haystack.includes("scrape")) return "GitHub, Threads, Reddit, 문서, 실제 코드를 찾아 근거와 참고 패턴을 추려 현재 계획에 연결합니다.";
+      if (haystack.includes("security") || haystack.includes("cso")) return "인증, 권한, 비밀정보, dependency, CI/CD, LLM 경계를 점검하고 위험도를 나눕니다.";
+      if (haystack.includes("benchmark") || haystack.includes("performance")) return "기준 성능을 잡고 변경 전후 지표와 체감 지연을 비교합니다.";
+      if (haystack.includes("context") || haystack.includes("checkpoint") || haystack.includes("learn") || haystack.includes("retro")) return "현재 결정과 작업 상태를 저장하고, 다음 세션이나 다음 작업자가 이어갈 수 있게 정리합니다.";
+      if (haystack.includes("adapter") || haystack.includes("runtime") || haystack.includes("setup") || haystack.includes("upgrade")) return "현재 host/runtime/OS를 확인하고 필요한 adapter, 설치, 업데이트, blocker를 정리합니다.";
+      if (haystack.includes("incremental") || haystack.includes("tdd") || haystack.includes("ultrawork") || haystack.includes("ralph")) return "계획된 일을 작은 단위로 나누고, 각 단위마다 구현과 검증을 닫는 실행 루프로 연결합니다.";
+      return "현재 작업 맥락에 맞게 원천 스킬을 읽고, Mansu route 안에서 필요한 증거와 다음 행동으로 연결합니다.";
+    }
+
+    function catalogOutputFor(item) {
+      if (item.dataset.catalogOutput) return item.dataset.catalogOutput;
+
+      const name = item.dataset.catalogName || "";
+      const family = item.dataset.catalogFamily || "";
+      const haystack = `${name} ${family}`.toLowerCase();
+
+      if (haystack.includes("ouroboros")) return "프로젝트 정의, seed/ledger 메모, session 상태, 다음 phase 진입점";
+      if (haystack.includes("autoplan") || haystack.includes("plan-") || haystack.includes("office-hours") || haystack.includes("planning")) return "비평된 계획, 결정 사항, 리스크, slice 후보, 테스트 전략";
+      if (haystack.includes("design")) return "디자인 방향, 시안 비교, 구현용 HTML/CSS 기준, visual QA findings";
+      if (haystack.includes("qa") || haystack.includes("browse") || haystack.includes("browser")) return "QA 리포트, 재현 단계, 스크린샷/콘솔 증거, 수정 또는 보류 판단";
+      if (haystack.includes("investigate") || haystack.includes("debug") || haystack.includes("doctor") || haystack.includes("build-fix")) return "재현 경로, root cause, 최소 수정안, 회귀 테스트 또는 수동 검증 증거";
+      if (haystack.includes("ship") || haystack.includes("deploy") || haystack.includes("release") || haystack.includes("canary")) return "ship/hold verdict, PR/릴리스 메모, 배포/감시 결과, 남은 리스크";
+      if (haystack.includes("research") || haystack.includes("source-driven") || haystack.includes("scrape")) return "레퍼런스 목록, 코드 패턴, 아키텍처 인사이트, 현재 프로젝트에 적용할 점";
+      if (haystack.includes("security") || haystack.includes("cso")) return "보안 finding, 위험도, 권장 수정, 추가 확인 항목";
+      if (haystack.includes("benchmark") || haystack.includes("performance")) return "baseline, 전후 성능 수치, regression verdict, 최적화 후보";
+      if (haystack.includes("context") || haystack.includes("checkpoint") || haystack.includes("learn") || haystack.includes("retro")) return "작업 상태, 끝낸 것, 남은 것, 다음 시작점, 재사용할 학습";
+      if (haystack.includes("adapter") || haystack.includes("runtime") || haystack.includes("setup") || haystack.includes("upgrade")) return "준비 상태, adapter 선택, 설치/업데이트 결과, blocker";
+      if (haystack.includes("incremental") || haystack.includes("tdd") || haystack.includes("ultrawork") || haystack.includes("ralph")) return "slice 실행 기록, 테스트/검증 결과, checkpoint, 다음 slice";
+      return "적용 기준, 실행 메모, 남은 리스크, 다음 행동";
+    }
+
+    function updateCatalogDetail(item) {
+      catalogItems.forEach((entry) => entry.classList.toggle("is-active", entry === item));
+      catalogName.textContent = item.dataset.catalogName;
+      catalogFamily.textContent = item.dataset.catalogFamily;
+      catalogRole.textContent = item.dataset.catalogRole;
+      catalogWhen.textContent = item.dataset.catalogWhen;
+      catalogProcess.textContent = catalogProcessFor(item);
+      catalogOutput.textContent = catalogOutputFor(item);
+    }
+
+    catalogItems.forEach((item) => {
+      item.addEventListener("click", () => updateCatalogDetail(item));
+    });
+
+    const initialCatalogItem = document.querySelector(".catalog-item.is-active") || catalogItems[0];
+    if (initialCatalogItem) updateCatalogDetail(initialCatalogItem);
+  </script>
+</body>
+</html>
