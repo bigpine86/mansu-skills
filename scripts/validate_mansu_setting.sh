@@ -159,7 +159,7 @@ assert_contains 'runtime target(Hermes, OpenCode, Codex, Claude Code), host, OS'
 assert_contains 'Hermes + tmux + OpenCode runtime' "$README_FILE"
 assert_contains '$HOME/.config/opencode/skills/mansu-setting' "$README_FILE"
 assert_contains '.opencode/skills/mansu-setting' "$README_FILE"
-assert_contains '설치/업데이트한 뒤' "$README_FILE"
+assert_contains 'installs or updates Ouroboros, gstack, and the matching' "$README_FILE"
 assert_contains 'install/update Ouroboros, gstack, and the matching Oh My adapter' "$README_FILE"
 assert_not_contains '$HOME/.opencode/skills' "$README_FILE"
 assert_not_contains 'Codex example' "$README_FILE"

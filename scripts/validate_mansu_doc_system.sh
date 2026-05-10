@@ -3,6 +3,7 @@ set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 README_FILE="$ROOT_DIR/README.md"
+README_KO_FILE="$ROOT_DIR/README.ko.md"
 PHILOSOPHY_FILE="$ROOT_DIR/MANSU_PHILOSOPHY.md"
 AGENTS_TEMPLATE="$ROOT_DIR/mansu-operating-model/references/AGENTS.md"
 CODING_RULES_TEMPLATE="$ROOT_DIR/mansu-operating-model/references/CODING_RULES.md"
@@ -24,6 +25,7 @@ contains() {
 }
 
 [ -f "$README_FILE" ] || fail "missing README.md"
+[ -f "$README_KO_FILE" ] || fail "missing README.ko.md"
 [ -f "$PHILOSOPHY_FILE" ] || fail "missing MANSU_PHILOSOPHY.md"
 [ -f "$AGENTS_TEMPLATE" ] || fail "missing AGENTS template"
 [ -f "$CODING_RULES_TEMPLATE" ] || fail "missing CODING_RULES template"
@@ -54,14 +56,19 @@ contains "$README_FILE" '^## Big Picture$' || fail 'README should include big pi
 contains "$README_FILE" 'Lifecycle phase spine' || fail 'README should mention lifecycle phase spine layer'
 contains "$README_FILE" 'Project definition / memory source' || fail 'README should mention project definition and memory layer'
 contains "$README_FILE" 'Implementation actor' || fail 'README should mention implementation actor layer'
-contains "$README_FILE" '프로젝트 로드맵/phase order' || fail 'README should preserve project roadmap/phase order boundary'
-contains "$README_FILE" '큰 기능 순서, phase `PLAN.md`' || fail 'README should preserve large-grain order before phase PLAN'
-contains "$README_FILE" '대표 route이지 고정 의존성이 아닙니다' || fail 'README should keep source routes representative, not mandatory'
+contains "$README_FILE" 'project roadmap/phase order' || fail 'README should preserve project roadmap/phase order boundary'
+contains "$README_FILE" 'Large feature order comes before a phase `PLAN.md`' || fail 'README should preserve large-grain order before phase PLAN'
+contains "$README_FILE" 'representative routes, not fixed dependencies' || fail 'README should keep source routes representative, not mandatory'
 contains "$README_FILE" 'source route verified by mansu-source-curator' || fail 'README should require source-curator verification for substitute routes'
 contains "$README_FILE" 'Last verified: 2026-05-10' || fail 'README freshness date should match source lock'
-contains "$README_FILE" '현재 phase의 active execution plan' || fail 'README should keep PLAN.md scoped to active phase execution'
+contains "$README_FILE" 'active phase execution plan' || fail 'README should keep PLAN.md scoped to active phase execution'
 contains "$README_FILE" 'Ouroboros, gstack, Oh My / OMO / OMC, addyosmani/agent-skills, and VoltAgent/awesome-design-md source freshness' || fail 'README should mention source freshness checks'
 contains "$README_FILE" 'install/update Ouroboros, gstack, and the matching Oh My adapter' || fail 'README should mention source tool install/update checks'
+contains "$README_FILE" '\[한국어\]\(\./README\.ko\.md\)' || fail 'README should link Korean README'
+contains "$README_KO_FILE" '\[English\]\(\./README\.md\)' || fail 'Korean README should link English README'
+contains "$README_KO_FILE" '최고의 자동화는 모든 것을 직접 만드는 데서 오지 않습니다' || fail 'Korean README should preserve Mansu philosophy'
+contains "$README_KO_FILE" '대표 route이지 고정 의존성이 아닙니다' || fail 'Korean README should keep source routes representative'
+contains "$README_KO_FILE" '현재 phase의 active execution plan' || fail 'Korean README should keep PLAN.md scoped to active phase execution'
 
 contains "$PHILOSOPHY_FILE" 'mansu-operating-model' || fail 'MANSU_PHILOSOPHY should mention mansu-operating-model'
 contains "$PHILOSOPHY_FILE" 'canonical doctrine' || fail 'MANSU_PHILOSOPHY should describe canonical doctrine role'
@@ -79,6 +86,7 @@ contains "$PHILOSOPHY_FILE" 'usable only after `mansu-source-curator` verifies' 
 
 scan_files=(
   "$README_FILE"
+  "$README_KO_FILE"
   "$PHILOSOPHY_FILE"
   "$SOURCE_CATALOG"
   "$DOC_ORDER"
