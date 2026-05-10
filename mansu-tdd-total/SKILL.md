@@ -1,6 +1,6 @@
 ---
 name: mansu-tdd-total
-description: Concise dispatcher and planner for Mansu TDD workflows. Use when the user wants `mansu-tdd-total`, a full Mansu TDD planning pass, or a mixed workflow that decides `mansu-tdd-lite` vs `mansu-tdd-strict` per vertical slice. This skill plans, classifies slices, records the per-slice mode decision in `PLAN.md`, and delegates execution details to the existing lite or strict skills instead of duplicating their workflows.
+description: End-to-end dispatcher, planner, and completion orchestrator for Mansu TDD workflows. Use when the user wants `mansu-tdd-total`, a full Mansu TDD planning pass, or a mixed workflow that decides `mansu-tdd-lite` vs `mansu-tdd-strict` per vertical slice. This skill plans, critiques, records the execution-ready plan in `PLAN.md`, classifies slices, runs every unblocked slice through the selected lite or strict skill, and closes the work with final verification, worklog, and commit accounting.
 ---
 
 # Mansu TDD Total
@@ -14,8 +14,10 @@ For the current runtime, read this as runtime-neutral orchestration: keep the pl
 Mansu does not reinvent strong workflows. It plans, separates roles, routes work to
 the right source skill, verifies the result, and records what happened.
 
-Use this skill as the TDD-series orchestrator: it owns planning and mode selection,
-then delegates execution to `mansu-tdd-lite` or `mansu-tdd-strict`.
+Use this skill as the TDD-series orchestrator: it owns planning, critique,
+mode selection, sequential dispatch, and final closeout. It delegates each
+slice's execution details to `mansu-tdd-lite` or `mansu-tdd-strict`, but it
+remains responsible for making sure the overall workflow actually finishes.
 
 ## Core promise
 
@@ -25,7 +27,9 @@ then delegates execution to `mansu-tdd-lite` or `mansu-tdd-strict`.
 - Split the work into vertical slices.
 - Choose `mansu-tdd-lite` or `mansu-tdd-strict` for each slice.
 - Record the per-slice mode decision and rationale in `PLAN.md`.
-- Delegate execution details to the selected skill.
+- Execute every unblocked slice in order through the selected skill.
+- Persist in a Ralph-style loop until all slices are closed, blocked with a recorded reason, or explicitly stopped by the user.
+- Run final project-level verification, worklog update, and commit accounting after the slices are complete.
 
 ## Shared invariants
 
@@ -39,6 +43,61 @@ These rules do not change between `lite` and `strict`:
 - Keep `PLAN.md` current.
 - Record completed work in `개발일지.md` or the project worklog.
 - Do not use `lite` as permission to lower work quality.
+- Treat missing review, QA, checkpoint, worklog, or commit evidence as an open slice, not as a finished slice.
+
+## Oh My execution-mode mapping
+
+Mansu TDD Total uses Oh My / OMO / OMC execution-mode skills by name when they
+are installed. This is not a generic list of every Oh My skill; these are the
+clear execution modes used by this workflow:
+
+- persistence loop: `ralph`
+- strict TDD habit: `tdd`
+
+Use `ralph` as the persistence rule for the whole workflow: keep retrying,
+re-routing, and verifying until every unblocked slice is closed or the work is
+explicitly blocked.
+
+Use `tdd` only inside slices routed to `mansu-tdd-strict`, where a meaningful
+RED -> GREEN -> REFACTOR loop improves confidence.
+
+Do not use parallel Oh My modes such as `ultrawork` or `ultrapilot` for the
+default slice execution loop. Mansu TDD slices are sequential by default. Use
+parallel modes only for dependency-free discovery or explicitly approved
+independent work that cannot affect the current slice order.
+
+## Gstack gate mapping
+
+Mansu's default implementation gates come from the gstack family when those
+skills are installed in the current runtime. Do not treat `review`, `QA`,
+`checkpoint`, or `health` as vague self-check words.
+
+Use these core gstack skills by name when they are installed:
+
+- review gate: `gstack-review`
+- QA evidence without fixes: `gstack-qa-only` or `gstack-browse`
+- QA test-fix-verify loop when fixes are approved: `gstack-qa`
+- checkpoint/state handoff: `gstack-context-save` and `gstack-context-restore`;
+  `gstack-checkpoint` only when the installed runtime still exposes it
+- health gate: `gstack-health`
+
+If the current runtime exposes these under shorter commands such as `review`,
+`qa`, `qa-only`, `browse`, or `health`, map the concrete gstack skill above to
+that callable command and record the mapping.
+
+Optional escalation gates:
+
+- use `gstack-cso` only when the slice changes auth, permissions, secrets,
+  data exposure, supply chain, or LLM trust boundaries
+- use `gstack-benchmark` only when the slice can affect loading, runtime
+  latency, bundle/resource size, or performance-sensitive paths
+
+Do not run `gstack-ship` from this TDD loop by default. Hand release and PR
+workflow to `mansu-ship-release` when the implementation work is complete.
+
+If the gstack gate is unavailable, use a project-standard equivalent only when
+it is separately invoked, produces evidence, and is recorded in `PLAN.md` or the
+worklog. A builder saying "I reviewed it" is not enough.
 
 Commit policy:
 
@@ -76,11 +135,19 @@ Before planning, confirm:
 - there is an active plan path, preferably `PLAN.md`
 - there is a completed-work log path, preferably `개발일지.md` when the project uses Korean worklogs
 - review, QA, checkpoint, and commit gates are available or have clear project equivalents
+- if the current host supports subagents, helper sessions, or external critic tools, there is a usable path for real critic review before implementation
+- the current-runtime names for `ralph`, `tdd`, `gstack-review`, `gstack-qa-only`, `gstack-browse`, `gstack-qa`, `gstack-context-save`/`gstack-context-restore`, and `gstack-health` are known, or explicit project equivalents are recorded
 - `mansu-tdd-lite` is available for lite slices
 - `mansu-tdd-strict` prerequisites are available before assigning strict slices
 
 An equivalent review, QA, or checkpoint gate must be separately invoked, produce
 status/evidence, and be distinguishable from the builder's self-summary.
+
+When actual multi-agent or helper-session critique is available, use it for
+non-trivial work instead of silently replacing it with a single-session role
+play. Local role separation is only a fallback when the runtime lacks safe
+critic agents, critic setup fails, or the task is too small to justify spawning
+extra reviewers. Record the reason when using the fallback.
 
 If strict prerequisites are missing, still plan the work, but mark would-be strict slices as blocked instead of pretending to run strict mode.
 
@@ -99,9 +166,14 @@ Use these responsibilities before implementation:
   Example mapping: one or more critique passes, reviewer sessions, or critic tools that challenge scope, risk, and design.
 - Synthesizer: merge critique into one execution-ready plan and remove contradictions.
 
-Depending on the runtime, the mapping may be a mix of the current session, runtime-backed helper sessions, subagents, external review tools, or local review passes.
+Depending on the runtime, the mapping may be a mix of runtime-backed helper
+sessions, subagents, external review tools, or local review passes.
 
-If exact historical agent names or tools are unavailable, map the available runtime roles, tools, sessions, or perspectives to these three responsibilities and record the mapping in `PLAN.md`.
+For non-trivial work, prefer actual independent critic agents, helper sessions,
+or external critic tools when the runtime can provide them safely. If exact
+historical agent names or tools are unavailable, map the available runtime
+roles, tools, sessions, or perspectives to these three responsibilities and
+record the mapping in `PLAN.md`.
 
 ## Real critic agent gate
 
@@ -130,7 +202,10 @@ The execution-ready plan must include:
 - non-goals and constraints
 - domain language and DDD-style responsibility boundaries
 - architecture and module boundaries
+- pre-refactor and file/module split plan so the implementation does not grow one giant file
 - source skills or tools to use
+- Oh My execution-mode mapping: `ralph` for persistence and `tdd` for strict slices, or their current-runtime equivalents
+- gstack gate mapping: concrete names for `gstack-review`, `gstack-qa-only`/`gstack-browse`, `gstack-qa`, `gstack-context-save`/`gstack-context-restore`, and `gstack-health`, or their current-runtime equivalents
 - code construction router: current phase, source skill to read, dependency/context/contract notes, and slice coding sequence
 - risks and mitigation
 - test and validation strategy
@@ -143,6 +218,7 @@ If any of these are unknown, mark the gap explicitly instead of pretending the p
 
 1. Clarify the goal, user value, constraints, and references.
 2. Map the Planner, Critics, and Synthesizer roles.
+   Prefer real critic agents, helper sessions, or external critique tools when available.
 3. Draft the implementation plan through the Planner role.
 4. Critique the plan through the Critics role.
 5. If real critic agents were started, wait for them or record a real failure/timeout fallback.
@@ -152,6 +228,8 @@ If any of these are unknown, mark the gap explicitly instead of pretending the p
 9. Assign each slice a mode: `lite`, `strict`, or `blocked`.
 10. Record the role mapping, critic status, execution-ready plan, slice table, and mode decisions in `PLAN.md`.
 11. Start execution automatically after the plan gate passes; pause only for explicit approval gates, risky actions, or unresolved blockers.
+12. Continue the sequential slice loop until every unblocked slice is closed.
+13. Run final closeout verification and commit accounting.
 
 ## Dispatch rules
 
@@ -185,10 +263,13 @@ Each planned slice should include:
 - impact files
 - risks
 - validation path
+- Oh My execution mode: `ralph` persistence plus `tdd` only when strict RED/GREEN/REFACTOR is selected
+- gstack gate path: which named gstack skills or current-runtime equivalents close this slice, for example `gstack-review -> gstack-qa-only or gstack-qa -> gstack-context-save -> commit`
 - mode: `lite`, `strict`, or `blocked`
 - why this mode
 - delegated skill: `mansu-tdd-lite` or `mansu-tdd-strict`
 - construction router notes: current phase, source skill read or skipped, dependency, context to load, contract to lock, and safe-default/rollback concern
+- pre-refactor notes: responsibility boundary, files/modules to split, and what must not be dumped into a giant file
 - close criteria
 - worklog note
 
@@ -199,6 +280,10 @@ For slices marked `lite`, execute with `mansu-tdd-lite`.
 For slices marked `strict`, execute with `mansu-tdd-strict`.
 
 For slices marked `blocked`, stop before implementation and report the missing prerequisite or unresolved plan decision.
+
+After each delegated slice returns, this skill must reconcile the result back
+into the whole plan: update slice status, evidence, worklog note, commit status,
+and the next starting point before dispatching the next slice.
 
 ## Sequential slice gate
 
@@ -216,6 +301,11 @@ A slice is fully closed only when:
 Do not start slice N+1 while slice N is open, ambiguous, blocked without a recorded decision,
 or missing review/QA/checkpoint evidence.
 
+Ralph-style persistence means retrying or re-routing reasonable failures inside
+the same slice before giving up: fix validation failures, re-run the gate, update
+the plan, and only stop when the issue is truly blocked, unsafe, out of scope, or
+requires the user's decision.
+
 ## Mode-change rules
 
 - Escalate from lite to strict if validation reveals hidden behavior risk, architecture churn, or a natural failing RED test.
@@ -229,9 +319,11 @@ When all slices are complete:
 
 - run the project-level build/test/type/lint suite that is relevant to the repo
 - run final QA or browser verification when user-visible behavior changed
+- run a final diff review or equivalent project review gate when code changed
 - keep only active follow-up items in `PLAN.md`
 - move completed multi-slice detail into `개발일지.md` or the project worklog
 - include the final slice modes and validation results in the worklog
 - create a final release/docs commit only when final docs, version, changelog, or deferred-commit policy requires it; otherwise record that per-slice commits already cover the code changes
+- if per-slice commits were skipped or deferred, create the final implementation commit after final verification unless the user or project policy forbids it
 - report what was verified, what could not be verified, remaining risks, and any follow-up checks needed
 - avoid leaving the same completed work fully expanded in both `PLAN.md` and `개발일지.md`

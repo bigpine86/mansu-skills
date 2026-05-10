@@ -1,4 +1,4 @@
 interface:
   display_name: "Mansu TDD Total"
-  short_description: "Planner and dispatcher that chooses lite vs strict per slice"
-  default_prompt: "Use $mansu-tdd-total to map Planner/Critics/Synthesizer roles for the current runtime, split the work into vertical slices, decide mansu-tdd-lite vs mansu-tdd-strict per slice, record the rationale in PLAN.md, and keep strict slices blocked when their prerequisites are unavailable."
+  short_description: "End-to-end TDD orchestrator that plans, slices, executes, and verifies"
+  default_prompt: "Use $mansu-tdd-total end to end: map Planner/Critics/Synthesizer roles, prefer real critic agents when available, map the required Oh My modes ralph and tdd plus core gstack gates gstack-review, gstack-qa-only/gstack-browse, gstack-qa, gstack-context-save/restore, and gstack-health to the current runtime, record the execution-ready plan and slice table in PLAN.md, decide mansu-tdd-lite vs mansu-tdd-strict per slice, run every unblocked slice sequentially through the mapped gates plus commit, update the worklog, then finish with project-level verification, final commit accounting, remaining risks, and follow-up checks."

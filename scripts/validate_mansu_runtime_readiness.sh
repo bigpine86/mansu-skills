@@ -105,6 +105,8 @@ SETTING_FILE="$ROOT_DIR/mansu-setting/SKILL.md"
 SETTING_YAML="$ROOT_DIR/mansu-setting/agents/openai.yaml"
 SETTING_VALIDATOR="$ROOT_DIR/scripts/validate_mansu_setting.sh"
 TDD_SERIES_VALIDATOR="$ROOT_DIR/scripts/validate_mansu_tdd_series.sh"
+TDD_TOTAL_FILE="$ROOT_DIR/mansu-tdd-total/SKILL.md"
+TDD_TOTAL_YAML="$ROOT_DIR/mansu-tdd-total/agents/openai.yaml"
 DEBUG_FILE="$ROOT_DIR/mansu-debug-rootcause/SKILL.md"
 DEBUG_VALIDATOR="$ROOT_DIR/scripts/validate_mansu_debug_rootcause.sh"
 OPERATING_MODEL_VALIDATOR="$ROOT_DIR/scripts/validate_mansu_operating_model.sh"
@@ -152,22 +154,30 @@ check_scoped_pattern \
   "$SELF_FILE"
 
 check_scoped_pattern \
-  'gstack-review stays restricted to validator-only reference zones' \
+  'gstack-review stays restricted to explicit Mansu TDD mapping and validator zones' \
   'gstack-review' \
+  "$TDD_TOTAL_FILE" \
+  "$TDD_TOTAL_YAML" \
+  "$ROOT_DIR/scripts/validate_mansu_tdd_total.sh" \
   "$TDD_SERIES_VALIDATOR" \
   "$SELF_FILE"
 
 check_scoped_pattern \
-  'gstack-qa stays restricted to explicit anti-pattern or validator zones' \
+  'gstack-qa stays restricted to explicit TDD/debug mapping or validator zones' \
   'gstack-qa' \
+  "$TDD_TOTAL_FILE" \
+  "$TDD_TOTAL_YAML" \
+  "$ROOT_DIR/scripts/validate_mansu_tdd_total.sh" \
   "$DEBUG_FILE" \
   "$TDD_SERIES_VALIDATOR" \
   "$OPERATING_MODEL_VALIDATOR" \
   "$SELF_FILE"
 
 check_scoped_pattern \
-  'gstack-checkpoint stays restricted to compatibility or validator zones' \
+  'gstack-checkpoint stays restricted to compatibility, TDD mapping, or validator zones' \
   'gstack-checkpoint' \
+  "$TDD_TOTAL_FILE" \
+  "$ROOT_DIR/scripts/validate_mansu_tdd_total.sh" \
   "$SETTING_FILE" \
   "$TDD_SERIES_VALIDATOR" \
   "$SELF_FILE"
