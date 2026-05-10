@@ -39,11 +39,13 @@ source_lock_date="$(jq -r '.last_checked' "$SOURCE_LOCK")"
 gstack_version="$(jq -r '.families[] | select(.id == "gstack") | .version' "$SOURCE_LOCK")"
 gstack_commit="$(jq -r '.families[] | select(.id == "gstack") | .commit' "$SOURCE_LOCK")"
 ouroboros_commit="$(jq -r '.families[] | select(.id == "ouroboros") | .commit' "$SOURCE_LOCK")"
+design_commit="$(jq -r '.families[] | select(.id == "voltagent-awesome-design-md") | .commit' "$SOURCE_LOCK")"
 
 [ -n "$source_lock_date" ]
 [ -n "$gstack_version" ]
 [ -n "$gstack_commit" ]
 [ -n "$ouroboros_commit" ]
+[ -n "$design_commit" ]
 
 grep -q '^name: mansu-manual$' "$FILE"
 grep -q '^description: Open or point to the prebuilt beginner-friendly HTML manual' "$FILE"
@@ -142,7 +144,7 @@ grep -q 'Mansu 매뉴얼 스냅샷: 2026-05-10' "$HTML_FILE"
 grep -q "Source lock checked: $source_lock_date" "$HTML_FILE"
 grep -q "gstack: $gstack_version / $gstack_commit" "$HTML_FILE"
 grep -q "Ouroboros: $ouroboros_commit" "$HTML_FILE"
-grep -q 'Design references: VoltAgent/awesome-design-md beec066' "$HTML_FILE"
+grep -q "Design references: VoltAgent/awesome-design-md $design_commit" "$HTML_FILE"
 grep -q 'panel-catalog' "$HTML_FILE"
 grep -q 'Codex는 <code>omx</code>, OpenCode/Hermes는 <code>omo</code>, Claude Code는 <code>omc</code>' "$HTML_FILE"
 grep -q '런타임 / 어댑터 준비' "$HTML_FILE"
@@ -239,6 +241,8 @@ grep -q 'gstack-make-pdf' "$HTML_FILE"
 grep -q 'gstack-pair-agent' "$HTML_FILE"
 grep -q 'gstack-landing-report' "$HTML_FILE"
 grep -q 'gstack-plan-tune' "$HTML_FILE"
+grep -q 'gstack-checkpoint는 설치된 runtime이 아직 노출할 때만 legacy alias' "$HTML_FILE"
+assert_not_contains 'gstack-context-save / gstack-context-restore / gstack-checkpoint' "$HTML_FILE"
 grep -q 'research' "$HTML_FILE"
 grep -q 'deepsearch' "$HTML_FILE"
 grep -q 'debug' "$HTML_FILE"

@@ -216,6 +216,10 @@ stop with the handoff report instead of entering `mansu-tdd-total`.
 
 ## Final report
 
+Write the report in the user's language or the project's default language.
+Field labels may stay canonical, but prose and values should follow that language
+unless the user asks otherwise.
+
 ```text
 MANSU PROJECT START REPORT
 Project intent:

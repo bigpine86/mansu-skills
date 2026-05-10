@@ -56,16 +56,19 @@ The default mental model is:
 
 | Layer | Typical role |
 | --- | --- |
-| Lifecycle phase spine | addyosmani/agent-skills or an equivalent source route provides the broad SDLC map: define, plan, build, verify, review, harden, document, and ship. |
-| Project definition / memory source | Ouroboros or an equivalent source route deepens the early definition phase with durable project purpose, Seed/Ledger/spec artifacts, long-horizon direction, and continuity. |
-| Design reference source | VoltAgent/awesome-design-md or an equivalent source route provides reusable `DESIGN.md` grammar: atmosphere, colors, typography, components, layout, responsive behavior, and agent handoff. |
+| Lifecycle phase spine | addyosmani/agent-skills, or a source route verified by `mansu-source-curator`, provides the broad SDLC map: define, plan, build, verify, review, harden, document, and ship. |
+| Project definition / memory source | Ouroboros, or a source route verified by `mansu-source-curator`, deepens the early definition phase with durable project purpose, Seed/Ledger/spec artifacts, long-horizon direction, and continuity. |
+| Design reference source | VoltAgent/awesome-design-md, or a design reference verified by `mansu-source-curator`, provides reusable `DESIGN.md` grammar: atmosphere, colors, typography, components, layout, responsive behavior, and agent handoff. |
 | Mansu | Orchestrator, judge, router, doctrine, gate owner, source selector, and final accountable operator. |
-| Execution-mode source | Oh My / OMO / OMC or an equivalent source route provides modes inside a phase, such as research, ultrawork, ralph, TDD, debug, parallelism, and persistence. |
-| Specialist team source | gstack or an equivalent source route provides specialist review and verification gates such as CEO, design, engineering, QA, security, performance, ship, deploy, and learning. |
+| Execution-mode source | Oh My / OMO / OMC, or a source route verified by `mansu-source-curator`, provides modes inside a phase, such as research, ultrawork, ralph, TDD, debug, parallelism, and persistence. |
+| Specialist team source | gstack, or a source route verified by `mansu-source-curator`, provides specialist review and verification gates such as CEO, design, engineering, QA, security, performance, ship, deploy, and learning. |
 | Implementation actor | Codex or the active coding agent edits files, runs tests, integrates changes, and produces commits. |
 
-The source names are representative, not mandatory. Mansu's job is to decide
-which source route best fits the moment, avoid duplicating that route, and then
+The source names are representative, not mandatory. A substitute source route is
+usable only after `mansu-source-curator` verifies its real source, version, role,
+and outputs in `SOURCE_SKILL_LOCK.json` and `SOURCE_SKILL_CATALOG.md`. Mansu's
+job is to decide which source route best fits the moment, avoid duplicating that
+route, and then
 turn the returned artifacts into Mansu-owned gates, phases, slices, evidence, and
 handoff.
 

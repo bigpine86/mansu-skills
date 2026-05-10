@@ -18,6 +18,7 @@
       --line: rgba(65, 78, 72, 0.16);
       --moss: #2f6f54;
       --forest: #123c32;
+      --cedar: #7a4a2c;
       --clay: #b86735;
       --sun: #edc46f;
       --blue: #284b63;
@@ -56,7 +57,7 @@
     }
 
     header, .tabs, section, footer {
-      max-width: 1180px;
+      max-width: 1320px;
       margin: 0 auto;
       padding-inline: 24px;
       position: relative;
@@ -454,7 +455,7 @@
     }
 
     .catalog-card {
-      padding: 30px;
+      padding: clamp(22px, 3vw, 34px);
     }
 
     .catalog-card h2, .agent-card h2 {
@@ -504,14 +505,15 @@
 
     .catalog-layout {
       display: grid;
-      grid-template-columns: minmax(0, 1fr) minmax(300px, 0.4fr);
-      gap: 20px;
+      grid-template-columns: minmax(0, 1fr) clamp(320px, 28vw, 380px);
+      gap: clamp(18px, 2.4vw, 28px);
       align-items: start;
     }
 
     .catalog-list {
       display: grid;
       gap: 18px;
+      min-width: 0;
     }
 
     .catalog-family-block {
@@ -563,14 +565,16 @@
 
     .catalog-items {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-      gap: 8px;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 190px), 1fr));
+      gap: 9px;
     }
 
     .source-family {
+      position: relative;
       display: grid;
-      gap: 14px;
-      padding: 18px;
+      gap: 16px;
+      overflow: hidden;
+      padding: clamp(16px, 2vw, 22px);
       border-radius: 28px;
       border: 1px solid rgba(18, 60, 50, 0.2);
       background:
@@ -579,10 +583,23 @@
       box-shadow: 0 18px 34px rgba(18, 60, 50, 0.07);
     }
 
+    .source-family::before {
+      content: "";
+      position: absolute;
+      inset: 0 auto 0 0;
+      width: 5px;
+      background: linear-gradient(180deg, var(--forest), rgba(237, 196, 111, 0.92));
+      opacity: 0.76;
+    }
+
+    .source-family > * {
+      position: relative;
+    }
+
     .source-family > h3 {
       margin: 0;
       color: var(--forest);
-      font-size: 24px;
+      font-size: clamp(23px, 2.2vw, 31px);
       letter-spacing: -0.05em;
     }
 
@@ -594,17 +611,20 @@
 
     .source-groups {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(245px, 1fr));
-      gap: 10px;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+      align-items: start;
+      gap: 12px;
     }
 
     .source-group {
       display: grid;
       gap: 8px;
-      padding: 12px;
+      align-self: start;
+      padding: 14px;
       border-radius: 20px;
       border: 1px solid rgba(18, 60, 50, 0.12);
-      background: rgba(255, 255, 255, 0.52);
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.72), rgba(255, 250, 241, 0.5));
     }
 
     .source-group h4 {
@@ -618,9 +638,9 @@
       appearance: none;
       cursor: pointer;
       display: grid;
-      gap: 3px;
-      min-height: 74px;
-      padding: 10px 11px;
+      gap: 7px;
+      min-height: 82px;
+      padding: 12px 13px;
       border: 1px solid rgba(18, 60, 50, 0.13);
       border-radius: 16px;
       background: rgba(255, 255, 255, 0.72);
@@ -633,16 +653,27 @@
     .catalog-item:hover,
     .catalog-item.is-active {
       border-color: rgba(18, 60, 50, 0.35);
-      background: rgba(47, 111, 84, 0.1);
+      background:
+        radial-gradient(circle at 8% 0%, rgba(237, 196, 111, 0.24), transparent 8rem),
+        rgba(47, 111, 84, 0.11);
       transform: translateY(-1px);
     }
 
     .catalog-item code {
       color: var(--forest);
       font-size: 13px;
+      line-height: 1.35;
+      overflow-wrap: anywhere;
+      white-space: normal;
     }
 
     .catalog-item small {
+      display: inline-flex;
+      width: fit-content;
+      margin-top: 2px;
+      padding: 3px 7px;
+      border-radius: 999px;
+      background: rgba(18, 60, 50, 0.07);
       color: var(--muted);
       font-size: 12px;
       line-height: 1.35;
@@ -653,20 +684,24 @@
       top: 92px;
       display: grid;
       gap: 12px;
+      max-height: calc(100vh - 118px);
+      overflow: auto;
       padding: 20px;
-      border: 1px solid var(--line);
+      border: 1px solid rgba(18, 60, 50, 0.19);
       border-radius: 30px;
       background:
         radial-gradient(circle at 0% 0%, rgba(237, 196, 111, 0.28), transparent 13rem),
         rgba(255, 252, 245, 0.94);
-      box-shadow: var(--shadow);
+      box-shadow: 0 26px 70px rgba(25, 32, 30, 0.13);
     }
 
     .catalog-inspector h3 {
       margin: 0;
       font-family: var(--font-display);
-      font-size: 30px;
+      font-size: clamp(22px, 2vw, 28px);
+      line-height: 1.14;
       letter-spacing: -0.055em;
+      overflow-wrap: anywhere;
     }
 
     .catalog-inspector p {
@@ -678,6 +713,13 @@
       display: grid;
       gap: 10px;
       margin: 0;
+    }
+
+    .catalog-inspector dl > div {
+      padding: 11px 12px;
+      border: 1px solid rgba(18, 60, 50, 0.11);
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.46);
     }
 
     .catalog-inspector dt {
@@ -801,19 +843,27 @@
     }
 
     footer {
-      max-width: 1180px;
+      max-width: 1320px;
       margin: 0 auto;
       padding: 0 24px 70px;
       color: var(--muted);
     }
 
-    @media (max-width: 820px) {
-      header { padding-top: 34px; }
-      .intro-card, .phase, .layer, .workbench, .catalog-layout {
+    @media (max-width: 1080px) {
+      .workbench, .catalog-layout {
         grid-template-columns: 1fr;
       }
+
       .inspector, .catalog-inspector {
         position: static;
+        max-height: none;
+      }
+    }
+
+    @media (max-width: 820px) {
+      header { padding-top: 34px; }
+      .intro-card, .phase, .layer {
+        grid-template-columns: 1fr;
       }
       .phase::before {
         min-height: 52px;
@@ -1613,7 +1663,7 @@
                       <h4>안전 / 컨텍스트 / 유틸리티</h4>
                       <div class="catalog-items">
                         <button class="catalog-item" type="button" data-catalog-name="gstack-careful / gstack-freeze / gstack-guard / gstack-unfreeze" data-catalog-family="gstack > 안전" data-catalog-role="위험 명령 경고, 수정 범위 제한, 안전모드 해제를 담당합니다." data-catalog-when="삭제/DB/force push/넓은 파일 수정처럼 위험이 있을 때 씁니다."><code>gstack-guard</code> family<small>안전장치</small></button>
-                        <button class="catalog-item" type="button" data-catalog-name="gstack-context-save / gstack-context-restore / gstack-checkpoint" data-catalog-family="gstack > 컨텍스트" data-catalog-role="작업 상태, 결정, 남은 일을 저장하고 이어갑니다." data-catalog-when="긴 작업을 멈추거나 다음 세션으로 넘길 때 씁니다."><code>gstack-context-save</code> family<small>상태 저장</small></button>
+                        <button class="catalog-item" type="button" data-catalog-name="gstack-context-save / gstack-context-restore" data-catalog-family="gstack > 컨텍스트" data-catalog-role="작업 상태, 결정, 남은 일을 저장하고 이어갑니다. gstack-checkpoint는 설치된 runtime이 아직 노출할 때만 legacy alias로 봅니다." data-catalog-when="긴 작업을 멈추거나 다음 세션으로 넘길 때 씁니다."><code>gstack-context-save</code> family<small>상태 저장</small></button>
                         <button class="catalog-item" type="button" data-catalog-name="gstack-setup-browser-cookies / gstack-open-gstack-browser" data-catalog-family="gstack > 브라우저" data-catalog-role="인증 쿠키를 가져오거나 사용자가 볼 수 있는 브라우저를 엽니다." data-catalog-when="로그인이 필요한 QA나 시각적으로 따라보는 브라우저 검증이 필요할 때 씁니다."><code>gstack-browser</code> family<small>인증/브라우저</small></button>
                         <button class="catalog-item" type="button" data-catalog-name="gstack-scrape / gstack-skillify" data-catalog-family="gstack > 유틸리티" data-catalog-role="웹 데이터 추출과 성공한 browser/scrape 흐름의 스킬화를 담당합니다." data-catalog-when="레퍼런스 페이지 수집이나 반복 웹 수집이 필요할 때 씁니다."><code>gstack-scrape</code> / <code>gstack-skillify</code><small>웹 수집</small></button>
                         <button class="catalog-item" type="button" data-catalog-name="gstack-claude / gstack-benchmark-models" data-catalog-family="gstack > 모델/비평" data-catalog-role="다른 모델의 독립 리뷰를 받거나 여러 모델의 비용/속도/품질을 비교합니다." data-catalog-when="계획이나 diff에 독립 비평이 필요하거나 모델 선택 근거가 필요할 때 씁니다."><code>gstack-claude</code> / models<small>모델 비교</small></button>
@@ -1830,7 +1880,7 @@
                 <p>작업 범위 보호, 컨텍스트 저장/복구, 배포 설정, 브라우저 쿠키 등 보조 흐름입니다.</p>
                 <div class="catalog-items">
                   <button class="catalog-item" type="button" data-catalog-name="gstack-careful / gstack-freeze / gstack-guard / gstack-unfreeze" data-catalog-family="gstack safety" data-catalog-role="위험 명령 경고, 수정 범위 제한, 안전모드 해제를 담당합니다." data-catalog-when="삭제/DB/force push/넓은 파일 수정처럼 위험이 있을 때 씁니다."><code>gstack-guard</code> family<small>안전장치</small></button>
-                  <button class="catalog-item" type="button" data-catalog-name="gstack-context-save / gstack-context-restore / gstack-checkpoint" data-catalog-family="gstack context" data-catalog-role="작업 상태, 결정, 남은 일을 저장하고 이어갑니다." data-catalog-when="긴 작업을 멈추거나 다음 세션으로 넘길 때 씁니다."><code>gstack-context-save</code> family<small>상태 저장</small></button>
+                  <button class="catalog-item" type="button" data-catalog-name="gstack-context-save / gstack-context-restore" data-catalog-family="gstack context" data-catalog-role="작업 상태, 결정, 남은 일을 저장하고 이어갑니다. gstack-checkpoint는 설치된 runtime이 아직 노출할 때만 legacy alias로 봅니다." data-catalog-when="긴 작업을 멈추거나 다음 세션으로 넘길 때 씁니다."><code>gstack-context-save</code> family<small>상태 저장</small></button>
                   <button class="catalog-item" type="button" data-catalog-name="gstack-setup-browser-cookies / gstack-open-gstack-browser" data-catalog-family="gstack browser" data-catalog-role="인증 쿠키를 가져오거나 눈으로 볼 수 있는 브라우저를 엽니다." data-catalog-when="로그인이 필요한 QA나 사용자가 브라우저 과정을 보고 싶을 때 씁니다."><code>gstack-setup-browser-cookies</code><small>인증/브라우저</small></button>
                   <button class="catalog-item" type="button" data-catalog-name="gstack-setup-deploy / gstack-setup-gbrain" data-catalog-family="gstack setup" data-catalog-role="배포 설정이나 gbrain 같은 보조 시스템을 초기화합니다." data-catalog-when="프로젝트 운영 환경을 처음 세팅할 때 씁니다."><code>gstack-setup-deploy</code> / <code>gstack-setup-gbrain</code><small>운영 세팅</small></button>
                   <button class="catalog-item" type="button" data-catalog-name="gstack-upgrade" data-catalog-family="gstack setup" data-catalog-role="gstack 자체를 최신 버전으로 업데이트하고 변경점을 확인합니다." data-catalog-when="gstack 원천을 최신으로 맞출 때 씁니다."><code>gstack-upgrade</code><small>gstack 업데이트</small></button>

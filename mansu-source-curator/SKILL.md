@@ -59,6 +59,7 @@ Default to `check` unless the user says update, refresh, sync, or curate.
 - Do not update Mansu references from memory. Read source skill files, source directory listings, or official GitHub data first.
 - Do not copy whole source workflows into Mansu. Capture routing, gates, artifacts, and composition insights.
 - Do not make project-delivery claims. This skill only maintains the Mansu suite.
+- Do not sync uncommitted Mansu repo changes into installed runtime skill copies unless the user explicitly requests WIP sync. Otherwise wait until the Mansu changes are committed or update-approved.
 
 ## Phase 0: Preflight
 
@@ -161,6 +162,7 @@ When local installed Mansu skills are part of the requested update, sync the
 changed `mansu-*` folders into the active runtime skill directory after validation.
 If `docs/mansu-manual.html` changed, also copy it into the installed
 `mansu-manual/docs/mansu-manual.html` artifact path.
+After syncing, run `MANSU_COMPARE_INSTALLED=1 scripts/validate_mansu_installed_copies.sh <runtime-skill-dir>`.
 
 Do not sync if validation fails.
 

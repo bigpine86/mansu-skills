@@ -96,11 +96,11 @@ depends on the missing source.
 
 Representative mapping:
 
-- Lifecycle phase spine: addyosmani/agent-skills or equivalent.
-- Project definition / memory source: Ouroboros or equivalent.
-- Design reference source: VoltAgent/awesome-design-md or equivalent.
-- Execution-mode source: Oh My / OMO / OMC or equivalent.
-- Specialist team source: gstack or equivalent.
+- Lifecycle phase spine: addyosmani/agent-skills or source-curator-verified substitute.
+- Project definition / memory source: Ouroboros or source-curator-verified substitute.
+- Design reference source: VoltAgent/awesome-design-md or source-curator-verified substitute.
+- Execution-mode source: Oh My / OMO / OMC or source-curator-verified substitute.
+- Specialist team source: gstack or source-curator-verified substitute.
 - Implementation actor: Codex or the active coding agent.
 
 ## Source Philosophy Checksums

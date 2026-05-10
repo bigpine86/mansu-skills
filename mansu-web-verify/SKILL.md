@@ -245,6 +245,10 @@ If in `fix-approved` mode, fix only after the issue is understood. Do not bundle
 
 ## Final report
 
+Write the report in the user's language or the project's default language.
+Field labels may stay canonical, but prose and values should follow that language
+unless the user asks otherwise.
+
 Leave this report:
 
 ```markdown

@@ -32,6 +32,10 @@ grep -q 'Escalate from lite to strict' "$FILE"
 grep -q 'Do not use `lite` as permission to lower work quality' "$FILE"
 grep -q 'The only core difference is the RED test requirement' "$FILE"
 grep -q 'Do not start the next slice until the current slice is fully closed' "$FILE"
+grep -q 'Commit policy:' "$FILE"
+grep -q 'Default to per-slice commits during implementation' "$FILE"
+grep -q 'Use a final release/docs commit only for final docs' "$FILE"
+grep -q 'record the no-commit reason' "$FILE"
 grep -q 'Execute slices in order unless the user explicitly approves a different dependency-free order' "$FILE"
 grep -q 'A slice is fully closed only when' "$FILE"
 grep -q 'Do not start slice N+1 while slice N is open' "$FILE"
@@ -39,9 +43,9 @@ grep -q 'do not treat planning as a single-agent TODO list' "$FILE"
 grep -q 'Planner: draft the plan' "$FILE"
 grep -q 'Critics: challenge the plan' "$FILE"
 grep -q 'Synthesizer: merge critique into one execution-ready plan' "$FILE"
-grep -q 'Hermes/OpenCode orchestration' "$FILE"
-grep -q 'Hermes + OpenCode session' "$FILE"
-grep -q 'tmux-backed helper sessions' "$FILE"
+grep -q 'runtime-neutral orchestration' "$FILE"
+grep -q 'current runtime session' "$FILE"
+grep -q 'runtime-backed helper sessions' "$FILE"
 grep -q 'If exact historical agent names or tools are unavailable' "$FILE"
 grep -q 'strict prerequisites are unavailable in the current runtime' "$FILE"
 grep -q 'record the mapping in `PLAN.md`' "$FILE"
@@ -67,8 +71,13 @@ grep -q 'Record the role mapping, critic status, execution-ready plan' "$FILE"
 grep -q 'Start execution automatically after the plan gate passes' "$FILE"
 grep -q 'run the project-level build/test/type/lint suite' "$FILE"
 grep -q 'run final QA or browser verification' "$FILE"
-grep -q 'create the final commit after final validation' "$FILE"
+grep -q 'create a final release/docs commit only when final docs' "$FILE"
 grep -q 'what could not be verified, remaining risks, and any follow-up checks needed' "$FILE"
+
+if grep -q 'Hermes/OpenCode orchestration' "$FILE" || grep -q 'Hermes + OpenCode session' "$FILE"; then
+  echo "mansu-tdd-total should stay runtime-neutral" >&2
+  exit 1
+fi
 
 if grep -q '^### RED$' "$FILE" || grep -q '^### GREEN$' "$FILE" || grep -q '^### REFACTOR$' "$FILE"; then
   echo "mansu-tdd-total should not copy strict executor internals" >&2

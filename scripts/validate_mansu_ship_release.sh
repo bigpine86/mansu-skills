@@ -26,6 +26,8 @@ grep -q 'gstack-retro' "$FILE"
 grep -q 'gstack-learn' "$FILE"
 grep -q 'rollback' "$FILE"
 grep -q 'Do not bury durable lessons only in the final chat message' "$FILE"
+grep -q "Write the report in the user's language or the project's default language" "$FILE"
+grep -q 'Field labels may stay canonical' "$FILE"
 
 grep -q '^interface:$' "$OPENAI_YAML"
 grep -q 'display_name: "Mansu Ship Release"' "$OPENAI_YAML"

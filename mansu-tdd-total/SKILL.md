@@ -7,7 +7,7 @@ description: Concise dispatcher and planner for Mansu TDD workflows. Use when th
 
 Use this skill as the default entry point for Mansu TDD work when the right execution mode is not obvious upfront.
 
-For the current runtime, read this as Hermes/OpenCode orchestration that may run inside a tmux session: keep the planning roles explicit, keep slice routing explicit, and avoid pretending legacy tool names are required when equivalent current-runtime roles are available.
+For the current runtime, read this as runtime-neutral orchestration: keep the planning roles explicit, keep slice routing explicit, and avoid pretending legacy tool names are required when equivalent current-runtime roles are available.
 
 ## Mansu philosophy
 
@@ -39,6 +39,12 @@ These rules do not change between `lite` and `strict`:
 - Keep `PLAN.md` current.
 - Record completed work in `개발일지.md` or the project worklog.
 - Do not use `lite` as permission to lower work quality.
+
+Commit policy:
+
+- Default to per-slice commits during implementation when the repo/project allows it.
+- Use a final release/docs commit only for final docs, version, changelog, or when the project policy explicitly deferred slice commits.
+- If any commit is deferred, record the no-commit reason, remaining diff scope, and next owner in `PLAN.md` or the worklog.
 
 The only core difference is the RED test requirement:
 
@@ -88,12 +94,12 @@ Planning must pass through explicit roles before slice dispatch.
 Use these responsibilities before implementation:
 
 - Planner: draft the plan.
-  Example mapping: the main planning pass in the current Hermes + OpenCode session, or a dedicated planning tool when one exists.
+  Example mapping: the main planning pass in the current runtime session, or a dedicated planning tool when one exists.
 - Critics: challenge the plan.
   Example mapping: one or more critique passes, reviewer sessions, or critic tools that challenge scope, risk, and design.
 - Synthesizer: merge critique into one execution-ready plan and remove contradictions.
 
-In Hermes + tmux + OpenCode workflows, the mapping may be a mix of the current session, tmux-backed helper sessions, OpenCode subagents, or local review passes.
+Depending on the runtime, the mapping may be a mix of the current session, runtime-backed helper sessions, subagents, external review tools, or local review passes.
 
 If exact historical agent names or tools are unavailable, map the available runtime roles, tools, sessions, or perspectives to these three responsibilities and record the mapping in `PLAN.md`.
 
@@ -226,6 +232,6 @@ When all slices are complete:
 - keep only active follow-up items in `PLAN.md`
 - move completed multi-slice detail into `개발일지.md` or the project worklog
 - include the final slice modes and validation results in the worklog
-- create the final commit after final validation, or record why a commit was intentionally deferred
+- create a final release/docs commit only when final docs, version, changelog, or deferred-commit policy requires it; otherwise record that per-slice commits already cover the code changes
 - report what was verified, what could not be verified, remaining risks, and any follow-up checks needed
 - avoid leaving the same completed work fully expanded in both `PLAN.md` and `개발일지.md`

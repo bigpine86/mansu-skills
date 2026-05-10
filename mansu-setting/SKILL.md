@@ -1,6 +1,6 @@
 ---
 name: mansu-setting
-description: Runtime-target-aware bootstrap/update workflow for the Mansu skill suite. Use when installing Mansu for the first time, choosing the right runtime target and host such as Hermes, OpenCode, Codex, or Claude Code, syncing `mansu-*` skills into the correct local skill directory, installing or updating required source tools like Ouroboros, gstack, and the matching Oh My adapter, checking Ouroboros, Oh My / OMO / OMC source skill freshness, checking addyosmani/agent-skills freshness for coding-order source workflows, checking VoltAgent/awesome-design-md freshness for DESIGN.md design-reference workflows, reporting optional adapter compatibility, refreshing gstack and Oh My source skill links, validating the installed skill suite, repairing a broken local skill install, or updating Mansu/Ouroboros/gstack/Oh My/agent-skills/design-reference/adapter tooling before serious work.
+description: Runtime-target-aware bootstrap/update workflow for the Mansu skill suite. Use when installing Mansu for the first time, choosing the right runtime target and host such as Hermes, OpenCode, Codex, or Claude Code, syncing `mansu-*` skills into the correct local skill directory, installing or updating required source tools like Ouroboros, gstack, and the matching Oh My adapter, checking Ouroboros, Oh My / OMO / OMC source skill freshness, checking addyosmani/agent-skills freshness for coding-order source workflows, checking VoltAgent/awesome-design-md freshness for DESIGN.md design-reference workflows, reporting optional adapter compatibility, refreshing gstack and Oh My source skill links, validating the source suite before sync and installed runtime copies after sync, repairing a broken local skill install, or updating Mansu/Ouroboros/gstack/Oh My/agent-skills/design-reference/adapter tooling before serious work.
 ---
 
 # Mansu Setting
@@ -24,7 +24,7 @@ manager is available.
 - Refresh gstack and Oh My source skill links after source updates.
 - Route deep source-reference refresh work to `mansu-source-curator`.
 - Read/verify the Mansu manual's agent guidance and catalog before syncing installed skills.
-- Validate the installed Mansu suite.
+- Validate the Mansu source suite before sync and installed runtime copies after sync.
 - Report versions, missing pieces, compatibility warnings, and the next safe action.
 
 ## Modes
@@ -79,6 +79,13 @@ Choose the skill target from the detected runtime target and host first:
 
 In `install` and `update` modes, missing source tools are work to do, not just facts to report.
 
+Before any third-party or global install command runs, verify the install recipe.
+Acceptable evidence is current source-lock evidence, installed source docs,
+official repository documentation, official release notes, or package-manager
+metadata that clearly matches the intended source family. If the recipe cannot be
+verified, do not execute remote scripts or global package installs. Report the
+step as `blocked by unverified install recipe` and continue with safe checks.
+
 | Tool family | Install target | Install / update rule |
 | --- | --- | --- |
 | Ouroboros / `ouroboros` | user-level CLI plus runtime MCP/setup integration | If missing, prefer the official installer `curl -fsSL https://raw.githubusercontent.com/Q00/ouroboros/main/scripts/install.sh \| bash` when shell/network policy allows; otherwise use `uv tool install 'ouroboros-ai[all]'`, `pipx install 'ouroboros-ai[mcp]'`, or `pip install ouroboros-ai` depending on available Python tooling. After install or update, run `ouroboros setup --runtime <detected-runtime>` when the runtime is supported, otherwise run `ouroboros setup` and report runtime ambiguity. Mansu-setting only prepares Ouroboros; it must not run `ooo auto`, `ooo interview`, or project creation commands. |
@@ -96,6 +103,7 @@ Source tool installation rules:
 - `update` updates already-installed source tools and installs missing expected tools unless the user explicitly requested a check-only update report.
 - If a source repo exists but is dirty, do not pull it; report the dirty state and skip only that source update.
 - If a package manager is missing, do not fail the whole Mansu setup. Record the blocked tool, the missing package manager, and the exact next manual command.
+- If an install recipe is unverified, do not fail the whole Mansu setup. Record the blocked tool, evidence checked, and the exact recipe gap.
 - After any source tool install/update, rerun source freshness checks and then validation before syncing Mansu skills.
 - Do not install adapters for runtimes that are not the active target unless the user explicitly asks for multi-runtime setup.
 - Do not let `mansu-setting` start a project through Ouroboros. `mansu-project-start` owns Ouroboros PM/interview/Seed/Ledger usage.
@@ -139,6 +147,7 @@ stop only that adapter step and report the exact manual follow-up.
 - Only write Mansu skill copies under the selected runtime target's `mansu-*` skill folders unless the user asks for a wider change.
 - Only refresh gstack links under the selected runtime target's `gstack-*` skill folders from the installed gstack repo.
 - If a repo is dirty, do not pull or merge it automatically; report the dirty state and ask for direction.
+- Do not sync uncommitted Mansu repo changes into installed runtime skill copies unless the user explicitly requests WIP sync. Otherwise wait until the Mansu repo changes are committed or update-approved.
 - Treat latest gstack `context-save` / `context-restore` as the checkpoint-family source skills. Flag stale `gstack-checkpoint` references as compatibility notes.
 
 ## Preflight
@@ -172,6 +181,7 @@ Collect this before making changes:
 - whether `CODE_CONSTRUCTION_ORDER.md` still maps to installed addyosmani/agent-skills phase names
 - `docs/mansu-manual.html` existence, `에이전트 안내` tab, family-first `스킬 카탈로그`, and runtime adapter mapping
 - result of `scripts/validate_mansu_skills.sh` when the repo is present
+- install-recipe evidence for every third-party/global install step before it runs
 
 ## First install
 
@@ -197,8 +207,9 @@ Then from the Mansu repo:
 12. Copy `docs/mansu-manual.html` into `<runtime-skill-dir>/mansu-manual/docs/mansu-manual.html` so the installed manual skill has its HTML artifact.
 13. Refresh gstack and Oh My source skill links/copies into the selected runtime target after their installers run.
 14. Do not copy `.git`, unrelated root docs, or non-skill files into individual skill folders. The manual HTML is the only root-doc exception.
-15. Confirm the installed `mansu-setting` path can be read.
-16. Confirm the installed `mansu-project-start` can use Ouroboros later, but do not start a project here.
+15. Run `MANSU_COMPARE_INSTALLED=1 scripts/validate_mansu_installed_copies.sh <runtime-skill-dir>` after syncing runtime copies.
+16. Confirm the installed `mansu-setting` path can be read.
+17. Confirm the installed `mansu-project-start` can use Ouroboros later, but do not start a project here.
 
 ## Update
 
@@ -221,7 +232,8 @@ When the user asks to update:
 15. Refresh Oh My / OMO / OMC source skill links or copies after the matching source is installed and the selected runtime target expects it.
 16. Do not automatically install or copy addyosmani/agent-skills into runtime skill directories unless the user asks; use it as a source-reference family by default.
 17. Do not automatically install or copy VoltAgent/awesome-design-md into runtime skill directories; use it as a design-reference family by default.
-18. Report version changes, installs performed, source skill freshness, manual readiness, reference curation status, and compatibility notes.
+18. Run `MANSU_COMPARE_INSTALLED=1 scripts/validate_mansu_installed_copies.sh <runtime-skill-dir>` after runtime copies are refreshed.
+19. Report version changes, installs performed, source skill freshness, manual readiness, installed-copy validation, reference curation status, and compatibility notes.
 
 If adapter tooling is missing in `install` or `update`, attempt the matching install path.
 Only record it as skipped after the install path is blocked by missing package manager,
@@ -246,6 +258,7 @@ Use repair when the source repos look correct but local runtime skills are missi
 - Re-check addyosmani/agent-skills phase names against `CODE_CONSTRUCTION_ORDER.md`; do not copy them unless explicitly requested.
 - Verify `gstack-context-save` and `gstack-context-restore` are present after refresh.
 - Re-run Mansu validation.
+- Run `scripts/validate_mansu_installed_copies.sh <runtime-skill-dir>` after repair; use `MANSU_COMPARE_INSTALLED=1` when the repair should exactly match the source repo.
 - Do not update remote repos during repair unless the user also requested update.
 
 ## Compatibility checks
@@ -261,6 +274,7 @@ Always watch for these drift signals:
 - The selected runtime target's adapter package version and CLI printed version disagree.
 - installed `<runtime-skill-dir>/mansu-*` differs from the local repo.
 - validators pass in the repo but the installed copy is missing `SKILL.md` or `agents/openai.yaml`.
+- installed-copy validation was skipped because no runtime skill directory was selected.
 - runtime/host detection is low-confidence, especially on Windows, WSL, or mixed Hermes/OpenCode/Claude/Codex setups.
 - the runtime target is known but adapter tooling is missing, stale, or mapped to a different host than the active session.
 
@@ -268,7 +282,9 @@ Report drift instead of hiding it. Fix only safe sync/link drift automatically.
 
 ## Required report
 
-End with this Korean report:
+End with this report in the user's language or the project's default language.
+The Korean field labels below are canonical for this repo; translate labels when
+the target project or user language differs.
 
 ```text
 MANSU SETTING 보고서
@@ -291,11 +307,12 @@ VoltAgent/awesome-design-md:
 원천 레퍼런스 정리:
 어댑터 상태:
 검증:
+설치본 검증:
 건너뛴 확인:
 호환성 메모:
 다음 행동:
 ```
 
-Write the values in the user's language or the project's default language. Keep
+Write prose and values in the user's language or the project's default language. Keep
 tool names, paths, commands, runtime names, and package names in their original
 spelling. If anything could not be checked, say exactly what was skipped and why.

@@ -94,6 +94,8 @@ assert_contains 'route durable regression automation to Oh My `playwright`' "$FI
 
 # Report fields.
 assert_contains 'WEB VERIFY REPORT' "$FILE"
+assert_contains "Write the report in the user's language or the project's default language" "$FILE"
+assert_contains 'Field labels may stay canonical' "$FILE"
 assert_contains 'Surface map:' "$FILE"
 assert_contains 'Source skills:' "$FILE"
 assert_contains 'Flows tested:' "$FILE"
