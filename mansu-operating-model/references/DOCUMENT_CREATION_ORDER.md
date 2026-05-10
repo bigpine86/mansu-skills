@@ -3,6 +3,9 @@
 This reference explains which planning documents to create, in what order, which
 source skills should produce them, and which source skills should verify them.
 
+For `DESIGN.md`, VoltAgent/awesome-design-md is a reference-only source. It helps
+shape the document; it is not an executable producer skill.
+
 It does not force every project to create every document. The right document set
 depends on risk, ambiguity, UI surface, architecture weight, and whether the work
 is a new project, a feature, a bug, or a release.
@@ -98,7 +101,7 @@ phase only.
 | Research notes | Tech, market, reference, or library choice depends on outside facts | Oh My `research` / `deepsearch`, addyosmani `source-driven-development` | `gstack-plan-eng-review`, `gstack-plan-design-review`, `gstack-plan-devex-review` depending on domain | Sources are named, freshness is checked, tradeoffs are compared, and recommendations are actionable |
 | Spec | Requirements are ambiguous or the work crosses modules | addyosmani `spec-driven-development` | `gstack-autoplan`, focused `gstack-plan-*` review | Objective, stack, commands, project structure, code style, testing strategy, boundaries, success criteria, and open questions are written |
 | Project design / TDR layer | Architecture, data, API, UI system, or phase order matters | `gstack-office-hours`, Oh My `planner`, addyosmani `spec-driven-development`, `api-and-interface-design` | `gstack-autoplan`, then focused `gstack-plan-ceo-review`, `gstack-plan-design-review`, `gstack-plan-eng-review`, `gstack-plan-devex-review` | Product shape, feature groups, domain model, architecture, data/API boundaries, tech stack, secret handling, UI direction, build strategy, roadmap, risks, and non-goals are clear |
-| `DESIGN.md` or UI design doc | User-facing UI, visual system, or interaction model matters | `gstack-design-consultation`, `gstack-design-shotgun`, `gstack-plan-design-review`, addyosmani `frontend-ui-engineering` | `gstack-plan-design-review`, `gstack-design-review`, `gstack-browse`, `gstack-qa-only` | Visual direction, information hierarchy, states, responsive behavior, accessibility, and reference rationale are locked enough to implement |
+| `DESIGN.md` or UI design doc | User-facing UI, visual system, or interaction model matters | Reference with VoltAgent/awesome-design-md; create/refine with `gstack-design-consultation`, `gstack-design-shotgun`, `gstack-plan-design-review`, addyosmani `frontend-ui-engineering` | `gstack-plan-design-review`, `gstack-design-review`, `gstack-browse`, `gstack-qa-only` | Visual atmosphere, color roles, typography, component rules, layout, depth/elevation, do/don't guardrails, responsive behavior, accessibility, agent prompt handoff, and reference rationale are locked enough to implement |
 | ADR | A decision will be expensive to reverse | addyosmani `documentation-and-adrs` | `gstack-plan-eng-review`, `gstack-cso` for security decisions, `gstack-benchmark` for performance decisions | Context, decision, alternatives, consequences, and status are recorded in `docs/decisions/` or the repo's ADR convention |
 | `PLAN.md` | A current phase needs execution-ready slices | addyosmani `planning-and-task-breakdown`, `mansu-tdd-total`, `CODE_CONSTRUCTION_ORDER.md` | `gstack-autoplan`, `gstack-plan-eng-review`, Metis/Momus-style critics, source-specific reviewers | Current phase goal, ordered vertical slices, acceptance criteria, impact files, validation, risks, mode decisions, and checkpoint rules are present |
 | Slice checkpoint | A slice finishes or pauses | `mansu-tdd-lite`, `mansu-tdd-strict`, checkpoint-equivalent source skill | review gate, QA gate, validation commands | Done, remaining risk, next starting point, commit/no-commit status, and updated `PLAN.md` are recorded |
@@ -190,6 +193,8 @@ class and risk.
 - Implementation starts while the current source of truth is unclear.
 - A TDR-like decision has no alternatives or consequences.
 - UI implementation starts without UI state, responsive, and accessibility notes.
+- `DESIGN.md` only says "modern/minimal" without tokens, component states,
+  responsive behavior, depth/elevation, or do/don't guardrails.
 - External research has no source freshness or citation trail.
 - ADRs are written after the decision is forgotten instead of when the tradeoff is live.
 - Verification is claimed but no verification skill, command, screenshot, or test evidence is named.

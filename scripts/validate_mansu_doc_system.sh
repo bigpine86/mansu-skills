@@ -57,7 +57,7 @@ contains "$README_FILE" 'Implementation actor' || fail 'README should mention im
 contains "$README_FILE" '프로젝트 로드맵/phase order' || fail 'README should preserve project roadmap/phase order boundary'
 contains "$README_FILE" '큰 기능 순서, phase `PLAN.md`' || fail 'README should preserve large-grain order before phase PLAN'
 contains "$README_FILE" '대표 route이지 고정 의존성이 아닙니다' || fail 'README should keep source routes representative, not mandatory'
-contains "$README_FILE" 'Ouroboros, gstack, Oh My / OMO / OMC, and addyosmani/agent-skills source freshness' || fail 'README should mention source freshness checks'
+contains "$README_FILE" 'Ouroboros, gstack, Oh My / OMO / OMC, addyosmani/agent-skills, and VoltAgent/awesome-design-md source freshness' || fail 'README should mention source freshness checks'
 contains "$README_FILE" 'install/update Ouroboros, gstack, and the matching Oh My adapter' || fail 'README should mention source tool install/update checks'
 
 contains "$PHILOSOPHY_FILE" 'mansu-operating-model' || fail 'MANSU_PHILOSOPHY should mention mansu-operating-model'
@@ -66,6 +66,7 @@ contains "$PHILOSOPHY_FILE" 'SOURCE_SKILL_CATALOG\.md' || fail 'MANSU_PHILOSOPHY
 contains "$PHILOSOPHY_FILE" 'stale source map is a' || fail 'MANSU_PHILOSOPHY should treat stale source maps as routing bugs'
 contains "$PHILOSOPHY_FILE" 'routing bug, not just old documentation' || fail 'MANSU_PHILOSOPHY should treat stale source maps as routing bugs'
 contains "$PHILOSOPHY_FILE" 'addyosmani/agent-skills' || fail 'MANSU_PHILOSOPHY should mention addyosmani source freshness'
+contains "$PHILOSOPHY_FILE" 'VoltAgent/awesome-design-md' || fail 'MANSU_PHILOSOPHY should mention design reference source freshness'
 contains "$PHILOSOPHY_FILE" 'detects the current' || fail 'MANSU_PHILOSOPHY should mention dynamic coding-order routing'
 contains "$PHILOSOPHY_FILE" 'current phase' || fail 'MANSU_PHILOSOPHY should mention current phase routing'
 contains "$PHILOSOPHY_FILE" 'project roadmap/phase order' || fail 'MANSU_PHILOSOPHY should preserve roadmap before phase PLAN boundary'

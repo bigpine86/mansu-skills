@@ -6,7 +6,7 @@ workflow.
 Mansu does not compete with strong specialist skills. Mansu classifies the work,
 sets the discipline, and routes to the right source skill at the right moment.
 
-Last local snapshot: 2026-05-03.
+Last local snapshot: 2026-05-10.
 
 Machine-readable freshness evidence lives in `SOURCE_SKILL_LOCK.json`. Treat that
 file as the source-family snapshot for paths, versions, commits, inventory, and
@@ -39,6 +39,9 @@ flattening them.
 - Use Ouroboros inside the early definition/spec phases when an idea must become
   a durable purpose, Seed/Ledger, project definition, or source-of-truth artifact
   before Mansu turns it into phases and slices.
+- Use VoltAgent/awesome-design-md as the design reference family for `DESIGN.md`
+  shape, visual atmosphere, tokens, component rules, responsive behavior, and
+  agent prompt handoff.
 - Use Oh My / OMO / OMC as execution-mode language inside a phase: autopilot,
   ultrawork, ralph, TDD, debug, research, build-fix, and lightweight
   orchestration habits.
@@ -56,6 +59,7 @@ Mansu must keep watching the upstream source families that shape this suite:
 
 - gstack specialist skills
 - Ouroboros project-definition, Seed, Ledger, and runtime setup flows
+- VoltAgent/awesome-design-md `DESIGN.md` reference collection
 - Oh My / OMO / OMC style execution-mode skills
 - addyosmani/agent-skills production engineering workflow skills
 
@@ -64,12 +68,13 @@ runs, include a source freshness check:
 
 1. Check whether the installed Ouroboros CLI/package, setup status, or project-definition artifacts changed.
 2. Check whether the installed gstack repo or `gstack-*` skill set changed.
-3. Check whether the installed Oh My / OMO / OMC adapter or source skill set changed.
-4. Check whether `addyosmani/agent-skills` changed when it is installed or referenced.
-5. Compare notable added, removed, or renamed skills against this catalog.
-6. If source skills changed in a way that affects routing, read the original
+3. Check whether the installed VoltAgent/awesome-design-md reference snapshot changed when UI/design work is in scope.
+4. Check whether the installed Oh My / OMO / OMC adapter or source skill set changed.
+5. Check whether `addyosmani/agent-skills` changed when it is installed or referenced.
+6. Compare notable added, removed, or renamed skills against this catalog.
+7. If source skills changed in a way that affects routing, read the original
    `SKILL.md` and update this catalog before relying on stale assumptions.
-7. Record the source freshness result in the final report and worklog.
+8. Record the source freshness result in the final report and worklog.
 
 Missing source tooling is not automatically fatal. Report what was unavailable,
 continue with the safe Mansu path, and block only when the requested workflow
@@ -81,6 +86,7 @@ depends on the missing source.
 | --- | --- | --- |
 | Lifecycle phase spine | broad SDLC phases: define, plan, build, verify, review, harden, document, ship | Mansu-specific strictness, project-local routing, runtime adapters |
 | Project definition / memory source | durable project purpose, Seed/Ledger/spec artifacts, long-horizon direction, continuity | Mansu-specific gate ownership, source selection, final accountability |
+| Design reference source | reusable `DESIGN.md` structures, brand/taste references, design token grammar, agent prompt handoff | project-specific product decisions, final UI approval, rendered QA |
 | Mansu | doctrine, classification, strictness, routing, evidence, checkpoint, worklog, final ship judgment | specialist craft implementation when a stronger source skill exists |
 | Ouroboros | project-definition interview, PM/Seed/Ledger artifacts, early acceptance criteria, spec source of truth | Mansu-specific routing, source comparison, role critique, slice gates, final implementation discipline |
 | gstack | role-based specialist gates, browser QA, design exploration, security, performance, ship/ops, learning | Mansu-specific doctrine or personal operating rules |
@@ -92,6 +98,7 @@ Representative mapping:
 
 - Lifecycle phase spine: addyosmani/agent-skills or equivalent.
 - Project definition / memory source: Ouroboros or equivalent.
+- Design reference source: VoltAgent/awesome-design-md or equivalent.
 - Execution-mode source: Oh My / OMO / OMC or equivalent.
 - Specialist team source: gstack or equivalent.
 - Implementation actor: Codex or the active coding agent.
@@ -104,6 +111,9 @@ Before Mansu composes source skills, preserve each family in its native role:
   into a fixed universal script when the current task needs a smaller route.
 - Ouroboros: definition, Seed/Ledger, and continuity; do not reduce it to a
   generic planning prompt or let it execute autonomously unless the user asked.
+- VoltAgent/awesome-design-md: `DESIGN.md` reference grammar and taste library;
+  do not copy a brand blindly or treat a reference file as the product's final
+  visual identity.
 - Oh My / OMO / OMC: execution mode and persistence language; do not use
   parallelism when slices have sequential dependencies or shared write scope.
 - gstack: independent specialist gates; do not treat builder self-review as a
@@ -163,6 +173,29 @@ Use gstack as the specialist team and verification layer.
 | Learning | `gstack-context-save`, `gstack-context-restore`, `gstack-retro`, `gstack-learn`; `gstack-checkpoint` only when the installed runtime still exposes it as the checkpoint-family gate | state handoff, session resume, retro, reusable lessons |
 | Browser data work | `gstack-scrape`, `gstack-skillify` | read-only extraction or codifying a repeated browser scrape |
 | Model/tool ops | `gstack-upgrade`, `gstack-benchmark-models`, `gstack-claude`, `gstack-pair-agent`, `gstack-setup-gbrain`, `gstack-plan-tune` | update, compare models, outside voice, pair agent, memory/profile tuning |
+
+## VoltAgent/awesome-design-md Capability Map
+
+Use VoltAgent/awesome-design-md as a design reference family, not as a runtime
+skill. It gives Mansu a strong `DESIGN.md` grammar for UI work before gstack
+design exploration or implementation starts.
+
+Inspect multiple reference `DESIGN.md` files, extract transferable principles,
+and record the source date/commit. Do not copy a public brand identity blindly.
+The output should become the project's own `DESIGN.md` or UI design artifact.
+
+| Capability | Reference shape | Route when |
+| --- | --- | --- |
+| `DESIGN.md` format | project-readable design source of truth for agents | a UI project needs a durable design artifact before implementation |
+| Visual Theme & Atmosphere | mood, density, product feel, design philosophy | the UI has no visual north star or feels generic |
+| Color Palette & Roles | semantic color names, hex values, functional usage | colors are arbitrary or not tied to product meaning |
+| Typography Rules | font families, hierarchy table, weights, line height, letter spacing | type hierarchy is weak or default-looking |
+| Component Stylings | buttons, cards, inputs, navigation, states | UI components need consistent shape and interaction states |
+| Layout Principles | spacing scale, grid, whitespace philosophy | pages feel inconsistent, cramped, or boilerplate |
+| Depth & Elevation | shadow system, surface hierarchy, borders | cards/surfaces feel flat, noisy, or AI-generated |
+| Do's and Don'ts | guardrails, anti-patterns, brand boundaries | preventing visual drift or AI slop matters |
+| Responsive Behavior | breakpoints, touch targets, collapsing strategy | mobile/tablet behavior matters |
+| Agent Prompt Guide | quick tokens and implementation prompts | handoff to coding/design agents needs specificity |
 
 ## Oh My / OMO / OMC Capability Map
 
@@ -240,7 +273,7 @@ The route is:
 
 Use `mansu-source-curator` when the issue is not feature delivery, but keeping
 Mansu's knowledge of Ouroboros, gstack, Oh My / OMO / OMC,
-addyosmani/agent-skills, or runtime adapters current.
+addyosmani/agent-skills, VoltAgent/awesome-design-md, or runtime adapters current.
 
 This is an internal maintenance route:
 
@@ -324,10 +357,14 @@ but it must not pretend the upstream tools all use the same filename.
 ### UI/UX Work
 
 1. Use Mansu doctrine to define the product goal, user, and risk.
-2. Use `gstack-plan-design-review` before implementation.
-3. Use `gstack-design-shotgun` when multiple visual directions are valuable.
-4. Use `gstack-design-html` only after a direction is approved or stable.
-5. Use `gstack-design-review`, `gstack-browse`, and `gstack-qa-only` for rendered
+2. If the project has no current design source, inspect VoltAgent/awesome-design-md
+   references and create or update `DESIGN.md` with visual atmosphere, color
+   roles, typography, component rules, layout, elevation, do/don't guardrails,
+   responsive behavior, and agent prompt handoff.
+3. Use `gstack-plan-design-review` before implementation.
+4. Use `gstack-design-shotgun` when multiple visual directions are valuable.
+5. Use `gstack-design-html` only after a direction is approved or stable.
+6. Use `gstack-design-review`, `gstack-browse`, and `gstack-qa-only` for rendered
    evidence before declaring the UI done.
 
 ### Bug Or Regression

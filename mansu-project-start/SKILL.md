@@ -13,8 +13,10 @@ Ouroboros Seed/Ledger when useful, TDR/architecture, UI direction when needed,
 operating rules, project roadmap/phase order, and the first phase-level
 `PLAN.md`.
 
-It does not implement the project. It hands off to `mansu-tdd-total` after the
-current phase is execution-ready.
+It does not own slice implementation. It defines the project purpose, source of
+truth, large-grain phase roadmap, and current phase handoff. `mansu-tdd-total`
+owns the selected phase's detailed slices, implementation loop, review, QA, and
+checkpoint.
 
 ## Core promise
 
@@ -56,6 +58,10 @@ Before drafting project artifacts, choose the smallest source route that fits th
 situation. Do not emulate a source route manually when the matching skill/MCP
 tool exists.
 
+Some entries are reference-only sources rather than executable routes.
+VoltAgent/awesome-design-md must be inspected as a `DESIGN.md` reference corpus,
+not invoked, installed, or treated as a runtime skill.
+
 | Situation | Prefer this source route | Mansu responsibility after it returns |
 | --- | --- | --- |
 | First-time setup or unclear source readiness | `mansu-setting`; Ouroboros `setup` / `welcome` / `help` when Ouroboros is the chosen route | repair setup before project planning |
@@ -65,7 +71,7 @@ tool exists.
 | Requirements need crystallizing into source-of-truth | Ouroboros `seed`; Ouroboros `auto --skip-run` when full convergence is useful | stop at definition artifacts; do not start implementation from project-start |
 | Reference research should drive direction | Oh My `research` / `deepsearch`; addyosmani `source-driven-development` | record evidence, dates, source URLs, and extracted architecture/design lessons |
 | Architecture, stack, API, or DX needs critique | `gstack-autoplan`; focused `gstack-plan-*`; addyosmani `api-and-interface-design` | resolve critique into locked decisions and risks |
-| UI direction needs exploration | `gstack-plan-design-review`; `gstack-design-consultation`; `gstack-design-shotgun` | convert direction into `design.md` or the project's design artifact |
+| UI direction needs exploration | VoltAgent/awesome-design-md `DESIGN.md` reference only, not an execution route; `gstack-plan-design-review`; `gstack-design-consultation`; `gstack-design-shotgun` | convert direction into `DESIGN.md` or the project's design artifact |
 | Existing source session must continue | Ouroboros `status` / `resume-session`; gstack context restore when applicable | restore the right session and preserve IDs/paths in handoff |
 | Execution quality needs independent verdict | Ouroboros `evaluate` / `qa`; `gstack-qa-only`; `gstack-review` | use as evidence, then map remaining risks to Mansu gates |
 | Project is stuck or looping | Ouroboros `unstuck`; gstack CEO/eng review; Oh My planning critique | preserve alternatives and unresolved assumptions before choosing a path |
@@ -81,7 +87,7 @@ Default for a new project:
 4. Crystallize a source-of-truth artifact: Seed, spec, PRD, TDR, or equivalent.
 5. Run research and critique routes before locking architecture, UI direction, or implementation sequence.
 6. Only after source artifacts are clear, create the current phase `PLAN.md` and
-   hand off to `mansu-tdd-total`.
+   hand the selected phase to `mansu-tdd-total` for slice-level execution.
 
 ## When to use
 
@@ -111,6 +117,7 @@ Load only what the current phase needs.
 | Spec and requirements | addyosmani `spec-driven-development` |
 | Reference research | Oh My `research` / `deepsearch`, addyosmani `source-driven-development` |
 | Product/design/eng/DX critique | `gstack-autoplan`, then focused `gstack-plan-*` reviews |
+| DESIGN.md reference / visual taste | VoltAgent/awesome-design-md reference collection |
 | UI direction | `gstack-plan-design-review`, `gstack-design-consultation`, `gstack-design-shotgun` |
 | API/module contracts | addyosmani `api-and-interface-design`, `gstack-plan-eng-review` |
 | Document routing | `mansu-operating-model/references/DOCUMENT_CREATION_ORDER.md` |
@@ -153,15 +160,20 @@ tradeoffs, reusable patterns, and anti-patterns.
 4. Research source projects and references with evidence-ranked sources.
 5. Analyze references at code level when they materially influence architecture,
    stack, or UI.
-6. Draft the spec/TDR layer: domain language, feature groups, data/API boundaries,
+6. When UI exists, inspect relevant VoltAgent/awesome-design-md references and
+   create or update `DESIGN.md` with visual atmosphere, color roles, typography,
+   component rules, layout, depth/elevation, do/don't guardrails, responsive
+   behavior, and agent prompt handoff. Record the reference date/commit and avoid
+   copying a brand identity blindly.
+7. Draft the spec/TDR layer: domain language, feature groups, data/API boundaries,
    tech stack, architecture, secret/API-key handling, UI direction, roadmap,
    risks, non-goals, and open questions.
-7. Decide the large-grain build order: feature groups, dependencies, phase
+8. Decide the large-grain build order: feature groups, dependencies, phase
    sequence, integration strategy, and what should wait.
-8. Critique with product, design, engineering, and DX roles or source skills.
-9. Resolve critique into a single project direction.
-10. Create the current phase `PLAN.md` with ordered vertical slices, validation
-   path, gate mapping, and handoff to `mansu-tdd-total`.
+9. Critique with product, design, engineering, and DX roles or source skills.
+10. Resolve critique into a single project direction.
+11. Create the current phase `PLAN.md` with ordered vertical slices, validation
+   path, gate mapping, and handoff to `mansu-tdd-total` for phase execution.
 
 ## Roadmap vs PLAN.md boundary
 
@@ -177,7 +189,7 @@ The big project plan and `PLAN.md` are different artifacts.
 - When the active phase changes, make a new or refreshed phase `PLAN.md` from the
   roadmap instead of expanding `PLAN.md` into the whole project memory.
 
-## Required handoff to implementation
+## Required handoff to phase execution
 
 The handoff must name:
 
@@ -185,6 +197,7 @@ The handoff must name:
 - Ouroboros artifacts used, or the reason Ouroboros was skipped
 - source skills used and skipped
 - references inspected, with date/version/source evidence
+- design references used and `DESIGN.md` status when UI is in scope
 - locked decisions and why
 - open questions and whether they block implementation
 - project roadmap or phase order artifact
@@ -195,11 +208,11 @@ The handoff must name:
 - worklog target
 - recommended `mansu-tdd-total` slice modes: `lite`, `strict`, or `blocked`
 
-Project-start does not build inside this skill. After the phase plan is
-execution-ready, stop with a handoff unless the current user request explicitly
-included implementation. If implementation was explicitly requested, continue by
-invoking `mansu-tdd-total` as the next separate skill; do not collapse
-project-start and implementation into one undocumented step.
+Project-start must not implement the slices itself. Once the current phase is
+execution-ready, the next owner is `mansu-tdd-total`: it takes the phase goal,
+slice table, validation path, and gate mapping, then runs the phase as
+slice-level work. If blockers, risky choices, or an explicit approval gate remain,
+stop with the handoff report instead of entering `mansu-tdd-total`.
 
 ## Final report
 
@@ -212,6 +225,8 @@ Ouroboros skipped reason:
 Documents created/updated:
 References researched:
 References inspected with date/version/source evidence:
+Design references used:
+DESIGN.md status:
 Source skills used:
 Source skills skipped:
 Architecture/stack decision:

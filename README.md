@@ -15,6 +15,9 @@ Lifecycle phase spine
 Project definition / memory source
 = Ouroboros or equivalent: purpose, Seed, Ledger, spec, long-horizon direction
 
+Design reference source
+= VoltAgent/awesome-design-md or equivalent: DESIGN.md structure, visual atmosphere, tokens, components, responsive behavior
+
 Mansu
 = orchestrator, judge, router, doctrine, gates, final accountability
 
@@ -65,7 +68,7 @@ Use $mansu-setting install from this repo. Detect my runtime target, host, and O
 업데이트할 때는:
 
 ```text
-Use $mansu-setting update. Update Mansu, install/update Ouroboros, gstack, and the matching Oh My adapter when needed, sync Mansu skills, check Ouroboros, gstack, Oh My / OMO / OMC, and addyosmani/agent-skills source freshness, and report adapter compatibility with any blocked install steps.
+Use $mansu-setting update. Update Mansu, install/update Ouroboros, gstack, and the matching Oh My adapter when needed, sync Mansu skills, check Ouroboros, gstack, Oh My / OMO / OMC, addyosmani/agent-skills, and VoltAgent/awesome-design-md source freshness, and report adapter compatibility with any blocked install steps.
 ```
 
 ### For Agents
@@ -99,9 +102,10 @@ Mansu가 직접 책임지는 것은 아래입니다.
 
 전문 실행은 가능한 한 더 잘 맞는 source skill에 맡깁니다.
 그 source skill 목록과 조합법은 `mansu-operating-model/references/SOURCE_SKILL_CATALOG.md`에서 관리합니다.
-`mansu-setting`은 Ouroboros, gstack, Oh My / OMO / OMC, addyosmani/agent-skills 계열 source skill이 바뀌었는지도 계속 확인해야 합니다.
+`mansu-setting`은 Ouroboros, gstack, Oh My / OMO / OMC, addyosmani/agent-skills, VoltAgent/awesome-design-md 계열 source/reference가 바뀌었는지도 계속 확인해야 합니다.
 전체 개발 흐름은 addyosmani/agent-skills의 Define → Plan → Build → Verify → Review → Ship phase를 큰 지도로 삼습니다. 다만 Mansu는 이 순서를 딱딱하게 복사하지 않고, 현재 단계와 위험도에 맞춰 필요한 source skill을 고릅니다.
 실제 코딩 순서는 하드코딩하지 않고, `mansu-operating-model/references/CODE_CONSTRUCTION_ORDER.md`가 현재 개발 단계를 판단한 뒤 필요한 `addyosmani/agent-skills` phase skill과 gstack/Oh My/Ouroboros 보조 route로 라우팅합니다.
+디자인 작업은 VoltAgent/awesome-design-md를 `DESIGN.md` 참고 원천으로 삼고, 프로젝트 고유의 분위기, 토큰, 컴포넌트, 반응형 규칙으로 바꾼 뒤 gstack 디자인/QA 게이트로 검증합니다.
 
 ## Core Philosophy
 
@@ -130,7 +134,7 @@ reviewed, QA'd, checkpointed, logged, and committed or explicitly recorded as no
 | `mansu-help` | 초보자이거나 지금 뭐부터 해야 할지 모르겠고, 현재 상황 진단과 다음 Mansu route 추천, 바로 쓸 프롬프트가 필요할 때 | beginner-friendly route helper |
 | `mansu-manual` | 브라우저에서 볼 수 있는 초보자용 HTML 사용 설명서가 필요할 때. 정적 문서인 `docs/mansu-manual.html`을 보여준다 | beginner-friendly HTML manual |
 | `mansu-setting` | Mansu를 시작하기 전 기본 세팅으로 runtime target/host/OS별 skill directory를 고르고, Ouroboros/gstack/현재 runtime의 Oh My adapter를 설치/업데이트하고, Mansu 스킬을 동기화/복구하며 adapter compatibility를 점검할 때 | runtime-target bootstrap, source-tool install, and update gate |
-| `mansu-source-curator` | Ouroboros, gstack, Oh My / OMO / OMC, addyosmani/agent-skills 같은 원천 스킬이 바뀌었고 Mansu 레퍼런스/validator/worklog까지 다시 맞춰야 할 때 | hidden source-reference maintenance |
+| `mansu-source-curator` | Ouroboros, gstack, Oh My / OMO / OMC, addyosmani/agent-skills, VoltAgent/awesome-design-md 같은 원천 스킬/레퍼런스가 바뀌었고 Mansu 레퍼런스/validator/worklog까지 다시 맞춰야 할 때 | hidden source-reference maintenance |
 | `mansu-project-start` | 새 제품, 앱, 레포, 큰 기능군을 아이디어/리서치/spec/TDR/UI 방향, 프로젝트 로드맵/phase order, 현재 phase `PLAN.md`까지 끌고 갈 때. Mansu는 이 시점에 Ouroboros, gstack, Oh My, addyosmani 중 어떤 source route를 쓸지 고르고 산출물 변환, gate mapping, phase/slice handoff를 맡는다 | zero-to-PLAN kickoff |
 | `mansu-operating-model` | 프로젝트의 개발 행동양식, role separation, strictness, evidence, 그리고 `AGENTS.md` / `CODING_RULES.md` 구조를 정할 때 | canonical doctrine and project-document templates |
 | `mansu-tdd-total` | 기능/리팩토링 작업을 먼저 계획하고 slice별로 `lite`/`strict`를 나눌 때 | planning dispatcher |
@@ -171,7 +175,7 @@ reviewed, QA'd, checkpointed, logged, and committed or explicitly recorded as no
 
 새 `mansu-*` 스킬을 만들거나 확장하기 전에:
 
-1. 관련 Ouroboros, Oh My, gstack, 공개 source skill을 먼저 찾습니다.
+1. 관련 Ouroboros, Oh My, gstack, 공개 source skill, 디자인 레퍼런스를 먼저 찾습니다.
 2. `mansu-operating-model/references/SOURCE_SKILL_CATALOG.md`에서 기존 조합법을 확인합니다.
 3. 그 스킬의 목적, 게이트, 철학을 읽습니다.
 4. Mansu가 맡을 경계와 source skill에 맡길 경계를 나눕니다.
@@ -214,7 +218,7 @@ scripts/validate_mansu_ship_release.sh
 
 - [MANSU_PHILOSOPHY.md](./MANSU_PHILOSOPHY.md): Mansu 공통 철학
 - [mansu-operating-model](./mansu-operating-model/SKILL.md): canonical doctrine + `AGENTS.md` / `CODING_RULES.md` templates
-- [SOURCE_SKILL_CATALOG.md](./mansu-operating-model/references/SOURCE_SKILL_CATALOG.md): Ouroboros / gstack / Oh My / OMO / OMC source skill map and composition recipes
+- [SOURCE_SKILL_CATALOG.md](./mansu-operating-model/references/SOURCE_SKILL_CATALOG.md): Ouroboros / gstack / Oh My / OMO / OMC / addyosmani / VoltAgent design-reference source map and composition recipes
 - [SOURCE_SKILL_LOCK.json](./mansu-operating-model/references/SOURCE_SKILL_LOCK.json): source-family freshness snapshot and evidence
 - [DOCUMENT_CREATION_ORDER.md](./mansu-operating-model/references/DOCUMENT_CREATION_ORDER.md): which document to create, which source skill to use, and which verification skill to run
 - [CODE_CONSTRUCTION_ORDER.md](./mansu-operating-model/references/CODE_CONSTRUCTION_ORDER.md): current phase detection and dynamic routing to coding-order source skills

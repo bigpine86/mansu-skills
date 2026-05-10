@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "last_checked": "2026-05-08",
+  "last_checked": "2026-05-10",
   "purpose": "Machine-readable source-family snapshot for Mansu reference curation. This file is evidence for freshness checks, not a substitute for reading source skill files.",
   "families": [
     {
@@ -132,6 +132,29 @@
         "deprecation-and-migration",
         "documentation-and-adrs",
         "shipping-and-launch"
+      ]
+    },
+    {
+      "id": "voltagent-awesome-design-md",
+      "kind": "github_source",
+      "repo_url": "https://github.com/VoltAgent/awesome-design-md",
+      "source_path": "/tmp/awesome-design-md",
+      "version": "local clone snapshot",
+      "commit": "beec066",
+      "evidence": "git -C /tmp/awesome-design-md rev-parse --short HEAD; find /tmp/awesome-design-md/design-md -name 'DESIGN.md' | wc -l; sed -n '1,220p' /tmp/awesome-design-md/README.md",
+      "inventory_count": 71,
+      "inventory_note": "Local file count under design-md is 71 at this snapshot. The README badge may show a different public collection count, so use the explicit find command as the checked evidence.",
+      "tracked_capabilities": [
+        "DESIGN.md format",
+        "Visual Theme & Atmosphere",
+        "Color Palette & Roles",
+        "Typography Rules",
+        "Component Stylings",
+        "Layout Principles",
+        "Depth & Elevation",
+        "Do's and Don'ts",
+        "Responsive Behavior",
+        "Agent Prompt Guide"
       ]
     }
   ]

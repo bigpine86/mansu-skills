@@ -1,4 +1,4 @@
 interface:
   display_name: "Mansu Source Curator"
   short_description: "Internal source-skill freshness curator"
-  default_prompt: "Use $mansu-source-curator to check or update Ouroboros, gstack, Oh My / OMO / OMC, addyosmani/agent-skills, and adapter source freshness, then update Mansu references, validators, worklog, the HTML manual agent guide/catalog, and local installed skills only when validation passes."
+  default_prompt: "Use $mansu-source-curator to check or update Ouroboros, gstack, Oh My / OMO / OMC, addyosmani/agent-skills, VoltAgent/awesome-design-md, and adapter source freshness, then update Mansu references, validators, worklog, the HTML manual agent guide/catalog, and local installed skills only when validation passes."
