@@ -6,7 +6,7 @@ workflow.
 Mansu does not compete with strong specialist skills. Mansu classifies the work,
 sets the discipline, and routes to the right source skill at the right moment.
 
-Last local snapshot: 2026-05-10.
+Last local snapshot: 2026-05-16.
 
 Machine-readable freshness evidence lives in `SOURCE_SKILL_LOCK.json`. Treat that
 file as the source-family snapshot for paths, versions, commits, inventory, and
@@ -42,6 +42,10 @@ flattening them.
 - Use VoltAgent/awesome-design-md as the design reference family for `DESIGN.md`
   shape, visual atmosphere, tokens, component rules, responsive behavior, and
   agent prompt handoff.
+- Use Open Design (`nexu-io/open-design`) as the callable agent-native design
+  workflow route when it is installed or explicitly approved for setup. Mansu
+  should route design artifact generation to Open Design instead of recreating
+  its workflow.
 - Use Oh My / OMO / OMC as execution-mode language inside a phase: autopilot,
   ultrawork, ralph, TDD, debug, research, build-fix, and lightweight
   orchestration habits.
@@ -60,6 +64,7 @@ Mansu must keep watching the upstream source families that shape this suite:
 - gstack specialist skills
 - Ouroboros project-definition, Seed, Ledger, and runtime setup flows
 - VoltAgent/awesome-design-md `DESIGN.md` reference collection
+- Open Design agent-native design workflow and artifact generation route
 - Oh My / OMO / OMC style execution-mode skills
 - addyosmani/agent-skills production engineering workflow skills
 
@@ -80,12 +85,15 @@ During the read-only source freshness check:
 1. Check whether the installed Ouroboros CLI/package, setup status, or project-definition artifacts changed.
 2. Check whether the installed gstack repo or `gstack-*` skill set changed.
 3. Check whether the installed VoltAgent/awesome-design-md reference snapshot changed when UI/design work is in scope.
-4. Check whether the installed Oh My / OMO / OMC adapter or source skill set changed.
-5. Check whether `addyosmani/agent-skills` changed when it is installed or referenced.
-6. Compare notable added, removed, or renamed skills against this catalog.
-7. If source skills changed in a way that affects routing, read the original
+4. Check whether Open Design is installed or available, and whether its skills,
+   design systems, visual directions, CLI lifecycle, or artifact/export contract
+   changed.
+5. Check whether the installed Oh My / OMO / OMC adapter or source skill set changed.
+6. Check whether `addyosmani/agent-skills` changed when it is installed or referenced.
+7. Compare notable added, removed, or renamed skills against this catalog.
+8. If source skills changed in a way that affects routing, read the original
    `SKILL.md` and update this catalog before relying on stale assumptions.
-8. Record the source freshness result in the final report and worklog.
+9. Record the source freshness result in the final report and worklog.
 
 Missing source tooling is not automatically fatal. Report what was unavailable,
 continue with the safe Mansu path, and block only when the requested workflow
@@ -97,6 +105,7 @@ depends on the missing source.
 | --- | --- | --- |
 | Lifecycle phase spine | broad SDLC phases: define, plan, build, verify, review, harden, document, ship | Mansu-specific strictness, project-local routing, runtime adapters |
 | Project definition / memory source | durable project purpose, Seed/Ledger/spec artifacts, long-horizon direction, continuity | Mansu-specific gate ownership, source selection, final accountability |
+| Design workflow source | callable design artifact workflow, Turn-1 discovery, visual direction selection, preview/export loop | Mansu-specific routing, final product decision, post-artifact verification |
 | Design reference source | reusable `DESIGN.md` structures, brand/taste references, design token grammar, agent prompt handoff | project-specific product decisions, final UI approval, rendered QA |
 | Mansu | doctrine, classification, strictness, routing, evidence, checkpoint, worklog, final ship judgment | specialist craft implementation when a stronger source skill exists |
 | Ouroboros | project-definition interview, PM/Seed/Ledger artifacts, early acceptance criteria, spec source of truth | Mansu-specific routing, source comparison, role critique, slice gates, final implementation discipline |
@@ -110,6 +119,7 @@ Representative mapping:
 - Lifecycle phase spine: addyosmani/agent-skills or source-curator-verified substitute.
 - Project definition / memory source: Ouroboros or source-curator-verified substitute.
 - Design reference source: VoltAgent/awesome-design-md or source-curator-verified substitute.
+- Design workflow source: Open Design or source-curator-verified substitute.
 - Execution-mode source: Oh My / OMO / OMC or source-curator-verified substitute.
 - Specialist team source: gstack or source-curator-verified substitute.
 - Implementation actor: Codex or the active coding agent.
@@ -125,6 +135,10 @@ Before Mansu composes source skills, preserve each family in its native role:
 - VoltAgent/awesome-design-md: `DESIGN.md` reference grammar and taste library;
   do not copy a brand blindly or treat a reference file as the product's final
   visual identity.
+- Open Design: design artifact workflow; do not clone its prompt stack into
+  Mansu. When it is installed or approved, let Open Design run the design
+  artifact loop and let Mansu handle route choice, input framing, handoff, and
+  verification.
 - Oh My / OMO / OMC: execution mode and persistence language; do not use
   parallelism when slices have sequential dependencies or shared write scope.
 - gstack: independent specialist gates; do not treat builder self-review as a
@@ -208,6 +222,36 @@ The output should become the project's own `DESIGN.md` or UI design artifact.
 | Responsive Behavior | breakpoints, touch targets, collapsing strategy | mobile/tablet behavior matters |
 | Agent Prompt Guide | quick tokens and implementation prompts | handoff to coding/design agents needs specificity |
 
+## Open Design Capability Map
+
+Use Open Design (`nexu-io/open-design`) as a callable design-artifact source
+route when it is installed or explicitly approved for setup. Mansu should not
+recreate Open Design's workflow. Mansu should prepare context, choose the route,
+let Open Design run its CLI/daemon workflow, then connect the output to
+`DESIGN.md`, design docs, `PLAN.md`, and verification gates.
+
+Open Design is a callable design-artifact source route.
+Open Design provides artifact-first rendering before implementation handoff.
+
+Open Design is different from VoltAgent/awesome-design-md:
+
+- Open Design owns the design workflow and artifact loop.
+- VoltAgent/awesome-design-md owns `DESIGN.md` reference systems and schema.
+- gstack owns independent design critique, browser evidence, and visual QA.
+- Mansu owns source choice, CLI execution approval, handoff, and final evidence.
+
+| Capability | Source shape | Route when |
+| --- | --- | --- |
+| Install / lifecycle | `git clone`, package install, `pnpm tools-dev` or current Open Design lifecycle command | Open Design is missing and the user approved Mansu to install or update it |
+| Agent detection | local daemon detects existing coding-agent CLIs | design should use the user's installed agent instead of a bundled model |
+| Turn-1 discovery | interactive question form before pixels | brief, audience, tone, brand context, or scale is still ambiguous |
+| Visual direction picker | curated visual schools with deterministic palette/font choices | no brand guide exists or the UI direction is too vague |
+| Design systems | `DESIGN.md` systems and product-system library | artifact should follow a concrete design system rather than freestyle styling |
+| Artifact-first loop | generated artifact rendered in sandboxed preview | user needs visible prototype/deck/mobile/dashboard evidence before implementation |
+| Built-in skills | prototype/deck/design/marketing/work-product skills | Open Design has a closer skill than Mansu/gstack for the requested artifact |
+| Anti-AI-slop gate | five-dimensional critique and P0/P1/P2 checklists | design output must pass taste, hierarchy, specificity, restraint, and execution gates |
+| Export handoff | HTML/PDF/PPTX/ZIP/Markdown or current supported exports | artifact needs to become a shareable design handoff or implementation input |
+
 ## Oh My / OMO / OMC Capability Map
 
 Use Oh My-style skills as execution-mode vocabulary and lightweight workflow
@@ -288,7 +332,7 @@ The route is:
 
 Use `mansu-source-curator` when the issue is not feature delivery, but keeping
 Mansu's knowledge of Ouroboros, gstack, Oh My / OMO / OMC,
-addyosmani/agent-skills, VoltAgent/awesome-design-md, or runtime adapters current.
+addyosmani/agent-skills, VoltAgent/awesome-design-md, Open Design, or runtime adapters current.
 
 This is an internal maintenance route:
 
@@ -372,14 +416,20 @@ but it must not pretend the upstream tools all use the same filename.
 ### UI/UX Work
 
 1. Use Mansu doctrine to define the product goal, user, and risk.
-2. If the project has no current design source, inspect VoltAgent/awesome-design-md
+2. If Open Design is installed or the user approved setup, prefer routing design
+   artifact generation to Open Design instead of recreating its workflow inside
+   Mansu. Mansu runs the needed CLI commands, records the Open Design skill,
+   design system, preview/export path, and keeps the result as evidence.
+3. If the project has no current design source, inspect VoltAgent/awesome-design-md
    references and create or update `DESIGN.md` with visual atmosphere, color
    roles, typography, component rules, layout, elevation, do/don't guardrails,
    responsive behavior, and agent prompt handoff.
-3. Use `gstack-plan-design-review` before implementation.
-4. Use `gstack-design-shotgun` when multiple visual directions are valuable.
-5. Use `gstack-design-html` only after a direction is approved or stable.
-6. Use `gstack-design-review`, `gstack-browse`, and `gstack-qa-only` for rendered
+4. Use `gstack-plan-design-review` before implementation.
+5. Use `gstack-design-shotgun` when Open Design is unavailable or when Mansu
+   needs independent alternatives outside the Open Design artifact loop.
+6. Use `gstack-design-html` only after a direction is approved or stable and
+   Open Design has not already produced an implementation-ready artifact.
+7. Use `gstack-design-review`, `gstack-browse`, and `gstack-qa-only` for rendered
    evidence before declaring the UI done.
 
 ### Bug Or Regression

@@ -1,6 +1,6 @@
 ---
 name: mansu-source-curator
-description: Hidden/internal maintenance workflow for refreshing Mansu's source-skill knowledge. Use when updating or checking Ouroboros, gstack, Oh My / OMO / OMC, addyosmani/agent-skills, VoltAgent/awesome-design-md, or runtime adapters; when source skills changed and Mansu references such as SOURCE_SKILL_CATALOG.md, DOCUMENT_CREATION_ORDER.md, CODE_CONSTRUCTION_ORDER.md, mansu-setting, validators, or worklogs must be updated; or when a Mansu source map may be stale.
+description: Hidden/internal maintenance workflow for refreshing Mansu's source-skill knowledge. Use when updating or checking Ouroboros, gstack, Oh My / OMO / OMC, addyosmani/agent-skills, VoltAgent/awesome-design-md, Open Design, or runtime adapters; when source skills changed and Mansu references such as SOURCE_SKILL_CATALOG.md, DOCUMENT_CREATION_ORDER.md, CODE_CONSTRUCTION_ORDER.md, mansu-setting, validators, or worklogs must be updated; or when a Mansu source map may be stale.
 ---
 
 # Mansu Source Curator
@@ -8,8 +8,8 @@ description: Hidden/internal maintenance workflow for refreshing Mansu's source-
 This is an internal maintenance skill.
 
 Use it to keep Mansu's source-skill map honest after Ouroboros, gstack, Oh My /
-OMO / OMC, addyosmani/agent-skills, VoltAgent/awesome-design-md, or runtime
-adapter changes.
+OMO / OMC, addyosmani/agent-skills, VoltAgent/awesome-design-md, Open Design,
+or runtime adapter changes.
 
 Do not use this skill for normal feature implementation. It maintains Mansu's
 knowledge of other skills.
@@ -66,6 +66,7 @@ fresh; it must not clone source-skill workflows into Mansu.
 | Oh My / OMO / OMC | installed adapter command, skill directories, execution-mode names | matching adapter update only when installed or requested | `SOURCE_SKILL_CATALOG.md`, TDD/debug/web verify docs, runtime wording |
 | addyosmani/agent-skills | local clone if present, otherwise GitHub contents/API, skill names and phase semantics | safe fast-forward local clone only; do not install into runtime skills by default | `SOURCE_SKILL_CATALOG.md`, `DOCUMENT_CREATION_ORDER.md`, `CODE_CONSTRUCTION_ORDER.md`, TDD docs |
 | VoltAgent/awesome-design-md | local clone if present, otherwise GitHub contents/API, commit, `DESIGN.md` count, and notable format changes | safe fast-forward local clone only; source-reference only; do not install into runtime skills | `SOURCE_SKILL_CATALOG.md`, `DOCUMENT_CREATION_ORDER.md`, `mansu-project-start`, `mansu-setting`, `docs/mansu-manual.html`, validators |
+| Open Design / nexu-io/open-design | local clone if present, otherwise GitHub contents/API, commit, skills, design systems, lifecycle command, preview/export contract | safe fast-forward local clone only; install/update/run lifecycle only when user approved design artifact work | `SOURCE_SKILL_CATALOG.md`, `DOCUMENT_CREATION_ORDER.md`, `mansu-project-start`, `mansu-setting`, `docs/mansu-manual.html`, validators |
 | Mansu repo | branch, dirty state, validator health, local installed skill copies | `git pull --ff-only` only when clean and requested | README, validators, worklog, local skill cache |
 | Runtime adapters | `omx`, `omo`, `omc`, host/runtime target, optional compatibility status | update only the matching installed adapter when requested | `mansu-setting`, runtime target matrix, runtime readiness validator |
 
@@ -76,6 +77,12 @@ fresh; it must not clone source-skill workflows into Mansu.
 - Do not install addyosmani/agent-skills into runtime skill directories unless the user explicitly asks.
 - Do not install VoltAgent/awesome-design-md into runtime skill directories. It is
   a source-reference collection for `DESIGN.md`, not an executable skill family.
+- Do not copy Open Design into runtime skill directories. It is an external
+  callable design-artifact route with its own repo, daemon, preview, and
+  artifact workspace.
+- Do not ask the user to run Open Design CLI commands manually when Mansu has
+  been asked and approved to prepare or use Open Design. Mansu runs the commands
+  and records the evidence.
 - Do not copy public brand identities blindly from design references.
 - Do not treat missing optional adapters as fatal unless adapter work was requested.
 - Do not update Mansu references from memory. Read source skill files, source directory listings, or official GitHub data first.
@@ -95,6 +102,9 @@ Collect:
 - addyosmani/agent-skills source availability: local clone or GitHub
 - VoltAgent/awesome-design-md source availability: local clone or GitHub,
   commit, `DESIGN.md` inventory count, and format sections
+- Open Design source availability: local clone or GitHub, commit, lifecycle
+  command, skills, design systems, visual directions, preview/export contract,
+  and current install/run evidence
 - current `SOURCE_SKILL_CATALOG.md` snapshot date
 - current `SOURCE_SKILL_LOCK.json` source paths, versions, commits, inventory, and evidence commands
 - current `DOCUMENT_CREATION_ORDER.md` and `CODE_CONSTRUCTION_ORDER.md` coverage
@@ -127,6 +137,9 @@ Only run this phase when the user asked for update or full refresh.
 - addyosmani/agent-skills: update a local clone with safe fast-forward only; otherwise use read-only GitHub data.
 - VoltAgent/awesome-design-md: update a local clone with safe fast-forward only
   or use read-only GitHub data; do not install or copy it into runtime skill dirs.
+- Open Design: update a local clone with safe fast-forward only or use read-only
+  GitHub data; install dependencies or run lifecycle commands only when the user
+  explicitly approved Open Design setup/use for design artifact work.
 - Mansu: update with `git pull --ff-only` only when clean and requested.
 
 After updating, repeat Phase 1. Source update without re-inspection is incomplete.

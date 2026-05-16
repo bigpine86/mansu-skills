@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "last_checked": "2026-05-10",
+  "last_checked": "2026-05-16",
   "purpose": "Machine-readable source-family snapshot for Mansu reference curation. This file is evidence for freshness checks, not a substitute for reading source skill files.",
   "families": [
     {
@@ -155,6 +155,33 @@
         "Do's and Don'ts",
         "Responsive Behavior",
         "Agent Prompt Guide"
+      ]
+    },
+    {
+      "id": "nexu-open-design",
+      "kind": "github_source",
+      "repo_url": "https://github.com/nexu-io/open-design",
+      "source_path": "local clone not found in this workspace during 2026-05-16 check; official GitHub release/Quickstart snapshot used",
+      "version": "open-design-v0.4.1 release snapshot",
+      "commit": "b1121c0",
+      "evidence": "official GitHub release https://github.com/nexu-io/open-design/releases tag open-design-v0.4.1 commit b1121c0; official Quickstart https://github.com/nexu-io/open-design/blob/main/QUICKSTART.md",
+      "install_evidence": "Official Quickstart documents corepack enable; pnpm install; pnpm tools-dev run web or pnpm tools-dev. It explicitly says pnpm tools-dev is the only local lifecycle entry point and not to use removed legacy root aliases.",
+      "inventory_count": 31,
+      "design_system_count": 129,
+      "inventory_note": "Open Design is treated as a callable design-artifact source route when installed or approved for install. Counts are volatile; source-check must verify current skills/design-systems before routing. 2026-05-16 official docs distinguish 31 bundled skills, 71 built-in systems, 57 design skills, and README-level 129 design-system/design-skill inventory wording.",
+      "tracked_capabilities": [
+        "agent-native design workflow",
+        "Turn-1 discovery form",
+        "visual direction picker",
+        "artifact-first rendering loop",
+        "sandboxed preview",
+        "DESIGN.md design systems",
+        "prototype skills",
+        "deck skills",
+        "anti-AI-slop checklist",
+        "five-dimensional critique",
+        "P0/P1/P2 gates",
+        "HTML/PDF/PPTX/ZIP/Markdown export"
       ]
     }
   ]

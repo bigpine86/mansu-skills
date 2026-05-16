@@ -61,6 +61,10 @@ tool exists.
 Some entries are reference-only sources rather than executable routes.
 VoltAgent/awesome-design-md must be inspected as a `DESIGN.md` reference corpus,
 not invoked, installed, or treated as a runtime skill.
+Open Design (`nexu-io/open-design`) is different: when installed or explicitly
+approved for setup, it is a callable design-artifact source route. Mansu should
+run the required CLI commands, not ask the user to copy them manually.
+Mansu should run the required CLI commands directly.
 
 | Situation | Prefer this source route | Mansu responsibility after it returns |
 | --- | --- | --- |
@@ -71,7 +75,7 @@ not invoked, installed, or treated as a runtime skill.
 | Requirements need crystallizing into source-of-truth | Ouroboros `seed`; Ouroboros `auto --skip-run` when full convergence is useful | stop at definition artifacts; do not start implementation from project-start |
 | Reference research should drive direction | Oh My `research` / `deepsearch`; addyosmani `source-driven-development` | record evidence, dates, source URLs, and extracted architecture/design lessons |
 | Architecture, stack, API, or DX needs critique | `gstack-autoplan`; focused `gstack-plan-*`; addyosmani `api-and-interface-design` | resolve critique into locked decisions and risks |
-| UI direction needs exploration | VoltAgent/awesome-design-md `DESIGN.md` reference only, not an execution route; `gstack-plan-design-review`; `gstack-design-consultation`; `gstack-design-shotgun` | convert direction into `DESIGN.md` or the project's design artifact |
+| UI direction needs exploration | Open Design when installed/approved; VoltAgent/awesome-design-md `DESIGN.md` reference only, not an execution route; `gstack-plan-design-review`; `gstack-design-consultation`; `gstack-design-shotgun` | route artifact generation to Open Design when available, then convert decisions into `DESIGN.md` or the project's design artifact |
 | Existing source session must continue | Ouroboros `status` / `resume-session`; gstack context restore when applicable | restore the right session and preserve IDs/paths in handoff |
 | Execution quality needs independent verdict | Ouroboros `evaluate` / `qa`; `gstack-qa-only`; `gstack-review` | use as evidence, then map remaining risks to Mansu gates |
 | Project is stuck or looping | Ouroboros `unstuck`; gstack CEO/eng review; Oh My planning critique | preserve alternatives and unresolved assumptions before choosing a path |
@@ -127,8 +131,9 @@ Expand the minimum gate only when the project risk asks for it:
   release notes, versions, and current examples.
 - Architecture or data risk: create or update a spec/TDR and verify it with
   engineering review.
-- UI risk: inspect VoltAgent/awesome-design-md references and create or update
-  `DESIGN.md` before implementation.
+- UI risk: if Open Design is installed or explicitly approved, route design
+  artifact generation there first; otherwise inspect VoltAgent/awesome-design-md
+  references and create or update `DESIGN.md` before implementation.
 - Expensive or durable decision: create an ADR or decision note with alternatives
   and consequences.
 - Long project: keep the project roadmap or phase order outside `PLAN.md`, then
@@ -170,7 +175,8 @@ Load only what the current phase needs.
 | Reference research | Oh My `research` / `deepsearch`, addyosmani `source-driven-development` |
 | Product/design/eng/DX critique | `gstack-autoplan`, then focused `gstack-plan-*` reviews |
 | DESIGN.md reference / visual taste | VoltAgent/awesome-design-md reference collection |
-| UI direction | `gstack-plan-design-review`, `gstack-design-consultation`, `gstack-design-shotgun` |
+| Design artifact generation | Open Design (`nexu-io/open-design`) when installed or explicitly approved for setup |
+| UI direction | Open Design when available; otherwise `gstack-plan-design-review`, `gstack-design-consultation`, `gstack-design-shotgun` |
 | API/module contracts | addyosmani `api-and-interface-design`, `gstack-plan-eng-review` |
 | Document routing | `mansu-operating-model/references/DOCUMENT_CREATION_ORDER.md` |
 | Coding-order handoff | `mansu-operating-model/references/CODE_CONSTRUCTION_ORDER.md` |
@@ -227,19 +233,22 @@ the full evidence archive.
 4. Research source projects and references with evidence-ranked sources.
 5. Analyze references at code level when they materially influence architecture,
    stack, or UI.
-6. When UI exists, inspect relevant VoltAgent/awesome-design-md references and
+6. When UI exists, check whether Open Design is installed or approved for setup.
+   If it is, let Mansu run the Open Design CLI/lifecycle commands and route the
+   design artifact generation there instead of recreating that workflow.
+7. Inspect relevant VoltAgent/awesome-design-md references and
    create or update `DESIGN.md` with visual atmosphere, color roles, typography,
    component rules, layout, depth/elevation, do/don't guardrails, responsive
    behavior, and agent prompt handoff. Record the reference date/commit and avoid
    copying a brand identity blindly.
-7. Draft the spec/TDR layer: domain language, feature groups, data/API boundaries,
+8. Draft the spec/TDR layer: domain language, feature groups, data/API boundaries,
    tech stack, architecture, secret/API-key handling, UI direction, roadmap,
    risks, non-goals, and open questions.
-8. Decide the large-grain build order: feature groups, dependencies, phase
+9. Decide the large-grain build order: feature groups, dependencies, phase
    sequence, integration strategy, and what should wait.
-9. Critique with product, design, engineering, and DX roles or source skills.
-10. Resolve critique into a single project direction.
-11. Create the current phase `PLAN.md` with ordered vertical slices, validation
+10. Critique with product, design, engineering, and DX roles or source skills.
+11. Resolve critique into a single project direction.
+12. Create the current phase `PLAN.md` with ordered vertical slices, validation
    path, gate mapping, and handoff to `mansu-tdd-total` for phase execution.
 
 ## Roadmap vs PLAN.md boundary
@@ -265,6 +274,8 @@ The handoff must name:
 - source skills used and skipped
 - references inspected, with date/version/source evidence
 - design references used and `DESIGN.md` status when UI is in scope
+- Open Design route status, artifact path, preview/export path, or fallback
+  reason when UI artifact generation is in scope
 - minimum gate status: purpose, user/problem, evidence, assumptions, direction,
   order, and execution bridge
 - expanded artifacts used, or the reason expansion was skipped

@@ -1,6 +1,6 @@
 ---
 name: mansu-setting
-description: Runtime-target-aware bootstrap/update workflow for the Mansu skill suite. Use when installing Mansu for the first time, choosing the right runtime target and host such as Hermes, OpenCode, Codex, or Claude Code, syncing `mansu-*` skills into the correct local skill directory, installing or updating required source tools like Ouroboros, gstack, and the matching Oh My adapter, checking Ouroboros, Oh My / OMO / OMC source skill freshness, checking addyosmani/agent-skills freshness for coding-order source workflows, checking VoltAgent/awesome-design-md freshness for DESIGN.md design-reference workflows, reporting optional adapter compatibility, refreshing gstack and Oh My source skill links, validating the source suite before sync and installed runtime copies after sync, repairing a broken local skill install, or updating Mansu/Ouroboros/gstack/Oh My/agent-skills/design-reference/adapter tooling before serious work.
+description: Runtime-target-aware bootstrap/update workflow for the Mansu skill suite. Use when installing Mansu for the first time, choosing the right runtime target and host such as Hermes, OpenCode, Codex, or Claude Code, syncing `mansu-*` skills into the correct local skill directory, installing or updating required source tools like Ouroboros, gstack, and the matching Oh My adapter, optionally preparing Open Design only when UI/design artifact work needs it or the user approves it, checking Ouroboros, Oh My / OMO / OMC source skill freshness, checking addyosmani/agent-skills freshness for coding-order source workflows, checking VoltAgent/awesome-design-md and Open Design freshness for design-reference/design-artifact workflows, reporting optional adapter compatibility, refreshing gstack and Oh My source skill links, validating the source suite before sync and installed runtime copies after sync, repairing a broken local skill install, or updating Mansu/Ouroboros/gstack/Oh My/agent-skills/design-reference/design-artifact/adapter tooling before serious work.
 ---
 
 # Mansu Setting
@@ -20,6 +20,9 @@ manager is available.
 - Sync `mansu-*` skills into the correct runtime skill directory.
 - Install or update required source tools: runtime skill dir, git, Ouroboros, and gstack.
 - Check source skill freshness for Ouroboros, gstack, Oh My / OMO / OMC, addyosmani/agent-skills style skills, and VoltAgent/awesome-design-md design references.
+- Check and, when explicitly approved, prepare Open Design as a callable
+  design-artifact route. Mansu runs the required CLI commands; users should not
+  have to copy Open Design commands manually.
 - Install or update the matching Oh My adapter for the detected runtime when in `install` or `update` mode.
 - Refresh gstack and Oh My source skill links after source updates.
 - Route deep source-reference refresh work to `mansu-source-curator`.
@@ -32,7 +35,7 @@ manager is available.
 - `check`: report-only preflight; make no changes except harmless reads.
 - `install`: first bootstrap from a local or cloned `mansu-skills` repo, then install required source tools such as Ouroboros, gstack, and the matching Oh My adapter when safe.
 - `update`: update Mansu, Ouroboros, gstack, installed source repos, and the matching Oh My adapter when the user asks for updates.
-- `source-check`: report whether Ouroboros, gstack, Oh My / OMO / OMC, addyosmani/agent-skills, and VoltAgent/awesome-design-md source references look stale against installed repos/adapters; make no changes unless the user also asked for update.
+- `source-check`: report whether Ouroboros, gstack, Oh My / OMO / OMC, addyosmani/agent-skills, VoltAgent/awesome-design-md, and Open Design source references look stale against installed repos/adapters; make no changes unless the user also asked for update.
 - `source-curate`: use `mansu-source-curator` when source skills changed and Mansu references, validators, or worklog must be updated.
 - `repair`: fix missing local Mansu copies or stale gstack skill links without changing source repos.
 
@@ -55,9 +58,10 @@ Default behavior:
 Use `Check -> Decide -> Mutate` for source ecosystem work.
 
 1. Check: `mansu-setting source-check` is read-only. It checks Ouroboros,
-   gstack, Oh My / OMO / OMC, addyosmani/agent-skills, and
-   VoltAgent/awesome-design-md freshness, then reports skipped checks as yellow
-   rather than green.
+   gstack, Oh My / OMO / OMC, addyosmani/agent-skills,
+   VoltAgent/awesome-design-md, and Open Design freshness, then reports skipped
+   checks as yellow rather than green.
+   It reports skipped checks as yellow.
 2. Decide: explain whether the source tools are current, which drift matters for
    Mansu routing, and which exact next route is recommended.
 3. Mutate: only after explicit user approval, run `mansu-setting update` for
@@ -115,6 +119,7 @@ step as `blocked by unverified install recipe` and continue with safe checks.
 | Oh My Claude / `omc` | Claude Code runtime | Prefer the currently documented Claude Code plugin install route for OMC; if the current OMC install command cannot be verified in the local/runtime docs, do not guess a package name. Report the exact missing install recipe as the blocker for this adapter only. |
 | addyosmani/agent-skills | source-reference repo only | Keep as a source-reference family by default. If needed and missing, clone/update a local read-only reference copy, but do not copy it into runtime skill directories unless the user explicitly asks. |
 | VoltAgent/awesome-design-md | source-reference repo only | Keep as a design-reference family by default. If UI/design workflows need it or the user asks, clone/update a local read-only reference copy and use it to shape `DESIGN.md`; do not copy it into runtime skill directories. |
+| Open Design / `nexu-io/open-design` | callable design-artifact source route | Keep as optional until UI/design artifact work needs it or the user asks. If missing and approved, clone `https://github.com/nexu-io/open-design.git`, verify Node/pnpm, install dependencies, and use the current Open Design lifecycle command such as `pnpm tools-dev` or the current upstream replacement. Mansu runs these commands and records the project/artifact/preview/export evidence. |
 
 Source tool installation rules:
 
@@ -196,8 +201,13 @@ Collect this before making changes:
 - Oh My / OMO / OMC source skill locations, installed adapter version when available, and installed source-skill folders
 - addyosmani/agent-skills repo path when installed, latest known release/tag or commit, and whether key coding-order skills exist
 - VoltAgent/awesome-design-md repo path when installed, latest known commit, `DESIGN.md` inventory count, and whether the 9-section `DESIGN.md` shape still matches Mansu's design reference map
+- Open Design repo path when installed, latest known commit, lifecycle command,
+  available skills, design-system count, visual directions, artifact/export
+  contract, and whether it can see the current coding-agent CLI
 - whether `gstack-context-save` and `gstack-context-restore` are available
-- whether Ouroboros, gstack, Oh My / OMO / OMC, addyosmani/agent-skills, and VoltAgent/awesome-design-md source names/formats still match the Mansu source catalog
+- whether Ouroboros, gstack, Oh My / OMO / OMC, addyosmani/agent-skills,
+  VoltAgent/awesome-design-md, and Open Design source names/formats still match
+  the Mansu source catalog
 - whether `CODE_CONSTRUCTION_ORDER.md` still maps to installed addyosmani/agent-skills phase names
 - `docs/mansu-manual.html` existence, `에이전트 안내` tab, family-first `스킬 카탈로그`, and runtime adapter mapping
 - result of `scripts/validate_mansu_skills.sh` when the repo is present
@@ -220,16 +230,19 @@ Then from the Mansu repo:
 5. Install the matching Oh My adapter for the detected runtime when safe.
 6. Check addyosmani/agent-skills as a source-reference family; clone/update a local reference only when coding-order workflows need it or the user asks.
 7. Check VoltAgent/awesome-design-md as a design-reference family; clone/update a local reference only when UI/design workflows need it or the user asks.
-8. Confirm `docs/mansu-manual.html` exists and includes the agent guide, family-first catalog, and selected runtime/adapter expectation.
-9. Run `scripts/validate_mansu_manual.sh` and `scripts/validate_mansu_skills.sh` in the repo before syncing runtime copies.
-10. Create the selected runtime skill directory if missing and safe.
-11. Sync every top-level `mansu-*` directory into `<runtime-skill-dir>/<skill-name>`.
-12. Copy `docs/mansu-manual.html` into `<runtime-skill-dir>/mansu-manual/docs/mansu-manual.html` so the installed manual skill has its HTML artifact.
-13. Refresh gstack and Oh My source skill links/copies into the selected runtime target after their installers run.
-14. Do not copy `.git`, unrelated root docs, or non-skill files into individual skill folders. The manual HTML is the only root-doc exception.
-15. Run `MANSU_COMPARE_INSTALLED=1 scripts/validate_mansu_installed_copies.sh <runtime-skill-dir>` after syncing runtime copies.
-16. Confirm the installed `mansu-setting` path can be read.
-17. Confirm the installed `mansu-project-start` can use Ouroboros later, but do not start a project here.
+8. Check Open Design as a callable design-artifact source route; clone/update and
+   run its lifecycle only when UI/design artifact workflows need it or the user
+   asks. Mansu executes the CLI commands and records evidence.
+9. Confirm `docs/mansu-manual.html` exists and includes the agent guide, family-first catalog, and selected runtime/adapter expectation.
+10. Run `scripts/validate_mansu_manual.sh` and `scripts/validate_mansu_skills.sh` in the repo before syncing runtime copies.
+11. Create the selected runtime skill directory if missing and safe.
+12. Sync every top-level `mansu-*` directory into `<runtime-skill-dir>/<skill-name>`.
+13. Copy `docs/mansu-manual.html` into `<runtime-skill-dir>/mansu-manual/docs/mansu-manual.html` so the installed manual skill has its HTML artifact.
+14. Refresh gstack and Oh My source skill links/copies into the selected runtime target after their installers run.
+15. Do not copy `.git`, unrelated root docs, or non-skill files into individual skill folders. The manual HTML is the only root-doc exception.
+16. Run `MANSU_COMPARE_INSTALLED=1 scripts/validate_mansu_installed_copies.sh <runtime-skill-dir>` after syncing runtime copies.
+17. Confirm the installed `mansu-setting` path can be read.
+18. Confirm the installed `mansu-project-start` can use Ouroboros later, but do not start a project here.
 
 ## Update
 
@@ -243,17 +256,20 @@ When the user asks to update:
 6. Check Ouroboros and Oh My / OMO / OMC source skill freshness separately from runtime detection.
 7. Check addyosmani/agent-skills freshness when installed or when coding-order workflows are requested.
 8. Check VoltAgent/awesome-design-md freshness when installed, when UI/design workflows are requested, or when the design reference catalog is being curated.
-9. If source skills changed in a way that affects Mansu routing, use `mansu-source-curator` to update `SOURCE_SKILL_CATALOG.md`, `SOURCE_SKILL_LOCK.json`, document/code-order references, validators, and worklog before relying on the new assumptions.
-10. Confirm `docs/mansu-manual.html` still matches the updated routing assumptions; if runtime/source routing changed, update it before syncing.
-11. Re-run `scripts/validate_mansu_manual.sh` and `scripts/validate_mansu_skills.sh`.
-12. Sync all top-level `mansu-*` directories into the selected runtime skill directory only after source curation and validation pass.
-13. Copy `docs/mansu-manual.html` into `<runtime-skill-dir>/mansu-manual/docs/mansu-manual.html` whenever the manual changed or runtime copies are refreshed.
-14. Refresh gstack skill links from the installed gstack repo into the selected runtime skill directory.
-15. Refresh Oh My / OMO / OMC source skill links or copies after the matching source is installed and the selected runtime target expects it.
-16. Do not automatically install or copy addyosmani/agent-skills into runtime skill directories unless the user asks; use it as a source-reference family by default.
-17. Do not automatically install or copy VoltAgent/awesome-design-md into runtime skill directories; use it as a design-reference family by default.
-18. Run `MANSU_COMPARE_INSTALLED=1 scripts/validate_mansu_installed_copies.sh <runtime-skill-dir>` after runtime copies are refreshed.
-19. Report version changes, installs performed, source skill freshness, manual readiness, installed-copy validation, reference curation status, and compatibility notes.
+9. Check Open Design freshness when installed, when UI/design artifact workflows
+   are requested, or when design routing is being curated.
+10. If source skills changed in a way that affects Mansu routing, use `mansu-source-curator` to update `SOURCE_SKILL_CATALOG.md`, `SOURCE_SKILL_LOCK.json`, document/code-order references, validators, and worklog before relying on the new assumptions.
+11. Confirm `docs/mansu-manual.html` still matches the updated routing assumptions; if runtime/source routing changed, update it before syncing.
+12. Re-run `scripts/validate_mansu_manual.sh` and `scripts/validate_mansu_skills.sh`.
+13. Sync all top-level `mansu-*` directories into the selected runtime skill directory only after source curation and validation pass.
+14. Copy `docs/mansu-manual.html` into `<runtime-skill-dir>/mansu-manual/docs/mansu-manual.html` whenever the manual changed or runtime copies are refreshed.
+15. Refresh gstack skill links from the installed gstack repo into the selected runtime skill directory.
+16. Refresh Oh My / OMO / OMC source skill links or copies after the matching source is installed and the selected runtime target expects it.
+17. Do not automatically install or copy addyosmani/agent-skills into runtime skill directories unless the user asks; use it as a source-reference family by default.
+18. Do not automatically install or copy VoltAgent/awesome-design-md into runtime skill directories; use it as a design-reference family by default.
+19. Do not copy Open Design into runtime skill directories. Treat it as an external callable design route with its own repo, daemon, preview, and artifact workspace.
+20. Run `MANSU_COMPARE_INSTALLED=1 scripts/validate_mansu_installed_copies.sh <runtime-skill-dir>` after runtime copies are refreshed.
+21. Report version changes, installs performed, source skill freshness, manual readiness, installed-copy validation, reference curation status, and compatibility notes.
 
 If adapter tooling is missing in `install` or `update`, attempt the matching install path.
 Only record it as skipped after the install path is blocked by missing package manager,
@@ -266,6 +282,10 @@ the agent-skills source check was skipped.
 If VoltAgent/awesome-design-md is missing and UI/design source work was not
 explicitly requested, continue the Mansu/Ouroboros/gstack/Oh My update path and
 record that the design-reference source check was skipped.
+
+If Open Design is missing and UI/design artifact work was not explicitly
+requested, continue the Mansu/Ouroboros/gstack/Oh My update path and record that
+the Open Design callable route check was skipped.
 
 ## Repair
 
@@ -322,6 +342,7 @@ Ouroboros:
 Oh My / OMO / OMC:
 addyosmani/agent-skills:
 VoltAgent/awesome-design-md:
+Open Design:
 설치/업데이트한 도구:
 원천 스킬 최신성:
 원천 레퍼런스 정리:

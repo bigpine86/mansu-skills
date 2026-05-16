@@ -30,21 +30,24 @@ When a strong source skill already exists, Mansu should delegate to it instead o
 copying the whole workflow into a new skill.
 
 That delegation must be explicit, not vibes-based. Mansu keeps a source skill
-catalog so it can remember what Ouroboros, gstack, Oh My / OMO / OMC, VoltAgent/awesome-design-md, and other public skills
+catalog so it can remember what Ouroboros, gstack, Oh My / OMO / OMC,
+Open Design, VoltAgent/awesome-design-md, and other public skills
 already do well, then compose them intentionally.
 
 The goal is not to make Mansu louder than those systems. The goal is to make
 Mansu the operator that knows how to follow addyosmani/agent-skills as the broad
 software delivery phase map, when to deepen the early definition phase through
-Ouroboros, when to use VoltAgent/awesome-design-md as a `DESIGN.md` reference
-for UI direction, when to use Oh My-style execution modes inside a phase, when to
-use gstack's specialist gates, and when to keep the work simple. Creative composition
+Ouroboros, when to use Open Design as a callable design-artifact workflow, when
+to use VoltAgent/awesome-design-md as a `DESIGN.md` reference for UI direction,
+when to use Oh My-style execution modes inside a phase, when to use gstack's
+specialist gates, and when to keep the work simple. Creative composition
 is allowed only when the
 basic gates remain intact: clear intent, source-aware research, explicit
 architecture, slice boundaries, validation, review, QA, checkpoint, and learning.
 
 Because those source families move, Mansu must keep checking freshness for
-Ouroboros, gstack, Oh My / OMO / OMC, addyosmani/agent-skills, and VoltAgent/awesome-design-md. A stale source map is a
+Ouroboros, gstack, Oh My / OMO / OMC, addyosmani/agent-skills,
+Open Design, and VoltAgent/awesome-design-md. A stale source map is a
 routing bug, not just old documentation.
 
 ## Mansu stack model
@@ -58,6 +61,7 @@ The default mental model is:
 | --- | --- |
 | Lifecycle phase spine | addyosmani/agent-skills, or a source route verified by `mansu-source-curator`, provides the broad SDLC map: define, plan, build, verify, review, harden, document, and ship. |
 | Project definition / memory source | Ouroboros, or a source route verified by `mansu-source-curator`, deepens the early definition phase with durable project purpose, Seed/Ledger/spec artifacts, long-horizon direction, and continuity. |
+| Design workflow source | Open Design, or a source route verified by `mansu-source-curator`, provides callable design-artifact generation, preview/export, visual direction selection, and anti-AI-slop gates. Mansu runs approved CLI/lifecycle commands instead of asking the user to copy them manually. |
 | Design reference source | VoltAgent/awesome-design-md, or a design reference verified by `mansu-source-curator`, provides reusable `DESIGN.md` grammar: atmosphere, colors, typography, components, layout, responsive behavior, and agent handoff. |
 | Mansu | Orchestrator, judge, router, doctrine, gate owner, source selector, and final accountable operator. |
 | Execution-mode source | Oh My / OMO / OMC, or a source route verified by `mansu-source-curator`, provides modes inside a phase, such as research, ultrawork, ralph, TDD, debug, parallelism, and persistence. |

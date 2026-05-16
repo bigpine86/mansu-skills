@@ -875,7 +875,7 @@
     }
   </style>
 </head>
-<body data-manual-purpose="lifecycle-route-map" data-manual-version="2026-05-10">
+<body data-manual-purpose="lifecycle-route-map" data-manual-version="2026-05-16">
   <header data-manual-section="hero">
     <span class="eyebrow">Mansu Skill</span>
     <h1>Mansu Skill Manual</h1>
@@ -1562,13 +1562,14 @@
       <section class="tab-panel" id="panel-catalog" data-manual-panel="catalog">
         <div class="catalog-card">
           <h2>스킬 카탈로그</h2>
-          <p class="micro">Mansu가 현재 조합할 수 있는 스킬 지도입니다. gstack, Ouroboros, Oh My, agent-skills, 디자인 레퍼런스를 원천별로 묶고, 그 안에서 역할별로 다시 나눴습니다. <code>mansu-setting</code>은 런타임/호스트/OS를 확인한 뒤 Codex는 <code>omx</code>, OpenCode/Hermes는 <code>omo</code>, Claude Code는 <code>omc</code>를 맞는 adapter로 준비합니다.</p>
+          <p class="micro">Mansu가 현재 조합할 수 있는 스킬 지도입니다. gstack, Ouroboros, Oh My, agent-skills, Open Design, 디자인 레퍼런스를 원천별로 묶고, 그 안에서 역할별로 다시 나눴습니다. <code>mansu-setting</code>은 런타임/호스트/OS를 확인한 뒤 Codex는 <code>omx</code>, OpenCode/Hermes는 <code>omo</code>, Claude Code는 <code>omc</code>를 맞는 adapter로 준비합니다.</p>
           <div class="catalog-meta">
-            <span>Mansu 매뉴얼 스냅샷: 2026-05-10</span>
-            <span>Source lock checked: 2026-05-10</span>
+            <span>Mansu 매뉴얼 스냅샷: 2026-05-16</span>
+            <span>Source lock checked: 2026-05-16</span>
             <span>gstack: 1.21.1.0 / 454423a</span>
             <span>Ouroboros: 55e700e</span>
             <span>Design references: VoltAgent/awesome-design-md beec066</span>
+            <span>Design workflow: Open Design / nexu-io/open-design</span>
           </div>
 
           <div class="catalog-layout">
@@ -1673,6 +1674,23 @@
                         <button class="catalog-item" type="button" data-catalog-name="gstack-claude / gstack-benchmark-models" data-catalog-family="gstack > 모델/비평" data-catalog-role="다른 모델의 독립 리뷰를 받거나 여러 모델의 비용/속도/품질을 비교합니다." data-catalog-when="계획이나 diff에 독립 비평이 필요하거나 모델 선택 근거가 필요할 때 씁니다."><code>gstack-claude</code> / models<small>모델 비교</small></button>
                         <button class="catalog-item" type="button" data-catalog-name="gstack-upgrade / gstack-setup-deploy / gstack-setup-gbrain" data-catalog-family="gstack > 세팅" data-catalog-role="gstack 업데이트, 배포 설정, gbrain 초기화를 맡습니다." data-catalog-when="gstack 원천이나 운영 보조 시스템을 준비할 때 씁니다."><code>gstack-upgrade</code> / setup<small>세팅</small></button>
                         <button class="catalog-item" type="button" data-catalog-name="gstack-make-pdf / gstack-pair-agent / gstack-landing-report / gstack-plan-tune" data-catalog-family="gstack > 운영 보조" data-catalog-role="PDF 생성, 원격 에이전트 페어링, landing queue 확인, 질문 민감도 조정을 맡습니다." data-catalog-when="문서 공유, 멀티 에이전트 협업, 작업 큐, 질문 정책을 다룰 때 씁니다."><code>gstack-ops</code> family<small>운영 보조</small></button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="source-family" data-source-family="open-design">
+                  <h3>Open Design</h3>
+                  <p>설치되었거나 사용 승인이 있을 때 Mansu가 직접 CLI/lifecycle 명령을 실행해서 디자인 artifact, preview, export를 만드는 callable design route입니다.</p>
+                  <div class="source-groups">
+                    <div class="source-group">
+                      <h4>Design Artifact Workflow</h4>
+                      <div class="catalog-items">
+                        <button class="catalog-item" type="button" data-catalog-name="Open Design lifecycle" data-catalog-family="Open Design > 실행 준비" data-catalog-role="Open Design repo, dependency, lifecycle command, local daemon/preview 준비 상태를 확인하고 승인된 경우 Mansu가 직접 실행합니다." data-catalog-when="UI artifact 생성에 Open Design을 쓰기로 했거나 설치 여부가 불확실할 때 씁니다." data-catalog-process="source-check로 설치/버전/명령을 확인하고, 승인되면 clone/install/lifecycle 명령을 Mansu가 실행합니다." data-catalog-output="Open Design readiness report, 실행 명령 로그, blocker 목록"><code>Open Design setup</code><small>CLI 준비</small></button>
+                        <button class="catalog-item" type="button" data-catalog-name="Open Design Turn-1 discovery" data-catalog-family="Open Design > 디자인 시작" data-catalog-role="대상, 사용자, 톤, 브랜드 맥락, 산출물 규모를 첫 턴에서 정리합니다." data-catalog-when="바로 화면을 만들기 전에 디자인 brief가 필요할 때 씁니다." data-catalog-process="Mansu가 프로젝트 맥락을 정리해 Open Design 입력으로 넘깁니다." data-catalog-output="design brief, 선택한 방향, Open Design 입력 기록"><code>Turn-1 discovery</code><small>질문 폼</small></button>
+                        <button class="catalog-item" type="button" data-catalog-name="Open Design visual direction picker" data-catalog-family="Open Design > 디자인 방향" data-catalog-role="visual direction, design system, palette/font 방향을 고르고 artifact 루프로 넘깁니다." data-catalog-when="UI가 무난하거나 브랜드 방향이 없을 때 씁니다." data-catalog-process="Open Design의 방향 선택을 사용하고, Mansu는 선택 이유와 버린 방향을 기록합니다." data-catalog-output="visual direction decision, 선택/비선택 이유, DESIGN.md 반영 항목"><code>visual direction</code><small>방향 선택</small></button>
+                        <button class="catalog-item" type="button" data-catalog-name="Open Design artifact-first loop" data-catalog-family="Open Design > 산출물" data-catalog-role="HTML/prototype/deck/mobile/dashboard 같은 artifact를 만들고 preview/export 증거를 남깁니다." data-catalog-when="디자인 결과물을 눈으로 볼 수 있는 artifact로 먼저 검증해야 할 때 씁니다." data-catalog-process="Open Design preview/export를 실행하고 Mansu가 artifact 경로와 검증 결과를 PLAN/DESIGN 문서에 연결합니다." data-catalog-output="preview path, export path, artifact evidence, handoff notes"><code>artifact loop</code><small>preview/export</small></button>
+                        <button class="catalog-item" type="button" data-catalog-name="Open Design anti-AI-slop gate" data-catalog-family="Open Design > 품질" data-catalog-role="철학, 위계, 실행, 구체성, 절제 관점과 P0/P1/P2 체크로 디자인 품질을 막습니다." data-catalog-when="AI가 만든 듯한 무난한 화면을 피하고 싶을 때 씁니다." data-catalog-process="Open Design critique 결과를 gstack-design-review와 함께 교차 검증합니다." data-catalog-output="anti-AI-slop findings, P0/P1/P2 issue list, 개선 방향"><code>anti-AI-slop</code><small>품질 게이트</small></button>
                       </div>
                     </div>
                   </div>
@@ -1815,6 +1833,7 @@
                 <h3>디자인 / UI</h3>
                 <p>디자인 방향, 시안, HTML 구현, 시각 QA를 담당합니다.</p>
                 <div class="catalog-items">
+                  <button class="catalog-item" type="button" data-catalog-name="Open Design artifact workflow" data-catalog-family="Open Design" data-catalog-role="설치/승인된 경우 Mansu가 직접 CLI/lifecycle 명령을 실행해 디자인 artifact, preview, export를 만듭니다." data-catalog-when="UI 방향을 실제 볼 수 있는 artifact로 빠르게 만들어 검증하고 싶을 때 씁니다." data-catalog-process="Mansu가 brief를 정리하고 Open Design을 호출한 뒤 artifact 경로를 DESIGN.md/PLAN.md/gstack 검증으로 연결합니다." data-catalog-output="design artifact, preview/export evidence, anti-AI-slop findings"><code>Open Design</code><small>디자인 artifact route</small></button>
                   <button class="catalog-item" type="button" data-catalog-name="VoltAgent/awesome-design-md DESIGN.md references" data-catalog-family="VoltAgent/awesome-design-md" data-catalog-role="DESIGN.md 작성 기준과 여러 제품의 시각 시스템 레퍼런스를 제공합니다." data-catalog-when="디자인 방향을 잡기 전에 참고할 시각 문법과 문서 구조가 필요할 때 씁니다." data-catalog-process="여러 reference를 비교해 복사할 브랜드가 아니라 프로젝트에 맞는 디자인 원칙을 뽑습니다." data-catalog-output="DESIGN.md 초안/갱신, 색/타이포/컴포넌트/반응형 기준"><code>VoltAgent/awesome-design-md</code><small>DESIGN.md 레퍼런스</small></button>
                   <button class="catalog-item" type="button" data-catalog-name="gstack-design-consultation" data-catalog-family="gstack design" data-catalog-role="제품 맥락을 이해하고 디자인 시스템 방향, 색, 타이포, 레이아웃, 모션을 제안합니다." data-catalog-when="아직 UI 톤과 디자인 시스템이 정해지지 않았을 때 씁니다."><code>gstack-design-consultation</code><small>디자인 방향</small></button>
                   <button class="catalog-item" type="button" data-catalog-name="gstack-design-shotgun" data-catalog-family="gstack design" data-catalog-role="4~6개 디자인 시안을 병렬로 만들어 비교하고 피드백을 모읍니다." data-catalog-when="한 가지 디자인으로 바로 가기보다 여러 방향을 보고 싶을 때 씁니다."><code>gstack-design-shotgun</code><small>시안 비교</small></button>

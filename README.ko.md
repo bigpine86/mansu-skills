@@ -42,7 +42,7 @@ Mansu는 원천 스킬이 이미 잘하는 일에는 얇게 붙습니다.
 
 ## 빠른 시작
 
-Last verified: 2026-05-10
+Last verified: 2026-05-16
 
 Canonical branch: `main`
 
@@ -94,13 +94,13 @@ Mansu가 현재 상황을 보고 다음 스킬을 안내합니다.
 업데이트하기 전에는 먼저 읽기 전용으로 확인합니다.
 
 ```text
-Use $mansu-setting source-check. Ouroboros, gstack, Oh My / OMO / OMC, addyosmani/agent-skills, VoltAgent/awesome-design-md가 Mansu 라우팅과 아직 맞는지 확인해줘. 설치, 업데이트, sync, 파일 수정은 하지 말고 Green/Yellow/Red 상태와 승인 필요한 다음 행동만 알려줘.
+Use $mansu-setting source-check. Ouroboros, gstack, Oh My / OMO / OMC, addyosmani/agent-skills, VoltAgent/awesome-design-md, Open Design이 Mansu 라우팅과 아직 맞는지 확인해줘. 설치, 업데이트, sync, 파일 수정은 하지 말고 Green/Yellow/Red 상태와 승인 필요한 다음 행동만 알려줘.
 ```
 
 업데이트하기로 결정했다면 이렇게 요청합니다.
 
 ```text
-Use $mansu-setting update. Update Mansu, install/update Ouroboros, gstack, and the matching Oh My adapter when needed, sync Mansu skills, check Ouroboros, gstack, Oh My / OMO / OMC, addyosmani/agent-skills, and VoltAgent/awesome-design-md source freshness, and report adapter compatibility with any blocked install steps.
+Use $mansu-setting update. Update Mansu, install/update Ouroboros, gstack, and the matching Oh My adapter when needed and approved, prepare Open Design only when UI/design artifact work needs it or I explicitly approve it, sync Mansu skills, check Ouroboros, gstack, Oh My / OMO / OMC, addyosmani/agent-skills, VoltAgent/awesome-design-md, and Open Design source freshness, and report adapter compatibility with any blocked install steps.
 ```
 
 ### 에이전트에게 줄 기본 지시
@@ -123,6 +123,7 @@ AI 코딩은 점점 빨라지고 있습니다.
 - Ouroboros: 초기 프로젝트 정의, memory, Seed, Ledger, 장기 방향
 - Oh My / OMO / OMC: research, ultrawork, ralph, TDD, debug 같은 실행 모드
 - gstack: CEO, design, engineering, QA, security, performance, ship, deploy, learn 같은 전문가 역할과 gate
+- Open Design: 설치 또는 승인된 경우 agent-native design artifact workflow
 - VoltAgent/awesome-design-md: `DESIGN.md`와 design handoff의 참고 구조
 
 Mansu는 이들을 대체하지 않습니다.
@@ -141,7 +142,7 @@ Mansu가 직접 책임지는 일은 아래입니다.
 
 전문 실행은 가능한 한 더 잘 맞는 source skill에 맡깁니다.
 source skill 목록과 조합법은 `mansu-operating-model/references/SOURCE_SKILL_CATALOG.md`에서 관리합니다.
-`mansu-setting`은 Ouroboros, gstack, Oh My / OMO / OMC, addyosmani/agent-skills, VoltAgent/awesome-design-md source freshness를 계속 확인합니다.
+`mansu-setting`은 Ouroboros, gstack, Oh My / OMO / OMC, addyosmani/agent-skills, VoltAgent/awesome-design-md, Open Design source freshness를 계속 확인합니다.
 
 Mansu가 좋아지는 방식은 단순합니다.
 
@@ -157,8 +158,9 @@ Mansu가 좋아지는 방식은 단순합니다.
 `mansu-operating-model/references/CODE_CONSTRUCTION_ORDER.md`가 현재 개발 phase를 판단하고,
 필요한 addyosmani/agent-skills phase skill과 gstack, Oh My, Ouroboros 보조 route로 연결합니다.
 
-디자인 작업은 VoltAgent/awesome-design-md를 `DESIGN.md` 참고 원천으로 삼습니다.
-그다음 프로젝트 고유의 분위기, 토큰, 컴포넌트, 반응형 규칙으로 바꾸고 gstack 디자인/QA gate로 검증합니다.
+디자인 작업은 Open Design이 설치되어 있거나 사용 승인이 있으면 Open Design을 design artifact 생성 route로 우선 고려합니다.
+Mansu가 Open Design CLI/lifecycle 명령을 직접 실행하고 산출물 증거를 기록합니다.
+그다음 VoltAgent/awesome-design-md를 `DESIGN.md` 참고 원천으로 삼아 프로젝트 고유의 분위기, 토큰, 컴포넌트, 반응형 규칙을 뽑고 gstack 디자인/QA gate로 검증합니다.
 
 ## 큰 그림
 
@@ -173,6 +175,9 @@ Project definition / memory source
 
 Design reference source
 = VoltAgent/awesome-design-md, or a design reference verified by mansu-source-curator: DESIGN.md structure, visual atmosphere, tokens, components, responsive behavior
+
+Design workflow source
+= Open Design / nexu-io/open-design, or a source route verified by mansu-source-curator: Turn-1 discovery, visual direction picker, artifact-first rendering, preview/export, anti-AI-slop critique
 
 Mansu
 = orchestrator, judge, router, doctrine, gates, final accountability

@@ -40,7 +40,7 @@ Mansu is strict where beginners and agents most often fail: planning, scope, saf
 
 ## Quick Start
 
-Last verified: 2026-05-10
+Last verified: 2026-05-16
 
 Canonical branch: `main`
 
@@ -89,13 +89,13 @@ Mansu will classify your situation and route you to the right next skill:
 Before updates, check source freshness without changing anything:
 
 ```text
-Use $mansu-setting source-check. Check whether Ouroboros, gstack, Oh My / OMO / OMC, addyosmani/agent-skills, and VoltAgent/awesome-design-md are still aligned with Mansu's routing. Do not install, update, sync, or edit files. Report Green/Yellow/Red status and the next action that needs approval.
+Use $mansu-setting source-check. Check whether Ouroboros, gstack, Oh My / OMO / OMC, addyosmani/agent-skills, VoltAgent/awesome-design-md, and Open Design are still aligned with Mansu's routing. Do not install, update, sync, or edit files. Report Green/Yellow/Red status and the next action that needs approval.
 ```
 
 When you decide to update:
 
 ```text
-Use $mansu-setting update. Update Mansu, install/update Ouroboros, gstack, and the matching Oh My adapter when needed, sync Mansu skills, check Ouroboros, gstack, Oh My / OMO / OMC, addyosmani/agent-skills, and VoltAgent/awesome-design-md source freshness, and report adapter compatibility with any blocked install steps.
+Use $mansu-setting update. Update Mansu, install/update Ouroboros, gstack, and the matching Oh My adapter when needed and approved, prepare Open Design only when UI/design artifact work needs it or I explicitly approve it, sync Mansu skills, check Ouroboros, gstack, Oh My / OMO / OMC, addyosmani/agent-skills, VoltAgent/awesome-design-md, and Open Design source freshness, and report adapter compatibility with any blocked install steps.
 ```
 
 ### For Agents
@@ -118,6 +118,7 @@ The best agentic workflows already exist in pieces:
 - Ouroboros is useful for early project definition, memory, Seed, Ledger, and long-horizon direction.
 - Oh My / OMO / OMC gives execution modes such as research, ultrawork, ralph, TDD, and debug.
 - gstack gives specialist roles and gates: CEO, design, engineering, QA, security, performance, ship, deploy, learn.
+- Open Design gives a callable agent-native design artifact workflow when installed or approved.
 - VoltAgent/awesome-design-md gives a reference shape for `DESIGN.md` and design handoff.
 
 Mansu's job is not to replace them.
@@ -136,7 +137,7 @@ Mansu owns:
 
 Specialized execution should stay with the best matching source skill whenever possible.
 The source skill map and composition recipes live in `mansu-operating-model/references/SOURCE_SKILL_CATALOG.md`.
-`mansu-setting` must keep checking Ouroboros, gstack, Oh My / OMO / OMC, addyosmani/agent-skills, and VoltAgent/awesome-design-md source freshness.
+`mansu-setting` must keep checking Ouroboros, gstack, Oh My / OMO / OMC, addyosmani/agent-skills, VoltAgent/awesome-design-md, and Open Design source freshness.
 
 This creates the Mansu flywheel:
 
@@ -151,7 +152,7 @@ Mansu does not copy that sequence mechanically. It chooses the needed source ski
 Actual code construction order is not hardcoded. `mansu-operating-model/references/CODE_CONSTRUCTION_ORDER.md`
 detects the current development phase and routes to the relevant addyosmani/agent-skills phase skill plus gstack, Oh My, or Ouroboros support routes.
 
-Design work uses VoltAgent/awesome-design-md as a `DESIGN.md` reference source, then turns it into the project's own atmosphere, tokens, components, responsive rules, and gstack design/QA gates.
+Design work prefers Open Design as the callable design-artifact route when installed or explicitly approved. Mansu runs the Open Design CLI/lifecycle commands, records the artifact evidence, then uses VoltAgent/awesome-design-md as a `DESIGN.md` reference source and gstack design/QA gates for critique and verification.
 
 ## Big Picture
 
@@ -166,6 +167,9 @@ Project definition / memory source
 
 Design reference source
 = VoltAgent/awesome-design-md, or a design reference verified by mansu-source-curator: DESIGN.md structure, visual atmosphere, tokens, components, responsive behavior
+
+Design workflow source
+= Open Design / nexu-io/open-design, or a source route verified by mansu-source-curator: Turn-1 discovery, visual direction picker, artifact-first rendering, preview/export, anti-AI-slop critique
 
 Mansu
 = orchestrator, judge, router, doctrine, gates, final accountability
@@ -266,7 +270,7 @@ and `scripts/validate_mansu_installed_copies.sh`.
 - [README.ko.md](./README.ko.md): Korean README
 - [MANSU_PHILOSOPHY.md](./MANSU_PHILOSOPHY.md): shared Mansu philosophy
 - [mansu-operating-model](./mansu-operating-model/SKILL.md): canonical doctrine plus `AGENTS.md` / `CODING_RULES.md` templates
-- [SOURCE_SKILL_CATALOG.md](./mansu-operating-model/references/SOURCE_SKILL_CATALOG.md): Ouroboros / gstack / Oh My / OMO / OMC / addyosmani / VoltAgent source map and composition recipes
+- [SOURCE_SKILL_CATALOG.md](./mansu-operating-model/references/SOURCE_SKILL_CATALOG.md): Ouroboros / gstack / Oh My / OMO / OMC / addyosmani / VoltAgent / Open Design source map and composition recipes
 - [SOURCE_SKILL_LOCK.json](./mansu-operating-model/references/SOURCE_SKILL_LOCK.json): source-family freshness snapshot and evidence
 - [DOCUMENT_CREATION_ORDER.md](./mansu-operating-model/references/DOCUMENT_CREATION_ORDER.md): which document to create, which source skill to use, and which verification skill to run
 - [CODE_CONSTRUCTION_ORDER.md](./mansu-operating-model/references/CODE_CONSTRUCTION_ORDER.md): current phase detection and dynamic routing to coding-order source skills
