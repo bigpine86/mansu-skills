@@ -62,6 +62,12 @@ Before slice 1, confirm:
 An equivalent gate must be separately invoked, produce status/evidence, and be
 distinguishable from the builder's self-summary.
 
+When invoked from `mansu-tdd-total`, carry the exact gstack/current-runtime gate
+names from the slice card. If the card names `gstack-review`, `gstack-qa-only`,
+`gstack-browse`, `gstack-qa`, `gstack-context-save`, or `gstack-context-restore`,
+use those mapped gates or record the equivalent invoked gate. A builder saying
+"I reviewed it" is not gate evidence.
+
 If any of those are unclear, decide them before implementation starts.
 
 If you cannot define a meaningful validation path, checkpoint path, or worklog path, stop and clarify the workflow before implementation.
@@ -72,9 +78,11 @@ If you cannot define a meaningful validation path, checkpoint path, or worklog p
 2. Confirm the slice is marked `lite`.
 3. Confirm the construction router before coding: current phase, source skill to read or skip, dependency, context pack, contract to lock, and safe-default or rollback concern.
 4. Confirm the validation path before coding.
-   Examples: failing test, focused tests, `review`, `qa`, visual check, manual verification
+   Examples: failing test, focused tests, `gstack-review`, `gstack-qa-only`,
+   `gstack-browse`, visual check, manual verification
 5. Implement one logical thing for the slice.
-6. Run `review -> qa -> checkpoint`.
+6. Run the mapped gates, usually `gstack-review -> gstack-qa-only` or
+   `gstack-qa -> gstack-context-save`.
 7. Commit the slice, or record the explicit no-commit reason when project policy or user instruction requires deferring the commit.
 8. Update `PLAN.md` and the project worklog.
 
@@ -86,6 +94,7 @@ Even in lite mode, each slice should leave behind a compact slice card with:
 - impact files
 - validation path
 - risk notes
+- exact review/QA/checkpoint gate names from `mansu-tdd-total` when available
 - checkpoint and worklog note
 
 Keep it short, but do not skip the structure.
@@ -99,7 +108,7 @@ Keep it short, but do not skip the structure.
 - Commit-or-explicit-no-commit accounting is mandatory.
 - `RED -> GREEN -> REFACTOR` is required only when strict TDD is useful for the slice.
 - For UI, docs, config, and tiny presentational slices, explicit verification may replace the RED test.
-- `review`, `qa`, and `checkpoint` are required gates unless the project has an explicit equivalent.
+- `review`, `qa`, and `checkpoint` are required gates unless the project has an explicit equivalent; prefer the exact mapped gstack/current-runtime names from the slice card.
 - Choose the validation and checkpoint path before slice 1 rather than improvising them mid-slice.
 - Do not keep growing a giant file when a new responsibility boundary appears.
 - Follow `mansu-operating-model/references/CODE_CONSTRUCTION_ORDER.md` as a dynamic router when a slice touches multiple files or risks turning into a one-pass patch.
@@ -111,7 +120,7 @@ A lite slice is closed enough to move on only when:
 1. the chosen validation path is complete
 2. the active plan reflects the current status
 3. the next starting point is recorded
-4. review, QA, and checkpoint are complete
+4. review, QA, and checkpoint are complete with separately invoked gate evidence
 5. the work is committed, or the reason for not committing yet is stated explicitly
 6. the completed-work log is updated when the project uses one
 

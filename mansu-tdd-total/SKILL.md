@@ -85,6 +85,11 @@ If the current runtime exposes these under shorter commands such as `review`,
 `qa`, `qa-only`, `browse`, or `health`, map the concrete gstack skill above to
 that callable command and record the mapping.
 
+`gstack-health` is mandatory at final closeout when the project has an equivalent
+health command. Run it per-slice only for strict, high-risk, or broad code-changing
+slices when the check is cheap enough; otherwise record that health is deferred to
+final closeout.
+
 Optional escalation gates:
 
 - use `gstack-cso` only when the slice changes auth, permissions, secrets,
@@ -102,6 +107,10 @@ worklog. A builder saying "I reviewed it" is not enough.
 Commit policy:
 
 - Default to per-slice commits during implementation when the repo/project allows it.
+- Strict slices treat a slice commit as part of the close gate after review, QA,
+  and checkpoint. If user or project policy forbids a commit, record the policy
+  override and mark the slice `commit-deferred` instead of fully closed until
+  final commit accounting resolves it.
 - Use a final release/docs commit only for final docs, version, changelog, or when the project policy explicitly deferred slice commits.
 - If any commit is deferred, record the no-commit reason, remaining diff scope, and next owner in `PLAN.md` or the worklog.
 
@@ -143,11 +152,18 @@ Before planning, confirm:
 An equivalent review, QA, or checkpoint gate must be separately invoked, produce
 status/evidence, and be distinguishable from the builder's self-summary.
 
-When actual multi-agent or helper-session critique is available, use it for
-non-trivial work instead of silently replacing it with a single-session role
-play. Local role separation is only a fallback when the runtime lacks safe
-critic agents, critic setup fails, or the task is too small to justify spawning
-extra reviewers. Record the reason when using the fallback.
+When actual multi-agent or helper-session critique is available safely, use it
+for non-trivial work instead of silently replacing it with a single-session role
+play. Available safely means the host supports it, current runtime instructions
+and user direction permit it, task data can be shared safely, and the critic path
+can return useful feedback for the planning gate.
+
+Real critic attempt/evidence is required for any multi-slice, strict,
+architecture, data-contract, security, UX-risk, or user-visible behavior work
+when the runtime can provide critics safely. Local role separation is only a
+fallback for a single low-risk lite slice, unsupported hosts, unsafe data/scope,
+critic setup failure/timeout, or an explicit user speed tradeoff. Record the
+reason and fallback critique when using the fallback.
 
 If strict prerequisites are missing, still plan the work, but mark would-be strict slices as blocked instead of pretending to run strict mode.
 
@@ -183,6 +199,8 @@ planning-gate inputs.
 - Record the critic names, responsibilities, and status in `PLAN.md`.
 - While critics run, continue only non-overlapping discovery or code reading.
 - Do not lock the execution-ready plan or start implementation while an expected critic is still pending.
+- Do not declare a critic unavailable merely because it is slower than local
+  role-play; wait for it or record a real timeout/failure.
 - If a critic fails or times out, record the failure, run an explicit local fallback for that responsibility, and mark any missing high-risk question as `blocked`.
 - Reconcile late critic feedback before starting the next slice, or immediately if it reveals data-contract, security, architecture, or UX-risk issues.
 
@@ -205,7 +223,7 @@ The execution-ready plan must include:
 - pre-refactor and file/module split plan so the implementation does not grow one giant file
 - source skills or tools to use
 - Oh My execution-mode mapping: `ralph` for persistence and `tdd` for strict slices, or their current-runtime equivalents
-- gstack gate mapping: concrete names for `gstack-review`, `gstack-qa-only`/`gstack-browse`, `gstack-qa`, `gstack-context-save`/`gstack-context-restore`, and `gstack-health`, or their current-runtime equivalents
+- gstack gate mapping: concrete names for `gstack-review`, `gstack-qa-only`/`gstack-browse`, `gstack-qa`, `gstack-context-save` and `gstack-context-restore`, and `gstack-health`, or their current-runtime equivalents
 - code construction router: current phase, source skill to read, dependency/context/contract notes, and slice coding sequence
 - risks and mitigation
 - test and validation strategy
@@ -218,7 +236,7 @@ If any of these are unknown, mark the gap explicitly instead of pretending the p
 
 1. Clarify the goal, user value, constraints, and references.
 2. Map the Planner, Critics, and Synthesizer roles.
-   Prefer real critic agents, helper sessions, or external critique tools when available.
+   Prefer real critic agents, helper sessions, or external critique tools when safely available.
 3. Draft the implementation plan through the Planner role.
 4. Critique the plan through the Critics role.
 5. If real critic agents were started, wait for them or record a real failure/timeout fallback.
@@ -264,7 +282,7 @@ Each planned slice should include:
 - risks
 - validation path
 - Oh My execution mode: `ralph` persistence plus `tdd` only when strict RED/GREEN/REFACTOR is selected
-- gstack gate path: which named gstack skills or current-runtime equivalents close this slice, for example `gstack-review -> gstack-qa-only or gstack-qa -> gstack-context-save -> commit`
+- gstack gate path: which named gstack skills or current-runtime equivalents close this slice, for example `gstack-review -> gstack-qa-only or gstack-qa -> gstack-context-save -> commit`; do not accept builder self-review as gate evidence
 - mode: `lite`, `strict`, or `blocked`
 - why this mode
 - delegated skill: `mansu-tdd-lite` or `mansu-tdd-strict`
@@ -279,7 +297,10 @@ For slices marked `lite`, execute with `mansu-tdd-lite`.
 
 For slices marked `strict`, execute with `mansu-tdd-strict`.
 
-For slices marked `blocked`, stop before implementation and report the missing prerequisite or unresolved plan decision.
+For slices marked `blocked`, do not implement that slice. Record the blocker,
+owner/decision needed, and whether later slices depend on it. Continue to later
+independent unblocked slices only when dependency order and the execution-ready
+plan remain valid; otherwise stop and report the blocking decision.
 
 After each delegated slice returns, this skill must reconcile the result back
 into the whole plan: update slice status, evidence, worklog note, commit status,
@@ -296,7 +317,10 @@ A slice is fully closed only when:
 - review, QA, and checkpoint are complete
 - `PLAN.md` reflects the current status and next starting point
 - `개발일지.md` or the project worklog is updated when used
-- the slice is committed, or the no-commit reason is recorded
+- commit status is resolved: strict slices have a slice commit, while lite slices
+  have a commit or explicit no-commit reason; strict no-commit exceptions require
+  a user/project policy override and remain `commit-deferred` until final commit
+  accounting resolves them
 
 Do not start slice N+1 while slice N is open, ambiguous, blocked without a recorded decision,
 or missing review/QA/checkpoint evidence.
@@ -305,6 +329,44 @@ Ralph-style persistence means retrying or re-routing reasonable failures inside
 the same slice before giving up: fix validation failures, re-run the gate, update
 the plan, and only stop when the issue is truly blocked, unsafe, out of scope, or
 requires the user's decision.
+
+## No-skip completion checklist
+
+Do not claim the Mansu TDD Total workflow is complete until this checklist is
+filled. Missing evidence means the work is still open, even if the code appears
+to work.
+
+- `[NS-PLAN-ROLES]` `PLAN.md` contains the Planner / Critics / Synthesizer role mapping.
+- `[NS-REAL-CRITICS]` If real critic agents were used, their names, responsibilities, and outcomes
+  are recorded.
+- `[NS-CRITIC-FALLBACK]` If real critic agents were not used for non-trivial work, the fallback reason
+  is recorded.
+- `[NS-PLAN-SLICES]` `PLAN.md` contains an execution-ready plan and a slice table.
+- `[NS-SLICE-CARDS]` Every slice has mode, rationale, validation path, Oh My execution mode, gstack
+  gate path, close criteria, and worklog note.
+- `[NS-SLICE-STATUS]` Every unblocked slice is either closed or has a recorded blocker.
+- `[NS-VALIDATION]` Every closed slice has validation evidence.
+- `[NS-GATES]` Every closed slice has review, QA, checkpoint/state handoff, and commit status.
+- `[NS-STRICT-COMMIT]` Strict slices have per-slice commit evidence, or an explicit policy override is
+  recorded as `commit-deferred` and resolved during final commit accounting.
+- `[NS-GATE-EXCEPTIONS]` Every skipped or replaced gate has a reason and an equivalent evidence path.
+- `[NS-NEXT-POINT]` `PLAN.md` shows the current status and next starting point.
+- `[NS-WORKLOG]` `개발일지.md` or the project worklog records completed work when the project uses one.
+- `[NS-FINAL-BUILD]` Final project-level build/test/type/lint or the project equivalent has run, or
+  the reason it could not run is recorded.
+- `[NS-FINAL-QA]` Final QA/browser verification has run when user-visible behavior changed, or
+  the reason it could not run is recorded.
+- `[NS-FINAL-REVIEW]` Final diff review or equivalent project review has run when code changed.
+- `[NS-FINAL-HEALTH]` Final `gstack-health` or equivalent project health check has run when available,
+  or the reason it could not run is recorded.
+- `[NS-RISKS]` Remaining risks, unverified checks, and follow-up items are listed.
+
+The final response must include a compact checklist summary. If any required
+item is missing, say the workflow is not fully complete yet and name the exact
+open item instead of presenting the work as finished.
+
+Keep the `NS-*` identifiers stable so validators can track the workflow contract
+even when the explanatory wording changes.
 
 ## Mode-change rules
 

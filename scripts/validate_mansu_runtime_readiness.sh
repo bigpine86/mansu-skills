@@ -107,8 +107,12 @@ SETTING_VALIDATOR="$ROOT_DIR/scripts/validate_mansu_setting.sh"
 TDD_SERIES_VALIDATOR="$ROOT_DIR/scripts/validate_mansu_tdd_series.sh"
 TDD_TOTAL_FILE="$ROOT_DIR/mansu-tdd-total/SKILL.md"
 TDD_TOTAL_YAML="$ROOT_DIR/mansu-tdd-total/agents/openai.yaml"
+TDD_LITE_FILE="$ROOT_DIR/mansu-tdd-lite/SKILL.md"
+TDD_LITE_VALIDATOR="$ROOT_DIR/scripts/validate_mansu_tdd_lite.sh"
 DEBUG_FILE="$ROOT_DIR/mansu-debug-rootcause/SKILL.md"
 DEBUG_VALIDATOR="$ROOT_DIR/scripts/validate_mansu_debug_rootcause.sh"
+WEB_VERIFY_FILE="$ROOT_DIR/mansu-web-verify/SKILL.md"
+WEB_VERIFY_VALIDATOR="$ROOT_DIR/scripts/validate_mansu_web_verify.sh"
 OPERATING_MODEL_VALIDATOR="$ROOT_DIR/scripts/validate_mansu_operating_model.sh"
 SELF_FILE="$ROOT_DIR/scripts/validate_mansu_runtime_readiness.sh"
 
@@ -158,6 +162,8 @@ check_scoped_pattern \
   'gstack-review' \
   "$TDD_TOTAL_FILE" \
   "$TDD_TOTAL_YAML" \
+  "$TDD_LITE_FILE" \
+  "$TDD_LITE_VALIDATOR" \
   "$ROOT_DIR/scripts/validate_mansu_tdd_total.sh" \
   "$TDD_SERIES_VALIDATOR" \
   "$SELF_FILE"
@@ -167,10 +173,54 @@ check_scoped_pattern \
   'gstack-qa' \
   "$TDD_TOTAL_FILE" \
   "$TDD_TOTAL_YAML" \
+  "$TDD_LITE_FILE" \
+  "$TDD_LITE_VALIDATOR" \
   "$ROOT_DIR/scripts/validate_mansu_tdd_total.sh" \
   "$DEBUG_FILE" \
   "$TDD_SERIES_VALIDATOR" \
   "$OPERATING_MODEL_VALIDATOR" \
+  "$SELF_FILE"
+
+check_scoped_pattern \
+  'gstack-browse stays restricted to explicit TDD/web-verify mapping or validator zones' \
+  '`gstack-browse`|gstack-browse[,/ ]' \
+  "$TDD_TOTAL_FILE" \
+  "$TDD_TOTAL_YAML" \
+  "$TDD_LITE_FILE" \
+  "$TDD_LITE_VALIDATOR" \
+  "$ROOT_DIR/scripts/validate_mansu_tdd_total.sh" \
+  "$WEB_VERIFY_VALIDATOR" \
+  "$SELF_FILE"
+
+check_scoped_pattern \
+  'gstack-health stays restricted to explicit TDD closeout or validator zones' \
+  'gstack-health' \
+  "$TDD_TOTAL_FILE" \
+  "$TDD_TOTAL_YAML" \
+  "$ROOT_DIR/scripts/validate_mansu_tdd_total.sh" \
+  "$SELF_FILE"
+
+check_scoped_pattern \
+  'gstack-context-save stays restricted to setup/TDD mapping or validator zones' \
+  'gstack-context-save' \
+  "$SETTING_FILE" \
+  "$SETTING_VALIDATOR" \
+  "$TDD_TOTAL_FILE" \
+  "$TDD_TOTAL_YAML" \
+  "$TDD_LITE_FILE" \
+  "$TDD_LITE_VALIDATOR" \
+  "$ROOT_DIR/scripts/validate_mansu_tdd_total.sh" \
+  "$SELF_FILE"
+
+check_scoped_pattern \
+  'gstack-context-restore stays restricted to setup/TDD mapping or validator zones' \
+  'gstack-context-restore' \
+  "$SETTING_FILE" \
+  "$SETTING_VALIDATOR" \
+  "$TDD_TOTAL_FILE" \
+  "$TDD_TOTAL_YAML" \
+  "$TDD_LITE_FILE" \
+  "$ROOT_DIR/scripts/validate_mansu_tdd_total.sh" \
   "$SELF_FILE"
 
 check_scoped_pattern \
@@ -180,6 +230,29 @@ check_scoped_pattern \
   "$ROOT_DIR/scripts/validate_mansu_tdd_total.sh" \
   "$SETTING_FILE" \
   "$TDD_SERIES_VALIDATOR" \
+  "$SELF_FILE"
+
+check_scoped_pattern \
+  'gstack-cso stays restricted to TDD/web security mapping or validator zones' \
+  'gstack-cso' \
+  "$TDD_TOTAL_FILE" \
+  "$ROOT_DIR/scripts/validate_mansu_tdd_total.sh" \
+  "$WEB_VERIFY_FILE" \
+  "$SELF_FILE"
+
+check_scoped_pattern \
+  'gstack-benchmark stays restricted to TDD/web performance mapping or validator zones' \
+  'gstack-benchmark' \
+  "$TDD_TOTAL_FILE" \
+  "$ROOT_DIR/scripts/validate_mansu_tdd_total.sh" \
+  "$WEB_VERIFY_FILE" \
+  "$SELF_FILE"
+
+check_scoped_pattern \
+  'gstack-ship stays restricted to TDD release handoff or validator zones' \
+  'gstack-ship' \
+  "$TDD_TOTAL_FILE" \
+  "$ROOT_DIR/scripts/validate_mansu_tdd_total.sh" \
   "$SELF_FILE"
 
 # Adapter wording should not drift into the rest of the suite.
