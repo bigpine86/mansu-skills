@@ -134,7 +134,7 @@ grep -q 'data-agent-rule="manual-is-maintenance-artifact"' "$HTML_FILE"
 grep -A2 'data-agent-rule="route-source-skills"' "$HTML_FILE" | grep -q '직접 흉내 내지 말고 연결한다'
 grep -A2 'data-agent-rule="runtime-aware-setup"' "$HTML_FILE" | grep -q '설치는 실행 환경에 맞춘다'
 grep -A2 'data-agent-rule="project-start-before-code"' "$HTML_FILE" | grep -q '프로젝트 시작은 큰 설계부터'
-grep -A2 'data-agent-rule="total-before-implementation"' "$HTML_FILE" | grep -q '구현은 total에서 시작한다'
+grep -A3 'data-agent-rule="total-before-implementation"' "$HTML_FILE" | grep -q '구현은 total에서 시작한다'
 grep -A2 'data-agent-rule="root-cause-before-fix"' "$HTML_FILE" | grep -q '버그는 원인 전 수정 금지'
 grep -A2 'data-agent-rule="user-language-report"' "$HTML_FILE" | grep -q '마지막 보고는 사용자 언어로'
 grep -A2 'data-agent-rule="manual-is-maintenance-artifact"' "$HTML_FILE" | grep -q '매뉴얼도 산출물이다'
@@ -197,6 +197,12 @@ grep -q 'data-mansu-detail="mansu-help"' "$HTML_FILE"
 grep -q 'data-mansu-detail="mansu-ship-release"' "$HTML_FILE"
 grep -q 'data-mansu-detail-card="mansu-help"' "$HTML_FILE"
 grep -q 'data-mansu-detail-card="mansu-ship-release"' "$HTML_FILE"
+grep -q 'Source Health Check' "$HTML_FILE"
+grep -q 'Green/Yellow/Red 상태와 승인 필요한 다음 행동' "$HTML_FILE"
+grep -q 'Check → Decide → Mutate' "$HTML_FILE"
+grep -q 'validator와 dry-run이 통과한 뒤에만 설치본' "$HTML_FILE"
+grep -q 'routing impact report' "$HTML_FILE"
+grep -q 'dry-run / validator evidence' "$HTML_FILE"
 grep -q '산출물: 추천 Mansu 스킬' "$HTML_FILE"
 grep -q '산출물: ship / hold verdict' "$HTML_FILE"
 grep -q 'Ouroboros</h3>' "$HTML_FILE"
@@ -256,6 +262,9 @@ grep -q '출하 / 문서 / 학습' "$HTML_FILE"
 grep -q 'Mansu development lifecycle' "$HTML_FILE"
 grep -q '<span class="pill">시작</span>' "$HTML_FILE"
 grep -q '도구와 스킬을 준비한다' "$HTML_FILE"
+grep -q '원천 스킬 상태를 확인한다' "$HTML_FILE"
+grep -q 'mansu-setting source-check' "$HTML_FILE"
+grep -q '먼저 읽기 전용으로 확인하고, drift가 있으면 승인 후 Mansu 지도를 갱신합니다' "$HTML_FILE"
 grep -q '기능을 slice로 실행한다' "$HTML_FILE"
 grep -q '계획을 검토하고 slice별 실행 방식을 고릅니다' "$HTML_FILE"
 grep -q '내부 흐름' "$HTML_FILE"
@@ -269,6 +278,11 @@ grep -q '현재 작업을 분류하고 바로 쓸 Mansu 스킬을 고릅니다' 
 grep -q 'Ouroboros <code>interview</code>/<code>pm</code>/<code>seed</code>/<code>brownfield</code>' "$HTML_FILE"
 grep -q '초기 정의 phase 안에서 목적, 제품 정의, 장기 기억, 기존 코드베이스 파악을 깊게 만듭니다' "$HTML_FILE"
 grep -q '큰 기능 순서' "$HTML_FILE"
+grep -q '새 아이디어/새 앱/새 프로젝트/큰 기능군' "$HTML_FILE"
+grep -q '현재 phase <code>PLAN.md</code>가 있으면 <code>mansu-tdd-total</code>, 없으면 먼저 <code>mansu-project-start</code>' "$HTML_FILE"
+grep -q 'Zero-to-PLAN minimum gate' "$HTML_FILE"
+grep -q '목적, 사용자/문제, 근거, 가정, 방향, 순서, 실행 연결' "$HTML_FILE"
+grep -q '현재 phase <code>PLAN.md</code>가 없으면 먼저 <code>mansu-project-start</code>' "$HTML_FILE"
 grep -q 'project roadmap / phase order' "$HTML_FILE"
 grep -q '전체 기능 순서는 spec/TDR/design layer에 남기고' "$HTML_FILE"
 grep -q '그 phase의 세부 slice, 구현, review, QA, checkpoint는 <code>mansu-tdd-total</code>이 맡습니다' "$HTML_FILE"

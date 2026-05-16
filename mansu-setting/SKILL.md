@@ -40,9 +40,29 @@ Default behavior:
 
 - If the user only asks to check readiness, use `check`.
 - If Mansu skills are missing locally, use `install`.
-- If the user says setup, setting, bootstrap, install, update, upgrade, latest, or refresh, use the mutating install/update path instead of report-only checks.
+- If the user asks whether source tools are latest, current, stale, fresh, or
+  needs a refresh, use `source-check` first and make no changes.
+- If the user says setup, setting, bootstrap, or install, use the mutating
+  install path only after runtime target, host, OS, and install recipe evidence
+  are checked.
+- If the user explicitly says update, upgrade, sync, install missing tools, or
+  "make changes", use the mutating update/install path.
 - If source repos are current but local skill links/copies are broken, use `repair`.
 - If source skills changed and Mansu reference docs must be updated, use `source-curate` or hand off to `mansu-source-curator`.
+
+## Source freshness ladder
+
+Use `Check -> Decide -> Mutate` for source ecosystem work.
+
+1. Check: `mansu-setting source-check` is read-only. It checks Ouroboros,
+   gstack, Oh My / OMO / OMC, addyosmani/agent-skills, and
+   VoltAgent/awesome-design-md freshness, then reports skipped checks as yellow
+   rather than green.
+2. Decide: explain whether the source tools are current, which drift matters for
+   Mansu routing, and which exact next route is recommended.
+3. Mutate: only after explicit user approval, run `mansu-setting update` for
+   source tool updates or `mansu-source-curator curate` for Mansu reference,
+   validator, manual, and worklog updates.
 
 ## Runtime target, host, and OS detection
 

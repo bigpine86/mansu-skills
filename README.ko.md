@@ -12,7 +12,8 @@ Mansu는 전세계의 좋은 agent skill을 다시 만들려고 하지 않습니
 그래서 초보자도 "무언가 만들고 싶다"는 생각에서 출발해 기획, 구현, QA, 릴리스, 학습 기록까지 증거를 남기며 갈 수 있게 돕습니다.
 
 좋은 원천 스킬(source skill)이 늘어날수록 Mansu도 더 좋아집니다.
-`mansu-setting`과 `mansu-source-curator`가 원천 스킬 지도를 계속 갱신하고, 더 나은 프로젝트 시작, 계획, 코딩, 디자인, QA, 디버그, 릴리스 방식을 Mansu 흐름 안으로 가져옵니다.
+`mansu-setting source-check`가 원천 생태계를 먼저 확인하고, drift가 확인되고 승인된 뒤에만 `mansu-source-curator`가 Mansu 내부 지도를 고칩니다.
+이 방식으로 더 나은 프로젝트 시작, 계획, 코딩, 디자인, QA, 디버그, 릴리스 방식을 계속 흡수하되, 사용자가 원치 않는 변경은 하지 않습니다.
 
 설치하고, `mansu-help`라고 말하세요.
 Mansu가 지금 상황에 맞는 길을 고르고, 끝에는 증거가 남습니다.
@@ -90,7 +91,13 @@ Mansu가 현재 상황을 보고 다음 스킬을 안내합니다.
 - `mansu-web-verify`: 실제 사용자 관점의 웹 검증
 - `mansu-ship-release`: release readiness 판단
 
-업데이트할 때는 이렇게 요청합니다.
+업데이트하기 전에는 먼저 읽기 전용으로 확인합니다.
+
+```text
+Use $mansu-setting source-check. Ouroboros, gstack, Oh My / OMO / OMC, addyosmani/agent-skills, VoltAgent/awesome-design-md가 Mansu 라우팅과 아직 맞는지 확인해줘. 설치, 업데이트, sync, 파일 수정은 하지 말고 Green/Yellow/Red 상태와 승인 필요한 다음 행동만 알려줘.
+```
+
+업데이트하기로 결정했다면 이렇게 요청합니다.
 
 ```text
 Use $mansu-setting update. Update Mansu, install/update Ouroboros, gstack, and the matching Oh My adapter when needed, sync Mansu skills, check Ouroboros, gstack, Oh My / OMO / OMC, addyosmani/agent-skills, and VoltAgent/awesome-design-md source freshness, and report adapter compatibility with any blocked install steps.
@@ -217,9 +224,9 @@ slice N+1은 slice N이 validation, review, QA, checkpoint, log, commit 또는 n
 | --- | --- | --- |
 | `mansu-help` | 초보자이거나 지금 무엇을 해야 할지 모를 때 | 다음 route 추천 |
 | `mansu-manual` | HTML 매뉴얼을 보고 싶을 때 | 시각 매뉴얼 |
-| `mansu-setting` | 설치, 업데이트, runtime 감지, source tool setup, skill sync, repair, adapter compatibility가 필요할 때 | bootstrap/update gate |
-| `mansu-source-curator` | 원천 스킬이 바뀌어 Mansu reference, validator, worklog를 갱신해야 할 때 | source-reference maintenance |
-| `mansu-project-start` | 새 제품, 앱, 레포, 큰 기능군을 idea/research/spec/TDR/UI 방향에서 project roadmap/phase order와 현재 phase `PLAN.md`까지 가져갈 때 | zero-to-PLAN kickoff |
+| `mansu-setting` | 설치, 읽기 전용 source health check, 업데이트, runtime 감지, source tool setup, skill sync, repair, adapter compatibility가 필요할 때 | bootstrap/check/update gate |
+| `mansu-source-curator` | drift가 확인되어 Mansu reference, validator, manual, worklog를 갱신해야 할 때 | 내부 source-reference maintenance |
+| `mansu-project-start` | 새 제품, 앱, 레포, 큰 기능군을 idea/research/spec/TDR/UI 방향에서 project roadmap/phase order와 현재 phase `PLAN.md`까지 가져가고, Zero-to-PLAN minimum gate를 답해야 할 때 | zero-to-PLAN kickoff |
 | `mansu-operating-model` | 프로젝트 행동양식, role separation, evidence rule, `AGENTS.md`, `CODING_RULES.md`를 정할 때 | canonical doctrine |
 | `mansu-tdd-total` | 기능/리팩토링을 계획하고 slice별 실행 모드를 고를 때 | planning dispatcher |
 | `mansu-tdd-strict` | 위험한 slice에 의미 있는 RED test가 필요할 때 | strict TDD loop |
@@ -232,8 +239,8 @@ slice N+1은 slice N이 validation, review, QA, checkpoint, log, commit 또는 n
 
 - 새롭거나 헷갈림: `mansu-help`
 - 시각 매뉴얼: `mansu-manual` 또는 [docs/mansu-manual.html](./docs/mansu-manual.html)
-- 설치, 업데이트, runtime 감지, skill sync, adapter compatibility: `mansu-setting`
-- source skill freshness와 catalog 유지보수: `mansu-source-curator`
+- 설치, 읽기 전용 source health check, 업데이트, runtime 감지, skill sync, adapter compatibility: `mansu-setting`
+- drift 확인 후 내부 source catalog/manual/validator 유지보수: `mansu-source-curator`
 - 새 프로젝트 또는 큰 기능군: `mansu-project-start`
 - project doctrine, `AGENTS.md`, `CODING_RULES.md`: `mansu-operating-model`
 - 기능/리팩토링 구현: `mansu-tdd-total`

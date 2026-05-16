@@ -60,7 +60,7 @@ Choose the smallest safe route that fits.
 | Situation | Recommend |
 | --- | --- |
 | Mansu가 처음이거나 설치/업데이트가 불안함 | `mansu-setting check`, then `mansu-setting install/update` if needed |
-| 원천 스킬이나 레퍼런스가 최신인지 모르겠음 | `mansu-setting source-check` or `mansu-source-curator check` |
+| 원천 스킬이나 레퍼런스가 최신인지 모르겠음 | `mansu-setting source-check`; use `mansu-source-curator curate` only after drift is confirmed and the user wants Mansu internals updated |
 | 새 프로젝트, 큰 기능군, TDR/기획이 필요함 | `mansu-project-start` |
 | 프로젝트 운영 원칙, `AGENTS.md`, `CODING_RULES.md`가 필요함 | `mansu-operating-model` |
 | 기능 구현/리팩토링을 시작해야 함 | `mansu-tdd-total` |
@@ -80,6 +80,7 @@ Use these shortcuts when the user gives only a vague sentence:
 | User says | Interpret as | Recommend |
 | --- | --- | --- |
 | "처음인데 뭐 해야 해?" | setup/readiness uncertainty | `mansu-setting check` |
+| "아이디어가 생겼어" / "웹앱 만들고 싶어" / "앱 만들고 싶어" | new idea / new product definition | `mansu-project-start` |
 | "새 프로젝트 시작하고 싶어" | project definition / planning | `mansu-project-start` |
 | "기능 만들고 싶어" | implementation planning | `mansu-tdd-total` |
 | "에러가 나" / "왜 안 돼?" | root-cause debugging | `mansu-debug-rootcause` |
@@ -87,6 +88,9 @@ Use these shortcuts when the user gives only a vague sentence:
 | "이제 끝난 것 같아" | ship/hold judgment | `mansu-ship-release` |
 
 If two shortcuts match, choose the one that is safer and more diagnostic first.
+New idea, new app, new webapp, or new product language takes precedence over
+"기능 만들고 싶어" and routes to `mansu-project-start` unless a current phase
+`PLAN.md` already exists.
 
 ## Recommended answer shape
 
@@ -119,16 +123,22 @@ Setup:
 Use $mansu-setting check. 지금 런타임/스킬/원천 도구 상태를 확인하고, 설치나 업데이트가 필요한지 한국어로 알려줘.
 ```
 
+Source health check:
+
+```text
+Use $mansu-setting source-check. Ouroboros, gstack, Oh My / OMO / OMC, addyosmani/agent-skills, VoltAgent/awesome-design-md가 현재 Mansu 라우팅과 맞는지 읽기 전용으로 확인해줘. 설치, 업데이트, sync, 파일 수정은 하지 말고 Green/Yellow/Red 상태와 다음에 승인할 행동만 알려줘.
+```
+
 Project start:
 
 ```text
-Use $mansu-project-start. 이 프로젝트를 시작하려고 해. 먼저 상황에 맞는 source route를 고르고, 필요한 기획/리서치/spec/TDR/UI 방향을 정리한 뒤 현재 phase PLAN.md까지 만들어줘.
+Use $mansu-project-start. 방금 생긴 웹앱/앱 아이디어를 프로젝트로 시작하고 싶어. 꼭 필요한 질문만 최대 3개 묻고, 나머지는 가정으로 기록한 뒤 목적, 사용자/문제, 근거, 방향, 큰 단계 순서, 현재 phase PLAN.md까지 만들어줘. 구현은 아직 시작하지 마.
 ```
 
 Implementation:
 
 ```text
-Use $mansu-tdd-total. 현재 목표를 확인하고, 계획을 검증한 뒤 sequential vertical slice로 나눠서 각 slice의 mode(lite/strict), 완료 조건, 영향 파일, 테스트 기준, 위험 요소를 정리해줘.
+Use $mansu-tdd-total. 현재 phase PLAN.md가 있으면 그 계획을 검증한 뒤 sequential vertical slice로 나눠서 각 slice의 mode(lite/strict), 완료 조건, 영향 파일, 테스트 기준, 위험 요소를 정리해줘. 현재 phase PLAN.md가 없으면 구현으로 가지 말고 먼저 mansu-project-start로 돌려줘.
 ```
 
 Debug:

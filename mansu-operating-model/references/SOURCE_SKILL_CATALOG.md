@@ -63,8 +63,19 @@ Mansu must keep watching the upstream source families that shape this suite:
 - Oh My / OMO / OMC style execution-mode skills
 - addyosmani/agent-skills production engineering workflow skills
 
-Whenever `mansu-setting check`, `mansu-setting update`, or serious project bootstrap
-runs, include a source freshness check:
+Whenever source freshness is uncertain, run `mansu-setting source-check` first.
+This is read-only: it checks the source ecosystem and reports whether changes
+are needed, but it does not install, update, sync, or edit files.
+
+Use `Check -> Decide -> Mutate`:
+
+1. Check with `mansu-setting source-check`.
+2. Decide whether the drift affects Mansu routing, gates, artifacts, validators,
+   manual guidance, or worklogs.
+3. Mutate only after explicit approval: use `mansu-setting update` for source
+   tool updates, or `mansu-source-curator curate` for Mansu reference updates.
+
+During the read-only source freshness check:
 
 1. Check whether the installed Ouroboros CLI/package, setup status, or project-definition artifacts changed.
 2. Check whether the installed gstack repo or `gstack-*` skill set changed.
@@ -252,6 +263,8 @@ The route is:
 
 1. Define purpose, user, current workaround, desired outcome, non-goals, and
    success signal.
+   This must satisfy the Zero-to-PLAN minimum gate: purpose, user/problem,
+   evidence, assumptions, direction, order, and execution bridge.
 2. Use the addyosmani lifecycle as the phase map: define/spec first, then plan,
    build, verify, review, and ship only when the previous phase has enough
    evidence.
@@ -265,6 +278,8 @@ The route is:
 6. Create the needed documents through `DOCUMENT_CREATION_ORDER.md`: operating
    docs, idea/spec, research notes, TDR/architecture, UI design, ADRs, then
    phase-level `PLAN.md`.
+   Expand only when risk or ambiguity asks for it; otherwise leave a small,
+   repo-visible artifact and record why larger documents were skipped.
 7. Verify with `gstack-autoplan` and focused `gstack-plan-*` reviewers.
 8. Hand off to `mansu-tdd-total` only after the current phase has ordered slices,
    gate mapping, validation path, upstream artifacts, and open blockers recorded.

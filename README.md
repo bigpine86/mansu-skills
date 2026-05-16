@@ -11,7 +11,8 @@ Mansu does not try to reinvent the world's best agent skills.
 It studies, verifies, and orchestrates them so beginners can move from "I want to build something" to plan, code, QA, release, and learning with evidence.
 
 As the source skills improve, Mansu improves with them.
-`mansu-setting` and `mansu-source-curator` keep the map fresh so the workflow can keep absorbing better project-start, planning, coding, design, QA, debug, and release patterns.
+`mansu-setting source-check` checks the source ecosystem first, and `mansu-source-curator` updates Mansu's internal map only after drift is confirmed and approved.
+That is how Mansu keeps absorbing better project-start, planning, coding, design, QA, debug, and release patterns without surprising the user.
 
 Install Mansu. Say `mansu-help`. Let it choose the route. Finish with evidence.
 
@@ -85,7 +86,13 @@ Mansu will classify your situation and route you to the right next skill:
 - `mansu-web-verify` for real-user web checks.
 - `mansu-ship-release` for release readiness.
 
-For updates:
+Before updates, check source freshness without changing anything:
+
+```text
+Use $mansu-setting source-check. Check whether Ouroboros, gstack, Oh My / OMO / OMC, addyosmani/agent-skills, and VoltAgent/awesome-design-md are still aligned with Mansu's routing. Do not install, update, sync, or edit files. Report Green/Yellow/Red status and the next action that needs approval.
+```
+
+When you decide to update:
 
 ```text
 Use $mansu-setting update. Update Mansu, install/update Ouroboros, gstack, and the matching Oh My adapter when needed, sync Mansu skills, check Ouroboros, gstack, Oh My / OMO / OMC, addyosmani/agent-skills, and VoltAgent/awesome-design-md source freshness, and report adapter compatibility with any blocked install steps.
@@ -211,9 +218,9 @@ See [MANSU_PHILOSOPHY.md](./MANSU_PHILOSOPHY.md) for the full doctrine.
 | --- | --- | --- |
 | `mansu-help` | You are new, unsure what to do next, or need the safest Mansu route. | Beginner-friendly route helper |
 | `mansu-manual` | You want the visual HTML guide at `docs/mansu-manual.html`. | Beginner-friendly HTML manual |
-| `mansu-setting` | You need install, update, runtime target detection, source tool setup, skill sync, repair, or adapter compatibility checks. | Runtime-target bootstrap and update gate |
-| `mansu-source-curator` | Ouroboros, gstack, Oh My / OMO / OMC, addyosmani/agent-skills, or VoltAgent/awesome-design-md changed and Mansu references/validators/worklog must be refreshed. | Hidden source-reference maintenance |
-| `mansu-project-start` | You are starting a new product, app, repo, or major feature family from idea/research/spec/TDR/UI direction to project roadmap/phase order and current phase `PLAN.md`. | Zero-to-PLAN kickoff |
+| `mansu-setting` | You need install, source health checks, update, runtime target detection, source tool setup, skill sync, repair, or adapter compatibility checks. | Runtime-target bootstrap and read-only check/update gate |
+| `mansu-source-curator` | Drift was confirmed and Mansu references/validators/manual/worklog must be refreshed. | Hidden source-reference maintenance |
+| `mansu-project-start` | You are starting a new product, app, repo, or major feature family from idea/research/spec/TDR/UI direction to project roadmap/phase order and current phase `PLAN.md`, after the Zero-to-PLAN minimum gate is answered. | Zero-to-PLAN kickoff |
 | `mansu-operating-model` | You are defining project behavior, role separation, evidence rules, `AGENTS.md`, or `CODING_RULES.md`. | Canonical doctrine and project-document templates |
 | `mansu-tdd-total` | You are implementing a feature or refactor and need planning plus slice-by-slice mode selection. | Planning dispatcher |
 | `mansu-tdd-strict` | A risky slice benefits from a meaningful failing RED test. | Strict TDD slice loop |
@@ -226,8 +233,8 @@ See [MANSU_PHILOSOPHY.md](./MANSU_PHILOSOPHY.md) for the full doctrine.
 
 - New or unsure: `mansu-help`
 - Visual guide: `mansu-manual` or [docs/mansu-manual.html](./docs/mansu-manual.html)
-- Install, update, runtime detection, skill sync, adapter compatibility: `mansu-setting`
-- Source skill freshness and catalog maintenance: `mansu-source-curator`
+- Install, read-only source health check, update, runtime detection, skill sync, adapter compatibility: `mansu-setting`
+- Internal source catalog/manual/validator maintenance after confirmed drift: `mansu-source-curator`
 - New project or major feature family: `mansu-project-start`
 - Project doctrine, `AGENTS.md`, `CODING_RULES.md`: `mansu-operating-model`
 - Feature or refactor implementation: `mansu-tdd-total`

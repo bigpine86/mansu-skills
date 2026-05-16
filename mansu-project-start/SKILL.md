@@ -80,7 +80,10 @@ not invoked, installed, or treated as a runtime skill.
 
 Default for a new project:
 
-1. If readiness is unknown, route to `mansu-setting` or the chosen source's setup/help route.
+1. If readiness is unknown, route to `mansu-setting` or the chosen source's
+   setup/help route only when missing setup blocks the next project-definition
+   step. Otherwise run a lightweight kickoff, record setup uncertainty, and
+   ask only the product questions needed to continue.
 2. If the repo already exists, gather brownfield/context facts before asking the user.
 3. If the idea is fuzzy, choose the best definition route: Ouroboros interview/pm,
    gstack office-hours, or addyosmani idea/spec depending on the artifact needed.
@@ -88,6 +91,55 @@ Default for a new project:
 5. Run research and critique routes before locking architecture, UI direction, or implementation sequence.
 6. Only after source artifacts are clear, create the current phase `PLAN.md` and
    hand the selected phase to `mansu-tdd-total` for slice-level execution.
+
+## Zero-to-PLAN minimum gate
+
+Use this as a flexible gate, not a form-filling ritual. Small ideas may satisfy
+each item in a short note. Large or risky projects may expand each item into
+research notes, spec, TDR, `DESIGN.md`, ADRs, and a phase roadmap.
+
+Before handing off to implementation, the project-start pass must answer:
+
+- Purpose: what are we making, and why does it matter?
+- User/problem: who has the problem, what is painful, and what do they do today?
+- Evidence: what source route artifacts, references, docs, repos, or community
+  signals support this direction, with dates or source paths when available?
+- Assumptions: which unsupported guesses are safe for now, which need a source
+  route, and which block implementation?
+- Direction: what product, technical, architecture, data/API, and UI choices are
+  known enough for the current risk level?
+- Order: what are the large-grain phases, and which phase starts now?
+- Execution bridge: where is the current phase `PLAN.md` or project-convention
+  active plan path from `DOCUMENT_CREATION_ORDER.md`, and does it contain
+  ordered slices, validation path, gate mapping, and `mansu-tdd-total` mode hints?
+
+If one of these is unknown, either record a safe assumption, route to the right
+source skill, or mark it as a blocker. Do not jump into slice implementation just
+because the idea sounds exciting.
+
+## Expand when useful
+
+Expand the minimum gate only when the project risk asks for it:
+
+- Market, adoption, or taste risk: inspect GitHub, Reddit, Threads, product
+  pages, issues, discussions, and recent activity.
+- Technical freshness risk: check official docs, source repos, changelogs,
+  release notes, versions, and current examples.
+- Architecture or data risk: create or update a spec/TDR and verify it with
+  engineering review.
+- UI risk: inspect VoltAgent/awesome-design-md references and create or update
+  `DESIGN.md` before implementation.
+- Expensive or durable decision: create an ADR or decision note with alternatives
+  and consequences.
+- Long project: keep the project roadmap or phase order outside `PLAN.md`, then
+  derive the active phase `PLAN.md`.
+
+Expansion decisions must name the risk/ambiguity class, the source route selected
+or skipped, the `DOCUMENT_CREATION_ORDER.md` artifact choice, and why the
+smallest artifact is enough.
+
+Do not create documents just to satisfy ceremony. Create the smallest artifact
+that lets the next agent understand the decision, evidence, and handoff.
 
 ## When to use
 
@@ -148,6 +200,21 @@ For market/product/UI signals:
 Do not copy a reference project. Extract intent, architecture, constraints,
 tradeoffs, reusable patterns, and anti-patterns.
 
+## Reference artifact defaults
+
+Follow the project's existing document convention first. If none exists, use
+these repo-visible defaults so future agents can find the evidence:
+
+- research and reference evidence: `docs/research/{topic-slug}.md`
+- product/spec direction: `docs/specs/{project-or-feature-slug}.md`
+- architecture/TDR direction: `docs/technical/{project-or-feature-slug}.md`
+- UI direction: `DESIGN.md` for project-wide UI, or `docs/design/{feature-slug}.md`
+- active phase execution: `PLAN.md`
+
+`PLAN.md` should link to research/spec/TDR/design artifacts instead of becoming
+the full evidence archive.
+
+
 ## Workflow
 
 1. Define the project intent: who, problem, current workaround, desired outcome,
@@ -198,6 +265,9 @@ The handoff must name:
 - source skills used and skipped
 - references inspected, with date/version/source evidence
 - design references used and `DESIGN.md` status when UI is in scope
+- minimum gate status: purpose, user/problem, evidence, assumptions, direction,
+  order, and execution bridge
+- expanded artifacts used, or the reason expansion was skipped
 - locked decisions and why
 - open questions and whether they block implementation
 - project roadmap or phase order artifact
@@ -231,6 +301,15 @@ References researched:
 References inspected with date/version/source evidence:
 Design references used:
 DESIGN.md status:
+Minimum gate status:
+- Purpose:
+- User/problem:
+- Evidence:
+- Assumptions:
+- Direction:
+- Order:
+- Execution bridge:
+Expanded artifacts used/skipped:
 Source skills used:
 Source skills skipped:
 Architecture/stack decision:

@@ -30,10 +30,32 @@ knowledge of other skills.
 - `check`: report source freshness and reference drift without changing files.
 - `update`: safely update installed source repos or adapters, then inspect drift.
 - `curate`: update Mansu references and validators after source drift is known.
-- `full-refresh`: update, inspect, curate, validate, and sync local installed Mansu skills.
+- `full-refresh`: update, inspect, curate, validate, dry-run routing, and sync local installed Mansu skills.
 - `repair`: fix stale local Mansu copies or broken reference links without updating remote sources.
 
-Default to `check` unless the user says update, refresh, sync, or curate.
+Default to `check` for latest/current/stale/freshness/check/refresh wording.
+Only mutate when the user explicitly says update, install, sync, curate,
+full-refresh, repair, or "make changes".
+
+## Mansu Self-Evolution Loop
+
+Use this loop only for Mansu-suite maintenance. It keeps Mansu's routing map
+fresh; it must not clone source-skill workflows into Mansu.
+
+1. Check source freshness from source-of-truth repos, installed tools, lock
+   evidence, or official GitHub data.
+2. Decide routing impact: for each drift item, record whether Mansu routing,
+   gates, artifacts, validators, manual guidance, or worklogs must change.
+3. Mutate only affected Mansu artifacts: `SOURCE_SKILL_LOCK.json`,
+   `SOURCE_SKILL_CATALOG.md`, document/code routers, affected `mansu-*` skills,
+   `docs/mansu-manual.html`, validators, and worklog.
+4. Validate with `scripts/validate_mansu_manual.sh`,
+   `scripts/validate_mansu_skills.sh`, and `git diff --check`.
+5. Dry-run the updated routing in check/report-only mode against representative
+   tasks before syncing installed copies.
+6. Sync installed Mansu copies only after validation and dry-run pass.
+7. Record worklog evidence: sources checked, routing decisions, files changed,
+   validators run, dry-run result, sync result, and remaining drift.
 
 ## Source families
 
@@ -158,6 +180,11 @@ scripts/validate_mansu_skills.sh
 git diff --check
 ```
 
+Before syncing installed runtime copies, dry-run the updated routing in
+check/report-only mode against representative tasks. At minimum include one
+source-health task, and include implementation, design, debug, or release tasks
+when those routes changed. Record the dry-run result and unresolved questions.
+
 When local installed Mansu skills are part of the requested update, sync the
 changed `mansu-*` folders into the active runtime skill directory after validation.
 If `docs/mansu-manual.html` changed, also copy it into the installed
@@ -173,18 +200,27 @@ End with:
 ```text
 MANSU SOURCE CURATOR REPORT
 Mode:
+Status: Green/Yellow/Red
+Read-only or mutating:
 Sources checked:
 Sources updated:
 Added/removed/renamed skills:
+Routing impact:
 Reference files changed:
 Manual updated:
 Source lock:
 Validators changed:
 Validation:
+Dry-run:
 Local skill sync:
+Changes made:
+Catalog trustworthy:
 Skipped checks:
 Remaining drift:
+Approval needed:
 Next action:
+Beginner next prompt:
+Worklog:
 ```
 
 If no references changed, say so and include the evidence that they are current.

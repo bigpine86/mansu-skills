@@ -1016,13 +1016,13 @@
           <article class="phase" data-detail="maintenance" role="button" tabindex="0" aria-pressed="false">
             <div>
               <span class="pill">관리</span>
-              <h3>원천 스킬과 매뉴얼을 갱신한다</h3>
-              <p>원천 도구가 바뀌면 Mansu의 스킬 지도와 매뉴얼도 함께 맞춥니다.</p>
-              <p><strong>사용:</strong> <code>$mansu-source-curator</code> / <code>$mansu-manual</code></p>
+              <h3>원천 스킬 상태를 확인한다</h3>
+              <p>먼저 읽기 전용으로 확인하고, drift가 있으면 승인 후 Mansu 지도를 갱신합니다.</p>
+              <p><strong>사용:</strong> <code>$mansu-setting source-check</code> → <code>$mansu-source-curator</code> / <code>$mansu-manual</code></p>
             </div>
             <div class="phase-command">
 	              <span>Mansu Skill</span>
-	              <pre>mansu-source-curator</pre>
+	              <pre>mansu-setting source-check</pre>
             </div>
           </article>
         </div>
@@ -1204,8 +1204,8 @@
           </div>
 
 	          <div class="detail-card" data-detail-card="maintenance">
-	            <h3>$mansu-source-curator / $mansu-manual</h3>
-	            <p>Mansu가 쓰는 원천 도구와 매뉴얼이 낡지 않게 유지합니다.</p>
+	            <h3>$mansu-setting source-check → $mansu-source-curator / $mansu-manual</h3>
+	            <p>Mansu가 쓰는 원천 도구와 매뉴얼을 먼저 확인하고, 필요한 변경만 승인 후 반영합니다.</p>
 		            <div class="source-routes">
 		              <strong>조합하는 원천</strong>
 		              <ul class="route-list">
@@ -1216,11 +1216,11 @@
 		              </ul>
 		            </div>
 	            <ul>
-	              <li>원천 스킬 변경 여부를 확인합니다.</li>
-	              <li>source catalog, lock, validator를 갱신합니다.</li>
+	              <li><code>mansu-setting source-check</code>로 읽기 전용 확인부터 합니다.</li>
+	              <li>drift가 있으면 영향 범위를 판단하고, 승인 후 source catalog, lock, validator를 갱신합니다.</li>
               <li>새 스킬이 생기면 HTML 매뉴얼도 같이 고칩니다.</li>
             </ul>
-            <div class="artifact-list"><span>산출물: 갱신된 원천 지도</span><span>산출물: 갱신된 매뉴얼</span></div>
+            <div class="artifact-list"><span>산출물: source health report</span><span>산출물: 갱신된 원천 지도</span><span>산출물: 갱신된 매뉴얼</span></div>
           </div>
         </aside>
         </div>
@@ -1238,8 +1238,8 @@
                 <div class="skill-grid">
                   <article class="skill-card mansu-skill-card is-active" id="mansu-help" data-mansu-detail="mansu-help" role="button" tabindex="0" aria-pressed="true"><strong><code>$mansu-help</code></strong><p>현재 작업을 분류하고 바로 쓸 Mansu 스킬을 고릅니다.</p></article>
                   <article class="skill-card mansu-skill-card" id="mansu-manual" data-mansu-detail="mansu-manual" role="button" tabindex="0" aria-pressed="false"><strong><code>$mansu-manual</code></strong><p>이 HTML 매뉴얼 위치를 알려주고 내용을 설명합니다.</p></article>
-                  <article class="skill-card mansu-skill-card" id="mansu-setting" data-mansu-detail="mansu-setting" role="button" tabindex="0" aria-pressed="false"><strong><code>$mansu-setting</code></strong><p>설치, 업데이트, 런타임, 원천 도구 준비 상태를 확인합니다.</p></article>
-                  <article class="skill-card mansu-skill-card" id="mansu-source-curator" data-mansu-detail="mansu-source-curator" role="button" tabindex="0" aria-pressed="false"><strong><code>$mansu-source-curator</code></strong><p>원천 스킬과 Mansu 레퍼런스 지도를 최신으로 맞춥니다.</p></article>
+                  <article class="skill-card mansu-skill-card" id="mansu-setting" data-mansu-detail="mansu-setting" role="button" tabindex="0" aria-pressed="false"><strong><code>$mansu-setting</code></strong><p>설치, 업데이트, 런타임, 원천 도구 상태를 먼저 확인합니다.</p></article>
+                  <article class="skill-card mansu-skill-card" id="mansu-source-curator" data-mansu-detail="mansu-source-curator" role="button" tabindex="0" aria-pressed="false"><strong><code>$mansu-source-curator</code></strong><p>drift 확인 후 Mansu 레퍼런스 지도를 갱신합니다.</p></article>
                   <article class="skill-card mansu-skill-card" id="mansu-project-start" data-mansu-detail="mansu-project-start" role="button" tabindex="0" aria-pressed="false"><strong><code>$mansu-project-start</code></strong><p>새 프로젝트나 큰 기능군을 기획과 현재 phase PLAN까지 연결합니다.</p></article>
                   <article class="skill-card mansu-skill-card" id="mansu-operating-model" data-mansu-detail="mansu-operating-model" role="button" tabindex="0" aria-pressed="false"><strong><code>$mansu-operating-model</code></strong><p>AGENTS.md, CODING_RULES.md, 운영 원칙과 게이트를 잡습니다.</p></article>
                   <article class="skill-card mansu-skill-card" id="mansu-tdd-total" data-mansu-detail="mansu-tdd-total" role="button" tabindex="0" aria-pressed="false"><strong><code>$mansu-tdd-total</code></strong><p>구현 목표를 slice로 나누고 필요한 실행 방식을 내부에서 판단합니다.</p></article>
@@ -1297,33 +1297,34 @@
                   <ul class="route-list">
                     <li>환경 감지<em>런타임, 호스트, OS, 스킬 경로를 확인합니다.</em></li>
                     <li>어댑터 매핑<em>Codex는 <code>omx</code>, OpenCode/Hermes는 <code>omo</code>, Claude Code는 <code>omc</code>를 맞춥니다.</em></li>
-                    <li>설치/업데이트 점검<em>Ouroboros, gstack, Oh My, agent-skills의 준비 상태를 확인하고 필요한 작업을 진행합니다.</em></li>
+                    <li>Source Health Check<em><code>source-check</code>는 Ouroboros, gstack, Oh My, agent-skills, 디자인 레퍼런스를 읽기 전용으로 확인합니다.</em></li>
+                    <li>설치/업데이트 실행<em>사용자가 명시적으로 승인한 경우에만 설치, 업데이트, sync를 진행합니다.</em></li>
                   </ul>
                 </div>
                 <ul>
                   <li>목적: 스킬이 실제로 작동할 수 있는 준비 상태를 만듭니다.</li>
-                  <li>언제: 새 환경, 업데이트 직후, 스킬 누락 의심, 런타임 변경 시 씁니다.</li>
-                  <li>주요 결과: 준비 상태와 필요한 설치/업데이트 작업을 정리합니다.</li>
+                  <li>언제: 새 환경, 업데이트 직전, 스킬 누락 의심, 런타임 변경 시 씁니다.</li>
+                  <li>주요 결과: Green/Yellow/Red 상태와 승인 필요한 다음 행동을 정리합니다.</li>
                 </ul>
-                <div class="artifact-list"><span>산출물: readiness report</span><span>산출물: adapter target</span><span>산출물: 설치/업데이트 목록</span></div>
+                <div class="artifact-list"><span>산출물: readiness report</span><span>산출물: source health report</span><span>산출물: adapter target</span></div>
               </div>
               <div class="mansu-detail-card" data-mansu-detail-card="mansu-source-curator">
                 <h3>$mansu-source-curator</h3>
-                <p>Mansu가 의존하는 원천 스킬 지식을 최신으로 유지하는 내부 관리 스킬입니다.</p>
+                <p>확인된 drift를 Mansu의 내부 라우팅 지도, 문서, validator에 반영하는 관리 스킬입니다.</p>
                 <div class="source-routes">
                   <strong>내부에서 하는 일</strong>
                   <ul class="route-list">
-                    <li>원천 변경 확인<em>Ouroboros, gstack, Oh My, agent-skills의 버전과 스킬 구성을 다시 읽습니다.</em></li>
+                    <li>Check → Decide → Mutate<em>먼저 원천 변화를 확인하고, 라우팅 영향을 판단한 뒤, 승인된 변경만 반영합니다.</em></li>
                     <li>참조 파일 갱신<em><code>SOURCE_SKILL_LOCK.json</code>, 카탈로그, validator, manual을 함께 맞춥니다.</em></li>
-                    <li>설치본 동기화<em>변경된 manual/skill을 실제 설치 경로로 복사합니다.</em></li>
+                    <li>검증 후 동기화<em>validator와 dry-run이 통과한 뒤에만 설치본을 실제 경로로 복사합니다.</em></li>
                   </ul>
                 </div>
                 <ul>
                   <li>목적: Mansu가 오래된 원천 정보를 바탕으로 잘못 라우팅하는 일을 막습니다.</li>
-                  <li>언제: 원천 도구 업데이트를 확인하거나 새 스킬을 반영할 때 씁니다.</li>
-                  <li>주요 결과: 원천 스냅샷과 문서/validator가 같이 업데이트됩니다.</li>
+                  <li>언제: <code>source-check</code>에서 drift가 확인되고 Mansu 내부 지도를 고쳐야 할 때 씁니다.</li>
+                  <li>주요 결과: routing impact, dry-run, 원천 스냅샷, 문서/validator 업데이트 여부가 남습니다.</li>
                 </ul>
-                <div class="artifact-list"><span>산출물: updated source lock</span><span>산출물: updated catalog</span><span>산출물: updated manual / validator</span></div>
+                <div class="artifact-list"><span>산출물: routing impact report</span><span>산출물: updated source lock/catalog</span><span>산출물: dry-run / validator evidence</span></div>
               </div>
               <div class="mansu-detail-card" data-mansu-detail-card="mansu-project-start">
                 <h3>$mansu-project-start</h3>
@@ -1332,6 +1333,7 @@
                   <strong>내부에서 하는 일</strong>
                   <ul class="route-list">
                     <li>큰 그림 정리<em>Ouroboros interview/pm/seed로 사용자, 문제, 방향, 장기 기억을 잡습니다.</em></li>
+                    <li>Minimum gate<em>목적, 사용자/문제, 근거, 가정, 방향, 순서, 실행 연결을 확인하고 위험할 때만 문서를 확장합니다.</em></li>
                     <li>로드맵 정리<em>메뉴, 데이터/API, 로그인, 게시판, 관리자, 배포 같은 큰 기능군의 순서를 spec/TDR/design layer에 둡니다.</em></li>
                     <li>계획 비평<em>gstack office-hours/autoplan과 plan-*로 제품, 디자인, 엔지니어링, DX 관점 비평을 거칩니다.</em></li>
                     <li>문서화<em>전체 로드맵은 spec/TDR/design layer에 두고, 현재 phase만 <code>PLAN.md</code>로 넘깁니다.</em></li>
@@ -1342,7 +1344,7 @@
                   <li>언제: 새 프로젝트, 큰 기능군, 아키텍처 전환, UI 방향 설정 때 씁니다.</li>
                   <li>주요 결과: 구현으로 들어가기 전에 읽을 기준 문서가 생깁니다.</li>
                 </ul>
-                <div class="artifact-list"><span>산출물: research notes</span><span>산출물: spec / TDR / design direction</span><span>산출물: project roadmap / phase order</span><span>산출물: phase PLAN.md</span></div>
+                <div class="artifact-list"><span>산출물: Zero-to-PLAN minimum gate</span><span>산출물: research notes</span><span>산출물: spec / TDR / design direction</span><span>산출물: project roadmap / phase order</span><span>산출물: phase PLAN.md</span></div>
               </div>
               <div class="mansu-detail-card" data-mansu-detail-card="mansu-operating-model">
                 <h3>$mansu-operating-model</h3>
@@ -1492,8 +1494,8 @@
               <p>사용자가 막연하면 바로 구현하지 말고 <code>mansu-help</code> 관점으로 현재 상황을 분류합니다.</p>
               <ul>
                 <li>설치/업데이트: <code>mansu-setting</code></li>
-                <li>새 프로젝트/큰 기능군: <code>mansu-project-start</code></li>
-                <li>구현: <code>mansu-tdd-total</code></li>
+                <li>새 아이디어/새 앱/새 프로젝트/큰 기능군: <code>mansu-project-start</code></li>
+                <li>구현: 현재 phase <code>PLAN.md</code>가 있으면 <code>mansu-tdd-total</code>, 없으면 먼저 <code>mansu-project-start</code></li>
                 <li>버그: <code>mansu-debug-rootcause</code></li>
                 <li>웹 검증: <code>mansu-web-verify</code></li>
                 <li>출하 판단: <code>mansu-ship-release</code></li>
@@ -1520,13 +1522,15 @@
             <div class="agent-note" data-agent-rule="project-start-before-code">
               <h3>4. 프로젝트 시작은 큰 설계부터</h3>
               <p><code>mansu-project-start</code>는 목적, 사용자, 리서치, reference project, spec/TDR, UI 방향, project roadmap/phase order를 만들고 현재 phase를 정합니다.</p>
+              <p>구현 handoff 전에는 목적, 사용자/문제, 근거, 가정, 방향, 순서, 실행 연결이라는 Zero-to-PLAN minimum gate를 통과해야 합니다. 위험이 작으면 짧게 기록하고, 위험이 크면 리서치/spec/TDR/DESIGN/ADR로 확장합니다.</p>
               <p>초기 정의는 Ouroboros interview/pm/seed로 깊게 만들고, phase 안 리서치는 Oh My research, 비평과 검증은 gstack office-hours/autoplan/plan-*로 조합합니다.</p>
               <p>전체 기능 순서는 spec/TDR/design layer에 남기고, <code>PLAN.md</code>는 현재 phase의 실행 문서로 둡니다. 그 phase의 세부 slice, 구현, review, QA, checkpoint는 <code>mansu-tdd-total</code>이 맡습니다.</p>
             </div>
 
             <div class="agent-note" data-agent-rule="total-before-implementation">
               <h3>5. 구현은 total에서 시작한다</h3>
-              <p>사용자가 구현을 원하면 기본은 <code>mansu-tdd-total</code>입니다. total은 계획을 비평하고 순차 vertical slice를 만든 뒤 각 slice를 lite/strict로 연결합니다.</p>
+              <p>사용자가 구현을 원하고 현재 phase <code>PLAN.md</code>가 있으면 기본은 <code>mansu-tdd-total</code>입니다. 현재 phase <code>PLAN.md</code>가 없으면 먼저 <code>mansu-project-start</code>로 돌아가 실행 연결을 만듭니다.</p>
+              <p><code>mansu-tdd-total</code>은 계획을 비평하고 순차 vertical slice를 만든 뒤 각 slice를 lite/strict로 연결합니다.</p>
               <ul>
                 <li>다음 slice는 이전 slice가 닫힌 뒤 시작합니다.</li>
                 <li>각 slice는 완료 조건, 영향 파일, 테스트 기준, 위험 요소를 가져야 합니다.</li>
