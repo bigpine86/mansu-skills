@@ -1,10 +1,10 @@
-# Mansu Skills
+# Mansu AgenticDev
 
-> Agentic coding for beginners, powered by the world's best source skills.
+> Agentic software development skills for planning, TDD, debugging, QA, and release.
 
 English | [한국어](./README.ko.md)
 
-Agentic coding is not about memorizing every prompt.
+Agentic software development is not about memorizing every prompt.
 It is about knowing which proven skill to use, when to use it, and how to verify the result.
 
 Mansu does not try to reinvent the world's best agent skills.
@@ -16,9 +16,9 @@ That is how Mansu keeps absorbing better project-start, planning, coding, design
 
 Install Mansu. Say `mansu-help`. Let it choose the route. Finish with evidence.
 
-## What Mansu Is
+## What Mansu AgenticDev Is
 
-Mansu is a skill orchestrator for agentic coding.
+Mansu AgenticDev is a guided software development workflow for AI agents and builders.
 
 It is built around one simple belief:
 
@@ -52,8 +52,8 @@ chooses the correct skill directory, installs or updates Ouroboros, gstack, and 
 Oh My adapter, then verifies adapter compatibility.
 
 ```bash
-git clone https://github.com/bigpine86/mansu-skills.git
-cd mansu-skills
+git clone https://github.com/bigpine86/mansu-agentic-dev.git
+cd mansu-agentic-dev
 
 # Example: Hermes + tmux + OpenCode runtime using OpenCode's global skill path.
 mkdir -p "$HOME/.config/opencode/skills/mansu-setting"
@@ -295,7 +295,7 @@ and `scripts/validate_mansu_installed_copies.sh`.
 - Mansu works best when a task needs planning, source-skill routing, implementation discipline, and verification.
 - For tiny edits, use the fastest direct path. For product, architecture, UI, debugging, or release work, use the matching Mansu route.
 - Before important work, run `mansu-setting` if your local skills may be stale.
-- `mansu-*` does not replace great tools. It helps compose them into one safer agentic coding workflow.
+- `mansu-*` does not replace great tools. It helps compose them into one safer agentic software development workflow.
 
 ## Status
 

@@ -1,44 +1,44 @@
-# Mansu Skills
+# Mansu AgenticDev
 
-> 좋은 스킬을 모아, 초보자도 에이전틱 코딩을 끝까지 굴릴 수 있게 만드는 작업 흐름
+> AI 에이전트에게 소프트웨어 개발을 맡기기 위한 에이전틱 개발 스킬 모음
 
 [English](./README.md) | 한국어
 
-에이전틱 코딩은 프롬프트를 많이 외우는 일이 아닙니다.
-지금 상황에서 어떤 검증된 스킬을 꺼내고, 어디까지 맡기고, 결과를 어떻게 확인할지 아는 일에 가깝습니다.
+AI 에이전트가 소프트웨어를 자율적으로 개발하게 하려면 프롬프트만 잘 써서는 부족합니다.
+어떤 스킬을 쓸지, 어디까지 맡길지, 결과를 어떻게 확인할지까지 정해져 있어야 합니다.
 
-Mansu는 전세계의 좋은 agent skill을 다시 만들려고 하지 않습니다.
-이미 잘 만든 스킬을 읽고, 검증하고, 필요한 순간에 조합합니다.
-그래서 초보자도 "무언가 만들고 싶다"는 생각에서 출발해 기획, 구현, QA, 릴리스, 학습 기록까지 증거를 남기며 갈 수 있게 돕습니다.
+Mansu는 새로운 코딩 스킬을 개발하는 프로젝트가 아닙니다.
+이미 검증된 스킬을 읽고 정리해서, 필요한 순간에 꺼내 쓸 수 있도록 엮는 프로젝트입니다.
+초보자도 "무언가 만들고 싶다"는 생각에서 출발해 기획, 구현, QA, 릴리스, 학습 기록까지 증거를 남기며 갈 수 있게 하는 것이 목표입니다.
 
-좋은 원천 스킬(source skill)이 늘어날수록 Mansu도 더 좋아집니다.
-`mansu-setting source-check`가 원천 생태계를 먼저 확인하고, drift가 확인되고 승인된 뒤에만 `mansu-source-curator`가 Mansu 내부 지도를 고칩니다.
-이 방식으로 더 나은 프로젝트 시작, 계획, 코딩, 디자인, QA, 디버그, 릴리스 방식을 계속 흡수하되, 사용자가 원치 않는 변경은 하지 않습니다.
+좋은 원천 스킬(source skill)이 늘어나면 Mansu도 함께 좋아집니다.
+`mansu-setting source-check`가 원천 생태계를 먼저 확인하고, 실제 변화가 확인되어 승인된 뒤에만 `mansu-source-curator`가 Mansu의 내부 지도를 고칩니다.
+그래서 프로젝트 시작, 계획, 코딩, 디자인, QA, 디버그, 릴리스 방식은 계속 흡수하되 사용자가 원치 않는 변경은 하지 않습니다.
 
 설치하고, `mansu-help`라고 말하세요.
-Mansu가 지금 상황에 맞는 길을 고르고, 끝에는 증거가 남습니다.
+Mansu가 지금 상황에 맞는 길을 고르고, 마지막에는 증거가 남습니다.
 
-## Mansu는 무엇인가
+## Mansu AgenticDev는 무엇인가
 
-Mansu는 agentic coding을 위한 스킬 오케스트레이터입니다.
+Mansu AgenticDev는 AI 에이전트와 함께 소프트웨어를 만들기 위한 개발 워크플로우입니다.
 
 Mansu의 믿음은 단순합니다.
 
 > 최고의 자동화는 모든 것을 직접 만드는 데서 오지 않습니다.
-> 이미 잘 만든 전세계의 스킬을 읽고, 검증하고, 상황에 맞게 조합할 때 나옵니다.
+> 전 세계의 잘 만든 스킬을 읽고, 검증하고, 상황에 맞게 조합할 때 나옵니다.
 
-Mansu는 초보자가 숙련된 에이전틱 코더처럼 일하도록 돕습니다.
+Mansu는 초보자도 숙련된 개발자처럼 개발 흐름을 운영할 수 있게 돕습니다.
 
 - 코딩 전에 프로젝트의 목적과 범위를 정합니다.
 - 추측으로 시작하지 않고 실제 레퍼런스를 조사합니다.
-- 현재 phase에 맞는 source skill을 고릅니다.
+- 현재 단계에 맞는 source skill을 고릅니다.
 - 큰 작업을 vertical slice로 나눕니다.
 - strict TDD는 효과가 있을 때만 씁니다.
 - review, QA, 브라우저 검증, 보안, 성능, release gate로 결과를 확인합니다.
 - `PLAN.md`, 개발일지, 문서, 검증 증거를 남깁니다.
 
-Mansu는 원천 스킬이 이미 잘하는 일에는 얇게 붙습니다.
-대신 초보자와 에이전트가 자주 놓치는 계획, 범위, 안전선, 검증, 원천 스킬 최신성, 완료 증거에는 엄격합니다.
+원천 스킬이 이미 잘하는 일은 Mansu가 다시 만들지 않습니다.
+대신 계획, 범위, 안전선, 검증, 원천 스킬 최신성, 완료 증거처럼 초보자와 에이전트가 자주 놓치는 지점을 고급 개발자들이 하는 것처럼 엄격히 가이드합니다.
 
 ## 빠른 시작
 
@@ -48,27 +48,33 @@ Canonical branch: `main`
 
 ### 처음 설치
 
-처음에는 `mansu-setting`만 먼저 복사합니다.
-그다음 `mansu-setting`이 나머지 설치와 동기화를 맡습니다.
+처음에는 `mansu-setting`만 복사합니다.
+나머지 설치와 동기화는 `mansu-setting`이 처리합니다.
 
-`mansu-setting`은 runtime target(Hermes, OpenCode, Codex, Claude Code), host, OS를 확인하고,
-맞는 skill directory를 고릅니다.
-그 뒤 Ouroboros, gstack, 현재 runtime에 맞는 Oh My adapter를 설치하거나 업데이트하고,
-adapter compatibility도 확인합니다.
+`mansu-setting`은 runtime target(Hermes, OpenCode, Codex, Claude Code), host, OS를 확인한 뒤 알맞은 skill directory를 고릅니다.
+그다음 Mansu가 쓰는 외부 스킬과 도구를 준비하고, 현재 runtime에 맞게 연결합니다.
+
+Mansu는 개발 단계를 혼자 새로 만들지 않고, 이미 검증된 외부 스킬을 단계별로 오케스트레이트합니다.
+
+- 초기 아이디어와 프로젝트 정의는 Ouroboros의 Seed, Ledger, memory 흐름을 참고합니다.
+- 전체 생애주기는 addyosmani/agent-skills의 Define -> Plan -> Build -> Verify -> Review -> Ship 흐름을 큰 지도로 삼습니다.
+- 리서치, 병렬 작업, TDD, 디버그 같은 실행 모드는 Oh My / OMO / OMC 계열 스킬을 참고합니다.
+- CEO, 디자인, 엔지니어링, QA, 보안, 성능, 릴리스 판단은 gstack의 전문가 gate를 활용합니다.
+- 디자인 산출물이 필요하면 Open Design과 VoltAgent/awesome-design-md를 참고 route로 삼습니다.
+- 실제 구현은 Codex, Claude Code, OpenCode 같은 현재 coding agent가 맡고, Mansu는 계획과 검증 흐름을 잡습니다.
 
 ```bash
-git clone https://github.com/bigpine86/mansu-skills.git
-cd mansu-skills
+git clone https://github.com/bigpine86/mansu-agentic-dev.git
+cd mansu-agentic-dev
 
 # 예시: Hermes + tmux + OpenCode runtime에서 OpenCode global skill path 사용
 mkdir -p "$HOME/.config/opencode/skills/mansu-setting"
 cp -R mansu-setting/. "$HOME/.config/opencode/skills/mansu-setting"/
 ```
 
-프로젝트 안에서만 OpenCode용으로 쓰고 싶다면 `.opencode/skills/mansu-setting`에 같은 방식으로 복사합니다.
-다른 runtime target을 쓴다면 그 runtime의 local/global skill directory에 맞춰 복사합니다.
+Claude Code, Codex, OpenCode 어느 쪽이든 `mansu-setting`으로 같은 방식의 설치와 동기화를 적용할 수 있습니다.
 
-그다음 사용하는 agent runtime에서 이렇게 요청합니다.
+그다음 사용하는 agent runtime에 이렇게 요청합니다.
 
 ```text
 Use $mansu-setting install from this repo. Detect my runtime target, host, and OS, install/update Ouroboros, gstack, and the matching Oh My adapter when needed, then choose paths and run compatibility checks.
@@ -82,7 +88,7 @@ Use $mansu-setting install from this repo. Detect my runtime target, host, and O
 mansu-help
 ```
 
-Mansu가 현재 상황을 보고 다음 스킬을 안내합니다.
+Mansu는 현재 개발 진행 상태를 보고 다음에 필요한 작업을 자율적으로 오케스트레이트합니다.
 
 - `mansu-setting`: 설치, 업데이트, runtime setup
 - `mansu-project-start`: 새 제품, 앱, 레포, 큰 기능군 시작
@@ -91,7 +97,7 @@ Mansu가 현재 상황을 보고 다음 스킬을 안내합니다.
 - `mansu-web-verify`: 실제 사용자 관점의 웹 검증
 - `mansu-ship-release`: release readiness 판단
 
-업데이트하기 전에는 먼저 읽기 전용으로 확인합니다.
+업데이트 전에는 먼저 읽기 전용으로 확인합니다.
 
 ```text
 Use $mansu-setting source-check. Ouroboros, gstack, Oh My / OMO / OMC, addyosmani/agent-skills, VoltAgent/awesome-design-md, Open Design이 Mansu 라우팅과 아직 맞는지 확인해줘. 설치, 업데이트, sync, 파일 수정은 하지 말고 Green/Yellow/Red 상태와 승인 필요한 다음 행동만 알려줘.
@@ -115,10 +121,11 @@ Do not invent a new workflow before checking the source skill map.
 ## 왜 필요한가
 
 AI 코딩은 점점 빨라지고 있습니다.
-문제는, 코드가 만들어지는 속도가 계획과 아키텍처, 범위, 리스크, 품질을 판단하는 속도보다 빨라질 수 있다는 점입니다.
+하지만 코드가 빨리 만들어진다고 해서 좋은 소프트웨어가 자동으로 나오지는 않습니다.
+계획, 아키텍처, 범위, 리스크, 품질을 판단하는 속도가 따라오지 못하면 프로젝트는 쉽게 흔들립니다.
+소프트웨어를 장기적으로 운영하고 유지보수할 수 있게 강건하게 만들려면 기획, 설계, 구현, 테스트, 디버그, 보안, 성능, 릴리스까지 여러 코딩 기술이 함께 필요합니다.
 
-좋은 에이전틱 워크플로우는 이미 여러 곳에 흩어져 있습니다.
-
+에이전트와 개발을 잘 굴리는 방법은 이미 여러 곳에 흩어져 있습니다.
 - `addyosmani/agent-skills`: define, plan, build, verify, review, ship 생애주기
 - Ouroboros: 초기 프로젝트 정의, memory, Seed, Ledger, 장기 방향
 - Oh My / OMO / OMC: research, ultrawork, ralph, TDD, debug 같은 실행 모드
@@ -127,9 +134,9 @@ AI 코딩은 점점 빨라지고 있습니다.
 - VoltAgent/awesome-design-md: `DESIGN.md`와 design handoff의 참고 구조
 
 Mansu는 이들을 대체하지 않습니다.
-Mansu는 지금 무엇을 써야 하는지 고르고, 각 도구의 산출물을 이어 붙이고, 끝까지 검증하게 만듭니다.
+대신 지금 무엇을 써야 하는지 고르고, 각 도구의 산출물을 이어 붙이고, 끝까지 검증하게 만듭니다.
 
-Mansu가 직접 책임지는 일은 아래입니다.
+Mansu가 직접 책임지는 일은 다음과 같습니다.
 
 - 계획
 - 안전선
@@ -140,25 +147,24 @@ Mansu가 직접 책임지는 일은 아래입니다.
 - 개발일지와 학습 기록
 - 최종 책임
 
-전문 실행은 가능한 한 더 잘 맞는 source skill에 맡깁니다.
+전문적인 실행은 가능한 한 더 잘 맞는 source skill에 맡깁니다.
 source skill 목록과 조합법은 `mansu-operating-model/references/SOURCE_SKILL_CATALOG.md`에서 관리합니다.
-`mansu-setting`은 Ouroboros, gstack, Oh My / OMO / OMC, addyosmani/agent-skills, VoltAgent/awesome-design-md, Open Design source freshness를 계속 확인합니다.
+`mansu-setting`은 Ouroboros, gstack, Oh My / OMO / OMC, addyosmani/agent-skills, VoltAgent/awesome-design-md, Open Design이 여전히 최신 흐름과 맞는지도 계속 확인합니다.
 
 Mansu가 좋아지는 방식은 단순합니다.
 
 - 좋은 source skill을 찾습니다.
 - 그 스킬의 철학, gate, 산출물을 읽습니다.
-- Mansu가 어설프게 복제하지 않고 가장 잘 맞는 source로 라우팅합니다.
+- 어설프게 복제하지 않고 가장 잘 맞는 source로 라우팅합니다.
 - `mansu-*` 안에는 꼭 필요한 guardrail만 남깁니다.
 - 더 좋은 스킬과 새로운 패턴이 나오면 source map을 갱신합니다.
 
 전체 개발 흐름은 addyosmani/agent-skills의 Define -> Plan -> Build -> Verify -> Review -> Ship phase를 큰 지도로 삼습니다.
-다만 Mansu는 이 순서를 기계적으로 복사하지 않고, 현재 단계와 위험도에 맞춰 필요한 source skill을 고릅니다.
-실제 코딩 순서는 하드코딩하지 않습니다.
+다만 Mansu는 이 순서를 기계적으로 따르지 않습니다. 현재 단계와 위험도에 맞춰 필요한 source skill을 고르고, 실제 코딩 순서를 오케스트레이트합니다.
 `mansu-operating-model/references/CODE_CONSTRUCTION_ORDER.md`가 현재 개발 phase를 판단하고,
 필요한 addyosmani/agent-skills phase skill과 gstack, Oh My, Ouroboros 보조 route로 연결합니다.
 
-디자인 작업은 Open Design이 설치되어 있거나 사용 승인이 있으면 Open Design을 design artifact 생성 route로 우선 고려합니다.
+디자인 작업에서는 Open Design이 설치되어 있거나 사용 승인이 있으면 Open Design을 design artifact 생성 route로 우선 고려합니다.
 Mansu가 Open Design CLI/lifecycle 명령을 직접 실행하고 산출물 증거를 기록합니다.
 그다음 VoltAgent/awesome-design-md를 `DESIGN.md` 참고 원천으로 삼아 프로젝트 고유의 분위기, 토큰, 컴포넌트, 반응형 규칙을 뽑고 gstack 디자인/QA gate로 검증합니다.
 
@@ -192,12 +198,11 @@ Implementation actor
 = Codex or the active coding agent: edits files, runs tests, integrates, commits
 ```
 
-이 이름들은 대표 route이지 고정 의존성이 아닙니다.
-다만 대체 source route는 `mansu-source-curator`가 실제 원천, 버전, 역할, 산출물을 확인하고
-`SOURCE_SKILL_LOCK.json`과 `SOURCE_SKILL_CATALOG.md`에 기록한 뒤에만 Mansu routing 근거로 씁니다.
+위 이름들은 대표 route이지 고정 의존성이 아닙니다.
+다만 다른 source route를 쓰려면 `mansu-source-curator`가 실제 원천, 버전, 역할, 산출물을 확인하고 `SOURCE_SKILL_LOCK.json`과 `SOURCE_SKILL_CATALOG.md`에 기록해야 합니다. 그래야 Mansu routing의 근거로 쓸 수 있습니다.
 
 Mansu의 canonical doctrine은 `mansu-operating-model`이 맡습니다.
-프로젝트별 `AGENTS.md`는 그 doctrine으로 에이전트를 라우팅하는 계약 문서입니다.
+프로젝트별 `AGENTS.md`는 그 doctrine으로 에이전트를 안내하는 계약 문서입니다.
 프로젝트별 `CODING_RULES.md`는 실제 runtime, 검증, ship 기준을 적는 로컬 운영 매뉴얼입니다.
 
 프로젝트 로드맵과 phase order는 spec, TDR, design 문서에 둡니다.
@@ -206,22 +211,22 @@ Mansu의 canonical doctrine은 `mansu-operating-model`이 맡습니다.
 
 ## 핵심 철학
 
-좋은 Mansu skill은 얇을 수 있는 곳에서는 얇고, 엄격해야 하는 곳에서는 엄격합니다.
+좋은 Mansu skill은 얇게 둘 곳은 얇게 두고, 엄격해야 할 곳은 엄격하게 잡습니다.
 
 - 얇게 둘 것: source별 세부 사용법, 긴 체크리스트, 전문 실행 루틴
 - 엄격하게 잡을 것: 계획, 안전선, scope boundary, 증거, 검증, 완료 조건
 
-중요한 작업에서 Mansu planning은 multi-role critique loop입니다.
-Planner가 계획을 만들고, Critics가 비평하고, Synthesizer가 하나의 실행 가능한 계획으로 합칩니다.
+중요한 작업에서 Mansu planning은 multi-role critique loop로 진행됩니다.
+Planner가 계획을 만들고, Critics가 비평하고, Synthesizer가 실행 가능한 하나의 계획으로 합칩니다.
 그 뒤 explicit approval gate, 위험한 행동, unresolved blocker가 없다면 slice는 자동으로 진행됩니다.
 
 실제 critic agent를 시작했다면 그 피드백은 선택 사항이 아닙니다.
-기다리거나, timeout/failure를 기록하고, 고위험 질문은 blocker로 남겨야 합니다.
+끝까지 기다리거나, timeout/failure를 기록해야 합니다. 위험도가 높은 질문은 blocker로 남깁니다.
 
 Slice는 기본적으로 순차 진행입니다.
 slice N+1은 slice N이 validation, review, QA, checkpoint, log, commit 또는 no-commit 기록까지 닫힌 뒤 시작합니다.
 
-자세한 기준은 [MANSU_PHILOSOPHY.md](./MANSU_PHILOSOPHY.md)를 봅니다.
+자세한 기준은 [MANSU_PHILOSOPHY.md](./MANSU_PHILOSOPHY.md)에 있습니다.
 
 ## Skills
 
@@ -231,42 +236,41 @@ slice N+1은 slice N이 validation, review, QA, checkpoint, log, commit 또는 n
 | `mansu-manual` | HTML 매뉴얼을 보고 싶을 때 | 시각 매뉴얼 |
 | `mansu-setting` | 설치, 읽기 전용 source health check, 업데이트, runtime 감지, source tool setup, skill sync, repair, adapter compatibility가 필요할 때 | bootstrap/check/update gate |
 | `mansu-source-curator` | drift가 확인되어 Mansu reference, validator, manual, worklog를 갱신해야 할 때 | 내부 source-reference maintenance |
-| `mansu-project-start` | 새 제품, 앱, 레포, 큰 기능군을 idea/research/spec/TDR/UI 방향에서 project roadmap/phase order와 현재 phase `PLAN.md`까지 가져가고, Zero-to-PLAN minimum gate를 답해야 할 때 | zero-to-PLAN kickoff |
+| `mansu-project-start` | 새 제품, 앱, 레포, 큰 기능군을 idea/research/spec/TDR/UI 방향에서 project roadmap/phase order와 현재 phase `PLAN.md`까지 가져가고, Zero-to-PLAN minimum gate까지 확인해야 할 때 | zero-to-PLAN kickoff |
 | `mansu-operating-model` | 프로젝트 행동양식, role separation, evidence rule, `AGENTS.md`, `CODING_RULES.md`를 정할 때 | canonical doctrine |
 | `mansu-tdd-total` | 기능/리팩토링을 계획하고 slice별 실행 모드를 고를 때 | planning dispatcher |
 | `mansu-tdd-strict` | 위험한 slice에 의미 있는 RED test가 필요할 때 | strict TDD loop |
-| `mansu-tdd-lite` | 계획, review, QA, checkpoint는 필요하지만 RED test가 인위적일 때 | relaxed RED, not quality |
+| `mansu-tdd-lite` | 계획, review, QA, checkpoint는 필요하지만 RED test가 억지스러울 때 | relaxed RED, not quality |
 | `mansu-debug-rootcause` | 버그를 재현, 격리, 원인 증명, 최소 수정, 회귀 검증할 때 | root-cause debugger |
 | `mansu-web-verify` | 웹을 실제 사용자처럼 눌러 검증할 때 | web verification |
 | `mansu-ship-release` | ship/hold 판단, PR, release docs, deploy/canary, learning closeout이 필요할 때 | release readiness |
 
 ## 상황별 선택
 
-- 새롭거나 헷갈림: `mansu-help`
+- 새롭거나 헷갈릴 때: `mansu-help`
 - 시각 매뉴얼: `mansu-manual` 또는 [docs/mansu-manual.html](./docs/mansu-manual.html)
 - 설치, 읽기 전용 source health check, 업데이트, runtime 감지, skill sync, adapter compatibility: `mansu-setting`
-- drift 확인 후 내부 source catalog/manual/validator 유지보수: `mansu-source-curator`
+- drift 확인 후 내부 source catalog/manual/validator를 유지보수할 때: `mansu-source-curator`
 - 새 프로젝트 또는 큰 기능군: `mansu-project-start`
 - project doctrine, `AGENTS.md`, `CODING_RULES.md`: `mansu-operating-model`
 - 기능/리팩토링 구현: `mansu-tdd-total`
 - 위험하고 RED test가 유용한 slice: `mansu-tdd-strict`
-- RED가 인위적인 낮은 위험 slice: `mansu-tdd-lite`
+- RED가 억지스러운 낮은 위험 slice: `mansu-tdd-lite`
 - 버그, 회귀, stack trace, "왜 깨졌지?": `mansu-debug-rootcause`
 - 실제 사용자 관점 웹 검증: `mansu-web-verify`
 - ship-ready, PR, release docs, deploy/canary, learning closeout: `mansu-ship-release`
 
 ## 신뢰와 검증
 
-Mansu를 처음 쓰기 위해 이 섹션을 실행할 필요는 없습니다.
-repo 구조를 확인하고 싶거나, 스킬을 수정하기 전에 검증하고 싶을 때 쓰면 됩니다.
+Mansu를 처음 쓴다고 해서 이 섹션을 꼭 실행할 필요는 없습니다.
+repo 구조를 확인하거나, 스킬을 수정하기 전에 검증하고 싶을 때 쓰면 됩니다.
 
 ```bash
 scripts/validate_mansu_skills.sh
 ```
 
 기대 결과: 모든 Mansu 구조 validator가 통과합니다.
-이 suite는 skill frontmatter, manual/catalog 일관성, source-lock reference,
-runtime-readiness 문구, TDD/debug/web/ship workflow, installed-copy validation hook을 확인합니다.
+이 suite는 skill frontmatter, manual/catalog 일관성, source-lock reference, runtime-readiness 문구, TDD/debug/web/ship workflow, installed-copy validation hook을 확인합니다.
 
 세부 검증은 [scripts](./scripts)에 있습니다.
 예를 들면 `scripts/validate_mansu_help.sh`, `scripts/validate_mansu_manual.sh`,
@@ -299,11 +303,11 @@ runtime-readiness 문구, TDD/debug/web/ship workflow, installed-copy validation
 
 ## 사용 기준
 
-- Mansu는 기획, source skill 라우팅, 구현 규율, 검증이 함께 필요한 작업에서 가장 잘 맞습니다.
+- Mansu는 기획, source skill 라우팅, 구현 규율, 검증이 함께 필요한 작업에 가장 잘 맞습니다.
 - 작은 오탈자나 단순 수정은 바로 고치면 됩니다.
 - 제품, 아키텍처, UI, 디버그, 출하 작업에서는 상황에 맞는 Mansu route를 쓰면 좋습니다.
 - 중요한 작업 전에 로컬 스킬이 오래됐다고 느껴지면 `mansu-setting`으로 먼저 정리합니다.
-- `mansu-*`는 좋은 도구를 대체하지 않습니다. 좋은 도구들을 하나의 안전한 agentic coding 흐름으로 조합합니다.
+- `mansu-*`는 좋은 도구를 대체하지 않습니다. 좋은 도구들을 하나의 안전한 agentic software development 흐름으로 조합합니다.
 
 ## Status
 
