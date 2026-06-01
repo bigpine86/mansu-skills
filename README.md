@@ -11,7 +11,7 @@ Mansu does not try to reinvent the world's best agent skills.
 It studies, verifies, and orchestrates them so beginners can move from "I want to build something" to plan, code, QA, release, and learning with evidence.
 
 As the source skills improve, Mansu improves with them.
-`mansu-setting source-check` checks the source ecosystem first, and `mansu-source-curator` updates Mansu's internal map only after drift is confirmed and approved.
+`mansu-setup source-check` checks the source ecosystem first, and `mansu-source-curator` updates Mansu's internal map only after drift is confirmed and approved.
 That is how Mansu keeps absorbing better project-start, planning, coding, design, QA, debug, and release patterns without surprising the user.
 
 Install Mansu. Say `mansu-help`. Let it choose the route. Finish with evidence.
@@ -46,8 +46,8 @@ Canonical branch: `main`
 
 ### First Install
 
-Bootstrap only `mansu-setting` first, then let that skill install and sync the rest of the suite.
-`mansu-setting` detects the runtime target(Hermes, OpenCode, Codex, Claude Code), host, OS,
+Bootstrap only `mansu-setup` first, then let that skill install and sync the rest of the suite.
+`mansu-setup` detects the runtime target(Hermes, OpenCode, Codex, Claude Code), host, OS,
 chooses the correct skill directory, installs or updates Ouroboros, gstack, and the matching
 Oh My adapter, then verifies adapter compatibility.
 
@@ -56,17 +56,17 @@ git clone https://github.com/bigpine86/mansu-agentic-dev.git
 cd mansu-agentic-dev
 
 # Example: Hermes + tmux + OpenCode runtime using OpenCode's global skill path.
-mkdir -p "$HOME/.config/opencode/skills/mansu-setting"
-cp -R mansu-setting/. "$HOME/.config/opencode/skills/mansu-setting"/
+mkdir -p "$HOME/.config/opencode/skills/mansu-setup"
+cp -R mansu-setup/. "$HOME/.config/opencode/skills/mansu-setup"/
 ```
 
-For a project-local OpenCode setup, copy the same folder into `.opencode/skills/mansu-setting`.
+For a project-local OpenCode setup, copy the same folder into `.opencode/skills/mansu-setup`.
 For another runtime target, copy it into that runtime's local or global skill directory.
 
 Then ask your agent runtime:
 
 ```text
-Use $mansu-setting install from this repo. Detect my runtime target, host, and OS, install/update Ouroboros, gstack, and the matching Oh My adapter when needed, then choose paths and run compatibility checks.
+Use $mansu-setup install from this repo. Detect my runtime target, host, and OS, install/update Ouroboros, gstack, and the matching Oh My adapter when needed, then choose paths and run compatibility checks.
 ```
 
 ### After Install
@@ -79,7 +79,7 @@ mansu-help
 
 Mansu will classify your situation and route you to the right next skill:
 
-- `mansu-setting` for install, update, and runtime setup.
+- `mansu-setup` for install, update, and runtime setup.
 - `mansu-project-start` for a new product, app, repo, or major feature family.
 - `mansu-tdd-total` for implementation.
 - `mansu-debug-rootcause` for bugs.
@@ -89,19 +89,19 @@ Mansu will classify your situation and route you to the right next skill:
 Before updates, check source freshness without changing anything:
 
 ```text
-Use $mansu-setting source-check. Check whether Ouroboros, gstack, Oh My / OMO / OMC, addyosmani/agent-skills, VoltAgent/awesome-design-md, and Open Design are still aligned with Mansu's routing. Do not install, update, sync, or edit files. Report Green/Yellow/Red status and the next action that needs approval.
+Use $mansu-setup source-check. Check whether Ouroboros, gstack, Oh My / OMO / OMC, addyosmani/agent-skills, VoltAgent/awesome-design-md, and Open Design are still aligned with Mansu's routing. Do not install, update, sync, or edit files. Report Green/Yellow/Red status and the next action that needs approval.
 ```
 
 When you decide to update:
 
 ```text
-Use $mansu-setting update. Update Mansu, install/update Ouroboros, gstack, and the matching Oh My adapter when needed and approved, prepare Open Design only when UI/design artifact work needs it or I explicitly approve it, sync Mansu skills, check Ouroboros, gstack, Oh My / OMO / OMC, addyosmani/agent-skills, VoltAgent/awesome-design-md, and Open Design source freshness, and report adapter compatibility with any blocked install steps.
+Use $mansu-setup update. Update Mansu, install/update Ouroboros, gstack, and the matching Oh My adapter when needed and approved, prepare Open Design only when UI/design artifact work needs it or I explicitly approve it, sync Mansu skills, check Ouroboros, gstack, Oh My / OMO / OMC, addyosmani/agent-skills, VoltAgent/awesome-design-md, and Open Design source freshness, and report adapter compatibility with any blocked install steps.
 ```
 
 ### For Agents
 
 ```text
-If Mansu is not installed or may be stale, run mansu-setting first.
+If Mansu is not installed or may be stale, run mansu-setup first.
 Read MANSU_PHILOSOPHY.md first.
 Then choose the correct mansu-* skill for the task.
 Do not invent a new workflow before checking the source skill map.
@@ -137,7 +137,7 @@ Mansu owns:
 
 Specialized execution should stay with the best matching source skill whenever possible.
 The source skill map and composition recipes live in `mansu-operating-model/references/SOURCE_SKILL_CATALOG.md`.
-`mansu-setting` must keep checking Ouroboros, gstack, Oh My / OMO / OMC, addyosmani/agent-skills, VoltAgent/awesome-design-md, and Open Design source freshness.
+`mansu-setup` must keep checking Ouroboros, gstack, Oh My / OMO / OMC, addyosmani/agent-skills, VoltAgent/awesome-design-md, and Open Design source freshness.
 
 This creates the Mansu flywheel:
 
@@ -222,7 +222,7 @@ See [MANSU_PHILOSOPHY.md](./MANSU_PHILOSOPHY.md) for the full doctrine.
 | --- | --- | --- |
 | `mansu-help` | You are new, unsure what to do next, or need the safest Mansu route. | Beginner-friendly route helper |
 | `mansu-manual` | You want the visual HTML guide at `docs/mansu-manual.html`. | Beginner-friendly HTML manual |
-| `mansu-setting` | You need install, source health checks, update, runtime target detection, source tool setup, skill sync, repair, or adapter compatibility checks. | Runtime-target bootstrap and read-only check/update gate |
+| `mansu-setup` | You need install, source health checks, update, runtime target detection, source tool setup, skill sync, repair, or adapter compatibility checks. | Runtime-target bootstrap and read-only check/update gate |
 | `mansu-source-curator` | Drift was confirmed and Mansu references/validators/manual/worklog must be refreshed. | Hidden source-reference maintenance |
 | `mansu-project-start` | You are starting a new product, app, repo, or major feature family from idea/research/spec/TDR/UI direction to project roadmap/phase order and current phase `PLAN.md`, after the Zero-to-PLAN minimum gate is answered. | Zero-to-PLAN kickoff |
 | `mansu-operating-model` | You are defining project behavior, role separation, evidence rules, `AGENTS.md`, or `CODING_RULES.md`. | Canonical doctrine and project-document templates |
@@ -237,7 +237,7 @@ See [MANSU_PHILOSOPHY.md](./MANSU_PHILOSOPHY.md) for the full doctrine.
 
 - New or unsure: `mansu-help`
 - Visual guide: `mansu-manual` or [docs/mansu-manual.html](./docs/mansu-manual.html)
-- Install, read-only source health check, update, runtime detection, skill sync, adapter compatibility: `mansu-setting`
+- Install, read-only source health check, update, runtime detection, skill sync, adapter compatibility: `mansu-setup`
 - Internal source catalog/manual/validator maintenance after confirmed drift: `mansu-source-curator`
 - New project or major feature family: `mansu-project-start`
 - Project doctrine, `AGENTS.md`, `CODING_RULES.md`: `mansu-operating-model`
@@ -255,11 +255,14 @@ This section is for advanced users, contributors, and maintainers who want to ve
 
 ```bash
 scripts/validate_mansu_skills.sh
+MANSU_COMPARE_INSTALLED=1 scripts/validate_mansu_installed_copies.sh /Users/hansol/.codex/skills
 ```
 
 Expected result: all Mansu structure validators pass.
 The suite checks skill frontmatter, manual/catalog consistency, source-lock references,
 runtime-readiness wording, TDD/debug/web/ship workflows, and installed-copy validation hooks.
+The second command compares the currently installed Codex skill copies, including nested reference files,
+and fails if an obsolete `mansu-*` skill is still installed.
 
 Targeted checks live in [scripts](./scripts), including `scripts/validate_mansu_help.sh`,
 `scripts/validate_mansu_manual.sh`, `scripts/validate_mansu_operating_model.sh`,
@@ -279,7 +282,7 @@ and `scripts/validate_mansu_installed_copies.sh`.
 - [mansu-help](./mansu-help/SKILL.md): route helper
 - [mansu-manual](./mansu-manual/SKILL.md): static HTML manual route
 - [mansu-manual.html](./docs/mansu-manual.html): visual manual
-- [mansu-setting](./mansu-setting/SKILL.md): install/update/repair entry point
+- [mansu-setup](./mansu-setup/SKILL.md): install/update/repair entry point
 - [mansu-source-curator](./mansu-source-curator/SKILL.md): internal source-reference maintenance
 - [mansu-project-start](./mansu-project-start/SKILL.md): zero-to-PLAN kickoff
 - [mansu-tdd-total](./mansu-tdd-total/SKILL.md): TDD series entry point
@@ -294,7 +297,7 @@ and `scripts/validate_mansu_installed_copies.sh`.
 
 - Mansu works best when a task needs planning, source-skill routing, implementation discipline, and verification.
 - For tiny edits, use the fastest direct path. For product, architecture, UI, debugging, or release work, use the matching Mansu route.
-- Before important work, run `mansu-setting` if your local skills may be stale.
+- Before important work, run `mansu-setup` if your local skills may be stale.
 - `mansu-*` does not replace great tools. It helps compose them into one safer agentic software development workflow.
 
 ## Status

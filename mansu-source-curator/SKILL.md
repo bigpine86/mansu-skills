@@ -1,6 +1,6 @@
 ---
 name: mansu-source-curator
-description: Hidden/internal maintenance workflow for refreshing Mansu's source-skill knowledge. Use when updating or checking Ouroboros, gstack, Oh My / OMO / OMC, addyosmani/agent-skills, VoltAgent/awesome-design-md, Open Design, or runtime adapters; when source skills changed and Mansu references such as SOURCE_SKILL_CATALOG.md, DOCUMENT_CREATION_ORDER.md, CODE_CONSTRUCTION_ORDER.md, mansu-setting, validators, or worklogs must be updated; or when a Mansu source map may be stale.
+description: Hidden/internal maintenance workflow for refreshing Mansu's source-skill knowledge. Use when updating or checking Ouroboros, gstack, Oh My / OMO / OMC, addyosmani/agent-skills, VoltAgent/awesome-design-md, Open Design, or runtime adapters; when source skills changed and Mansu references such as SOURCE_SKILL_CATALOG.md, DOCUMENT_CREATION_ORDER.md, CODE_CONSTRUCTION_ORDER.md, mansu-setup, validators, or worklogs must be updated; or when a Mansu source map may be stale.
 ---
 
 # Mansu Source Curator
@@ -61,14 +61,14 @@ fresh; it must not clone source-skill workflows into Mansu.
 
 | Source family | Check | Update when requested | Mansu references to review |
 | --- | --- | --- | --- |
-| Ouroboros | installed `ouroboros` / `ooo` commands, package version, runtime setup status, Seed/Ledger/project-definition docs or skills | official installer or safe Python tool update, then `ouroboros setup --runtime <target>` when supported | `SOURCE_SKILL_CATALOG.md`, `mansu-setting`, `mansu-project-start`, document-order references, validators |
-| gstack | installed repo, `VERSION`, `.agents/skills/gstack-*` names, notable skill docs | `gstack-upgrade` skill or safe `git fetch` + fast-forward path | `SOURCE_SKILL_CATALOG.md`, `DOCUMENT_CREATION_ORDER.md`, `mansu-setting`, validators |
+| Ouroboros | installed `ouroboros` / `ooo` commands, package version, runtime setup status, Seed/Ledger/project-definition docs or skills | official installer or safe Python tool update, then `ouroboros setup --runtime <target>` when supported | `SOURCE_SKILL_CATALOG.md`, `mansu-setup`, `mansu-project-start`, document-order references, validators |
+| gstack | installed repo, `VERSION`, `.agents/skills/gstack-*` names, notable skill docs | `gstack-upgrade` skill or safe `git fetch` + fast-forward path | `SOURCE_SKILL_CATALOG.md`, `DOCUMENT_CREATION_ORDER.md`, `mansu-setup`, validators |
 | Oh My / OMO / OMC | installed adapter command, skill directories, execution-mode names | matching adapter update only when installed or requested | `SOURCE_SKILL_CATALOG.md`, TDD/debug/web verify docs, runtime wording |
 | addyosmani/agent-skills | local clone if present, otherwise GitHub contents/API, skill names and phase semantics | safe fast-forward local clone only; do not install into runtime skills by default | `SOURCE_SKILL_CATALOG.md`, `DOCUMENT_CREATION_ORDER.md`, `CODE_CONSTRUCTION_ORDER.md`, TDD docs |
-| VoltAgent/awesome-design-md | local clone if present, otherwise GitHub contents/API, commit, `DESIGN.md` count, and notable format changes | safe fast-forward local clone only; source-reference only; do not install into runtime skills | `SOURCE_SKILL_CATALOG.md`, `DOCUMENT_CREATION_ORDER.md`, `mansu-project-start`, `mansu-setting`, `docs/mansu-manual.html`, validators |
-| Open Design / nexu-io/open-design | local clone if present, otherwise GitHub contents/API, commit, skills, design systems, lifecycle command, preview/export contract | safe fast-forward local clone only; install/update/run lifecycle only when user approved design artifact work | `SOURCE_SKILL_CATALOG.md`, `DOCUMENT_CREATION_ORDER.md`, `mansu-project-start`, `mansu-setting`, `docs/mansu-manual.html`, validators |
+| VoltAgent/awesome-design-md | local clone if present, otherwise GitHub contents/API, commit, `DESIGN.md` count, and notable format changes | safe fast-forward local clone only; source-reference only; do not install into runtime skills | `SOURCE_SKILL_CATALOG.md`, `DOCUMENT_CREATION_ORDER.md`, `mansu-project-start`, `mansu-setup`, `docs/mansu-manual.html`, validators |
+| Open Design / nexu-io/open-design | local clone if present, otherwise GitHub contents/API, commit, skills, design systems, lifecycle command, preview/export contract | safe fast-forward local clone only; install/update/run lifecycle only when user approved design artifact work | `SOURCE_SKILL_CATALOG.md`, `DOCUMENT_CREATION_ORDER.md`, `mansu-project-start`, `mansu-setup`, `docs/mansu-manual.html`, validators |
 | Mansu repo | branch, dirty state, validator health, local installed skill copies | `git pull --ff-only` only when clean and requested | README, validators, worklog, local skill cache |
-| Runtime adapters | `omx`, `omo`, `omc`, host/runtime target, optional compatibility status | update only the matching installed adapter when requested | `mansu-setting`, runtime target matrix, runtime readiness validator |
+| Runtime adapters | `omx`, `omo`, `omc`, host/runtime target, optional compatibility status | update only the matching installed adapter when requested | `mansu-setup`, runtime target matrix, runtime readiness validator |
 
 ## Safety rules
 
@@ -156,7 +156,7 @@ Common targets:
 - `mansu-operating-model/references/CODE_CONSTRUCTION_ORDER.md`
 - `docs/mansu-manual.html`
 - `mansu-manual/SKILL.md`
-- `mansu-setting/SKILL.md`
+- `mansu-setup/SKILL.md`
 - `mansu-project-start/SKILL.md`
 - `mansu-tdd-total/SKILL.md`
 - `mansu-tdd-lite/SKILL.md`

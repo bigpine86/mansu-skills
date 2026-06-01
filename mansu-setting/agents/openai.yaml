@@ -1,4 +1,4 @@
 interface:
-  display_name: "Mansu Setting"
-  short_description: "Runtime-aware Mansu bootstrap and updater"
-  default_prompt: "Use $mansu-setting to detect the runtime target, agent host, and OS, install or update Ouroboros, gstack, and the matching Oh My adapter when explicitly needed, prepare Open Design only when UI/design artifact work needs it or the user approves it, read/verify the Mansu manual agent guide and catalog, choose the right skill directory, verify Ouroboros, gstack, Oh My / OMO / OMC, addyosmani/agent-skills, VoltAgent/awesome-design-md, and Open Design source freshness in read-only source-check mode by default, run Open Design CLI/lifecycle commands directly when approved instead of asking the user to copy them, sync Mansu skills only after approved update/install/repair, hand off source-reference drift to $mansu-source-curator, report optional adapter compatibility, run validation, and report skipped checks or compatibility drift."
+  display_name: "Mansu Setup Compatibility Alias"
+  trigger: "Compatibility alias for Mansu Setup."
+  default_prompt: "Use $mansu-setup with the same mode and user intent. This $mansu-setting skill is a compatibility alias only."

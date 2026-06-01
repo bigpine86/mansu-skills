@@ -142,12 +142,23 @@ Before planning, confirm:
 
 - the repository has `git` and write access
 - there is an active plan path, preferably `PLAN.md`
+- for project-started work, `PLAN.md` names the active phase and links to a
+  project roadmap or phase order artifact
 - there is a completed-work log path, preferably `개발일지.md` when the project uses Korean worklogs
 - review, QA, checkpoint, and commit gates are available or have clear project equivalents
 - if the current host supports subagents, helper sessions, or external critic tools, there is a usable path for real critic review before implementation
 - the current-runtime names for `ralph`, `tdd`, `gstack-review`, `gstack-qa-only`, `gstack-browse`, `gstack-qa`, `gstack-context-save`/`gstack-context-restore`, and `gstack-health` are known, or explicit project equivalents are recorded
 - `mansu-tdd-lite` is available for lite slices
 - `mansu-tdd-strict` prerequisites are available before assigning strict slices
+
+If the work came from a new product/app/repo/major feature-family kickoff and
+`PLAN.md` does not name an active phase plus its roadmap/phase-order artifact,
+do not start implementation. Route back to `mansu-project-start` to create the
+phase roadmap and active phase plan first.
+
+If `PLAN.md` contains the whole project roadmap instead of one active phase,
+split it: keep the roadmap in the spec/TDR/design layer, then derive a phase-only
+`PLAN.md` before slice execution.
 
 An equivalent review, QA, or checkpoint gate must be separately invoked, produce
 status/evidence, and be distinguishable from the builder's self-summary.

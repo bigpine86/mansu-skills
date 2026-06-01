@@ -152,6 +152,27 @@ If a local document appears to contradict a non-negotiable Mansu doctrine rule,
 do not silently follow the weaker rule. Report the conflict, use the safer
 interpretation, and ask only if the choice has real consequences.
 
+## Document ownership map
+
+Keep Mansu documents MECE: each document owns one layer and links to other
+layers instead of copying their details.
+
+| Document | Owns | Must not own |
+| --- | --- | --- |
+| `README.md` / `README.ko.md` | public entry, install path, quick start, top-level skill list, links to canonical docs | full doctrine, source capability maps, document matrices, local project commands |
+| `MANSU_PHILOSOPHY.md` | why Mansu exists, orchestration philosophy, stable stack model, source-fluency principle | operational route tables, artifact matrices, validator contracts |
+| `mansu-operating-model/SKILL.md` | canonical doctrine hub, authority order, work classes, role separation, evidence, ship readiness, reference map | source-family details, project-local commands, long artifact matrices |
+| `references/AGENTS.md` | project-local first-hop router and entry instructions | source capability details, validation commands, dangerous path details |
+| `references/CODING_RULES.md` | project-local runtime, commands, paths, validation, dangerous surfaces, ship checks | universal Mansu doctrine or source-family catalogs |
+| `references/SOURCE_SKILL_CATALOG.md` | source-family map, freshness policy, capability maps, composition recipes | project-local commands or full document matrix |
+| `references/DOCUMENT_CREATION_ORDER.md` | artifact router, document paths, creation order, verification order, handoff requirements | source-family capability maps or implementation sequence details |
+| `references/CODE_CONSTRUCTION_ORDER.md` | coding phase detection, construction order, dependency slicing, contracts, safe defaults | project kickoff doctrine or document matrix |
+| `mansu-project-start/SKILL.md` | executable Zero-to-PLAN workflow, minimum gate, route selection, handoff report | full source catalog, full document matrix, slice implementation |
+| `docs/mansu-manual.html` | human-facing visual summary, lightweight route map, skill catalog UI | canonical source truth or validator-only policy |
+
+When a detail belongs elsewhere, link to the owner and summarize only the routing
+decision needed in the current document.
+
 ## Reference map
 
 - `references/DOCTRINE.md`: full doctrine text for classification, delivery spine, role model, orchestration, review, QA, debugging, strictness, evidence, authority, and anti-patterns.

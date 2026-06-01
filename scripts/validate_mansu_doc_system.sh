@@ -64,11 +64,15 @@ contains "$README_FILE" 'Last verified: 2026-05-16' || fail 'README freshness da
 contains "$README_FILE" 'active phase execution plan' || fail 'README should keep PLAN.md scoped to active phase execution'
 contains "$README_FILE" 'Ouroboros, gstack, Oh My / OMO / OMC, addyosmani/agent-skills, VoltAgent/awesome-design-md, and Open Design source freshness' || fail 'README should mention source freshness checks'
 contains "$README_FILE" 'install/update Ouroboros, gstack, and the matching Oh My adapter' || fail 'README should mention source tool install/update checks'
+contains "$README_FILE" 'MANSU_COMPARE_INSTALLED=1 scripts/validate_mansu_installed_copies\.sh /Users/hansol/\.codex/skills' || fail 'README should document installed copy comparison command'
+contains "$README_FILE" 'obsolete `mansu-\*` skill is still installed' || fail 'README should document obsolete installed skill detection'
 contains "$README_FILE" '\[한국어\]\(\./README\.ko\.md\)' || fail 'README should link Korean README'
 contains "$README_KO_FILE" '\[English\]\(\./README\.md\)' || fail 'Korean README should link English README'
 contains "$README_KO_FILE" '최고의 자동화는 모든 것을 직접 만드는 데서 오지 않습니다' || fail 'Korean README should preserve Mansu philosophy'
 contains "$README_KO_FILE" '대표 route이지 고정 의존성이 아닙니다' || fail 'Korean README should keep source routes representative'
 contains "$README_KO_FILE" '현재 phase의 active execution plan' || fail 'Korean README should keep PLAN.md scoped to active phase execution'
+contains "$README_KO_FILE" 'MANSU_COMPARE_INSTALLED=1 scripts/validate_mansu_installed_copies\.sh /Users/hansol/\.codex/skills' || fail 'Korean README should document installed copy comparison command'
+contains "$README_KO_FILE" '더 이상 소스에 없는 `mansu-\*` 스킬' || fail 'Korean README should document obsolete installed skill detection'
 
 contains "$PHILOSOPHY_FILE" 'mansu-operating-model' || fail 'MANSU_PHILOSOPHY should mention mansu-operating-model'
 contains "$PHILOSOPHY_FILE" 'canonical doctrine' || fail 'MANSU_PHILOSOPHY should describe canonical doctrine role'
@@ -95,7 +99,7 @@ scan_files=(
   "$CODE_ORDER"
   "$ROOT_DIR/mansu-operating-model/references/SOURCE_SKILL_LOCK.json"
   "$ROOT_DIR/docs/mansu-manual.html"
-  "$ROOT_DIR/mansu-setting/SKILL.md"
+  "$ROOT_DIR/mansu-setup/SKILL.md"
   "$ROOT_DIR/mansu-source-curator/SKILL.md"
 )
 
@@ -115,6 +119,36 @@ deny_patterns=(
 for pattern in "${deny_patterns[@]}"; do
   if grep -E -n "$pattern" "${scan_files[@]}" >/dev/null; then
     fail "unverified design source leaked into active Mansu docs: $pattern"
+  fi
+done
+
+stale_route_files=(
+  "$README_FILE"
+  "$README_KO_FILE"
+  "$ROOT_DIR/docs/mansu-manual.html"
+  "$SOURCE_CATALOG"
+  "$DOC_ORDER"
+  "$CODE_ORDER"
+  "$ROOT_DIR/mansu-help/SKILL.md"
+  "$ROOT_DIR/mansu-help/agents/openai.yaml"
+  "$ROOT_DIR/mansu-manual/SKILL.md"
+  "$ROOT_DIR/mansu-manual/agents/openai.yaml"
+  "$ROOT_DIR/mansu-operating-model/SKILL.md"
+  "$ROOT_DIR/mansu-operating-model/agents/openai.yaml"
+  "$ROOT_DIR/mansu-project-start/SKILL.md"
+  "$ROOT_DIR/mansu-project-start/agents/openai.yaml"
+  "$ROOT_DIR/mansu-setup/SKILL.md"
+  "$ROOT_DIR/mansu-setup/agents/openai.yaml"
+  "$ROOT_DIR/mansu-source-curator/SKILL.md"
+  "$ROOT_DIR/mansu-source-curator/agents/openai.yaml"
+  "$ROOT_DIR/mansu-tdd-total/SKILL.md"
+  "$ROOT_DIR/mansu-tdd-total/agents/openai.yaml"
+)
+
+for file in "${stale_route_files[@]}"; do
+  [ -f "$file" ] || continue
+  if grep -n 'mansu-start' "$file" >/dev/null; then
+    fail "removed mansu-start route leaked into active docs: $file"
   fi
 done
 

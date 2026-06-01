@@ -93,24 +93,32 @@ Large-grain feature order is decided before `PLAN.md`. For example, a web app ma
 need a roadmap that orders menu structure, data model/API contracts, login,
 board, admin, UI system, deployment, and verification. That order belongs in the
 spec/TDR/design layer. `PLAN.md` is created from that roadmap for the active
-phase only.
+phase only. If no roadmap artifact names the ordered phase list and exactly one
+active phase, do not enter `mansu-tdd-total`; return to `mansu-project-start`.
 
 ## Document Matrix
 
 | Artifact | Use when | Create with | Verify with | Exit criteria |
 | --- | --- | --- | --- | --- |
 | `AGENTS.md` | A repo needs an agent router | `mansu-operating-model` templates | `mansu-operating-model`, local review | Routes to doctrine, local rules, and strict gates without duplicating everything |
-| `CODING_RULES.md` | A repo needs runnable local rules | `mansu-operating-model` templates, `mansu-setting` checks | `gstack-health`, local commands, `mansu-operating-model` | Commands, runtimes, dangerous surfaces, validation, and ship criteria are concrete |
+| `CODING_RULES.md` | A repo needs runnable local rules | `mansu-operating-model` templates, `mansu-setup` checks | `gstack-health`, local commands, `mansu-operating-model` | Commands, runtimes, dangerous surfaces, validation, and ship criteria are concrete |
 | Idea one-pager | The idea is still raw or too broad | addyosmani `idea-refine`, Oh My `planner` | `gstack-office-hours`, Oh My `ralplan` | User, problem, MVP, assumptions, not-doing list, and open questions are explicit |
 | gstack design doc | The problem or wedge needs shaping | `gstack-office-hours` | `gstack-plan-ceo-review`, `gstack-autoplan` when plan exists | Problem, status quo, target user, constraints, approaches, recommended direction, and success criteria exist |
 | Research notes | Tech, market, reference, or library choice depends on outside facts | Oh My `research` / `deepsearch`, addyosmani `source-driven-development` | `gstack-plan-eng-review`, `gstack-plan-design-review`, `gstack-plan-devex-review` depending on domain | Sources are named, freshness is checked, tradeoffs are compared, and recommendations are actionable |
 | Spec | Requirements are ambiguous or the work crosses modules | addyosmani `spec-driven-development` | `gstack-autoplan`, focused `gstack-plan-*` review | Objective, stack, commands, project structure, code style, testing strategy, boundaries, success criteria, and open questions are written |
 | Project design / TDR layer | Architecture, data, API, UI system, or phase order matters | `gstack-office-hours`, Oh My `planner`, addyosmani `spec-driven-development`, `api-and-interface-design` | `gstack-autoplan`, then focused `gstack-plan-ceo-review`, `gstack-plan-design-review`, `gstack-plan-eng-review`, `gstack-plan-devex-review` | Product shape, feature groups, domain model, architecture, data/API boundaries, tech stack, secret handling, UI direction, build strategy, roadmap, risks, and non-goals are clear |
-| `DESIGN.md` or UI design doc | User-facing UI, visual system, or interaction model matters | Prefer Open Design when installed/approved for artifact generation; reference with VoltAgent/awesome-design-md; create/refine with `gstack-design-consultation`, `gstack-design-shotgun`, `gstack-plan-design-review`, addyosmani `frontend-ui-engineering` | `gstack-plan-design-review`, `gstack-design-review`, `gstack-browse`, `gstack-qa-only` | Visual atmosphere, color roles, typography, component rules, layout, depth/elevation, do/don't guardrails, responsive behavior, accessibility, agent prompt handoff, reference rationale, and Open Design artifact/preview/export evidence are locked enough to implement |
+| Design brief / visual research note | UI direction is unclear because market, taste, competitors, positioning, or current visual patterns are unknown | Oh My `research` / `deepsearch`, addyosmani `source-driven-development`, Threads/Reddit/GitHub/product references | `gstack-plan-design-review` or `gstack-plan-ceo-review` when taste/product direction is risky | References inspected, selected direction, rejected directions, taste/positioning lessons, and source evidence are clear enough to choose a design route |
+| `DESIGN.md` or UI design doc | User-facing UI, visual system, or interaction model matters | Prefer Open Design when installed/approved for artifact generation; reference with VoltAgent/awesome-design-md; create/refine with `gstack-design-consultation`, `gstack-design-shotgun`, `gstack-plan-design-review`, addyosmani `frontend-ui-engineering` | `gstack-plan-design-review`, `gstack-design-review`, `gstack-browse`, `gstack-qa-only` | Visual atmosphere, color roles, typography, component rules, layout, depth/elevation, do/don't guardrails, responsive behavior, accessibility, agent prompt handoff, reference rationale, selected/rejected directions, and Open Design artifact/preview/export evidence are locked enough to implement |
 | ADR | A decision will be expensive to reverse | addyosmani `documentation-and-adrs` | `gstack-plan-eng-review`, `gstack-cso` for security decisions, `gstack-benchmark` for performance decisions | Context, decision, alternatives, consequences, and status are recorded in `docs/decisions/` or the repo's ADR convention |
 | `PLAN.md` | A current phase needs execution-ready slices | addyosmani `planning-and-task-breakdown`, `mansu-tdd-total`, `CODE_CONSTRUCTION_ORDER.md` | `gstack-autoplan`, `gstack-plan-eng-review`, Metis/Momus-style critics, source-specific reviewers | Current phase goal, ordered vertical slices, acceptance criteria, impact files, validation, risks, mode decisions, and checkpoint rules are present |
 | Slice checkpoint | A slice finishes or pauses | `mansu-tdd-lite`, `mansu-tdd-strict`, checkpoint-equivalent source skill | review gate, QA gate, validation commands | Done, remaining risk, next starting point, commit/no-commit status, and updated `PLAN.md` are recorded |
 | Worklog / `개발일지.md` | Work has happened and should compound | `gstack-retro`, `gstack-learn`, Mansu checkpoint closeout | self-review against `PLAN.md`, source freshness notes | Historical decisions and actual flow are recorded without keeping completed detail active in `PLAN.md` |
+
+For user-facing UI, choose the design source route before phase roadmap planning.
+Do not let Mansu replace Open Design, VoltAgent/awesome-design-md, gstack design
+skills, Oh My research, or addyosmani source-driven/frontend skills with a
+Mansu-owned design questionnaire. If no design route is selected, block
+implementation handoff and return to `mansu-project-start`.
 | Verification report | Runtime behavior or user flow is claimed | `mansu-web-verify`, `gstack-browse`, `gstack-qa-only`, `gstack-benchmark`, `gstack-cso` | rerun relevant checks, screenshots, logs, security/perf evidence | What was tested, what passed, what failed, what was not tested, and remaining risk are explicit |
 | Release docs | Work is ready to ship or has shipped | `gstack-document-release`, addyosmani `documentation-and-adrs`, `shipping-and-launch` | `gstack-health`, `gstack-review`, `gstack-ship`, `gstack-canary` when deployed | README, changelog, architecture notes, release risk, and rollback/next steps match reality |
 
@@ -142,6 +150,9 @@ Each document should end with a handoff section:
 
 - Source skills used:
 - Verification skills used:
+- Visual research used:
+- Selected direction / rejected directions:
+- Open Design artifact / preview / export:
 - Decisions locked:
 - Open questions:
 - Next artifact:
@@ -159,6 +170,9 @@ blocker remains unresolved.
 
 Use the project roadmap or TDR for the whole feature sequence. Use `PLAN.md` for
 the phase currently being executed.
+
+Before `mansu-tdd-total` starts, `PLAN.md` must name the active phase and link to
+the roadmap or phase-order artifact it was derived from.
 
 Put into `PLAN.md`:
 

@@ -59,8 +59,8 @@ Choose the smallest safe route that fits.
 
 | Situation | Recommend |
 | --- | --- |
-| Mansu가 처음이거나 설치/업데이트가 불안함 | `mansu-setting check`, then `mansu-setting install/update` if needed |
-| 원천 스킬이나 레퍼런스가 최신인지 모르겠음 | `mansu-setting source-check`; use `mansu-source-curator curate` only after drift is confirmed and the user wants Mansu internals updated |
+| Mansu가 처음이거나 설치/업데이트가 불안함 | `mansu-setup check`, then `mansu-setup install/update` if needed |
+| 원천 스킬이나 레퍼런스가 최신인지 모르겠음 | `mansu-setup source-check`; use `mansu-source-curator curate` only after drift is confirmed and the user wants Mansu internals updated |
 | 새 프로젝트, 큰 기능군, TDR/기획이 필요함 | `mansu-project-start` |
 | 프로젝트 운영 원칙, `AGENTS.md`, `CODING_RULES.md`가 필요함 | `mansu-operating-model` |
 | 기능 구현/리팩토링을 시작해야 함 | `mansu-tdd-total` |
@@ -79,7 +79,7 @@ Use these shortcuts when the user gives only a vague sentence:
 
 | User says | Interpret as | Recommend |
 | --- | --- | --- |
-| "처음인데 뭐 해야 해?" | setup/readiness uncertainty | `mansu-setting check` |
+| "처음인데 뭐 해야 해?" | setup/readiness uncertainty | `mansu-setup check` |
 | "아이디어가 생겼어" / "웹앱 만들고 싶어" / "앱 만들고 싶어" | new idea / new product definition | `mansu-project-start` |
 | "새 프로젝트 시작하고 싶어" | project definition / planning | `mansu-project-start` |
 | "기능 만들고 싶어" | implementation planning | `mansu-tdd-total` |
@@ -120,19 +120,19 @@ Use this shape:
 Setup:
 
 ```text
-Use $mansu-setting check. 지금 런타임/스킬/원천 도구 상태를 확인하고, 설치나 업데이트가 필요한지 한국어로 알려줘.
+Use $mansu-setup check. 지금 런타임/스킬/원천 도구 상태를 확인하고, 설치나 업데이트가 필요한지 한국어로 알려줘.
 ```
 
 Source health check:
 
 ```text
-Use $mansu-setting source-check. Ouroboros, gstack, Oh My / OMO / OMC, addyosmani/agent-skills, VoltAgent/awesome-design-md가 현재 Mansu 라우팅과 맞는지 읽기 전용으로 확인해줘. 설치, 업데이트, sync, 파일 수정은 하지 말고 Green/Yellow/Red 상태와 다음에 승인할 행동만 알려줘.
+Use $mansu-setup source-check. Ouroboros, gstack, Oh My / OMO / OMC, addyosmani/agent-skills, VoltAgent/awesome-design-md, Open Design이 현재 Mansu 라우팅과 맞는지 읽기 전용으로 확인해줘. 설치, 업데이트, sync, 파일 수정은 하지 말고 Green/Yellow/Red 상태와 다음에 승인할 행동만 알려줘.
 ```
 
 Project start:
 
 ```text
-Use $mansu-project-start. 방금 생긴 웹앱/앱 아이디어를 프로젝트로 시작하고 싶어. 꼭 필요한 질문만 최대 3개 묻고, 나머지는 가정으로 기록한 뒤 목적, 사용자/문제, 근거, 방향, 큰 단계 순서, 현재 phase PLAN.md까지 만들어줘. 구현은 아직 시작하지 마.
+Use $mansu-project-start. 방금 생긴 웹앱/앱 아이디어를 프로젝트로 시작하고 싶어. 먼저 `ooo` / `ouroboros`가 가능한지 확인하고, 가능하면 `ouroboros init start` / `ouroboros-interview`, PM, Seed로 초기 질문과 정의를 진행해줘. Mansu가 자체 질문으로 대신 시작하지 말고, Ouroboros를 못 쓰는 경우에만 이유를 기록한 fallback으로 진행해줘. 구현은 아직 시작하지 마.
 ```
 
 Implementation:

@@ -4,7 +4,7 @@ set -euo pipefail
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 FILE="$ROOT_DIR/mansu-source-curator/SKILL.md"
 OPENAI_YAML="$ROOT_DIR/mansu-source-curator/agents/openai.yaml"
-SETTING_FILE="$ROOT_DIR/mansu-setting/SKILL.md"
+SETTING_FILE="$ROOT_DIR/mansu-setup/SKILL.md"
 SOURCE_CATALOG="$ROOT_DIR/mansu-operating-model/references/SOURCE_SKILL_CATALOG.md"
 
 assert_contains() {

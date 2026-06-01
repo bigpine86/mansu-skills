@@ -6,8 +6,8 @@ ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 RUNTIME_FILES=(
   "$ROOT_DIR/README.md"
   "$ROOT_DIR/docs/runtime-target-matrix.md"
-  "$ROOT_DIR/mansu-setting/SKILL.md"
-  "$ROOT_DIR/mansu-setting/agents/openai.yaml"
+  "$ROOT_DIR/mansu-setup/SKILL.md"
+  "$ROOT_DIR/mansu-setup/agents/openai.yaml"
   "$ROOT_DIR/mansu-operating-model/SKILL.md"
   "$ROOT_DIR/mansu-operating-model/agents/openai.yaml"
   "$ROOT_DIR/mansu-operating-model/references/DOCTRINE.md"
@@ -25,7 +25,7 @@ RUNTIME_FILES=(
   "$ROOT_DIR/mansu-tdd-lite/agents/openai.yaml"
   "$ROOT_DIR/mansu-web-verify/SKILL.md"
   "$ROOT_DIR/mansu-web-verify/agents/openai.yaml"
-  "$ROOT_DIR/scripts/validate_mansu_setting.sh"
+  "$ROOT_DIR/scripts/validate_mansu_setup.sh"
   "$ROOT_DIR/scripts/validate_mansu_tdd_lite.sh"
   "$ROOT_DIR/scripts/validate_mansu_tdd_series.sh"
   "$ROOT_DIR/scripts/validate_mansu_tdd_total.sh"
@@ -101,9 +101,9 @@ check_scoped_pattern() {
 
 README_FILE="$ROOT_DIR/README.md"
 MATRIX_FILE="$ROOT_DIR/docs/runtime-target-matrix.md"
-SETTING_FILE="$ROOT_DIR/mansu-setting/SKILL.md"
-SETTING_YAML="$ROOT_DIR/mansu-setting/agents/openai.yaml"
-SETTING_VALIDATOR="$ROOT_DIR/scripts/validate_mansu_setting.sh"
+SETTING_FILE="$ROOT_DIR/mansu-setup/SKILL.md"
+SETTING_YAML="$ROOT_DIR/mansu-setup/agents/openai.yaml"
+SETTING_VALIDATOR="$ROOT_DIR/scripts/validate_mansu_setup.sh"
 TDD_SERIES_VALIDATOR="$ROOT_DIR/scripts/validate_mansu_tdd_series.sh"
 TDD_TOTAL_FILE="$ROOT_DIR/mansu-tdd-total/SKILL.md"
 TDD_TOTAL_YAML="$ROOT_DIR/mansu-tdd-total/agents/openai.yaml"
@@ -125,12 +125,14 @@ assert_contains 'runtime target(Hermes, OpenCode, Codex, Claude Code), host, OS'
 assert_contains 'compatibility check' "$README_FILE"
 assert_contains '^# Runtime Target Matrix$' "$MATRIX_FILE"
 assert_contains 'runtime target을 먼저 고르고, adapter는 그 다음에 본다' "$MATRIX_FILE"
+assert_contains 'LazyCodex / OMO가 설치되어 있으면 Oh My 계열 실행을 우선 맡기고' "$MATRIX_FILE"
+assert_contains '초기 목표는 Ouroboros, 검증은 gstack, 디자인 산출물/참조는 Open Design과 design-md' "$MATRIX_FILE"
 assert_contains 'validator는 wording뿐 아니라 stale runtime assumptions도 잡아야 한다' "$MATRIX_FILE"
 assert_contains 'Treat adapters as runtime-matched compatibility tooling layered on top of the runtime target' "$SETTING_FILE"
 assert_contains 'Do not infer adapter requirements from runtime target detection alone' "$SETTING_FILE"
 assert_contains 'missing compatibility tooling for the detected runtime should be installed' "$SETTING_FILE"
 assert_contains 'report optional adapter compatibility' "$SETTING_YAML"
-note_pass 'runtime-first adapter contract remains anchored in README, matrix, and mansu-setting'
+note_pass 'runtime-first adapter contract remains anchored in README, matrix, and mansu-setup'
 
 # Hardcoded host/runtime path wording should stay inside explicit runtime-target docs and validators.
 check_scoped_pattern \

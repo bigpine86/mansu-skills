@@ -25,7 +25,7 @@ static artifact that lives in `docs/mansu-manual.html`.
 ## Agent self-orientation
 
 When an agent is choosing which Mansu route to use, or when it invokes
-`mansu-help`, `mansu-manual`, `mansu-setting`, or `mansu-source-curator`, treat
+`mansu-help`, `mansu-manual`, `mansu-setup`, or `mansu-source-curator`, treat
 `docs/mansu-manual.html` as both:
 
 - the human-facing visual manual
@@ -41,7 +41,7 @@ skills, read enough of the manual to confirm:
 - the `에이전트 안내` tab exists and explains Mansu's routing posture
 - the `Mansu Skill` tab exists and lists top-level `mansu-*` skills
 - the `스킬 카탈로그` tab exists and is grouped by source family first, then purpose
-- the runtime adapter mapping is visible: Codex -> `omx`, OpenCode/Hermes -> `omo`, Claude Code -> `omc`
+- the runtime adapter mapping is visible: Codex -> LazyCodex / OMO with `omx` fallback, OpenCode/Hermes -> `omo`, Claude Code -> `omc`
 - the lifecycle tab still points beginners to `mansu-help` first
 
 Do not parse the whole HTML when targeted checks are enough. Do not open a

@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "last_checked": "2026-05-16",
+  "last_checked": "2026-05-30",
   "purpose": "Machine-readable source-family snapshot for Mansu reference curation. This file is evidence for freshness checks, not a substitute for reading source skill files.",
   "families": [
     {
@@ -8,10 +8,10 @@
       "kind": "github_source",
       "repo_url": "https://github.com/Q00/ouroboros",
       "source_path": "/tmp/ouroboros-mansu-analysis",
-      "version": "local clone snapshot",
+      "version": "0.40.1",
       "commit": "55e700e",
-      "evidence": "git -C /tmp/ouroboros-mansu-analysis rev-parse --short HEAD; find /tmp/ouroboros-mansu-analysis -maxdepth 3 -type f -name 'SKILL.md'; command -v ouroboros; command -v ooo",
-      "install_evidence": "README.md and docs/getting-started.md document the official installer curl -fsSL https://raw.githubusercontent.com/Q00/ouroboros/main/scripts/install.sh | bash, pip install ouroboros-ai, and ouroboros setup --runtime <target> for supported runtimes.",
+      "evidence": "ouroboros --version; ouroboros --help; ouroboros init --help; find /Users/hansol/.codex/skills -maxdepth 1 -type d -name 'ouroboros-*'",
+      "install_evidence": "uv tool install 'ouroboros-ai[all]' installed ouroboros-ai 0.40.1 and executable /Users/hansol/.local/bin/ouroboros; ouroboros setup --runtime codex configured Codex, installed 20 Ouroboros Codex skills, registered MCP, and wrote /Users/hansol/.codex/rules/ouroboros.md.",
       "tracked_capabilities": [
         "skills/auto",
         "skills/brownfield",
@@ -28,7 +28,7 @@
         "skills/unstuck",
         "skills/publish",
         "commands/setup",
-        "commands/interview",
+        "commands/init",
         "commands/seed",
         "commands/run",
         "commands/evaluate",
@@ -44,8 +44,8 @@
       "kind": "local_repo",
       "source_path": "/Users/hansol/.gstack/repos/gstack",
       "skills_path": "/Users/hansol/.gstack/repos/gstack/.agents/skills",
-      "version": "1.21.1.0",
-      "commit": "454423a",
+      "version": "1.52.2.0",
+      "commit": "62024d1",
       "evidence": "cat /Users/hansol/.gstack/repos/gstack/VERSION; git -C /Users/hansol/.gstack/repos/gstack rev-parse --short HEAD; find /Users/hansol/.gstack/repos/gstack/.agents/skills -maxdepth 1 -type d -name 'gstack-*'",
       "skill_inventory": [
         "gstack-autoplan",
@@ -94,6 +94,45 @@
         "gstack-unfreeze",
         "gstack-upgrade"
       ]
+    },
+    {
+      "id": "lazycodex-omo-codex-plugin",
+      "kind": "codex_plugin_distribution",
+      "repo_url": "https://github.com/code-yeongyu/lazycodex",
+      "source_path": "/Users/hansol/.codex/plugins/local/lazycodex",
+      "installed_cache_path": "/Users/hansol/.codex/plugins/cache/sisyphuslabs/omo/0.1.0",
+      "plugin_id": "omo@sisyphuslabs",
+      "plugin_name": "omo",
+      "version": "0.1.0",
+      "commit": "4fe315b",
+      "submodule_oh_my_openagent_commit": "9be97de641ded839f6ab043d7959fa67b21372aa",
+      "submodule_lsp_tools_mcp_commit": "e7c65b04d0cc549f0478d3b78b51714fc0f572b3",
+      "priority_rule": "For Codex runtimes, prefer LazyCodex / OMO Codex plugin as the highest-priority Oh My execution transport when codex plugin list reports omo@sisyphuslabs installed/enabled and hook/MCP entrypoints are healthy. Fall back to omx, then native Codex with Mansu slice discipline.",
+      "source_family_split": "LazyCodex / OMO drives Codex execution. Mansu owns routing, evidence, checkpoints, and final ship/hold judgment. Ouroboros shapes early goals, Seed, Ledger, and long-horizon direction. gstack provides independent validation and specialist gates. Open Design creates design artifacts, and VoltAgent/awesome-design-md provides DESIGN.md reference grammar.",
+      "evidence": "git -C /Users/hansol/.codex/plugins/local/lazycodex rev-parse --short HEAD; git -C /tmp/lazycodex-latest submodule status --recursive; /Applications/Codex.app/Contents/Resources/codex plugin list; python3 -m json.tool /Users/hansol/.codex/plugins/cache/sisyphuslabs/omo/0.1.0/hooks/hooks.json; node /Users/hansol/.codex/plugins/cache/sisyphuslabs/omo/0.1.0/components/lsp/dist/cli.js --help",
+      "install_update_warning": "The local source checkout may be dirty and the installed cache contains node_modules. Do not use naive recursive copy/diff/update tooling. Preserve the marketplace name sisyphuslabs and the local config marketplace key indirection. Telemetry hooks may be disabled locally and should not be assumed active.",
+      "tracked_capabilities": [
+        "rules",
+        "lsp",
+        "ultrawork",
+        "ultragoal",
+        "comment-checker",
+        "ai-slop-remover",
+        "programming",
+        "debugging",
+        "frontend-ui-ux",
+        "refactor",
+        "review-work"
+      ]
+    },
+    {
+      "id": "oh-my-openagent",
+      "kind": "github_submodule_source",
+      "repo_url": "https://github.com/code-yeongyu/oh-my-openagent",
+      "source_path": "/Users/hansol/.codex/plugins/local/lazycodex/src",
+      "commit": "9be97de641ded839f6ab043d7959fa67b21372aa",
+      "evidence": "git -C /Users/hansol/.codex/plugins/local/lazycodex submodule status --recursive; sed -n '1,160p' /Users/hansol/.codex/plugins/local/lazycodex/README.md",
+      "role": "Core OmO harness source behind LazyCodex: discipline agents, parallel orchestration, model routing, skills, hooks, and lifecycle concepts. Treat LazyCodex as the Codex-facing thin distribution, not the full upstream truth."
     },
     {
       "id": "oh-my-codex-runtime",
