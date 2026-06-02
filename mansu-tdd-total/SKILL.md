@@ -1,6 +1,6 @@
 ---
 name: mansu-tdd-total
-description: End-to-end dispatcher, planner, and completion orchestrator for Mansu TDD workflows. Use when the user wants `mansu-tdd-total`, a full Mansu TDD planning pass, or a mixed workflow that decides `mansu-tdd-lite` vs `mansu-tdd-strict` per vertical slice. This skill plans, critiques, records the execution-ready plan in `PLAN.md`, classifies slices, runs every unblocked slice through the selected lite or strict skill, and closes the work with final verification, worklog, and commit accounting.
+description: End-to-end dispatcher, planner, and completion orchestrator for Mansu TDD workflows. Use to plan slices, choose lite/strict mode, execute, verify, and close work.
 ---
 
 # Mansu TDD Total

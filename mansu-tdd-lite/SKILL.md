@@ -1,6 +1,6 @@
 ---
 name: mansu-tdd-lite
-description: Disciplined plan-first, slice-first workflow for work that needs real planning, review, QA, checkpoint, commit, and work logging, but does not always require strict failing-test-first TDD for every slice. Use when the user wants `mansu-tdd-lite`, strong planning and vertical slices with lighter TDD rules, or a workflow where each slice defines its validation path before implementation while keeping review/QA/checkpoint discipline.
+description: Disciplined plan-first, slice-first workflow with review, QA, checkpoint, commit, and worklog gates, without mandatory RED tests for every slice.
 ---
 
 # Mansu TDD Lite

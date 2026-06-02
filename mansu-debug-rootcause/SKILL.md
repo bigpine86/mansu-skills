@@ -1,6 +1,6 @@
 ---
 name: mansu-debug-rootcause
-description: Root-cause debugging workflow for bugs, regressions, stack traces, broken behavior, intermittent failures, and "why is this broken?" situations. Use when the user wants debug, investigate, root cause analysis, or a fix that must be reproduced, explained, minimally changed, and verified before shipping. Not for planned feature work.
+description: Root-cause debugging workflow for bugs, regressions, stack traces, and broken behavior. Use for reproduce-explain-fix-verify debugging. Not for planned feature work.
 ---
 
 # Mansu Debug Rootcause

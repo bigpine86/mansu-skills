@@ -1,6 +1,6 @@
 ---
 name: mansu-source-curator
-description: Hidden/internal maintenance workflow for refreshing Mansu's source-skill knowledge. Use when updating or checking Ouroboros, gstack, Oh My / OMO / OMC, addyosmani/agent-skills, VoltAgent/awesome-design-md, Open Design, or runtime adapters; when source skills changed and Mansu references such as SOURCE_SKILL_CATALOG.md, DOCUMENT_CREATION_ORDER.md, CODE_CONSTRUCTION_ORDER.md, mansu-setup, validators, or worklogs must be updated; or when a Mansu source map may be stale.
+description: Hidden/internal maintenance workflow for refreshing Mansu's source-skill knowledge. Use when source drift requires catalog, validator, manual, or worklog updates.
 ---
 
 # Mansu Source Curator

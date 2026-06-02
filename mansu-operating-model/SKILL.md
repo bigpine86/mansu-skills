@@ -1,6 +1,6 @@
 ---
 name: mansu-operating-model
-description: Canonical operating doctrine for Mansu-based software delivery. Use when defining or reviewing how a project should plan, orchestrate, review, verify, and ship work; when writing or auditing project `AGENTS.md` or `CODING_RULES.md`; when deciding work class, role separation, strictness, or evidence standards; or when a Mansu flow is drifting into one-pass implementation without real gates.
+description: Canonical operating doctrine for Mansu-based software delivery. Use for project rules, `AGENTS.md`, `CODING_RULES.md`, role separation, and evidence gates.
 ---
 
 # Mansu Operating Model

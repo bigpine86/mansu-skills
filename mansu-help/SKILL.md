@@ -1,6 +1,6 @@
 ---
 name: mansu-help
-description: Beginner-friendly Mansu triage and route recommendation workflow. Use when the user says mansu-help, is unsure what to do next, asks which Mansu skill to use, feels lost in a project, is new to Mansu, wants a simple explanation of the current situation, or needs a safe next-step prompt before starting setup, project planning, implementation, debugging, web verification, shipping, or source-tool updates.
+description: Beginner-friendly Mansu triage and route recommendation workflow. Use when the user is unsure which Mansu skill or next step fits the current work.
 ---
 
 # Mansu Help

@@ -1,11 +1,12 @@
 ---
 name: mansu-web-verify
-description: Plan-first, report-only web verification workflow for checking a web app like a real user. Use when the user wants all important pages, buttons, links, forms, flows, responsive layouts, console/network stability, performance, and basic security reviewed with evidence. Default is verification and reporting, not fixing.
+description: Plan-first, report-only web verification workflow for checking a web app like a real user across pages, flows, responsive behavior, console, and network.
 ---
 
 # Mansu Web Verify
 
 Use this skill to verify a web app before shipping or after a major change.
+Default is verification and reporting, not fixing.
 
 This skill is a verifier and orchestrator, not a feature builder. It plans first,
 tests like a real user, gathers evidence, and delegates specialized work to the

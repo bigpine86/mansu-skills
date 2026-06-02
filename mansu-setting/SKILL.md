@@ -1,6 +1,6 @@
 ---
 name: mansu-setting
-description: Compatibility alias for `mansu-setup`. Use only when an older prompt, document, or installed runtime still calls `mansu-setting`; immediately route the work to `mansu-setup` with the same mode and user intent.
+description: Compatibility alias for `mansu-setup`. Use only to route older `mansu-setting` calls to `mansu-setup` with the same mode and user intent.
 ---
 
 # Mansu Setup Compatibility Alias

@@ -1,6 +1,6 @@
 ---
 name: mansu-manual
-description: Open or point to the prebuilt beginner-friendly HTML manual for the Mansu skill suite. Use when the user asks for mansu-manual, a visual/manual page, an HTML guide, a skill list, beginner documentation, usage examples, route explanations, or a browsable overview of all mansu-* skills and when to use each one.
+description: Open or point to the prebuilt beginner-friendly HTML manual for the Mansu skill suite. Use for visual guides, skill lists, and route explanations.
 ---
 
 # Mansu Manual

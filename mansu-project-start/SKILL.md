@@ -1,6 +1,6 @@
 ---
 name: mansu-project-start
-description: Zero-to-PLAN project kickoff workflow for Mansu. Use when starting a new product, app, repo, major feature family, architecture direction, UI system, or TDR-style project from idea stage; when the agent must prefer prepared Ouroboros project-definition flows for early init/interview/PM/Seed work, research references, define purpose, compare source projects, choose architecture/tech stack/UI direction, create the right planning documents, and hand off into `mansu-tdd-total` with an execution-ready phase plan.
+description: Zero-to-PLAN project kickoff workflow for Mansu. Use for new products, apps, repos, major feature families, architecture direction, UI systems, and phase planning.
 ---
 
 # Mansu Project Start

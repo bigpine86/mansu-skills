@@ -1,6 +1,6 @@
 ---
 name: mansu-ship-release
-description: Mansu release and ship-readiness workflow. Use after implementation slices are complete, when deciding whether work is ship-ready, preparing commits/PRs, release notes, docs, deployment, canary checks, rollback notes, retro, and learning capture; or when distinguishing implemented, reviewed, QA-verified, ship-ready, merged, deployed, and monitored states.
+description: Mansu release and ship-readiness workflow. Use after implementation to decide ship/hold, prepare release artifacts, deployment notes, and learning closeout.
 ---
 
 # Mansu Ship Release

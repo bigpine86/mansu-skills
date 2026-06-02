@@ -3,6 +3,24 @@ set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 
+for skill_file in "$ROOT_DIR"/mansu-*/SKILL.md; do
+  [ -f "$skill_file" ] || continue
+  description="$(
+    awk 'BEGIN{in_desc=0; desc=""}
+      /^description:/{in_desc=1; sub(/^description:[ ]*/,""); desc=$0; next}
+      in_desc && /^---$/{print desc; exit}
+      in_desc{desc=desc" "$0}' "$skill_file"
+  )"
+  [ -n "$description" ] || {
+    echo "FAIL: missing description: $skill_file" >&2
+    exit 1
+  }
+  if [ "${#description}" -gt 240 ]; then
+    echo "FAIL: description too long (${#description} chars): $skill_file" >&2
+    exit 1
+  fi
+done
+
 "$ROOT_DIR/scripts/validate_mansu_setup.sh"
 "$ROOT_DIR/scripts/validate_mansu_help.sh"
 "$ROOT_DIR/scripts/validate_mansu_manual.sh"

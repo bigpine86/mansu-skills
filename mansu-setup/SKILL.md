@@ -1,6 +1,6 @@
 ---
 name: mansu-setup
-description: Runtime-target-aware bootstrap/update workflow for the Mansu skill suite. Use when installing Mansu for the first time, choosing the right runtime target and host such as Hermes, OpenCode, Codex, or Claude Code, syncing `mansu-*` skills into the correct local skill directory, installing or updating required source tools like Ouroboros, gstack, and the matching Oh My adapter, optionally preparing Open Design only when UI/design artifact work needs it or the user approves it, checking Ouroboros, Oh My / OMO / OMC source skill freshness, checking addyosmani/agent-skills freshness for coding-order source workflows, checking VoltAgent/awesome-design-md and Open Design freshness for design-reference/design-artifact workflows, reporting optional adapter compatibility, refreshing gstack and Oh My source skill links, validating the source suite before sync and installed runtime copies after sync, repairing a broken local skill install, or updating Mansu/Ouroboros/gstack/Oh My/agent-skills/design-reference/design-artifact/adapter tooling before serious work.
+description: Runtime-target-aware bootstrap/update workflow for the Mansu skill suite. Use for install, update, source-check, repair, runtime sync, and adapter readiness.
 ---
 
 # Mansu Setup
@@ -13,6 +13,11 @@ tools are missing during `install` or `update`; it should install or update the
 safe, expected tools for the detected runtime whenever the required package
 manager is available.
 
+Use it when installing Mansu for the first time, updating the local skill suite,
+checking source freshness, repairing installed runtime copies, or preparing the
+runtime adapter before serious work.
+It supports runtime targets such as Hermes, OpenCode, Codex, or Claude Code.
+
 ## Core promise
 
 - Find the local Mansu repo and canonical branch.
@@ -24,6 +29,7 @@ manager is available.
   design-artifact route. Mansu runs the required CLI commands; users should not
   have to copy Open Design commands manually.
 - Install or update the matching Oh My adapter for the detected runtime when in `install` or `update` mode.
+- Report optional adapter compatibility separately from core Mansu readiness.
 - Refresh gstack and Oh My source skill links after source updates.
 - Route deep source-reference refresh work to `mansu-source-curator`.
 - Read/verify the Mansu manual's agent guidance and catalog before syncing installed skills.
