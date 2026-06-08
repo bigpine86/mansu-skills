@@ -1,0 +1,4 @@
+interface:
+  display_name: Mansu Build
+  short_description: Build the active phase through Mansu TDD slices.
+  default_prompt: Use $mansu-build to execute only after a current phase PLAN.md exists; if it is missing or incomplete, route back to mansu-define / mansu-plan. Do not implement from a whole-project roadmap. Use mansu-tdd-total for the active phase slices.

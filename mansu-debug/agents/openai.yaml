@@ -1,0 +1,4 @@
+interface:
+  display_name: Mansu Debug
+  short_description: Find root cause before fixing unknown failures or regressions.
+  default_prompt: Use $mansu-debug to reproduce, isolate, prove root cause, and regression-test the fix. Do not patch first and explain later.

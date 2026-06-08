@@ -6,12 +6,13 @@ workflow.
 Mansu does not compete with strong specialist skills. Mansu classifies the work,
 sets the discipline, and routes to the right source skill at the right moment.
 
-Last local snapshot: 2026-05-16.
+Last local snapshot: 2026-06-08.
 
 Machine-readable freshness evidence lives in `SOURCE_SKILL_LOCK.json`. Treat that
 file as the source-family snapshot for paths, versions, commits, inventory, and
-evidence commands. This catalog explains routing meaning; the lock file records
-what was actually checked.
+evidence commands. Source overlap and composition rules live in
+`SOURCE_SKILL_COMPOSITION.md`. This catalog explains routing meaning; the lock
+file records what was actually checked.
 
 ## Operating Rule
 
@@ -33,9 +34,9 @@ for the original skill files.
 Mansu should know the source skill families well enough to compose them without
 flattening them.
 
-- Use addyosmani/agent-skills as the broad SDLC phase spine: idea/spec,
+- Use addyosmani/agent-skills as the broad SDLC phase spine: interview/idea/spec,
   planning, context, source-driven coding, incremental implementation, testing,
-  review, simplification, hardening, docs, and launch.
+  doubt-driven review, simplification, hardening, docs, and launch.
 - Use Ouroboros inside the early definition/spec phases when an idea must become
   a durable purpose, Seed/Ledger, project definition, or source-of-truth artifact
   before Mansu turns it into phases and slices.
@@ -43,13 +44,14 @@ flattening them.
   shape, visual atmosphere, tokens, component rules, responsive behavior, and
   agent prompt handoff.
 - Use Open Design (`nexu-io/open-design`) as the callable agent-native design
-  workflow route when it is installed or explicitly approved for setup. Mansu
-  should route design artifact generation to Open Design instead of recreating
-  its workflow.
+  workflow route when it is installed or explicitly approved for setup. Current
+  source docs describe Open Design 0.9.0 as a native app plus CLI/MCP route with
+  `od mcp install <agent>`. Mansu should route design artifact generation to
+  Open Design instead of recreating its workflow.
 - Use Oh My / OMO / OMC as execution-mode language inside a phase. For Codex,
-  LazyCodex is the preferred thin distribution route for OmO when verified and
-  healthy; OmO / oh-my-openagent remains the core harness source for discipline
-  agents, parallel orchestration, model routing, skills, and hooks.
+  LazyCodex is runtime transport for OMO when verified and healthy; OmO /
+  oh-my-openagent remains the core harness source for discipline agents,
+  parallel orchestration, model routing, skills, and hooks.
 - Use gstack as the specialist team: CEO, design, engineering, DX, browser QA,
   security, performance, ship, deploy, and learning gates.
 - Compose creatively only after the basic gates are explicit: intent, scope,
@@ -104,14 +106,14 @@ depends on the missing source.
 
 | Layer | Owns | Does not own |
 | --- | --- | --- |
-| Lifecycle phase spine | broad SDLC phases: define, plan, build, verify, review, harden, document, ship | Mansu-specific strictness, project-local routing, runtime adapters |
+| Lifecycle phase spine | broad SDLC phases: define, plan, build, verify, review, ship | Mansu-specific strictness, project-local routing, runtime adapters |
 | Project definition / memory source | durable project purpose, Seed/Ledger/spec artifacts, long-horizon direction, continuity | Mansu-specific gate ownership, source selection, final accountability |
 | Design workflow source | callable design artifact workflow, Turn-1 discovery, visual direction selection, preview/export loop | Mansu-specific routing, final product decision, post-artifact verification |
 | Design reference source | reusable `DESIGN.md` structures, brand/taste references, design token grammar, agent prompt handoff | project-specific product decisions, final UI approval, rendered QA |
 | Mansu | doctrine, classification, strictness, routing, evidence, checkpoint, worklog, final ship judgment | specialist craft implementation when a stronger source skill exists |
 | Ouroboros | project-definition interview, PM/Seed/Ledger artifacts, early acceptance criteria, spec source of truth | Mansu-specific routing, source comparison, role critique, slice gates, final implementation discipline |
 | gstack | role-based specialist gates, browser QA, design exploration, security, performance, ship/ops, learning | Mansu-specific doctrine or personal operating rules |
-| Oh My / OMO / OMC | execution modes, parallel work patterns, persistence, TDD/debug/research habits, lightweight orchestration language; for Codex, LazyCodex / OMO Codex plugin is the highest-priority route when installed and healthy | Mansu keeps routing/evidence/final judgment; Ouroboros keeps early definition; gstack keeps independent validation; design sources keep design artifacts and references |
+| Oh My / OMO / OMC | execution modes, parallel work patterns, persistence, TDD/debug/research habits, lightweight orchestration language; for Codex, LazyCodex / OMO Codex plugin is the highest-priority runtime transport when installed and healthy | Mansu keeps routing/evidence/final judgment; Ouroboros keeps early definition; gstack keeps independent validation; design sources keep design artifacts and references |
 | addyosmani/agent-skills | senior-engineering SDLC sequence and phase skills across define, plan, build, verify, review, and ship | Mansu-specific strictness, project-local routing, runtime adapters |
 | Implementation actor | file edits, tests, integration, commits, concrete code changes | replacing Mansu's planning/routing/evidence responsibility |
 
@@ -121,7 +123,7 @@ Representative mapping:
 - Project definition / memory source: Ouroboros or source-curator-verified substitute.
 - Design reference source: VoltAgent/awesome-design-md or source-curator-verified substitute.
 - Design workflow source: Open Design or source-curator-verified substitute.
-- Execution-mode source: Oh My / OMO / OMC or source-curator-verified substitute; prefer LazyCodex / OMO Codex plugin inside this family for Codex runtimes when available.
+- Execution-mode source: Oh My / OMO / OMC or source-curator-verified substitute. For Codex runtimes, prefer LazyCodex / OMO Codex plugin as runtime transport when available.
 - Specialist team source: gstack or source-curator-verified substitute.
 - Implementation actor: Codex or the active coding agent.
 
@@ -234,7 +236,10 @@ let Open Design run its CLI/daemon workflow, then connect the output to
 `DESIGN.md`, design docs, `PLAN.md`, and verification gates.
 
 Open Design is a callable design-artifact source route.
-Open Design provides artifact-first rendering before implementation handoff.
+Open Design provides artifact-first rendering before implementation handoff. The
+2026-06-08 local source snapshot reports 111 design-template skill files, 151
+design-system directories, and 477 total `SKILL.md` files; treat these counts as
+volatile and verify before depending on a specific template.
 
 Open Design is different from VoltAgent/awesome-design-md:
 
@@ -288,7 +293,7 @@ Recommended combinations:
 
 | Capability | Source shape | Route when |
 | --- | --- | --- |
-| Install / lifecycle | `git clone`, package install, `pnpm tools-dev` or current Open Design lifecycle command | Open Design is missing and the user approved Mansu to install or update it |
+| Install / lifecycle | native app, source checkout, current CLI/MCP route such as `od mcp install codex`, or current Open Design lifecycle command | Open Design is missing and the user approved Mansu to install or update it |
 | Agent detection | local daemon detects existing coding-agent CLIs | design should use the user's installed agent instead of a bundled model |
 | Turn-1 discovery | interactive question form before pixels | brief, audience, tone, brand context, or scale is still ambiguous |
 | Visual direction picker | curated visual schools with deterministic palette/font choices | no brand guide exists or the UI direction is too vague |
@@ -305,21 +310,20 @@ patterns. Names may differ by runtime target; verify the installed skill path
 with `mansu-setup`.
 
 For Codex runtimes, treat LazyCodex / OMO Codex plugin (`omo@sisyphuslabs`,
-plugin name `omo`) as the highest-priority execution transport inside the Oh
-My / OMO / OMC family when it is installed, enabled, and its hooks/MCP
-entrypoints are healthy. OmO / oh-my-openagent is the core harness source;
-LazyCodex is the Codex-facing thin distribution. Legacy `omx` remains a
-fallback compatibility route. In this source-family split, LazyCodex / OMO
-drives Codex execution; Mansu owns routing, evidence, checkpoints, and final
-ship/hold judgment; Ouroboros shapes early goals, Seed, Ledger, and long-horizon
-direction, with Ouroboros execution opt-in only; gstack provides independent
-review, QA, design critique, security, performance, ship, and learning gates;
-Open Design creates design artifacts; VoltAgent/awesome-design-md provides
-`DESIGN.md` reference grammar.
+plugin name `omo`) as the highest-priority runtime transport inside the Oh My /
+OMO / OMC family when it is installed, enabled, and its hooks/MCP entrypoints
+are healthy. OmO / oh-my-openagent is the core harness source; LazyCodex is the
+Codex-facing thin distribution. Legacy `omx` remains a fallback compatibility
+route. In this split, LazyCodex / OMO drives Codex execution; Mansu owns routing,
+evidence, checkpoints, and final ship/hold judgment; Ouroboros shapes early
+goals, Seed, Ledger, and long-horizon direction, with Ouroboros execution opt-in
+only; gstack provides independent review, QA, design critique, security,
+performance, ship, and learning gates; Open Design creates design artifacts;
+VoltAgent/awesome-design-md provides `DESIGN.md` reference grammar.
 
 | Capability | Source skills | Route when |
 | --- | --- | --- |
-| Codex OMO execution backbone | LazyCodex / OMO Codex plugin: `ultrawork`, `ultragoal`, `rules`, `lsp`, `comment-checker`, `ai-slop-remover`, `programming`, `debugging`, `frontend-ui-ux`, `refactor`, `review-work` | Codex runtime has `omo@sisyphuslabs` installed and enabled; use before legacy `omx` for Oh My execution modes |
+| Codex runtime transport | LazyCodex / OMO Codex plugin carrying `start-work`, `ulw-plan`, `ulw-loop`, `rules`, `lsp`, `comment-checker`, `remove-ai-slops`, `programming`, `debugging`, `frontend-ui-ux`, `refactor`, `review-work` | Codex runtime has `omo@sisyphuslabs` installed and enabled; use before legacy `omx` for Oh My execution modes, but do not treat LazyCodex as a Mansu source skill family |
 | End-to-end build mode | `autopilot` | full user story or feature needs systematic plan-execute-verify |
 | Large parallel work | `ultrawork`, `ultrapilot`, `team`, `swarm` | independent file/module slices can run in parallel without conflicts |
 | Persistent completion | `ralph` | task must not stop at partial success and needs retry loops |
@@ -344,6 +348,7 @@ Ship, but Mansu still chooses the smallest safe route for the current work.
 
 | Capability | Source skills | Route when |
 | --- | --- | --- |
+| Intent interview | `interview-me` | the ask is underspecified, missing user/problem/success/constraint, or the agent would otherwise guess |
 | Idea and spec | `idea-refine`, `spec-driven-development` | vague request, new feature, unclear acceptance criteria |
 | Task ordering | `planning-and-task-breakdown` | plan must become dependency-ordered, verifiable tasks |
 | Context loading | `context-engineering` | session drift, unfamiliar module, or task-specific context is needed |
@@ -353,6 +358,7 @@ Ship, but Mansu still chooses the smallest safe route for the current work.
 | UI implementation | `frontend-ui-engineering` | user-facing UI needs component, accessibility, responsive discipline |
 | API/interface design | `api-and-interface-design` | public or cross-module boundary must be stable and explicit |
 | Runtime verification | `browser-testing-with-devtools`, `debugging-and-error-recovery` | browser behavior, runtime state, or broken behavior needs evidence |
+| Doubt gate | `doubt-driven-development` | non-trivial decisions need a fresh-context adversarial check before they stand |
 | Quality gates | `code-review-and-quality`, `code-simplification`, `security-and-hardening`, `performance-optimization` | implementation needs review, simplification, security, or performance work beyond compile/test success |
 | Ship lifecycle | `git-workflow-and-versioning`, `ci-cd-and-automation`, `deprecation-and-migration`, `documentation-and-adrs`, `shipping-and-launch` | commits, CI, deprecation, migration, docs, ADRs, launch, rollback need discipline |
 
@@ -360,8 +366,10 @@ Ship, but Mansu still chooses the smallest safe route for the current work.
 
 ### New Project / Zero-To-PLAN
 
-Use `mansu-project-start` when the work starts from an idea, new repo, major
-product direction, architecture choice, UI system, or TDR-level ambiguity.
+Use `mansu-define` and then `mansu-plan` when the work starts from an idea, new
+repo, major product direction, architecture choice, UI system, or TDR-level
+ambiguity. `mansu-project-start` remains the compatibility alias for older
+kickoff prompts.
 
 The route is:
 
@@ -388,9 +396,10 @@ The route is:
    Expand only when risk or ambiguity asks for it; otherwise leave a small,
    repo-visible artifact and record why larger documents were skipped.
 7. Verify with `gstack-autoplan` and focused `gstack-plan-*` reviewers.
-8. Hand off to `mansu-tdd-total` only after the roadmap artifact, ordered phase
+8. Hand off to `mansu-build` only after the roadmap artifact, ordered phase
    list, exactly one active phase, current phase ordered slices, gate mapping,
    validation path, upstream artifacts, and open blockers are recorded.
+   `mansu-build` then uses `mansu-tdd-total` as its build engine.
 
 ### Source Refresh And Reference Curation
 
@@ -464,13 +473,14 @@ but it must not pretend the upstream tools all use the same filename.
 8. Record major irreversible or architectural choices as ADR-style notes when
    `documentation-and-adrs` applies.
 9. Only then derive the current phase's `PLAN.md` and vertical slice table.
-   If no phase roadmap exists, stop before `mansu-tdd-total` and return to
-   `mansu-project-start`.
+   If no phase roadmap exists, stop before `mansu-build` / `mansu-tdd-total`
+   and return to `mansu-define` / `mansu-plan`.
 
 ### Feature Or Refactor
 
 1. Mansu classifies `Quick / Standard / Heavy`.
-2. For non-trivial work, use `mansu-tdd-total`.
+2. For non-trivial work, use `mansu-build`; it delegates to `mansu-tdd-total`
+   for slice planning and execution.
 3. Use `CODE_CONSTRUCTION_ORDER.md` to decide dependency graph, context pack,
    contract-first boundaries, and slice coding order.
 4. Planning may route through `gstack-office-hours`, `gstack-autoplan`, and
@@ -512,7 +522,8 @@ but it must not pretend the upstream tools all use the same filename.
 
 ### Bug Or Regression
 
-1. Use `mansu-debug-rootcause`.
+1. Use `mansu-debug`; it delegates to `mansu-debug-rootcause` for root-cause
+   proof.
 2. Borrow Oh My `debug` as the outer habit: reproduce, isolate, hypothesize,
    test, fix, verify.
 3. Use `gstack-investigate` gates for root-cause proof, minimal fix, and fresh
@@ -522,7 +533,8 @@ but it must not pretend the upstream tools all use the same filename.
 
 ### Web Verification
 
-1. Use `mansu-web-verify` as the orchestrator.
+1. Use `mansu-verify`; it delegates web/browser verification to
+   `mansu-web-verify`.
 2. Use `gstack-browse` for direct interaction and screenshots.
 3. Use `gstack-qa-only` for report-only mode.
 4. Use `gstack-qa` only when fixes are approved.
@@ -531,11 +543,12 @@ but it must not pretend the upstream tools all use the same filename.
 
 ### Ship And Learn
 
-Use `mansu-ship-release` when implementation is complete enough to judge.
+Use `mansu-ship` when implementation is complete enough to judge. It delegates
+release readiness to `mansu-ship-release`.
 
 1. Use `gstack-health` before ship judgment.
 2. Use `gstack-review` for diff risk.
-3. Use `mansu-web-verify`, `gstack-qa-only`, or project QA for runtime/user-flow evidence.
+3. Use `mansu-verify` / `mansu-web-verify`, `gstack-qa-only`, or project QA for runtime/user-flow evidence.
 4. Use `gstack-cso` or `gstack-benchmark` when security or performance risk is part of the claim.
 5. Use `gstack-ship` for PR/commit/push workflows when appropriate.
 6. Use `gstack-land-and-deploy` and `gstack-canary` for actual deployment.

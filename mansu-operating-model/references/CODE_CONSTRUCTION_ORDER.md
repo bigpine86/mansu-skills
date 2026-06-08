@@ -7,9 +7,45 @@ source skill should be read, and what execution gates must remain true.
 
 Primary source family: `addyosmani/agent-skills`.
 
+Mansu reads the addyosmani lifecycle as the broad phase spine:
+
+```text
+Define -> Plan -> Build -> Verify -> Review -> Ship
+```
+
+For user-facing Korean planning and progress reports, Mansu also keeps a more
+granular product-development flow:
+
+```text
+기획 -> 요구사항 정리 -> 스펙 작성 -> 구현 계획 -> 코딩 -> 테스트 -> QA -> 수정/개선 -> 배포/공유
+```
+
+These are not competing sequences. The addyosmani spine is the source-skill
+phase map; the Korean flow is the detailed coding-flow vocabulary Mansu uses to
+classify where the work is, explain progress, and decide the next gate.
+
+| Korean detailed flow | addyosmani phase | Mansu interpretation |
+| --- | --- | --- |
+| 기획 | Define | clarify purpose, user, problem, non-goals, and success signal |
+| 요구사항 정리 | Define | lock requirements, acceptance criteria, scope, and constraints |
+| 스펙 작성 | Define -> Plan | turn requirements into spec/TDR/design/source-of-truth artifacts |
+| 구현 계획 | Plan | create phase roadmap, active phase `PLAN.md`, ordered slices, and gates |
+| 코딩 | Build | implement the current slice through the selected source skill and Mansu TDD mode |
+| 테스트 | Verify | prove behavior with focused tests or other slice-level validation |
+| QA | Verify -> Review | check real usage, browser/runtime behavior, regressions, and evidence quality |
+| 수정/개선 | Review -> Build -> Verify | resolve findings, refactor safely, then re-verify before widening scope |
+| 배포/공유 | Ship | prepare release docs, PR/commit/push/deploy/canary, and learning handoff |
+
+Treat `수정/개선` as a loop, not a one-time final cleanup:
+
+```text
+Build -> Verify -> Review -> Build -> Verify -> Review -> Ship
+```
+
 Relevant source skills:
 
 - `using-agent-skills`
+- `interview-me`
 - `idea-refine`
 - `spec-driven-development`
 - `planning-and-task-breakdown`
@@ -21,6 +57,7 @@ Relevant source skills:
 - `api-and-interface-design`
 - `browser-testing-with-devtools`
 - `debugging-and-error-recovery`
+- `doubt-driven-development`
 - `code-review-and-quality`
 - `code-simplification`
 - `security-and-hardening`
@@ -32,7 +69,24 @@ Relevant source skills:
 - `shipping-and-launch`
 
 Read the original source skill when the task enters that phase. This document is
-a router and invariant layer, not a substitute for the source skill.
+a router and invariant layer, not a substitute for the source skill. When source
+skills overlap, use `SOURCE_SKILL_COMPOSITION.md` to choose the composition.
+
+## Canonical Phase Orders
+
+Mansu exposes six phase skills. Each phase has an internal order and source
+skill route. The phase skill owns orchestration, gates, and evidence; source
+skills own specialized execution.
+
+| Mansu phase | Internal order | Source route |
+| --- | --- | --- |
+| Define | Idea intake -> User/problem interview -> Requirements -> Acceptance criteria -> Source-of-truth seed | Ouroboros `interview`, `pm`, `seed`, `brownfield`; addyosmani `interview-me`, `idea-refine`, `spec-driven-development`; gstack `office-hours`, `plan-ceo-review` |
+| Plan | Requirements/Spec -> Architecture -> Design Direction -> Implementation Roadmap | addyosmani `spec-driven-development`, `planning-and-task-breakdown`, `api-and-interface-design`, `source-driven-development`; OMO `ulw-plan`; gstack `autoplan`, `plan-ceo-review`, `plan-eng-review`, `plan-devex-review` |
+| Plan design gate | Reference discovery -> Design system/artifact -> Variant exploration -> Plan-stage design review -> Implementation handoff | OMO research/deepsearch when available; Open Design for callable artifacts; VoltAgent/awesome-design-md for `DESIGN.md`; gstack `design-consultation`, `design-shotgun`, `plan-design-review`, `design-html`; addyosmani `frontend-ui-engineering` |
+| Build | Context pack -> Contract/source verification -> Slice plan -> Implement -> Local validation -> Checkpoint | `mansu-tdd-total` as the default build orchestrator; OMO `start-work`, `programming`, `ulw-loop`, `lsp` as execution habits; addyosmani `context-engineering`, `source-driven-development`, `incremental-implementation`, `test-driven-development`; gstack `guard`, `careful`, `checkpoint` |
+| Verify | Test evidence -> Runtime/browser evidence -> QA report -> Security/perf checks when relevant -> Verification closeout | addyosmani `test-driven-development`, `browser-testing-with-devtools`, `security-and-hardening`, `performance-optimization`; gstack `qa-only`, `qa`, `browse`, `health`, `cso`, `benchmark`; Ouroboros `qa`, `evaluate`; OMO `review-work` |
+| Review | Diff review -> Architecture/design/security critique -> AI-slop/simplification pass -> Root-cause loop for findings -> Re-verify | addyosmani `code-review-and-quality`, `code-simplification`, `debugging-and-error-recovery`, `doubt-driven-development`; gstack `review`, `plan-eng-review`, `plan-design-review`, `design-review`, `investigate`, `cso`; OMO `review-work`, `remove-ai-slops`, `debugging`, `comment-checker` |
+| Ship | Release readiness -> Version/changelog/docs -> Commit/push/PR/deploy decision -> Canary/monitoring -> Learning handoff | addyosmani `git-workflow-and-versioning`, `ci-cd-and-automation`, `documentation-and-adrs`, `shipping-and-launch`; gstack `ship`, `document-release`, `landing-report`, `setup-deploy`, `land-and-deploy`, `canary`, `retro`, `learn`; Ouroboros `publish`, `status` |
 
 ## Phase Detection
 
@@ -40,7 +94,7 @@ Before coding, decide the current phase from evidence:
 
 | Evidence | Current phase | Read source skill |
 | --- | --- | --- |
-| Goal is vague or user is still exploring | Idea/spec definition | `idea-refine`, `spec-driven-development` |
+| Goal is vague, underspecified, or user is still exploring | Define | `interview-me`, `idea-refine`, `spec-driven-development`, Ouroboros `interview` |
 | Acceptance criteria exist but implementation order is unclear | Planning/task breakdown | `planning-and-task-breakdown` |
 | Agent lacks project patterns or touched files are unclear | Context setup | `context-engineering` |
 | Framework/library/API behavior may be version-sensitive | Source-verified implementation | `source-driven-development` |
@@ -55,6 +109,10 @@ Before coding, decide the current phase from evidence:
 | CI/CD, release automation, migration, deprecation, docs, or launch is in scope | Ship/docs | `git-workflow-and-versioning`, `ci-cd-and-automation`, `deprecation-and-migration`, `documentation-and-adrs`, `shipping-and-launch` |
 
 If the phase is ambiguous, read `using-agent-skills` first and classify the task.
+
+Runtime transport is resolved by `mansu-setup`. LazyCodex / OMO Codex plugin can
+be the preferred Codex runtime transport, but it is not a phase source route and
+does not replace the source-skill composition in `SOURCE_SKILL_COMPOSITION.md`.
 
 ## Router Loop
 

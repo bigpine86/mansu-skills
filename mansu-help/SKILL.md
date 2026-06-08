@@ -61,14 +61,15 @@ Choose the smallest safe route that fits.
 | --- | --- |
 | Mansu가 처음이거나 설치/업데이트가 불안함 | `mansu-setup check`, then `mansu-setup install/update` if needed |
 | 원천 스킬이나 레퍼런스가 최신인지 모르겠음 | `mansu-setup source-check`; use `mansu-source-curator curate` only after drift is confirmed and the user wants Mansu internals updated |
-| 새 프로젝트, 큰 기능군, TDR/기획이 필요함 | `mansu-project-start` |
+| 새 프로젝트, 큰 기능군, TDR/기획이 필요함 | `mansu-define`, then `mansu-plan` |
 | 프로젝트 운영 원칙, `AGENTS.md`, `CODING_RULES.md`가 필요함 | `mansu-operating-model` |
-| 기능 구현/리팩토링을 시작해야 함 | `mansu-tdd-total` |
+| 기능 구현/리팩토링을 시작해야 함 | `mansu-build` |
 | slice가 위험하고 테스트로 행동을 잠가야 함 | `mansu-tdd-strict` |
 | 문서/UI/config/작은 정리라 RED 테스트가 인위적임 | `mansu-tdd-lite` |
-| 버그 원인을 모르거나 회귀/stack trace가 있음 | `mansu-debug-rootcause` |
-| 웹앱을 사용자처럼 눌러 검증하고 싶음 | `mansu-web-verify` |
-| 구현이 끝났고 ship/hold/PR/deploy 판단이 필요함 | `mansu-ship-release` |
+| 테스트/브라우저/QA로 동작을 증명해야 함 | `mansu-verify` |
+| 구현 품질, 구조, 보안, 디자인 리스크를 봐야 함 | `mansu-review` |
+| 버그 원인을 모르거나 회귀/stack trace가 있음 | `mansu-debug` |
+| 구현이 끝났고 ship/hold/PR/deploy 판단이 필요함 | `mansu-ship` |
 
 If none fits, say the closest route and what extra information would change the
 recommendation.
@@ -80,17 +81,26 @@ Use these shortcuts when the user gives only a vague sentence:
 | User says | Interpret as | Recommend |
 | --- | --- | --- |
 | "처음인데 뭐 해야 해?" | setup/readiness uncertainty | `mansu-setup check` |
-| "아이디어가 생겼어" / "웹앱 만들고 싶어" / "앱 만들고 싶어" | new idea / new product definition | `mansu-project-start` |
-| "새 프로젝트 시작하고 싶어" | project definition / planning | `mansu-project-start` |
-| "기능 만들고 싶어" | implementation planning | `mansu-tdd-total` |
-| "에러가 나" / "왜 안 돼?" | root-cause debugging | `mansu-debug-rootcause` |
-| "웹페이지가 잘 되는지 봐줘" | report-only web verification | `mansu-web-verify` |
-| "이제 끝난 것 같아" | ship/hold judgment | `mansu-ship-release` |
+| "아이디어가 생겼어" / "웹앱 만들고 싶어" / "앱 만들고 싶어" | new idea / new product definition | `mansu-define` |
+| "새 프로젝트 시작하고 싶어" | project definition / planning | `mansu-define` -> `mansu-plan` |
+| "기능 만들고 싶어" | implementation planning | `mansu-build` |
+| "테스트/QA 해줘" | verification | `mansu-verify` |
+| "리뷰해줘" | quality review | `mansu-review` |
+| "에러가 나" / "왜 안 돼?" | root-cause debugging | `mansu-debug` |
+| "이제 끝난 것 같아" | ship/hold judgment | `mansu-ship` |
 
 If two shortcuts match, choose the one that is safer and more diagnostic first.
 New idea, new app, new webapp, or new product language takes precedence over
-"기능 만들고 싶어" and routes to `mansu-project-start` unless a current phase
+"기능 만들고 싶어" and routes to `mansu-define` unless a current phase
 `PLAN.md` already exists.
+
+compatibility alias map:
+
+- `mansu-project-start` -> `mansu-define`
+- `mansu-tdd-total` -> `mansu-build`
+- `mansu-web-verify` -> `mansu-verify`
+- `mansu-debug-rootcause` -> `mansu-debug`
+- `mansu-ship-release` -> `mansu-ship`
 
 ## Recommended answer shape
 
@@ -132,31 +142,31 @@ Use $mansu-setup source-check. Ouroboros, gstack, Oh My / OMO / OMC, addyosmani/
 Project start:
 
 ```text
-Use $mansu-project-start. 방금 생긴 웹앱/앱 아이디어를 프로젝트로 시작하고 싶어. 먼저 `ooo` / `ouroboros`가 가능한지 확인하고, 가능하면 `ouroboros init start` / `ouroboros-interview`, PM, Seed로 초기 질문과 정의를 진행해줘. Mansu가 자체 질문으로 대신 시작하지 말고, Ouroboros를 못 쓰는 경우에만 이유를 기록한 fallback으로 진행해줘. 구현은 아직 시작하지 마.
+Use $mansu-define. 방금 생긴 웹앱/앱 아이디어를 프로젝트로 정의하고 싶어. addyosmani interview-me, Ouroboros interview/PM/Seed, gstack office-hours 중 지금 상황에 맞는 source skill을 골라 먼저 질문과 정의를 진행해줘. Mansu가 자체 질문으로 대신 시작하지 말고, source skill을 못 쓰는 경우에만 이유를 기록한 fallback으로 진행해줘. 구현은 아직 시작하지 마.
 ```
 
 Implementation:
 
 ```text
-Use $mansu-tdd-total. 현재 phase PLAN.md가 있으면 그 계획을 검증한 뒤 sequential vertical slice로 나눠서 각 slice의 mode(lite/strict), 완료 조건, 영향 파일, 테스트 기준, 위험 요소를 정리해줘. 현재 phase PLAN.md가 없으면 구현으로 가지 말고 먼저 mansu-project-start로 돌려줘.
+Use $mansu-build. 현재 phase PLAN.md가 있으면 mansu-tdd-total을 기본 엔진으로 사용해서 sequential vertical slice로 나누고 각 slice의 mode(lite/strict), 완료 조건, 영향 파일, 테스트 기준, 위험 요소를 정리한 뒤 구현해줘. 현재 phase PLAN.md가 없으면 구현으로 가지 말고 먼저 mansu-define/mansu-plan으로 돌려줘.
 ```
 
 Debug:
 
 ```text
-Use $mansu-debug-rootcause. 이 문제를 바로 고치지 말고 재현, 격리, 근본 원인, 최소 수정, 회귀 검증 순서로 진행해줘.
+Use $mansu-debug. 이 문제를 바로 고치지 말고 mansu-debug-rootcause를 기본 route로 사용해서 재현, 격리, 근본 원인, 최소 수정, 회귀 검증 순서로 진행해줘.
 ```
 
 Web verification:
 
 ```text
-Use $mansu-web-verify. 이 웹앱을 실제 사용자처럼 주요 페이지/버튼/폼/반응형/콘솔/성능/기본 보안 관점에서 report-only로 검증해줘.
+Use $mansu-verify. 이 웹앱을 실제 사용자처럼 주요 페이지/버튼/폼/반응형/콘솔/성능/기본 보안 관점에서 report-only로 검증해줘. 웹 검증은 mansu-web-verify 호환 route를 사용해줘.
 ```
 
 Ship:
 
 ```text
-Use $mansu-ship-release. 구현이 끝난 변경이 ship-ready인지 health/review/QA/docs/PR/deploy/canary/learning 기준으로 판단해줘.
+Use $mansu-ship. 구현이 끝난 변경이 ship-ready인지 health/review/QA/docs/PR/deploy/canary/learning 기준으로 판단해줘. release readiness 판단은 mansu-ship-release 호환 route를 사용해줘.
 ```
 
 ## Safety

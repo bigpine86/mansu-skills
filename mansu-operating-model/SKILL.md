@@ -167,7 +167,14 @@ layers instead of copying their details.
 | `references/SOURCE_SKILL_CATALOG.md` | source-family map, freshness policy, capability maps, composition recipes | project-local commands or full document matrix |
 | `references/DOCUMENT_CREATION_ORDER.md` | artifact router, document paths, creation order, verification order, handoff requirements | source-family capability maps or implementation sequence details |
 | `references/CODE_CONSTRUCTION_ORDER.md` | coding phase detection, construction order, dependency slicing, contracts, safe defaults | project kickoff doctrine or document matrix |
-| `mansu-project-start/SKILL.md` | executable Zero-to-PLAN workflow, minimum gate, route selection, handoff report | full source catalog, full document matrix, slice implementation |
+| `mansu-define/SKILL.md` | public Define phase route, source-skill interview selection, source-of-truth handoff | full source catalog, full document matrix, slice implementation |
+| `mansu-plan/SKILL.md` | public Plan phase route, requirements/spec, architecture, design direction, implementation roadmap | full source catalog, full document matrix, slice implementation |
+| `mansu-build/SKILL.md` | public Build phase route and `mansu-tdd-total` dispatch boundary | direct lite/strict executor internals |
+| `mansu-verify/SKILL.md` | public Verify phase route and evidence expectations | quality-review judgment or release decision |
+| `mansu-review/SKILL.md` | public Review phase route and risk judgment | behavior proof or release operations |
+| `mansu-debug/SKILL.md` | public root-cause route and `mansu-debug-rootcause` dispatch boundary | planned feature implementation |
+| `mansu-ship/SKILL.md` | public Ship phase route and `mansu-ship-release` dispatch boundary | source catalog or local runtime setup |
+| `mansu-project-start/SKILL.md` | compatibility Zero-to-PLAN workflow, minimum gate, route selection, handoff report | full source catalog, full document matrix, slice implementation |
 | `docs/mansu-manual.html` | human-facing visual summary, lightweight route map, skill catalog UI | canonical source truth or validator-only policy |
 
 When a detail belongs elsewhere, link to the owner and summarize only the routing

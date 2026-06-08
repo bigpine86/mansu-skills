@@ -236,6 +236,9 @@ The execution-ready plan must include:
 - Oh My execution-mode mapping: `ralph` for persistence and `tdd` for strict slices, or their current-runtime equivalents
 - gstack gate mapping: concrete names for `gstack-review`, `gstack-qa-only`/`gstack-browse`, `gstack-qa`, `gstack-context-save` and `gstack-context-restore`, and `gstack-health`, or their current-runtime equivalents
 - code construction router: current phase, source skill to read, dependency/context/contract notes, and slice coding sequence
+- detailed coding-flow step: one of `기획`, `요구사항 정리`, `스펙 작성`,
+  `구현 계획`, `코딩`, `테스트`, `QA`, `수정/개선`, `배포/공유`, mapped to the
+  addyosmani phase spine
 - risks and mitigation
 - test and validation strategy
 - documentation and worklog targets

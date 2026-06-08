@@ -91,11 +91,13 @@ mansu-help
 Mansu는 현재 개발 진행 상태를 보고 다음에 필요한 작업을 자율적으로 오케스트레이트합니다.
 
 - `mansu-setup`: 설치, 업데이트, runtime setup
-- `mansu-project-start`: 새 제품, 앱, 레포, 큰 기능군 시작
-- `mansu-tdd-total`: 기능 구현과 리팩토링
-- `mansu-debug-rootcause`: 버그 원인 분석과 수정
-- `mansu-web-verify`: 실제 사용자 관점의 웹 검증
-- `mansu-ship-release`: release readiness 판단
+- `mansu-define`: 새 제품, 앱, 레포, 큰 기능군의 목적/요구사항/성공 기준 정의
+- `mansu-plan`: Requirements/Spec, Architecture, Design Direction, Implementation Roadmap
+- `mansu-build`: `mansu-tdd-total`을 통한 기능 구현과 리팩토링
+- `mansu-verify`: 테스트, runtime/browser 확인, QA evidence
+- `mansu-review`: 품질, 구조, 디자인, 보안, decision risk 검토
+- `mansu-debug`: 원인 불명 버그와 회귀 분석
+- `mansu-ship`: release readiness 판단
 
 업데이트 전에는 먼저 읽기 전용으로 확인합니다.
 
@@ -148,7 +150,8 @@ Mansu가 직접 책임지는 일은 다음과 같습니다.
 - 최종 책임
 
 전문적인 실행은 가능한 한 더 잘 맞는 source skill에 맡깁니다.
-source skill 목록과 조합법은 `mansu-operating-model/references/SOURCE_SKILL_CATALOG.md`에서 관리합니다.
+source skill 목록은 `mansu-operating-model/references/SOURCE_SKILL_CATALOG.md`에서 관리합니다.
+비슷한 source skill을 어떻게 조합할지는 `mansu-operating-model/references/SOURCE_SKILL_COMPOSITION.md`에서 관리합니다.
 `mansu-setup`은 Ouroboros, gstack, Oh My / OMO / OMC, addyosmani/agent-skills, VoltAgent/awesome-design-md, Open Design이 여전히 최신 흐름과 맞는지도 계속 확인합니다.
 
 Mansu가 좋아지는 방식은 단순합니다.
@@ -167,6 +170,8 @@ Mansu가 좋아지는 방식은 단순합니다.
 디자인 작업에서는 Open Design이 설치되어 있거나 사용 승인이 있으면 Open Design을 design artifact 생성 route로 우선 고려합니다.
 Mansu가 Open Design CLI/lifecycle 명령을 직접 실행하고 산출물 증거를 기록합니다.
 그다음 VoltAgent/awesome-design-md를 `DESIGN.md` 참고 원천으로 삼아 프로젝트 고유의 분위기, 토큰, 컴포넌트, 반응형 규칙을 뽑고 gstack 디자인/QA gate로 검증합니다.
+
+LazyCodex는 runtime transport입니다. Codex에서 OMO 실행을 싣는 경로이지, Mansu의 source skill family나 Define -> Plan -> Build -> Verify -> Review -> Ship 라우팅을 대체하지 않습니다.
 
 ## 큰 그림
 
@@ -236,14 +241,21 @@ slice N+1은 slice N이 validation, review, QA, checkpoint, log, commit 또는 n
 | `mansu-manual` | HTML 매뉴얼을 보고 싶을 때 | 시각 매뉴얼 |
 | `mansu-setup` | 설치, 읽기 전용 source health check, 업데이트, runtime 감지, source tool setup, skill sync, repair, adapter compatibility가 필요할 때 | bootstrap/check/update gate |
 | `mansu-source-curator` | drift가 확인되어 Mansu reference, validator, manual, worklog를 갱신해야 할 때 | 내부 source-reference maintenance |
-| `mansu-project-start` | 새 제품, 앱, 레포, 큰 기능군을 idea/research/spec/TDR/UI 방향에서 project roadmap/phase order와 현재 phase `PLAN.md`까지 가져가고, Zero-to-PLAN minimum gate까지 확인해야 할 때 | zero-to-PLAN kickoff |
+| `mansu-define` | 새 제품, 앱, 레포, 큰 기능군의 목적, 사용자, 문제, 요구사항, 성공 기준, source of truth를 잡을 때 | Define phase |
+| `mansu-plan` | Requirements/Spec, Architecture, Design Direction, Implementation Roadmap과 phase-level `PLAN.md`가 필요할 때 | Plan phase |
 | `mansu-operating-model` | 프로젝트 행동양식, role separation, evidence rule, `AGENTS.md`, `CODING_RULES.md`를 정할 때 | canonical doctrine |
-| `mansu-tdd-total` | 기능/리팩토링을 계획하고 slice별 실행 모드를 고를 때 | planning dispatcher |
+| `mansu-build` | 기능/리팩토링을 `mansu-tdd-total` slice로 구현할 때 | Build phase |
+| `mansu-verify` | 테스트, runtime/browser 확인, QA evidence, 보안/성능 증명이 필요할 때 | Verify phase |
+| `mansu-review` | 품질, 유지보수성, 구조, 디자인, 보안, decision risk를 검토할 때 | Review phase |
+| `mansu-debug` | 버그를 재현, 격리, 원인 증명, 최소 수정, 회귀 검증할 때 | Debug route |
+| `mansu-ship` | ship/hold 판단, PR, release docs, deploy/canary, learning closeout이 필요할 때 | Ship phase |
+| `mansu-project-start` | `mansu-define`의 compatibility alias | legacy kickoff |
+| `mansu-tdd-total` | `mansu-build` 아래의 기본 구현 엔진 | build engine |
 | `mansu-tdd-strict` | 위험한 slice에 의미 있는 RED test가 필요할 때 | strict TDD loop |
 | `mansu-tdd-lite` | 계획, review, QA, checkpoint는 필요하지만 RED test가 억지스러울 때 | relaxed RED, not quality |
-| `mansu-debug-rootcause` | 버그를 재현, 격리, 원인 증명, 최소 수정, 회귀 검증할 때 | root-cause debugger |
-| `mansu-web-verify` | 웹을 실제 사용자처럼 눌러 검증할 때 | web verification |
-| `mansu-ship-release` | ship/hold 판단, PR, release docs, deploy/canary, learning closeout이 필요할 때 | release readiness |
+| `mansu-debug-rootcause` | `mansu-debug` 아래의 compatibility route | root-cause debugger |
+| `mansu-web-verify` | `mansu-verify` 아래의 실제 사용자 관점 웹 검증 route | web verification |
+| `mansu-ship-release` | `mansu-ship` 아래의 release readiness route | release readiness |
 
 ## 상황별 선택
 
@@ -251,14 +263,15 @@ slice N+1은 slice N이 validation, review, QA, checkpoint, log, commit 또는 n
 - 시각 매뉴얼: `mansu-manual` 또는 [docs/mansu-manual.html](./docs/mansu-manual.html)
 - 설치, 읽기 전용 source health check, 업데이트, runtime 감지, skill sync, adapter compatibility: `mansu-setup`
 - drift 확인 후 내부 source catalog/manual/validator를 유지보수할 때: `mansu-source-curator`
-- 새 프로젝트 또는 큰 기능군: `mansu-project-start`
+- 새 프로젝트 또는 큰 기능군: `mansu-define`, 그다음 `mansu-plan`
 - project doctrine, `AGENTS.md`, `CODING_RULES.md`: `mansu-operating-model`
-- 기능/리팩토링 구현: `mansu-tdd-total`
+- 기능/리팩토링 구현: `mansu-build`
+- 동작 증명, QA, browser/runtime 검증: `mansu-verify`
+- 품질, 구조, 디자인, 보안, decision-risk review: `mansu-review`
 - 위험하고 RED test가 유용한 slice: `mansu-tdd-strict`
 - RED가 억지스러운 낮은 위험 slice: `mansu-tdd-lite`
-- 버그, 회귀, stack trace, "왜 깨졌지?": `mansu-debug-rootcause`
-- 실제 사용자 관점 웹 검증: `mansu-web-verify`
-- ship-ready, PR, release docs, deploy/canary, learning closeout: `mansu-ship-release`
+- 버그, 회귀, stack trace, "왜 깨졌지?": `mansu-debug`
+- ship-ready, PR, release docs, deploy/canary, learning closeout: `mansu-ship`
 
 ## 신뢰와 검증
 
@@ -284,6 +297,7 @@ MANSU_COMPARE_INSTALLED=1 scripts/validate_mansu_installed_copies.sh /Users/hans
 - [MANSU_PHILOSOPHY.md](./MANSU_PHILOSOPHY.md): Mansu 공통 철학
 - [mansu-operating-model](./mansu-operating-model/SKILL.md): canonical doctrine + `AGENTS.md` / `CODING_RULES.md` templates
 - [SOURCE_SKILL_CATALOG.md](./mansu-operating-model/references/SOURCE_SKILL_CATALOG.md): source skill map과 조합법
+- [SOURCE_SKILL_COMPOSITION.md](./mansu-operating-model/references/SOURCE_SKILL_COMPOSITION.md): 비슷한 source skill 비교와 조합 route
 - [SOURCE_SKILL_LOCK.json](./mansu-operating-model/references/SOURCE_SKILL_LOCK.json): source-family freshness snapshot과 evidence
 - [DOCUMENT_CREATION_ORDER.md](./mansu-operating-model/references/DOCUMENT_CREATION_ORDER.md): 문서 생성 router
 - [CODE_CONSTRUCTION_ORDER.md](./mansu-operating-model/references/CODE_CONSTRUCTION_ORDER.md): 현재 phase 감지와 coding-order source skill 라우팅
@@ -294,8 +308,15 @@ MANSU_COMPARE_INSTALLED=1 scripts/validate_mansu_installed_copies.sh /Users/hans
 - [mansu-manual.html](./docs/mansu-manual.html): 시각 매뉴얼
 - [mansu-setup](./mansu-setup/SKILL.md): 설치/업데이트/복구 진입점
 - [mansu-source-curator](./mansu-source-curator/SKILL.md): 내부 source-reference 유지보수
-- [mansu-project-start](./mansu-project-start/SKILL.md): zero-to-PLAN kickoff
-- [mansu-tdd-total](./mansu-tdd-total/SKILL.md): TDD 시리즈 진입점
+- [mansu-define](./mansu-define/SKILL.md): Define phase
+- [mansu-plan](./mansu-plan/SKILL.md): Plan phase
+- [mansu-build](./mansu-build/SKILL.md): Build phase와 `mansu-tdd-total` dispatcher
+- [mansu-verify](./mansu-verify/SKILL.md): Verify phase
+- [mansu-review](./mansu-review/SKILL.md): Review phase
+- [mansu-debug](./mansu-debug/SKILL.md): 특수 root-cause route
+- [mansu-ship](./mansu-ship/SKILL.md): Ship phase
+- [mansu-project-start](./mansu-project-start/SKILL.md): Define compatibility alias
+- [mansu-tdd-total](./mansu-tdd-total/SKILL.md): `mansu-build`가 쓰는 구현 엔진
 - [mansu-tdd-strict](./mansu-tdd-strict/SKILL.md): strict TDD 실행
 - [mansu-tdd-lite](./mansu-tdd-lite/SKILL.md): lite 실행
 - [mansu-debug-rootcause](./mansu-debug-rootcause/SKILL.md): root-cause 디버그
