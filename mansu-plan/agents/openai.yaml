@@ -1,4 +1,4 @@
 interface:
   display_name: Mansu Plan
   short_description: Create requirements, architecture, design direction, and implementation roadmap.
-  default_prompt: Use $mansu-plan to turn the defined project into a phase roadmap and current PLAN.md.
+  default_prompt: Use $mansu-plan to turn the defined project into a phase roadmap and current phase execution plan. Prefer PLAN.md, but support Plan.md, .codex/plans/*.md, .omo/plans/*.md, or a concrete plan path the user referenced. End by stating whether Plan is complete; if complete, tell the user to use mansu-build next.

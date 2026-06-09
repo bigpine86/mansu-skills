@@ -13,6 +13,9 @@ Mansu reads the addyosmani lifecycle as the broad phase spine:
 Define -> Plan -> Build -> Verify -> Review -> Ship
 ```
 
+`mansu-debug` is a public special-purpose interrupt route for unknown failures,
+not a normal lifecycle phase.
+
 For user-facing Korean planning and progress reports, Mansu also keeps a more
 granular product-development flow:
 
@@ -32,7 +35,7 @@ classify where the work is, explain progress, and decide the next gate.
 | 구현 계획 | Plan | create phase roadmap, active phase `PLAN.md`, ordered slices, and gates |
 | 코딩 | Build | implement the current slice through the selected source skill and Mansu TDD mode |
 | 테스트 | Verify | prove behavior with focused tests or other slice-level validation |
-| QA | Verify -> Review | check real usage, browser/runtime behavior, regressions, and evidence quality |
+| QA | Verify -> Review | check real usage, browser/runtime behavior, regressions, and evidence quality; when Verify passes, continue into Review by default |
 | 수정/개선 | Review -> Build -> Verify | resolve findings, refactor safely, then re-verify before widening scope |
 | 배포/공유 | Ship | prepare release docs, PR/commit/push/deploy/canary, and learning handoff |
 
@@ -74,7 +77,8 @@ skills overlap, use `SOURCE_SKILL_COMPOSITION.md` to choose the composition.
 
 ## Canonical Phase Orders
 
-Mansu exposes six phase skills. Each phase has an internal order and source
+Mansu exposes six normal phase skills plus the `mansu-debug` interrupt route.
+Each phase has an internal order and source
 skill route. The phase skill owns orchestration, gates, and evidence; source
 skills own specialized execution.
 
@@ -83,9 +87,10 @@ skills own specialized execution.
 | Define | Idea intake -> User/problem interview -> Requirements -> Acceptance criteria -> Source-of-truth seed | Ouroboros `interview`, `pm`, `seed`, `brownfield`; addyosmani `interview-me`, `idea-refine`, `spec-driven-development`; gstack `office-hours`, `plan-ceo-review` |
 | Plan | Requirements/Spec -> Architecture -> Design Direction -> Implementation Roadmap | addyosmani `spec-driven-development`, `planning-and-task-breakdown`, `api-and-interface-design`, `source-driven-development`; OMO `ulw-plan`; gstack `autoplan`, `plan-ceo-review`, `plan-eng-review`, `plan-devex-review` |
 | Plan design gate | Reference discovery -> Design system/artifact -> Variant exploration -> Plan-stage design review -> Implementation handoff | OMO research/deepsearch when available; Open Design for callable artifacts; VoltAgent/awesome-design-md for `DESIGN.md`; gstack `design-consultation`, `design-shotgun`, `plan-design-review`, `design-html`; addyosmani `frontend-ui-engineering` |
-| Build | Context pack -> Contract/source verification -> Slice plan -> Implement -> Local validation -> Checkpoint | `mansu-tdd-total` as the default build orchestrator; OMO `start-work`, `programming`, `ulw-loop`, `lsp` as execution habits; addyosmani `context-engineering`, `source-driven-development`, `incremental-implementation`, `test-driven-development`; gstack `guard`, `careful`, `checkpoint` |
-| Verify | Test evidence -> Runtime/browser evidence -> QA report -> Security/perf checks when relevant -> Verification closeout | addyosmani `test-driven-development`, `browser-testing-with-devtools`, `security-and-hardening`, `performance-optimization`; gstack `qa-only`, `qa`, `browse`, `health`, `cso`, `benchmark`; Ouroboros `qa`, `evaluate`; OMO `review-work` |
+| Build | Context pack -> Contract/source verification -> Slice plan -> Implement -> Local validation -> Checkpoint | `mansu-tdd-total` as the internal build engine under `mansu-build`; OMO `start-work`, `programming`, `ulw-loop`, `lsp` as execution habits; addyosmani `context-engineering`, `source-driven-development`, `incremental-implementation`, `test-driven-development`; gstack `guard`, `careful`, `checkpoint` |
+| Verify | Test evidence -> Runtime/browser evidence -> QA report -> Security/perf checks when relevant -> Review handoff | addyosmani `test-driven-development`, `browser-testing-with-devtools`, `security-and-hardening`, `performance-optimization`; gstack `qa-only`, `qa`, `browse`, `health`, `cso`, `benchmark`; Ouroboros `qa`, `evaluate`; OMO `review-work` |
 | Review | Diff review -> Architecture/design/security critique -> AI-slop/simplification pass -> Root-cause loop for findings -> Re-verify | addyosmani `code-review-and-quality`, `code-simplification`, `debugging-and-error-recovery`, `doubt-driven-development`; gstack `review`, `plan-eng-review`, `plan-design-review`, `design-review`, `investigate`, `cso`; OMO `review-work`, `remove-ai-slops`, `debugging`, `comment-checker` |
+| Debug | Reproduce -> Isolate -> Hypothesize -> Prove root cause -> Minimal fix -> Regression proof | `mansu-debug-rootcause`; OMO `debugging`; addyosmani `debugging-and-error-recovery`, `doubt-driven-development`; gstack `investigate`, `browse`, `qa-only` |
 | Ship | Release readiness -> Version/changelog/docs -> Commit/push/PR/deploy decision -> Canary/monitoring -> Learning handoff | addyosmani `git-workflow-and-versioning`, `ci-cd-and-automation`, `documentation-and-adrs`, `shipping-and-launch`; gstack `ship`, `document-release`, `landing-report`, `setup-deploy`, `land-and-deploy`, `canary`, `retro`, `learn`; Ouroboros `publish`, `status` |
 
 ## Phase Detection

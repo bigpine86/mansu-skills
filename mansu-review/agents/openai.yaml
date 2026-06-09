@@ -1,4 +1,4 @@
 interface:
   display_name: Mansu Review
   short_description: Review quality, maintainability, safety, design, and decision risk.
-  default_prompt: Use $mansu-review to judge the verified change before ship. Review is not QA; route unknown issues to mansu-debug.
+  default_prompt: Use $mansu-review to judge the verified change before ship. Review is not QA; route unknown issues to mansu-debug. End by naming the next route: mansu-ship if review passes, mansu-build then mansu-verify for clear fixes, or mansu-debug for unknown-cause problems.

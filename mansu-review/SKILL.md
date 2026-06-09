@@ -30,3 +30,14 @@ without verification evidence.
 - architectural, design, security, maintainability, and decision risks
 - required fixes or route to `mansu-debug`
 - re-verification needed before ship
+
+## Final guidance
+
+End the response by saying what should happen next.
+
+- If Review passes and Verify evidence exists, tell the user the next step is
+  `mansu-ship`.
+- If Review finds required fixes with a clear path, route back to `mansu-build`
+  and then `mansu-verify`.
+- If Review finds an unknown-cause problem, route to `mansu-debug`.
+- Do not claim ship-ready when required fixes or re-verification remain.

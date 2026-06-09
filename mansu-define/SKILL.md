@@ -36,5 +36,16 @@ Produce or update only the definition layer:
 - `AGENTS.md` and `CODING_RULES.md` candidates when the project needs operating rules
 - handoff notes for `mansu-plan`
 
+## Final guidance
+
+End the response by saying whether Define is complete.
+
+- If Define is complete, tell the user the next step is `mansu-plan` to turn the
+  definition into requirements/spec, architecture, design direction, roadmap,
+  and the current phase execution plan.
+- If Define is incomplete, name the missing definition evidence before any
+  planning.
+- Do not suggest `mansu-build` directly from Define.
+
 Do not start implementation. If a build request appears during Define, finish
 the definition gate and route to `mansu-plan` first.

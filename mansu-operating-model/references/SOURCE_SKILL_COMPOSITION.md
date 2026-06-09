@@ -8,6 +8,9 @@ Canonical lifecycle:
 Define -> Plan -> Build -> Verify -> Review -> Ship
 ```
 
+`mansu-debug` is a public special-purpose interrupt route for unknown failures,
+not a normal lifecycle phase.
+
 Mansu does not choose one source family forever. It chooses the source skill that
 best fits the current phase, then keeps Mansu-owned gates, evidence, and final
 judgment visible.
@@ -31,8 +34,8 @@ it must not appear as a phase source or replace Mansu's source-skill routing.
 | `mansu-define` | Idea intake -> User/problem interview -> Requirements -> Acceptance criteria -> Source-of-truth seed | addyosmani `interview-me`, `idea-refine`, `spec-driven-development`; Ouroboros `interview`, `pm`, `seed`, `brownfield`; gstack `office-hours`, `plan-ceo-review` |
 | `mansu-plan` | Requirements/Spec -> Architecture -> Design Direction -> Implementation Roadmap | addyosmani `spec-driven-development`, `planning-and-task-breakdown`, `api-and-interface-design`, `source-driven-development`; OMO `ulw-plan`; gstack `autoplan`, `plan-ceo-review`, `plan-eng-review`, `plan-devex-review`, `gstack-plan-design-review` |
 | Design inside `mansu-plan` | Reference discovery -> Design system/artifact -> Variant exploration -> Design review -> Build handoff | OMO research/deepsearch when available; Open Design; VoltAgent/awesome-design-md; gstack `gstack-design-consultation`, `gstack-design-shotgun`, `gstack-plan-design-review`, `gstack-design-html`; addyosmani `frontend-ui-engineering` |
-| `mansu-build` | Context pack -> Contract/source verification -> Slice plan -> Implement -> Local validation -> Checkpoint | `mansu-tdd-total` as the default build orchestrator; addyosmani `context-engineering`, `source-driven-development`, `incremental-implementation`, `test-driven-development`; OMO `start-work`, `programming`, `ulw-loop`, `lsp`; gstack `guard`, `careful`, `checkpoint` |
-| `mansu-verify` | Test evidence -> Runtime/browser evidence -> QA report -> Security/perf checks -> Closeout | addyosmani `test-driven-development`, `browser-testing-with-devtools`, `security-and-hardening`, `performance-optimization`; gstack `qa-only`, `qa`, `browse`, `health`, `cso`, `benchmark`; Ouroboros `qa`, `evaluate`; OMO `review-work` |
+| `mansu-build` | Context pack -> Contract/source verification -> Slice plan -> Implement -> Local validation -> Checkpoint | `mansu-tdd-total` as the internal build engine under `mansu-build`; addyosmani `context-engineering`, `source-driven-development`, `incremental-implementation`, `test-driven-development`; OMO `start-work`, `programming`, `ulw-loop`, `lsp`; gstack `guard`, `careful`, `checkpoint` |
+| `mansu-verify` | Test evidence -> Runtime/browser evidence -> QA report -> Security/perf checks -> Review handoff | addyosmani `test-driven-development`, `browser-testing-with-devtools`, `security-and-hardening`, `performance-optimization`; gstack `qa-only`, `qa`, `browse`, `health`, `cso`, `benchmark`; Ouroboros `qa`, `evaluate`; OMO `review-work` |
 | `mansu-review` | Diff review -> Architecture/design/security critique -> AI-slop/simplification pass -> Root-cause loop -> Re-verify | addyosmani `code-review-and-quality`, `code-simplification`, `debugging-and-error-recovery`, `doubt-driven-development`; gstack `review`, `plan-eng-review`, `plan-design-review`, `design-review`, `investigate`, `cso`; OMO `review-work`, `remove-ai-slops`, `debugging`, `comment-checker` |
 | `mansu-debug` | Reproduce -> Isolate -> Hypothesize -> Prove root cause -> Minimal fix -> Regression proof | `mansu-debug-rootcause`; OMO `debugging`; addyosmani `debugging-and-error-recovery`, `doubt-driven-development`; gstack `investigate`, `browse`, `qa-only` |
 | `mansu-ship` | Release readiness -> Version/changelog/docs -> Commit/push/PR/deploy decision -> Canary -> Learning handoff | `mansu-ship-release`; addyosmani `git-workflow-and-versioning`, `ci-cd-and-automation`, `documentation-and-adrs`, `shipping-and-launch`; gstack `ship`, `document-release`, `land-and-deploy`, `canary`, `retro`, `learn`; Ouroboros `publish`, `status` |
@@ -45,7 +48,7 @@ it must not appear as a phase source or replace Mansu's source-skill routing.
 | addyosmani planning vs OMO `ulw-plan` vs gstack `autoplan` | Use addyosmani for engineering phase discipline, OMO for decomposition mechanics, and gstack for specialist critique. | Draft with addyosmani/OMO, then send the plan through gstack reviewers before Build. |
 | Open Design vs design-md vs gstack design skills | Use Open Design for callable artifact generation, design-md for `DESIGN.md` grammar, and gstack for critique/options. | Research references, create or update design artifact, compare options, then run plan-stage design review. |
 | `mansu-tdd-total` vs OMO build modes | Use `mansu-tdd-total` for Mansu build governance; use OMO modes as execution habits inside a slice. | Mansu owns slice gates and evidence; OMO can accelerate the actual execution path. |
-| gstack QA vs addyosmani verification | Use addyosmani to choose the verification style; use gstack to act as independent QA/browser/security/perf specialist. | Verify proves behavior; Review judges quality. Do not merge these gates. |
+| gstack QA vs addyosmani verification | Use addyosmani to choose the verification style; use gstack to act as independent QA/browser/security/perf specialist. | Verify proves behavior; Review judges quality. Do not merge these gates conceptually, but run `mansu-verify -> mansu-review` as a continuous sequence by default when verification passes. |
 
 ## Composition Routes
 
@@ -63,5 +66,6 @@ it must not appear as a phase source or replace Mansu's source-skill routing.
 - Design is part of Plan for user-facing products, not an afterthought during Build.
 - Verify proves behavior with evidence.
 - Review judges quality, maintainability, security, design risk, and decision risk.
+- Passing Verify hands off to Review by default; failed or incomplete Verify stops before Review.
 - Debug is a special route that can interrupt any phase when the cause is unknown.
 - LazyCodex is runtime transport and must not appear as a phase source.

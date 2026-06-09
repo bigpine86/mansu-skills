@@ -1,4 +1,4 @@
 interface:
   display_name: Mansu Define
   short_description: Define project purpose, requirements, and source of truth before planning.
-  default_prompt: Use $mansu-define to define the project before planning or implementation.
+  default_prompt: Use $mansu-define to define the project before planning or implementation. End by stating whether Define is complete; if complete, tell the user to use mansu-plan next, and never jump directly to mansu-build.

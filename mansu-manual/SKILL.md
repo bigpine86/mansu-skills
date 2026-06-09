@@ -13,9 +13,13 @@ static artifact that lives in `docs/mansu-manual.html`.
 ## Core promise
 
 - Open the single self-contained HTML manual when the environment supports local HTML.
+- Open through `scripts/open-manual.sh` first; do not hand-roll shell/browser
+  open logic when the script is available.
 - If opening is unavailable, point the user to the exact manual path.
 - Explain Mansu in beginner-friendly Korean.
-- Put the development lifecycle flow first: Define -> Plan -> Build -> Verify -> Review -> Ship.
+- Put the development process flow first: Define -> Plan -> Build -> Verify -> Review -> Ship.
+- Explain `mansu-debug` as a public special-purpose interrupt route, not as a
+  normal lifecycle phase.
 - Keep top-level `mansu-*` skills in their own `Mansu Skill` tab.
 - Keep source-family details in the skill catalog, without duplicating Mansu's own top-level skills there.
 - Keep an agent-facing routing map in the manual for entry, setup, help, and maintenance flows.
@@ -43,7 +47,7 @@ skills, read enough of the manual to confirm:
 - the `Mansu Skill` tab exists and lists top-level lifecycle skills: `mansu-define`, `mansu-plan`, `mansu-build`, `mansu-verify`, `mansu-review`, `mansu-debug`, and `mansu-ship`
 - the `스킬 카탈로그` tab exists and is grouped by source family first, then purpose
 - the runtime adapter mapping is visible: Codex -> LazyCodex / OMO with `omx` fallback, OpenCode/Hermes -> `omo`, Claude Code -> `omc`
-- the lifecycle tab still points beginners to `mansu-help` first
+- the development process tab still points beginners to `mansu-help` first
 
 Do not parse the whole HTML when targeted checks are enough. When the user
 invokes `mansu-manual`, treat that as a request to view the manual and open the
@@ -62,11 +66,27 @@ supports opening local HTML. Then provide the path and a short explanation. If
 opening local HTML is unavailable, provide the exact path and say it was not
 opened.
 
+## Opener script
+
+Use this script first:
+
+```bash
+mansu-manual/scripts/open-manual.sh
+```
+
+The script supports both repo layout and installed runtime layout:
+
+- repo: `docs/mansu-manual.html`
+- installed skill: `mansu-manual/docs/mansu-manual.html`
+
+It prints `OPENED:{absolute-path}` when the manual was opened. If no local open
+command is available, it prints `OPEN_UNAVAILABLE:{absolute-path}` and exits 2.
+
 ## Workflow
 
 1. Locate the Mansu repo root.
 2. Confirm `docs/mansu-manual.html` exists.
-3. Open `docs/mansu-manual.html` with the local browser/open mechanism when available.
+3. Run `mansu-manual/scripts/open-manual.sh` when available.
 4. Report the manual path and what it contains.
 5. If the manual is stale, update the static HTML file directly as part of the
    same change that added or renamed a skill.
@@ -80,8 +100,9 @@ update `docs/mansu-manual.html` in the same change.
 The HTML manual must include:
 
 - What Mansu is, in plain language.
-- Development lifecycle flow from first help/setup through Define, Plan, Build,
-  Verify, Review, Debug, Ship, and maintenance.
+- Development process flow from first help/setup through Define, Plan, Build,
+  Verify, Review, Ship, and maintenance.
+- `mansu-debug` shown separately as an interrupt route for unknown failures.
 - `Mansu Skill` tab for directly callable top-level `mansu-*` skills.
 - Agent guide tab explaining how agents should route Mansu work before acting.
 - Skill cards for every top-level `mansu-*` skill.

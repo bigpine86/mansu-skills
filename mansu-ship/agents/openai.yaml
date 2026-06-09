@@ -1,4 +1,4 @@
 interface:
   display_name: Mansu Ship
   short_description: Make ship/hold decisions and coordinate release readiness.
-  default_prompt: Use $mansu-ship to decide ship or hold only after verification evidence and review/risk notes exist. If they are missing, route back to mansu-verify or mansu-review.
+  default_prompt: Use $mansu-ship to decide ship or hold only after verification evidence and review/risk notes exist. If they are missing, route back to mansu-verify or mansu-review. End with a clear ship/hold status and the next route if held.

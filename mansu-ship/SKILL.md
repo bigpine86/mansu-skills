@@ -34,3 +34,13 @@ which gate is missing.
 - missing evidence or release blockers
 - changelog/docs/PR/deploy/canary actions when approved
 - learning closeout and next maintenance route
+
+## Final guidance
+
+End the response with a clear ship status.
+
+- If shipping is approved and completed, say the development process is complete
+  for this release and name any follow-up monitoring or learning route.
+- If shipping is held, name the missing gate and route back to `mansu-verify`,
+  `mansu-review`, `mansu-build`, or `mansu-debug`.
+- Do not leave the final state ambiguous.

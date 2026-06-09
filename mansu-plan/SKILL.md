@@ -40,8 +40,26 @@ Requirements/Spec -> Architecture -> Design Direction -> Implementation Roadmap
 - architecture and interface notes
 - design direction or explicit no-design-needed reason
 - full project phase map
-- current phase `PLAN.md` with slice boundaries, validation gates, risks, and
-  handoff to `mansu-build`
+- current phase execution plan with slice boundaries, validation gates, risks,
+  and handoff to `mansu-build`
 
-Do not skip directly to Build unless a current phase plan already exists and is
-still valid.
+The preferred filename is `PLAN.md`, but Mansu must also support active plans in
+`Plan.md`, `.codex/plans/*.md`, `.omo/plans/*.md`, or another concrete path the
+user references. If an existing roadmap file already identifies the next active
+phase, `mansu-plan` may update that file or derive a clearer phase plan from it;
+do not force a new file merely because the plan is not named `PLAN.md`.
+
+Do not skip directly to Build unless a current phase execution plan already
+exists and is still valid.
+
+## Final guidance
+
+End the response by saying whether Plan is complete.
+
+- If Plan is complete, tell the user the next step is `mansu-build` to implement
+  the current phase through slices.
+- If Plan is incomplete, name the missing plan evidence: requirements/spec,
+  architecture/interface notes, design direction or no-design-needed reason,
+  phase map, or current phase execution plan.
+- Do not suggest `mansu-verify` or `mansu-ship` before `mansu-build` has
+  produced implementation evidence.

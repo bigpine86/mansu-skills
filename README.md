@@ -51,6 +51,19 @@ Bootstrap only `mansu-setup` first, then let that skill install and sync the res
 chooses the correct skill directory, installs or updates Ouroboros, gstack, and the matching
 Oh My adapter, then verifies adapter compatibility.
 
+### Development Process
+
+`Define -> Plan -> Build -> Verify -> Review -> Ship`
+
+| Phase | Plain meaning | Explanation |
+| --- | --- | --- |
+| Define | Decide what to build | Clarify the problem, needed features, scope, and finish line. |
+| Plan | Turn it into work | Decide what to build first, how to implement it, and the order of tasks. |
+| Build | Make it | Write code, build screens, store data, and implement behavior. |
+| Verify | Check that it works | Test buttons, inputs, save/load paths, error cases, browser behavior, and other real usage. Passing verification continues into Review by default. |
+| Review | Check the result | Look for complexity, missed requirements, weak UX, risky code, and maintainability problems. |
+| Ship | Release it | Put the verified and reviewed work where users can use it, with release notes or usage guidance when needed. |
+
 ```bash
 git clone https://github.com/bigpine86/mansu-agentic-dev.git
 cd mansu-agentic-dev
@@ -150,7 +163,8 @@ This creates the Mansu flywheel:
 - Keep only the essential Mansu guardrails in `mansu-*`.
 - Refresh the source map as better skills and newer patterns appear.
 
-The broad development flow follows the addyosmani/agent-skills Define -> Plan -> Build -> Verify -> Review -> Ship phase map.
+The broad development flow follows the Mansu public lifecycle: Define -> Plan -> Build -> Verify -> Review -> Ship.
+`mansu-debug` is a public special-purpose interrupt route for unknown failures, not a normal lifecycle phase.
 Mansu does not copy that sequence mechanically. It chooses the needed source skill based on the current phase and risk.
 Actual code construction order is not hardcoded. `mansu-operating-model/references/CODE_CONSTRUCTION_ORDER.md`
 detects the current development phase and routes to the relevant addyosmani/agent-skills phase skill plus gstack, Oh My, or Ouroboros support routes.
@@ -226,14 +240,13 @@ See [MANSU_PHILOSOPHY.md](./MANSU_PHILOSOPHY.md) for the full doctrine.
 | Skill | Use when | Core idea |
 | --- | --- | --- |
 | `mansu-help` | You are new, unsure what to do next, or need the safest Mansu route. | Beginner-friendly route helper |
-| `mansu-manual` | You want the visual HTML guide at `docs/mansu-manual.html`. | Beginner-friendly HTML manual |
 | `mansu-setup` | You need install, source health checks, update, runtime target detection, source tool setup, skill sync, repair, or adapter compatibility checks. | Runtime-target bootstrap and read-only check/update gate |
 | `mansu-source-curator` | Drift was confirmed and Mansu references/validators/manual/worklog must be refreshed. | Hidden source-reference maintenance |
 | `mansu-define` | You are starting a new product, app, repo, or major feature family and need source-skill interview, requirements, acceptance criteria, and source-of-truth artifacts. | Define phase |
 | `mansu-plan` | You need requirements/spec, architecture, design direction, phase roadmap, and current phase `PLAN.md`. | Plan phase |
 | `mansu-operating-model` | You are defining project behavior, role separation, evidence rules, `AGENTS.md`, or `CODING_RULES.md`. | Canonical doctrine and project-document templates |
 | `mansu-build` | You are implementing a feature or refactor and need `mansu-tdd-total` slice execution. | Build phase |
-| `mansu-verify` | You need tests, runtime checks, browser checks, QA evidence, or security/performance proof. | Verify phase |
+| `mansu-verify` | You need tests, runtime checks, browser checks, QA evidence, or security/performance proof; passing verification continues into `mansu-review` by default. | Verify phase |
 | `mansu-review` | You need quality, maintainability, architecture, design, security, or decision-risk review. | Review phase |
 | `mansu-debug` | You need to reproduce, isolate, prove root cause, minimally fix, and regression-test a bug. | Debug route |
 | `mansu-ship` | Implementation is done and you need a ship/hold decision with health, review, QA, docs, PR/deploy/canary, and learning closeout. | Ship phase |
@@ -244,6 +257,7 @@ See [MANSU_PHILOSOPHY.md](./MANSU_PHILOSOPHY.md) for the full doctrine.
 | `mansu-debug-rootcause` | Compatibility route under `mansu-debug`. | Root-cause-first debugger |
 | `mansu-web-verify` | Compatibility route under `mansu-verify` for real-user web checks. | Web verification orchestrator |
 | `mansu-ship-release` | Compatibility route under `mansu-ship`. | Release readiness gate |
+| `mansu-manual` | You want the visual HTML guide at `docs/mansu-manual.html`. | Beginner-friendly HTML manual |
 
 ## Recommended Routing
 
@@ -254,7 +268,7 @@ See [MANSU_PHILOSOPHY.md](./MANSU_PHILOSOPHY.md) for the full doctrine.
 - New project or major feature family: `mansu-define`, then `mansu-plan`
 - Project doctrine, `AGENTS.md`, `CODING_RULES.md`: `mansu-operating-model`
 - Feature or refactor implementation: `mansu-build`
-- Behavior proof, QA, browser/runtime verification: `mansu-verify`
+- Behavior proof, QA, browser/runtime verification, then default review handoff: `mansu-verify`
 - Quality, architecture, design, security, decision-risk review: `mansu-review`
 - High-risk slice with useful RED test: `mansu-tdd-strict`
 - Lower-risk slice where RED is artificial: `mansu-tdd-lite`
@@ -294,8 +308,6 @@ and `scripts/validate_mansu_installed_copies.sh`.
 - [PLAN.md](./PLAN.md): active phase execution plan. Whole-project roadmap and large feature order stay in spec/TDR/design docs.
 - [개발일지.md](./개발일지.md): chronological worklog
 - [mansu-help](./mansu-help/SKILL.md): route helper
-- [mansu-manual](./mansu-manual/SKILL.md): static HTML manual route
-- [mansu-manual.html](./docs/mansu-manual.html): visual manual
 - [mansu-setup](./mansu-setup/SKILL.md): install/update/repair entry point
 - [mansu-source-curator](./mansu-source-curator/SKILL.md): internal source-reference maintenance
 - [mansu-define](./mansu-define/SKILL.md): Define phase
@@ -312,6 +324,8 @@ and `scripts/validate_mansu_installed_copies.sh`.
 - [mansu-debug-rootcause](./mansu-debug-rootcause/SKILL.md): root-cause debugging
 - [mansu-web-verify](./mansu-web-verify/SKILL.md): web verification orchestrator
 - [mansu-ship-release](./mansu-ship-release/SKILL.md): release readiness and ship/hold decision
+- [mansu-manual](./mansu-manual/SKILL.md): static HTML manual route
+- [mansu-manual.html](./docs/mansu-manual.html): visual manual
 - [scripts](./scripts): structure validators
 
 ## What To Expect

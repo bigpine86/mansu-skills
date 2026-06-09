@@ -141,9 +141,11 @@ Use this skill when:
 Before planning, confirm:
 
 - the repository has `git` and write access
-- there is an active plan path, preferably `PLAN.md`
-- for project-started work, `PLAN.md` names the active phase and links to a
-  project roadmap or phase order artifact
+- there is an active plan path: prefer `PLAN.md`, but also recognize `Plan.md`,
+  `.codex/plans/*.md`, `.omo/plans/*.md`, or a concrete plan path the user just
+  referenced
+- for project-started work, the active plan names the active phase and links to
+  a project roadmap or phase order artifact when they are separate
 - there is a completed-work log path, preferably `개발일지.md` when the project uses Korean worklogs
 - review, QA, checkpoint, and commit gates are available or have clear project equivalents
 - if the current host supports subagents, helper sessions, or external critic tools, there is a usable path for real critic review before implementation
@@ -152,13 +154,16 @@ Before planning, confirm:
 - `mansu-tdd-strict` prerequisites are available before assigning strict slices
 
 If the work came from a new product/app/repo/major feature-family kickoff and
-`PLAN.md` does not name an active phase plus its roadmap/phase-order artifact,
+the active plan does not name an active phase plus its roadmap/phase-order artifact,
 do not start implementation. Route back to `mansu-project-start` to create the
 phase roadmap and active phase plan first.
 
-If `PLAN.md` contains the whole project roadmap instead of one active phase,
-split it: keep the roadmap in the spec/TDR/design layer, then derive a phase-only
-`PLAN.md` before slice execution.
+If the active plan file contains the whole project roadmap instead of one active
+phase, inspect it before rejecting it. If it clearly marks the current or next
+phase and contains execution-ready slices and validation gates, use that file as
+the active phase plan. If it only lists the whole roadmap, split it: keep the
+roadmap in the spec/TDR/design layer, then derive a phase-only execution plan
+before slice execution.
 
 An equivalent review, QA, or checkpoint gate must be separately invoked, produce
 status/evidence, and be distinguishable from the builder's self-summary.

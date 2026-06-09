@@ -5,16 +5,29 @@ description: Execute the current phase through Mansu TDD slices while preserving
 
 # Mansu Build
 
-Use this skill when a current phase `PLAN.md` exists and the user wants
+Use this skill when a current phase execution plan exists and the user wants
 implementation, refactoring, or code changes.
+
+The active plan is a role, not a literal filename. Prefer `PLAN.md`, but also
+recognize `Plan.md`, `.codex/plans/*.md`, `.omo/plans/*.md`, or a concrete plan
+path the user just referenced. Do not say "no plan" until these candidates have
+been checked.
 
 `mansu-build` preserves the existing `mansu-tdd-total` behavior as the default
 implementation engine.
 
-If the current phase `PLAN.md` is missing, incomplete, or only contains a
-whole-project roadmap, do not implement; route back to `mansu-define` / `mansu-plan`
-so the active phase, slice boundaries, validation gates, and source skill
-handoff are created first. Do not implement from a whole-project roadmap.
+If the active plan is missing, incomplete, or only contains a whole-project
+roadmap without a current/next phase, do not implement; route back to
+`mansu-define` / `mansu-plan` so the active phase, slice boundaries, validation
+gates, and source skill handoff are created first.
+
+If a roadmap-style file already names the current or next phase and contains
+execution-ready slice boundaries and validation gates, treat that file as the
+active phase plan even when it is not named `PLAN.md`. Do not reject a valid plan
+only because the filename is `.omo/plans/{slug}.md`.
+
+Do not implement from a whole-project roadmap that lacks an active phase and
+slice table.
 
 ## Required references
 
@@ -42,3 +55,15 @@ transport checked by `mansu-setup`, but it does not replace Mansu routing or
 - validation evidence
 - checkpoint and commit/no-commit status
 - next route: `mansu-verify`, `mansu-review`, `mansu-debug`, or next slice
+
+## Final guidance
+
+End the response by saying what should happen next.
+
+- If the active phase still has open slices, tell the user the next step is the
+  next `mansu-build` slice.
+- If implementation for the active phase is complete, tell the user the next
+  step is `mansu-verify` to prove the behavior.
+- If validation failed or the cause is unknown, route to `mansu-debug` before
+  claiming the build is complete.
+- Do not suggest `mansu-ship` directly from Build.

@@ -88,13 +88,16 @@ require_contains "$PROJECT" 'Phase list:' 'project-start report must include pha
 require_contains "$PROJECT" 'Active phase:' 'project-start report must include active phase'
 require_contains "$PROJECT_YAML" 'before calling \$mansu-tdd-total, create or update a repo-visible phase roadmap' 'OpenAI prompt must require phase roadmap before tdd-total'
 
-scenario "Given mansu-tdd-total is invoked directly, When PLAN lacks active phase or roadmap link, Then it routes back to define/plan compatibility kickoff"
+scenario "Given mansu-tdd-total is invoked directly, When the active plan path lacks active phase or roadmap link, Then it routes back to define/plan compatibility kickoff"
 require_contains "$TDD_TOTAL" 'project roadmap or phase order artifact' 'tdd-total must require roadmap artifact for project-started work'
 require_contains "$TDD_TOTAL" 'does not name an active phase plus its roadmap/phase-order artifact' 'tdd-total must detect missing active phase/roadmap'
 require_contains "$TDD_TOTAL" 'Route back to `mansu-project-start`' 'tdd-total must route back instead of implementing'
-require_contains "$TDD_TOTAL" 'contains the whole project roadmap instead of one active phase' 'tdd-total must reject whole-project PLAN'
-require_contains "$TDD_TOTAL_YAML" 'PLAN\.md names one active phase' 'tdd-total OpenAI prompt must require active phase preflight'
-require_contains "$TDD_TOTAL_YAML" 'project roadmap or phase-order artifact' 'tdd-total OpenAI prompt must require roadmap/phase-order artifact'
+require_contains "$TDD_TOTAL" 'inspect it before rejecting it' 'tdd-total must inspect roadmap-style files before rejecting them'
+require_contains "$TDD_TOTAL" 'use that file as[[:space:]]*$' 'tdd-total must accept roadmap-style files when they are active phase plans'
+require_contains "$TDD_TOTAL_YAML" 'find the active plan path first' 'tdd-total OpenAI prompt must find active plan path first'
+require_contains "$TDD_TOTAL_YAML" '\.omo/plans/\*\.md' 'tdd-total OpenAI prompt must check OMO plan paths'
+require_contains "$TDD_TOTAL_YAML" 'do not claim no plan just because the filename differs' 'tdd-total OpenAI prompt must not reject plan by filename'
+require_contains "$TDD_TOTAL_YAML" 'roadmap/phase-order artifact' 'tdd-total OpenAI prompt must require roadmap/phase-order artifact'
 require_contains "$TDD_TOTAL_YAML" 'route back to \$mansu-project-start instead of implementing' 'tdd-total OpenAI prompt must route back to project-start'
 require_contains "$DOC_ORDER" 'Before `mansu-build` / `mansu-tdd-total` starts, `PLAN.md` must name the active phase' 'document router must enforce build/tdd-total preflight'
 

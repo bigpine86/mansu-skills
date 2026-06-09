@@ -57,11 +57,25 @@ Canonical branch: `main`
 Mansu는 개발 단계를 혼자 새로 만들지 않고, 이미 검증된 외부 스킬을 단계별로 오케스트레이트합니다.
 
 - 초기 아이디어와 프로젝트 정의는 Ouroboros의 Seed, Ledger, memory 흐름을 참고합니다.
-- 전체 생애주기는 addyosmani/agent-skills의 Define -> Plan -> Build -> Verify -> Review -> Ship 흐름을 큰 지도로 삼습니다.
+- 전체 개발 프로세스는 Mansu의 Define -> Plan -> Build -> Verify -> Review -> Ship 흐름을 큰 지도로 삼습니다.
+- `mansu-debug`는 정규 phase가 아니라 원인 불명 문제가 생겼을 때 어느 단계에서든 끼어드는 특수 route입니다.
 - 리서치, 병렬 작업, TDD, 디버그 같은 실행 모드는 Oh My / OMO / OMC 계열 스킬을 참고합니다.
 - CEO, 디자인, 엔지니어링, QA, 보안, 성능, 릴리스 판단은 gstack의 전문가 gate를 활용합니다.
 - 디자인 산출물이 필요하면 Open Design과 VoltAgent/awesome-design-md를 참고 route로 삼습니다.
 - 실제 구현은 Codex, Claude Code, OpenCode 같은 현재 coding agent가 맡고, Mansu는 계획과 검증 흐름을 잡습니다.
+
+### 개발 프로세스
+
+`Define -> Plan -> Build -> Verify -> Review -> Ship`
+
+| 단계 | 의미 | 설명 |
+| --- | --- | --- |
+| Define | 정의 | 무엇을 만들지 정하는 단계입니다. 해결하려는 문제, 필요한 기능, 만들 범위, 완료 기준을 명확히 합니다. |
+| Plan | 계획 | 정의한 내용을 실제 작업으로 나누는 단계입니다. 어떤 기능부터 만들지, 어떤 방식으로 구현할지, 필요한 작업 순서를 정합니다. |
+| Build | 구현 | 계획한 내용을 실제로 만드는 단계입니다. 코드를 작성하고, 화면을 만들고, 데이터 저장이나 기능 동작을 구현합니다. |
+| Verify | 검증 | 만든 기능이 의도한 대로 동작하는지 확인하는 단계입니다. 버튼, 입력값, 저장, 조회, 오류 상황 등을 직접 테스트합니다. 통과하면 기본적으로 Review로 이어집니다. |
+| Review | 리뷰 | 결과물을 다시 점검하는 단계입니다. 코드가 너무 복잡하지 않은지, 빠진 요구사항은 없는지, 사용자가 불편할 부분은 없는지 확인합니다. |
+| Ship | 배포 | 검증과 리뷰가 끝난 결과물을 실제 사용자가 쓸 수 있게 내보내는 단계입니다. 운영 환경에 반영하거나 릴리즈하고, 필요하면 사용 안내를 함께 제공합니다. |
 
 ```bash
 git clone https://github.com/bigpine86/mansu-agentic-dev.git
@@ -128,7 +142,7 @@ AI 코딩은 점점 빨라지고 있습니다.
 소프트웨어를 장기적으로 운영하고 유지보수할 수 있게 강건하게 만들려면 기획, 설계, 구현, 테스트, 디버그, 보안, 성능, 릴리스까지 여러 코딩 기술이 함께 필요합니다.
 
 에이전트와 개발을 잘 굴리는 방법은 이미 여러 곳에 흩어져 있습니다.
-- `addyosmani/agent-skills`: define, plan, build, verify, review, ship 생애주기
+- `addyosmani/agent-skills`: define, plan, build, verify, review, ship 개발 프로세스
 - Ouroboros: 초기 프로젝트 정의, memory, Seed, Ledger, 장기 방향
 - Oh My / OMO / OMC: research, ultrawork, ralph, TDD, debug 같은 실행 모드
 - gstack: CEO, design, engineering, QA, security, performance, ship, deploy, learn 같은 전문가 역할과 gate
@@ -162,7 +176,8 @@ Mansu가 좋아지는 방식은 단순합니다.
 - `mansu-*` 안에는 꼭 필요한 guardrail만 남깁니다.
 - 더 좋은 스킬과 새로운 패턴이 나오면 source map을 갱신합니다.
 
-전체 개발 흐름은 addyosmani/agent-skills의 Define -> Plan -> Build -> Verify -> Review -> Ship phase를 큰 지도로 삼습니다.
+전체 개발 흐름은 Mansu의 Define -> Plan -> Build -> Verify -> Review -> Ship phase를 큰 지도로 삼습니다.
+`mansu-debug`는 정규 phase가 아니라 원인 불명 문제를 다루는 interrupt route입니다.
 다만 Mansu는 이 순서를 기계적으로 따르지 않습니다. 현재 단계와 위험도에 맞춰 필요한 source skill을 고르고, 실제 코딩 순서를 오케스트레이트합니다.
 `mansu-operating-model/references/CODE_CONSTRUCTION_ORDER.md`가 현재 개발 phase를 판단하고,
 필요한 addyosmani/agent-skills phase skill과 gstack, Oh My, Ouroboros 보조 route로 연결합니다.
@@ -238,14 +253,13 @@ slice N+1은 slice N이 validation, review, QA, checkpoint, log, commit 또는 n
 | Skill | 언제 쓰나 | 핵심 |
 | --- | --- | --- |
 | `mansu-help` | 초보자이거나 지금 무엇을 해야 할지 모를 때 | 다음 route 추천 |
-| `mansu-manual` | HTML 매뉴얼을 보고 싶을 때 | 시각 매뉴얼 |
 | `mansu-setup` | 설치, 읽기 전용 source health check, 업데이트, runtime 감지, source tool setup, skill sync, repair, adapter compatibility가 필요할 때 | bootstrap/check/update gate |
 | `mansu-source-curator` | drift가 확인되어 Mansu reference, validator, manual, worklog를 갱신해야 할 때 | 내부 source-reference maintenance |
 | `mansu-define` | 새 제품, 앱, 레포, 큰 기능군의 목적, 사용자, 문제, 요구사항, 성공 기준, source of truth를 잡을 때 | Define phase |
 | `mansu-plan` | Requirements/Spec, Architecture, Design Direction, Implementation Roadmap과 phase-level `PLAN.md`가 필요할 때 | Plan phase |
 | `mansu-operating-model` | 프로젝트 행동양식, role separation, evidence rule, `AGENTS.md`, `CODING_RULES.md`를 정할 때 | canonical doctrine |
 | `mansu-build` | 기능/리팩토링을 `mansu-tdd-total` slice로 구현할 때 | Build phase |
-| `mansu-verify` | 테스트, runtime/browser 확인, QA evidence, 보안/성능 증명이 필요할 때 | Verify phase |
+| `mansu-verify` | 테스트, runtime/browser 확인, QA evidence, 보안/성능 증명이 필요할 때. 통과하면 기본적으로 `mansu-review`로 이어집니다. | Verify phase |
 | `mansu-review` | 품질, 유지보수성, 구조, 디자인, 보안, decision risk를 검토할 때 | Review phase |
 | `mansu-debug` | 버그를 재현, 격리, 원인 증명, 최소 수정, 회귀 검증할 때 | Debug route |
 | `mansu-ship` | ship/hold 판단, PR, release docs, deploy/canary, learning closeout이 필요할 때 | Ship phase |
@@ -256,6 +270,7 @@ slice N+1은 slice N이 validation, review, QA, checkpoint, log, commit 또는 n
 | `mansu-debug-rootcause` | `mansu-debug` 아래의 compatibility route | root-cause debugger |
 | `mansu-web-verify` | `mansu-verify` 아래의 실제 사용자 관점 웹 검증 route | web verification |
 | `mansu-ship-release` | `mansu-ship` 아래의 release readiness route | release readiness |
+| `mansu-manual` | HTML 매뉴얼을 보고 싶을 때 | 시각 매뉴얼 |
 
 ## 상황별 선택
 
@@ -266,7 +281,7 @@ slice N+1은 slice N이 validation, review, QA, checkpoint, log, commit 또는 n
 - 새 프로젝트 또는 큰 기능군: `mansu-define`, 그다음 `mansu-plan`
 - project doctrine, `AGENTS.md`, `CODING_RULES.md`: `mansu-operating-model`
 - 기능/리팩토링 구현: `mansu-build`
-- 동작 증명, QA, browser/runtime 검증: `mansu-verify`
+- 동작 증명, QA, browser/runtime 검증, 그다음 기본 review handoff: `mansu-verify`
 - 품질, 구조, 디자인, 보안, decision-risk review: `mansu-review`
 - 위험하고 RED test가 유용한 slice: `mansu-tdd-strict`
 - RED가 억지스러운 낮은 위험 slice: `mansu-tdd-lite`
@@ -304,8 +319,6 @@ MANSU_COMPARE_INSTALLED=1 scripts/validate_mansu_installed_copies.sh /Users/hans
 - [PLAN.md](./PLAN.md): 현재 phase의 active execution plan. 전체 프로젝트 로드맵과 큰 기능 순서는 spec/TDR/design 문서에 둡니다.
 - [개발일지.md](./개발일지.md): 시간순 작업 기록
 - [mansu-help](./mansu-help/SKILL.md): route helper
-- [mansu-manual](./mansu-manual/SKILL.md): 정적 HTML 매뉴얼 안내
-- [mansu-manual.html](./docs/mansu-manual.html): 시각 매뉴얼
 - [mansu-setup](./mansu-setup/SKILL.md): 설치/업데이트/복구 진입점
 - [mansu-source-curator](./mansu-source-curator/SKILL.md): 내부 source-reference 유지보수
 - [mansu-define](./mansu-define/SKILL.md): Define phase
@@ -322,6 +335,8 @@ MANSU_COMPARE_INSTALLED=1 scripts/validate_mansu_installed_copies.sh /Users/hans
 - [mansu-debug-rootcause](./mansu-debug-rootcause/SKILL.md): root-cause 디버그
 - [mansu-web-verify](./mansu-web-verify/SKILL.md): 웹 검증 오케스트레이터
 - [mansu-ship-release](./mansu-ship-release/SKILL.md): release readiness와 ship/hold 판단
+- [mansu-manual](./mansu-manual/SKILL.md): 정적 HTML 매뉴얼 안내
+- [mansu-manual.html](./docs/mansu-manual.html): 시각 매뉴얼
 - [scripts](./scripts): 구조 검증 스크립트
 
 ## 사용 기준
