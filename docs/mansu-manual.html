@@ -1008,11 +1008,11 @@
               <span class="pill">시작</span>
               <h3>현재 작업을 분류한다</h3>
               <p>설치, 기획, 구현, 디버그, 검증, 출하 중 어디에 있는지 잡습니다.</p>
-              <p><strong>사용:</strong> <code>$mansu-help</code></p>
+              <p><strong>사용:</strong> <code>$mansu-0help</code></p>
             </div>
             <div class="phase-command">
 	              <span>Mansu Skill</span>
-	              <pre>mansu-help</pre>
+		              <pre>mansu-0help</pre>
             </div>
           </article>
 
@@ -1021,11 +1021,11 @@
               <span class="pill">준비</span>
               <h3>도구와 스킬을 준비한다</h3>
               <p>Mansu, Ouroboros, gstack, Oh My 계열 도구를 현재 환경에 맞춥니다.</p>
-              <p><strong>사용:</strong> <code>$mansu-setup</code></p>
+              <p><strong>사용:</strong> <code>$mansu-9setup</code></p>
             </div>
             <div class="phase-command">
 	              <span>Mansu Skill</span>
-	              <pre>mansu-setup</pre>
+		              <pre>mansu-9setup</pre>
             </div>
           </article>
 
@@ -1034,11 +1034,11 @@
               <span class="pill">Define</span>
               <h3>무엇을 만들지 정의한다</h3>
               <p>해결하려는 문제, 필요한 기능, 만들 범위, 완료 기준을 명확히 합니다.</p>
-              <p><strong>사용:</strong> <code>$mansu-define</code></p>
+              <p><strong>사용:</strong> <code>$mansu-1define</code></p>
             </div>
             <div class="phase-command">
 		              <span>Mansu Skill</span>
-		              <pre>mansu-define</pre>
+			              <pre>mansu-1define</pre>
             </div>
           </article>
 
@@ -1047,11 +1047,11 @@
               <span class="pill">Plan</span>
               <h3>작업 순서를 정한다</h3>
               <p>어떤 기능부터 만들지, 어떤 방식으로 구현할지, 필요한 작업 순서를 정합니다.</p>
-              <p><strong>사용:</strong> <code>$mansu-plan</code></p>
+              <p><strong>사용:</strong> <code>$mansu-2plan</code></p>
             </div>
             <div class="phase-command">
 		              <span>Mansu Skill</span>
-		              <pre>mansu-plan</pre>
+			              <pre>mansu-2plan</pre>
             </div>
           </article>
 
@@ -1060,11 +1060,11 @@
               <span class="pill">Build</span>
               <h3>계획한 내용을 만든다</h3>
               <p>코드를 작성하고, 화면을 만들고, 데이터 저장이나 기능 동작을 구현합니다.</p>
-              <p><strong>사용:</strong> <code>$mansu-build</code></p>
+              <p><strong>사용:</strong> <code>$mansu-3build</code></p>
             </div>
             <div class="phase-command">
 		              <span>Mansu Skill</span>
-		              <pre>mansu-build</pre>
+			              <pre>mansu-3build</pre>
             </div>
           </article>
 
@@ -1073,11 +1073,11 @@
               <span class="pill">Verify</span>
               <h3>동작을 증거로 확인한다</h3>
               <p>버튼, 입력값, 저장, 조회, 오류 상황이 의도한 대로 동작하는지 직접 확인합니다.</p>
-              <p><strong>사용:</strong> <code>$mansu-verify</code></p>
+              <p><strong>사용:</strong> <code>$mansu-4verify</code></p>
             </div>
             <div class="phase-command">
 		              <span>Mansu Skill</span>
-		              <pre>mansu-verify</pre>
+			              <pre>mansu-4verify</pre>
             </div>
           </article>
 
@@ -1086,11 +1086,11 @@
               <span class="pill">Review</span>
               <h3>결과물을 다시 점검한다</h3>
               <p>코드가 복잡하지 않은지, 빠진 요구사항은 없는지, 사용자가 불편할 부분은 없는지 확인합니다.</p>
-              <p><strong>사용:</strong> <code>$mansu-review</code></p>
+              <p><strong>사용:</strong> <code>$mansu-5review</code></p>
             </div>
             <div class="phase-command">
 		              <span>Mansu Skill</span>
-		              <pre>mansu-review</pre>
+			              <pre>mansu-5review</pre>
             </div>
           </article>
 
@@ -1099,11 +1099,11 @@
               <span class="pill">Ship</span>
               <h3>사용자가 쓰게 내보낸다</h3>
               <p>검증과 리뷰가 끝난 결과물을 운영 환경에 반영하거나 릴리즈합니다.</p>
-              <p><strong>사용:</strong> <code>$mansu-ship</code></p>
+              <p><strong>사용:</strong> <code>$mansu-6ship</code></p>
             </div>
             <div class="phase-command">
 		              <span>Mansu Skill</span>
-		              <pre>mansu-ship</pre>
+			              <pre>mansu-6ship</pre>
             </div>
           </article>
 
@@ -1126,13 +1126,13 @@
           <p class="inspector-kicker">내부 흐름</p>
 
 	          <div class="detail-card is-active" data-detail-card="help">
-	            <h3>$mansu-help</h3>
+	            <h3>$mansu-0help</h3>
 	            <p>현재 작업을 분류하고 바로 쓸 Mansu 스킬을 고릅니다.</p>
 		            <div class="source-routes">
 		              <strong>조합하는 원천</strong>
 		              <ul class="route-list">
 		                <li><code>Mansu selector</code><em>현재 작업을 분류하고 맞는 Mansu 스킬로 연결합니다.</em></li>
-				                <li><code>mansu-define</code> → <code>mansu-plan</code> → <code>mansu-build</code> → <code>mansu-verify</code> → <code>mansu-review</code> → <code>mansu-ship</code><em>현재 작업을 개발 프로세스에 맞춰 연결합니다. 원인 불명 문제는 중간에 <code>mansu-debug</code>로 원인부터 찾습니다.</em></li>
+				                <li><code>mansu-1define</code> → <code>mansu-2plan</code> → <code>mansu-3build</code> → <code>mansu-4verify</code> → <code>mansu-5review</code> → <code>mansu-6ship</code><em>현재 작업을 개발 프로세스에 맞춰 연결합니다. 원인 불명 문제는 중간에 <code>mansu-debug</code>로 원인부터 찾습니다.</em></li>
 		              </ul>
 		            </div>
 	            <ul>
@@ -1145,7 +1145,7 @@
           </div>
 
 	          <div class="detail-card" data-detail-card="setup">
-	            <h3>$mansu-setup</h3>
+	            <h3>$mansu-9setup</h3>
 	            <p>필요한 도구와 스킬을 현재 런타임에 맞게 준비합니다.</p>
 		            <div class="source-routes">
 		              <strong>조합하는 원천</strong>
@@ -1166,8 +1166,8 @@
           </div>
 
 	          <div class="detail-card" data-detail-card="define">
-		            <h3>$mansu-define</h3>
-			            <p>큰 작업을 시작하기 전에 목적, 사용자, 문제, 성공 기준, source of truth를 잡습니다. 정의가 끝나면 다음 단계로 <code>mansu-plan</code>을 안내합니다.</p>
+		            <h3>$mansu-1define</h3>
+			            <p>큰 작업을 시작하기 전에 목적, 사용자, 문제, 성공 기준, source of truth를 잡습니다. 정의가 끝나면 다음 단계로 <code>mansu-2plan</code>을 안내합니다.</p>
 		            <div class="source-routes">
 		              <strong>조합하는 원천</strong>
 		              <ul class="route-list">
@@ -1181,14 +1181,14 @@
 		              <li>사용자의 아이디어와 실제 문제를 분리합니다.</li>
 		              <li>목표 사용자, 성공 기준, 제약, source of truth를 정리합니다.</li>
 		              <li>기존 코드가 있으면 brownfield로 현재 상태를 읽습니다.</li>
-	              <li>구현하지 않고 <code>mansu-plan</code>으로 넘깁니다.</li>
+	              <li>구현하지 않고 <code>mansu-2plan</code>으로 넘깁니다.</li>
 	            </ul>
-	            <div class="artifact-list"><span>산출물: definition brief</span><span>산출물: acceptance criteria</span><span>산출물: mansu-plan handoff</span></div>
+	            <div class="artifact-list"><span>산출물: definition brief</span><span>산출물: acceptance criteria</span><span>산출물: mansu-2plan handoff</span></div>
 	          </div>
 
 		          <div class="detail-card" data-detail-card="plan">
-		            <h3>$mansu-plan</h3>
-			            <p>정의된 프로젝트를 요구사항, 아키텍처, 디자인 방향, 구현 로드맵, 현재 phase 실행 계획으로 바꿉니다. 계획이 끝나면 다음 단계로 <code>mansu-build</code>를 안내합니다.</p>
+		            <h3>$mansu-2plan</h3>
+			            <p>정의된 프로젝트를 요구사항, 아키텍처, 디자인 방향, 구현 로드맵, 현재 phase 실행 계획으로 바꿉니다. 계획이 끝나면 다음 단계로 <code>mansu-3build</code>를 안내합니다.</p>
 			            <div class="source-routes">
 			              <strong>조합하는 원천</strong>
 			              <ul class="route-list">
@@ -1202,14 +1202,14 @@
 		              <li>Requirements/Spec → Architecture → Design Direction → Implementation Roadmap 순서로 잡습니다.</li>
 		              <li>큰 phase map과 정확히 하나의 현재/다음 phase를 고릅니다.</li>
 	              <li>활성 계획은 <code>PLAN.md</code>뿐 아니라 <code>.omo/plans/*.md</code> 같은 경로도 인정합니다.</li>
-	              <li>slice boundaries, validation gates, risks를 명확히 한 뒤 <code>mansu-build</code>로 넘깁니다.</li>
+	              <li>slice boundaries, validation gates, risks를 명확히 한 뒤 <code>mansu-3build</code>로 넘깁니다.</li>
 	            </ul>
 	            <div class="artifact-list"><span>산출물: phase map</span><span>산출물: design direction</span><span>산출물: active phase execution plan</span></div>
 	          </div>
 
 		          <div class="detail-card" data-detail-card="build">
-		            <h3>$mansu-build</h3>
-			            <p>활성 phase 실행 계획을 기준으로 실제 구현에 들어갑니다. 내부 구현 엔진은 <code>mansu-tdd-total</code>입니다. 구현이 끝나면 다음 단계로 <code>mansu-verify</code>를 안내합니다.</p>
+		            <h3>$mansu-3build</h3>
+			            <p>활성 phase 실행 계획을 기준으로 실제 구현에 들어갑니다. 내부 구현 엔진은 <code>mansu-tdd-total</code>입니다. 구현이 끝나면 다음 단계로 <code>mansu-4verify</code>를 안내합니다.</p>
 			            <div class="source-routes">
 			              <strong>조합하는 원천</strong>
 			              <ul class="route-list">
@@ -1253,8 +1253,8 @@
           </div>
 
 		          <div class="detail-card" data-detail-card="verify">
-		            <h3>$mansu-verify</h3>
-			            <p>구현이 실제로 맞는지 테스트, 런타임, 브라우저, QA evidence로 증명합니다. 통과하면 기본적으로 <code>mansu-review</code>를 이어 실행합니다.</p>
+		            <h3>$mansu-4verify</h3>
+			            <p>구현이 실제로 맞는지 테스트, 런타임, 브라우저, QA evidence로 증명합니다. 통과하면 기본적으로 <code>mansu-5review</code>를 이어 실행합니다.</p>
 		            <div class="source-routes">
 		              <strong>조합하는 원천</strong>
 		              <ul class="route-list">
@@ -1269,15 +1269,15 @@
 	            <ul>
 		              <li>테스트, 실행 결과, 브라우저 확인을 증거로 남깁니다.</li>
 			              <li>수정 없이 현재 동작을 먼저 증명합니다.</li>
-		              <li>검증이 통과하면 <code>mansu-review</code>로 이어가고, 실패하거나 증거가 부족하면 멈춥니다.</li>
+		              <li>검증이 통과하면 <code>mansu-5review</code>로 이어가고, 실패하거나 증거가 부족하면 멈춥니다.</li>
 	              <li>문제를 재현 가능한 형태로 정리하고 필요하면 <code>mansu-debug</code>로 넘깁니다.</li>
 	            </ul>
 		            <div class="artifact-list"><span>산출물: QA evidence</span><span>산출물: 재현 단계와 위험도</span><span>산출물: review handoff</span></div>
 	          </div>
 
 		          <div class="detail-card" data-detail-card="review">
-		            <h3>$mansu-review</h3>
-			            <p>검증된 변경을 품질, 구조, 보안, 디자인, 유지보수, 의사결정 리스크 관점으로 판단합니다. Review는 QA를 대체하지 않습니다. 리뷰가 통과하면 다음 단계로 <code>mansu-ship</code>을 안내합니다.</p>
+		            <h3>$mansu-5review</h3>
+			            <p>검증된 변경을 품질, 구조, 보안, 디자인, 유지보수, 의사결정 리스크 관점으로 판단합니다. Review는 QA를 대체하지 않습니다. 리뷰가 통과하면 다음 단계로 <code>mansu-6ship</code>을 안내합니다.</p>
 			            <div class="source-routes">
 			              <strong>조합하는 원천</strong>
 			              <ul class="route-list">
@@ -1295,7 +1295,7 @@
 	          </div>
 
 		          <div class="detail-card" data-detail-card="ship">
-		            <h3>$mansu-ship</h3>
+		            <h3>$mansu-6ship</h3>
 		            <p>검증과 리뷰 뒤 실제로 내보낼 수 있는지 ship/hold를 판단합니다. release 실행은 필요할 때 <code>mansu-ship-release</code>로 연결합니다.</p>
 		            <div class="source-routes">
 		              <strong>조합하는 원천</strong>
@@ -1332,16 +1332,25 @@
                 <h3>직접 호출하는 스킬</h3>
                 <p>각 스킬이 무엇을 위해 존재하는지, 내부에서 무엇을 조합하는지, 어떤 결과를 남기는지 확인합니다.</p>
                 <div class="skill-grid">
-                  <article class="skill-card mansu-skill-card is-active" id="mansu-help" data-mansu-detail="mansu-help" role="button" tabindex="0" aria-pressed="true"><strong><code>$mansu-help</code></strong><p>현재 작업을 분류하고 바로 쓸 Mansu 스킬을 고릅니다.</p></article>
-                  <article class="skill-card mansu-skill-card" id="mansu-setup" data-mansu-detail="mansu-setup" role="button" tabindex="0" aria-pressed="false"><strong><code>$mansu-setup</code></strong><p>설치, 업데이트, 런타임, 원천 도구 상태를 먼저 확인합니다.</p></article>
+                  <article class="skill-card mansu-skill-card is-active" id="mansu-0help" data-mansu-detail="mansu-help" role="button" tabindex="0" aria-pressed="true"><strong><code>$mansu-0help</code></strong><p>현재 작업을 분류하고 바로 쓸 Mansu 스킬을 고릅니다.</p></article>
+                  <article class="skill-card mansu-skill-card" id="mansu-1define" data-mansu-detail="mansu-define" role="button" tabindex="0" aria-pressed="false"><strong><code>$mansu-1define</code></strong><p>목적, 사용자, 문제, 요구사항, 성공 기준을 source skill로 정의합니다.</p></article>
+                  <article class="skill-card mansu-skill-card" id="mansu-2plan" data-mansu-detail="mansu-plan" role="button" tabindex="0" aria-pressed="false"><strong><code>$mansu-2plan</code></strong><p>Requirements/Spec, Architecture, Design Direction, Roadmap을 만듭니다.</p></article>
+                  <article class="skill-card mansu-skill-card" id="mansu-3build" data-mansu-detail="mansu-build" role="button" tabindex="0" aria-pressed="false"><strong><code>$mansu-3build</code></strong><p><code>mansu-tdd-total</code>을 기본 엔진으로 현재 phase를 구현합니다.</p></article>
+                  <article class="skill-card mansu-skill-card" id="mansu-4verify" data-mansu-detail="mansu-verify" role="button" tabindex="0" aria-pressed="false"><strong><code>$mansu-4verify</code></strong><p>테스트, 브라우저, 런타임, QA evidence로 동작을 증명합니다.</p></article>
+                  <article class="skill-card mansu-skill-card" id="mansu-5review" data-mansu-detail="mansu-review" role="button" tabindex="0" aria-pressed="false"><strong><code>$mansu-5review</code></strong><p>품질, 구조, 디자인, 보안, 의사결정 리스크를 검토합니다.</p></article>
+                  <article class="skill-card mansu-skill-card" id="mansu-6ship" data-mansu-detail="mansu-ship" role="button" tabindex="0" aria-pressed="false"><strong><code>$mansu-6ship</code></strong><p>검증과 리뷰 뒤 ship/hold, PR, 배포, 학습 마감을 판단합니다.</p></article>
+                  <article class="skill-card mansu-skill-card" id="mansu-9setup" data-mansu-detail="mansu-setup" role="button" tabindex="0" aria-pressed="false"><strong><code>$mansu-9setup</code></strong><p>설치, 업데이트, 런타임, 원천 도구 상태를 먼저 확인합니다.</p></article>
+                  <article class="skill-card mansu-skill-card" id="mansu-0manual" data-mansu-detail="mansu-manual" role="button" tabindex="0" aria-pressed="false"><strong><code>$mansu-0manual</code></strong><p>이 HTML 매뉴얼 위치를 알려주고 내용을 설명합니다.</p></article>
+                  <article class="skill-card mansu-skill-card" id="mansu-help" data-mansu-detail="mansu-help" role="button" tabindex="0" aria-pressed="false"><strong><code>$mansu-help</code></strong><p><code>mansu-0help</code>의 compatibility alias입니다.</p></article>
+                  <article class="skill-card mansu-skill-card" id="mansu-setup" data-mansu-detail="mansu-setup" role="button" tabindex="0" aria-pressed="false"><strong><code>$mansu-setup</code></strong><p><code>mansu-9setup</code>의 compatibility alias입니다.</p></article>
                   <article class="skill-card mansu-skill-card" id="mansu-source-curator" data-mansu-detail="mansu-source-curator" role="button" tabindex="0" aria-pressed="false"><strong><code>$mansu-source-curator</code></strong><p>drift 확인 후 Mansu 레퍼런스 지도를 갱신합니다.</p></article>
-                  <article class="skill-card mansu-skill-card" id="mansu-define" data-mansu-detail="mansu-define" role="button" tabindex="0" aria-pressed="false"><strong><code>$mansu-define</code></strong><p>목적, 사용자, 문제, 요구사항, 성공 기준을 source skill로 정의합니다.</p></article>
-                  <article class="skill-card mansu-skill-card" id="mansu-plan" data-mansu-detail="mansu-plan" role="button" tabindex="0" aria-pressed="false"><strong><code>$mansu-plan</code></strong><p>Requirements/Spec, Architecture, Design Direction, Roadmap을 만듭니다.</p></article>
-                  <article class="skill-card mansu-skill-card" id="mansu-build" data-mansu-detail="mansu-build" role="button" tabindex="0" aria-pressed="false"><strong><code>$mansu-build</code></strong><p><code>mansu-tdd-total</code>을 기본 엔진으로 현재 phase를 구현합니다.</p></article>
-                  <article class="skill-card mansu-skill-card" id="mansu-verify" data-mansu-detail="mansu-verify" role="button" tabindex="0" aria-pressed="false"><strong><code>$mansu-verify</code></strong><p>테스트, 브라우저, 런타임, QA evidence로 동작을 증명합니다.</p></article>
-                  <article class="skill-card mansu-skill-card" id="mansu-review" data-mansu-detail="mansu-review" role="button" tabindex="0" aria-pressed="false"><strong><code>$mansu-review</code></strong><p>품질, 구조, 디자인, 보안, 의사결정 리스크를 검토합니다.</p></article>
+                  <article class="skill-card mansu-skill-card" id="mansu-define" data-mansu-detail="mansu-define" role="button" tabindex="0" aria-pressed="false"><strong><code>$mansu-define</code></strong><p><code>mansu-1define</code>의 compatibility alias입니다.</p></article>
+                  <article class="skill-card mansu-skill-card" id="mansu-plan" data-mansu-detail="mansu-plan" role="button" tabindex="0" aria-pressed="false"><strong><code>$mansu-plan</code></strong><p><code>mansu-2plan</code>의 compatibility alias입니다.</p></article>
+                  <article class="skill-card mansu-skill-card" id="mansu-build" data-mansu-detail="mansu-build" role="button" tabindex="0" aria-pressed="false"><strong><code>$mansu-build</code></strong><p><code>mansu-3build</code>의 compatibility alias입니다.</p></article>
+                  <article class="skill-card mansu-skill-card" id="mansu-verify" data-mansu-detail="mansu-verify" role="button" tabindex="0" aria-pressed="false"><strong><code>$mansu-verify</code></strong><p><code>mansu-4verify</code>의 compatibility alias입니다.</p></article>
+                  <article class="skill-card mansu-skill-card" id="mansu-review" data-mansu-detail="mansu-review" role="button" tabindex="0" aria-pressed="false"><strong><code>$mansu-review</code></strong><p><code>mansu-5review</code>의 compatibility alias입니다.</p></article>
                   <article class="skill-card mansu-skill-card" id="mansu-debug" data-mansu-detail="mansu-debug" role="button" tabindex="0" aria-pressed="false"><strong><code>$mansu-debug</code></strong><p>원인 불명 버그를 재현, 격리, 원인 증명, 회귀 검증으로 다룹니다.</p></article>
-                  <article class="skill-card mansu-skill-card" id="mansu-ship" data-mansu-detail="mansu-ship" role="button" tabindex="0" aria-pressed="false"><strong><code>$mansu-ship</code></strong><p>검증과 리뷰 뒤 ship/hold, PR, 배포, 학습 마감을 판단합니다.</p></article>
+                  <article class="skill-card mansu-skill-card" id="mansu-ship" data-mansu-detail="mansu-ship" role="button" tabindex="0" aria-pressed="false"><strong><code>$mansu-ship</code></strong><p><code>mansu-6ship</code>의 compatibility alias입니다.</p></article>
                   <article class="skill-card mansu-skill-card" id="mansu-project-start" data-mansu-detail="mansu-project-start" role="button" tabindex="0" aria-pressed="false"><strong><code>$mansu-project-start</code></strong><p>새 프로젝트나 큰 기능군을 기획과 현재 phase PLAN까지 연결합니다.</p></article>
                   <article class="skill-card mansu-skill-card" id="mansu-operating-model" data-mansu-detail="mansu-operating-model" role="button" tabindex="0" aria-pressed="false"><strong><code>$mansu-operating-model</code></strong><p>AGENTS.md, CODING_RULES.md, 운영 원칙과 게이트를 잡습니다.</p></article>
                   <article class="skill-card mansu-skill-card" id="mansu-tdd-total" data-mansu-detail="mansu-tdd-total" role="button" tabindex="0" aria-pressed="false"><strong><code>$mansu-tdd-total</code></strong><p>구현 목표를 slice로 나누고 필요한 실행 방식을 내부에서 판단합니다.</p></article>
@@ -1350,21 +1359,21 @@
                   <article class="skill-card mansu-skill-card" id="mansu-debug-rootcause" data-mansu-detail="mansu-debug-rootcause" role="button" tabindex="0" aria-pressed="false"><strong><code>$mansu-debug-rootcause</code></strong><p>버그를 재현, 격리, 원인 증명, 최소 수정, 회귀 검증으로 다룹니다.</p></article>
                   <article class="skill-card mansu-skill-card" id="mansu-web-verify" data-mansu-detail="mansu-web-verify" role="button" tabindex="0" aria-pressed="false"><strong><code>$mansu-web-verify</code></strong><p>웹앱을 실제 사용자처럼 눌러 수정 없이 검증합니다.</p></article>
                   <article class="skill-card mansu-skill-card" id="mansu-ship-release" data-mansu-detail="mansu-ship-release" role="button" tabindex="0" aria-pressed="false"><strong><code>$mansu-ship-release</code></strong><p>구현 완료 후 출하 가능한 상태인지 판단합니다.</p></article>
-                  <article class="skill-card mansu-skill-card" id="mansu-manual" data-mansu-detail="mansu-manual" role="button" tabindex="0" aria-pressed="false"><strong><code>$mansu-manual</code></strong><p>이 HTML 매뉴얼 위치를 알려주고 내용을 설명합니다.</p></article>
+                  <article class="skill-card mansu-skill-card" id="mansu-manual" data-mansu-detail="mansu-manual" role="button" tabindex="0" aria-pressed="false"><strong><code>$mansu-manual</code></strong><p><code>mansu-0manual</code>의 compatibility alias입니다.</p></article>
                 </div>
               </div>
             </div>
             <aside class="catalog-inspector" aria-live="polite">
               <p class="inspector-kicker">Mansu Skill Detail</p>
               <div class="mansu-detail-card is-active" data-mansu-detail-card="mansu-help">
-                <h3>$mansu-help</h3>
+                <h3>$mansu-0help</h3>
                 <p>지금 무엇을 해야 할지 막연할 때 쓰는 입구 스킬입니다.</p>
                 <div class="source-routes">
                   <strong>내부에서 하는 일</strong>
                   <ul class="route-list">
                     <li>현재 작업 분류<em>설치, 기획, 구현, 디버그, 검증, 출하 중 어디에 있는지 잡습니다.</em></li>
                     <li>질문 최소화<em>필요할 때만 1~3개의 짧은 질문으로 다음 판단에 필요한 정보만 모읍니다.</em></li>
-                    <li>다음 스킬 추천<em><code>mansu-setup</code>, <code>mansu-project-start</code>, <code>mansu-tdd-total</code> 같은 다음 루트로 연결합니다.</em></li>
+                    <li>다음 스킬 추천<em><code>mansu-9setup</code>, <code>mansu-1define</code>, <code>mansu-3build</code> 같은 다음 루트로 연결합니다.</em></li>
                   </ul>
                 </div>
                 <ul>
@@ -1375,7 +1384,7 @@
                 <div class="artifact-list"><span>산출물: 현재 작업 요약</span><span>산출물: 추천 Mansu 스킬</span><span>산출물: 다음 실행 문장</span></div>
               </div>
               <div class="mansu-detail-card" data-mansu-detail-card="mansu-manual">
-                <h3>$mansu-manual</h3>
+                <h3>$mansu-0manual</h3>
                 <p>Mansu 전체 흐름과 스킬 지도를 한 화면으로 보여주는 시각 매뉴얼 스킬입니다.</p>
                 <div class="source-routes">
                   <strong>내부에서 하는 일</strong>
@@ -1393,7 +1402,7 @@
                 <div class="artifact-list"><span>산출물: 매뉴얼 경로</span><span>산출물: 매뉴얼 구조 요약</span><span>산출물: 갱신 필요 여부</span></div>
               </div>
               <div class="mansu-detail-card" data-mansu-detail-card="mansu-setup">
-                <h3>$mansu-setup</h3>
+                <h3>$mansu-9setup</h3>
                 <p>현재 실행 환경에 맞게 Mansu와 원천 도구를 준비시키는 부트스트랩 스킬입니다.</p>
                 <div class="source-routes">
                   <strong>내부에서 하는 일</strong>
@@ -1430,17 +1439,17 @@
                 <div class="artifact-list"><span>산출물: routing impact report</span><span>산출물: updated source lock/catalog</span><span>산출물: dry-run / validator evidence</span></div>
               </div>
               <div class="mansu-detail-card" data-mansu-detail-card="mansu-define">
-                <h3>$mansu-define</h3>
+                <h3>$mansu-1define</h3>
                 <p>새 제품, 앱, 레포, 큰 기능군을 구현 전에 정의하는 phase 스킬입니다. Mansu가 질문을 직접 꾸며내기보다 addyosmani <code>interview-me</code>, Ouroboros interview/pm/seed, gstack office-hours를 상황에 맞게 연결합니다.</p>
                 <ul>
                   <li>목적: 사용자, 문제, 성공 기준, 요구사항, non-goal, source of truth를 잡습니다.</li>
                   <li>언제: 아이디어가 흐릿하거나, 새 프로젝트/큰 기능군을 시작할 때 씁니다.</li>
-                  <li>주요 결과: 정의 산출물, acceptance criteria, <code>AGENTS.md</code>/<code>CODING_RULES.md</code> 후보, <code>mansu-plan</code> handoff가 남습니다.</li>
+                  <li>주요 결과: 정의 산출물, acceptance criteria, <code>AGENTS.md</code>/<code>CODING_RULES.md</code> 후보, <code>mansu-2plan</code> handoff가 남습니다.</li>
                 </ul>
                 <div class="artifact-list"><span>산출물: definition brief</span><span>산출물: acceptance criteria</span><span>산출물: source-of-truth handoff</span></div>
               </div>
               <div class="mansu-detail-card" data-mansu-detail-card="mansu-plan">
-                <h3>$mansu-plan</h3>
+                <h3>$mansu-2plan</h3>
                 <p>정의된 프로젝트를 <code>Requirements/Spec → Architecture → Design Direction → Implementation Roadmap</code> 순서로 실행 가능한 계획으로 바꿉니다.</p>
                 <ul>
                   <li>목적: 전체 phase map과 현재 phase execution plan을 만듭니다.</li>
@@ -1450,7 +1459,7 @@
                 <div class="artifact-list"><span>산출물: phase map</span><span>산출물: design direction</span><span>산출물: active phase execution plan</span></div>
               </div>
               <div class="mansu-detail-card" data-mansu-detail-card="mansu-build">
-                <h3>$mansu-build</h3>
+                <h3>$mansu-3build</h3>
                 <p>현재 phase 실행 계획이 있을 때 실제 구현으로 들어가는 phase 스킬입니다. <code>PLAN.md</code>, <code>Plan.md</code>, <code>.codex/plans/*.md</code>, <code>.omo/plans/*.md</code>, 사용자가 가리킨 계획 파일을 모두 후보로 봅니다. 내부 구현 엔진은 기존 <code>mansu-tdd-total</code>입니다.</p>
                 <ul>
                   <li>목적: 계획된 phase를 sequential vertical slice로 구현합니다.</li>
@@ -1460,8 +1469,8 @@
                 <div class="artifact-list"><span>산출물: slice execution</span><span>산출물: validation evidence</span><span>산출물: checkpoint</span></div>
               </div>
               <div class="mansu-detail-card" data-mansu-detail-card="mansu-verify">
-                <h3>$mansu-verify</h3>
-                <p>동작이 실제로 맞는지 증거로 확인하는 phase 스킬입니다. 검증이 통과하면 기본적으로 <code>mansu-review</code>로 이어지고, 웹 검증은 기존 <code>mansu-web-verify</code> route를 호환 경로로 씁니다.</p>
+                <h3>$mansu-4verify</h3>
+                <p>동작이 실제로 맞는지 증거로 확인하는 phase 스킬입니다. 검증이 통과하면 기본적으로 <code>mansu-5review</code>로 이어지고, 웹 검증은 기존 <code>mansu-web-verify</code> route를 호환 경로로 씁니다.</p>
                 <ul>
                   <li>목적: 테스트, runtime/browser, QA evidence로 동작을 증명합니다.</li>
                   <li>언제: 구현 후 review/ship 전에 사실 확인이 필요할 때 씁니다.</li>
@@ -1470,7 +1479,7 @@
                 <div class="artifact-list"><span>산출물: verification report</span><span>산출물: QA evidence</span><span>산출물: review handoff</span></div>
               </div>
               <div class="mansu-detail-card" data-mansu-detail-card="mansu-review">
-                <h3>$mansu-review</h3>
+                <h3>$mansu-5review</h3>
                 <p>동작 증명 뒤 품질, 구조, 디자인, 보안, 의사결정 리스크를 판단하는 phase 스킬입니다. Review는 QA가 아닙니다.</p>
                 <ul>
                   <li>목적: 결함, 유지보수 리스크, 보안/디자인/구조 문제를 찾습니다.</li>
@@ -1490,7 +1499,7 @@
                 <div class="artifact-list"><span>산출물: repro</span><span>산출물: root cause</span><span>산출물: regression proof</span></div>
               </div>
               <div class="mansu-detail-card" data-mansu-detail-card="mansu-ship">
-                <h3>$mansu-ship</h3>
+                <h3>$mansu-6ship</h3>
                 <p>검증과 리뷰 뒤 실제로 내보낼 수 있는지 판단하는 phase 스킬입니다. 기존 <code>mansu-ship-release</code>를 release readiness route로 씁니다.</p>
                 <ul>
                   <li>목적: ship/hold, docs, PR, deploy/canary, learning closeout을 정리합니다.</li>
@@ -1659,20 +1668,20 @@
             <div class="agent-note" data-agent-rule="manual-is-route-map">
               <h3>0. 매뉴얼은 실행 지침이 아니라 루트 지도다</h3>
               <p>특정 Mansu 스킬이 이미 선택됐으면 그 스킬의 <code>SKILL.md</code>가 실행 기준입니다. 이 탭은 모든 스킬이 매번 읽는 필수 문서가 아니라, 어떤 Mansu 루트를 골라야 할지 애매할 때 보는 지도입니다.</p>
-              <p>주로 <code>mansu-help</code>, <code>mansu-setup</code>, <code>mansu-manual</code>, <code>mansu-source-curator</code> 같은 입구/세팅/관리 흐름에서 참고합니다.</p>
+              <p>주로 <code>mansu-0help</code>, <code>mansu-9setup</code>, <code>mansu-0manual</code>, <code>mansu-source-curator</code> 같은 입구/세팅/관리 흐름에서 참고합니다.</p>
             </div>
 
             <div class="agent-note" data-agent-rule="route-selection">
               <h3>1. 먼저 상황을 분류한다</h3>
-              <p>사용자가 막연하면 바로 구현하지 말고 <code>mansu-help</code> 관점으로 현재 상황을 분류합니다.</p>
+              <p>사용자가 막연하면 바로 구현하지 말고 <code>mansu-0help</code> 관점으로 현재 상황을 분류합니다.</p>
               <ul>
-                <li>설치/업데이트: <code>mansu-setup</code></li>
-                <li>새 아이디어/새 앱/새 프로젝트/큰 기능군: <code>mansu-define</code>, 그다음 <code>mansu-plan</code></li>
-                <li>구현: 현재 phase 실행 계획이 있으면 <code>mansu-build</code>, 없으면 먼저 <code>mansu-define</code>/<code>mansu-plan</code></li>
-                <li>동작 증명/QA: <code>mansu-verify</code></li>
-                <li>품질/구조/보안/디자인 리뷰: <code>mansu-review</code></li>
+                <li>설치/업데이트: <code>mansu-9setup</code></li>
+                <li>새 아이디어/새 앱/새 프로젝트/큰 기능군: <code>mansu-1define</code>, 그다음 <code>mansu-2plan</code></li>
+                <li>구현: 현재 phase 실행 계획이 있으면 <code>mansu-3build</code>, 없으면 먼저 <code>mansu-1define</code>/<code>mansu-2plan</code></li>
+                <li>동작 증명/QA: <code>mansu-4verify</code></li>
+                <li>품질/구조/보안/디자인 리뷰: <code>mansu-5review</code></li>
                 <li>버그: <code>mansu-debug</code></li>
-                <li>출하 판단: <code>mansu-ship</code></li>
+                <li>출하 판단: <code>mansu-6ship</code></li>
               </ul>
             </div>
 
@@ -1689,22 +1698,22 @@
 
             <div class="agent-note" data-agent-rule="runtime-aware-setup">
               <h3>3. 설치는 실행 환경에 맞춘다</h3>
-              <p><code>mansu-setup</code>은 런타임, 에이전트 호스트, OS를 먼저 확인합니다. Codex 실행은 검증된 LazyCodex / OMO에 먼저 맡기고, 없으면 <code>omx</code>로 fallback합니다. OpenCode/Hermes는 <code>omo</code>, Claude Code는 <code>omc</code>를 맞는 adapter로 봅니다.</p>
+              <p><code>mansu-9setup</code>은 런타임, 에이전트 호스트, OS를 먼저 확인합니다. Codex 실행은 검증된 LazyCodex / OMO에 먼저 맡기고, 없으면 <code>omx</code>로 fallback합니다. OpenCode/Hermes는 <code>omo</code>, Claude Code는 <code>omc</code>를 맞는 adapter로 봅니다.</p>
               <p>확신이 낮으면 추측 설치하지 말고 check/report 또는 사용자 확인으로 멈춥니다.</p>
             </div>
 
             <div class="agent-note" data-agent-rule="project-start-before-code">
               <h3>4. 프로젝트 시작은 큰 설계부터</h3>
-              <p><code>mansu-define</code>은 목적, 사용자, 요구사항, 성공 기준, source of truth를 잡고, <code>mansu-plan</code>은 spec/TDR, UI 방향, project roadmap/phase order와 현재 phase를 정합니다. <code>mansu-project-start</code>는 이 흐름의 compatibility alias입니다.</p>
+              <p><code>mansu-1define</code>은 목적, 사용자, 요구사항, 성공 기준, source of truth를 잡고, <code>mansu-2plan</code>은 spec/TDR, UI 방향, project roadmap/phase order와 현재 phase를 정합니다. <code>mansu-project-start</code>는 이 흐름의 compatibility alias입니다.</p>
               <p>구현 handoff 전에는 목적, 사용자/문제, 근거, 가정, 방향, 순서, 실행 연결이라는 Zero-to-PLAN minimum gate를 통과해야 합니다. 위험이 작으면 짧게 기록하고, 위험이 크면 리서치/spec/TDR/DESIGN/ADR로 확장합니다.</p>
               <p>초기 정의는 Ouroboros interview/pm/seed로 깊게 만들고, phase 안 리서치는 Oh My research, 비평과 검증은 gstack office-hours/autoplan/plan-*로 조합합니다.</p>
-              <p>전체 기능 순서는 spec/TDR/design layer에 남기고, <code>PLAN.md</code>는 현재 phase의 실행 문서로 둡니다. 그 phase의 세부 slice, 구현, review, QA, checkpoint는 <code>mansu-build</code>가 맡고 내부 구현 엔진으로 <code>mansu-tdd-total</code>을 사용합니다.</p>
+              <p>전체 기능 순서는 spec/TDR/design layer에 남기고, <code>PLAN.md</code>는 현재 phase의 실행 문서로 둡니다. 그 phase의 세부 slice, 구현, review, QA, checkpoint는 <code>mansu-3build</code>가 맡고 내부 구현 엔진으로 <code>mansu-tdd-total</code>을 사용합니다.</p>
             </div>
 
             <div class="agent-note" data-agent-rule="total-before-implementation">
               <h3>5. 구현은 build에서 시작한다</h3>
-              <p>사용자가 구현을 원하고 현재 phase 실행 계획이 있으면 기본은 <code>mansu-build</code>입니다. <code>PLAN.md</code>만 보지 말고 <code>Plan.md</code>, <code>.codex/plans/*.md</code>, <code>.omo/plans/*.md</code>, 사용자가 가리킨 계획 파일까지 확인합니다.</p>
-              <p><code>mansu-build</code>가 내부 엔진으로 <code>mansu-tdd-total</code>을 사용해 계획을 비평하고 순차 vertical slice를 만든 뒤 각 slice를 lite/strict로 연결합니다.</p>
+              <p>사용자가 구현을 원하고 현재 phase 실행 계획이 있으면 기본은 <code>mansu-3build</code>입니다. <code>PLAN.md</code>만 보지 말고 <code>Plan.md</code>, <code>.codex/plans/*.md</code>, <code>.omo/plans/*.md</code>, 사용자가 가리킨 계획 파일까지 확인합니다.</p>
+              <p><code>mansu-3build</code>가 내부 엔진으로 <code>mansu-tdd-total</code>을 사용해 계획을 비평하고 순차 vertical slice를 만든 뒤 각 slice를 lite/strict로 연결합니다.</p>
               <ul>
                 <li>다음 slice는 이전 slice가 닫힌 뒤 시작합니다.</li>
                 <li>각 slice는 완료 조건, 영향 파일, 테스트 기준, 위험 요소를 가져야 합니다.</li>
@@ -1727,7 +1736,7 @@
 	            <div class="agent-note" data-agent-rule="manual-is-maintenance-artifact">
 	              <h3>8. 에이전트/관리자용: 매뉴얼도 산출물이다</h3>
 	              <p>이 규칙은 Mansu를 유지보수하는 에이전트와 관리자에게 적용됩니다. Mansu 스킬, 원천 스킬, 버전, 날짜, 루트 의미가 바뀌면 이 HTML 매뉴얼과 validator도 같이 갱신합니다.</p>
-	              <p><code>mansu-setup source-check</code>는 개발 프로세스 단계가 아니라 관리자용 source freshness 점검입니다. drift가 확인되면 승인 후 <code>mansu-source-curator</code>와 매뉴얼/validator 갱신으로 이어갑니다.</p>
+	              <p><code>mansu-9setup source-check</code>는 개발 프로세스 단계가 아니라 관리자용 source freshness 점검입니다. drift가 확인되면 승인 후 <code>mansu-source-curator</code>와 매뉴얼/validator 갱신으로 이어갑니다.</p>
 	              <p>매뉴얼은 사람용 UI이면서 입구/관리 흐름에서 참고하는 에이전트용 루트 맵입니다.</p>
 	            </div>
           </div>
@@ -1737,7 +1746,7 @@
       <section class="tab-panel" id="panel-catalog" data-manual-panel="catalog">
         <div class="catalog-card">
           <h2>스킬 카탈로그</h2>
-          <p class="micro">Mansu가 현재 조합할 수 있는 스킬 지도입니다. gstack, Ouroboros, Oh My, agent-skills, Open Design, 디자인 레퍼런스를 원천별로 묶고, 그 안에서 역할별로 다시 나눴습니다. <code>mansu-setup</code>은 런타임/호스트/OS를 확인한 뒤 Codex에서는 검증된 LazyCodex / OMO를 우선하고 <code>omx</code>를 fallback으로 둡니다. OpenCode/Hermes는 <code>omo</code>, Claude Code는 <code>omc</code>를 맞는 adapter로 준비합니다.</p>
+          <p class="micro">Mansu가 현재 조합할 수 있는 스킬 지도입니다. gstack, Ouroboros, Oh My, agent-skills, Open Design, 디자인 레퍼런스를 원천별로 묶고, 그 안에서 역할별로 다시 나눴습니다. <code>mansu-9setup</code>은 런타임/호스트/OS를 확인한 뒤 Codex에서는 검증된 LazyCodex / OMO를 우선하고 <code>omx</code>를 fallback으로 둡니다. OpenCode/Hermes는 <code>omo</code>, Claude Code는 <code>omc</code>를 맞는 adapter로 준비합니다.</p>
           <div class="catalog-meta">
             <span>Mansu 매뉴얼 스냅샷: 2026-06-08</span>
             <span>Source lock checked: 2026-06-08</span>

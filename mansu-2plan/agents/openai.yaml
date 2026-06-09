@@ -1,0 +1,4 @@
+interface:
+  display_name: Mansu 2 Plan
+  short_description: Plan the defined work before building.
+  default_prompt: Use $mansu-2plan as the primary numbered route backed by mansu-plan. Read mansu-plan/SKILL.md, create or update the active phase execution plan, and if complete tell the user to use mansu-3build next.

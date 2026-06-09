@@ -1,0 +1,4 @@
+interface:
+  display_name: Mansu 4 Verify
+  short_description: Verify that the built behavior works.
+  default_prompt: Use $mansu-4verify as the primary numbered route backed by mansu-verify. Read mansu-verify/SKILL.md. If verification passes, continue into mansu-5review by default.

@@ -1,0 +1,4 @@
+interface:
+  display_name: Mansu 3 Build
+  short_description: Build the active phase through slices.
+  default_prompt: Use $mansu-3build as the primary numbered route backed by mansu-build. Read mansu-build/SKILL.md, implement only from a valid active phase plan, and if implementation is complete tell the user to use mansu-4verify next.

@@ -14,7 +14,7 @@ As the source skills improve, Mansu improves with them.
 `mansu-setup source-check` checks the source ecosystem first, and `mansu-source-curator` updates Mansu's internal map only after drift is confirmed and approved.
 That is how Mansu keeps absorbing better project-start, planning, coding, design, QA, debug, and release patterns without surprising the user.
 
-Install Mansu. Say `mansu-help`. Let it choose the route. Finish with evidence.
+Install Mansu. Say `mansu-0help`. Let it choose the route. Finish with evidence.
 
 ## What Mansu AgenticDev Is
 
@@ -46,8 +46,8 @@ Canonical branch: `main`
 
 ### First Install
 
-Bootstrap only `mansu-setup` first, then let that skill install and sync the rest of the suite.
-`mansu-setup` detects the runtime target(Hermes, OpenCode, Codex, Claude Code), host, OS,
+Bootstrap `mansu-9setup` together with its compatibility implementation `mansu-setup`, then let that skill install and sync the rest of the suite.
+`mansu-9setup` detects the runtime target(Hermes, OpenCode, Codex, Claude Code), host, OS,
 chooses the correct skill directory, installs or updates Ouroboros, gstack, and the matching
 Oh My adapter, then verifies adapter compatibility.
 
@@ -70,16 +70,18 @@ cd mansu-agentic-dev
 
 # Example: Hermes + tmux + OpenCode runtime using OpenCode's global skill path.
 mkdir -p "$HOME/.config/opencode/skills/mansu-setup"
+mkdir -p "$HOME/.config/opencode/skills/mansu-9setup"
 cp -R mansu-setup/. "$HOME/.config/opencode/skills/mansu-setup"/
+cp -R mansu-9setup/. "$HOME/.config/opencode/skills/mansu-9setup"/
 ```
 
-For a project-local OpenCode setup, copy the same folder into `.opencode/skills/mansu-setup`.
+For a project-local OpenCode setup, copy both folders into `.opencode/skills/mansu-setup` and `.opencode/skills/mansu-9setup`.
 For another runtime target, copy it into that runtime's local or global skill directory.
 
 Then ask your agent runtime:
 
 ```text
-Use $mansu-setup install from this repo. Detect my runtime target, host, and OS, install/update Ouroboros, gstack, and the matching Oh My adapter when needed, then choose paths and run compatibility checks.
+Use $mansu-9setup install from this repo. Detect my runtime target, host, and OS, install/update Ouroboros, gstack, and the matching Oh My adapter when needed, then choose paths and run compatibility checks.
 ```
 
 ### After Install
@@ -87,36 +89,36 @@ Use $mansu-setup install from this repo. Detect my runtime target, host, and OS,
 Use this first:
 
 ```text
-mansu-help
+mansu-0help
 ```
 
 Mansu will classify your situation and route you to the right next skill:
 
-- `mansu-setup` for install, update, and runtime setup.
-- `mansu-define` for a new product, app, repo, or major feature family.
-- `mansu-plan` for requirements/spec, architecture, design direction, and roadmap.
-- `mansu-build` for implementation through `mansu-tdd-total`.
-- `mansu-verify` for tests, runtime checks, browser checks, and QA evidence.
-- `mansu-review` for quality, architecture, design, security, and decision risk.
+- `mansu-9setup` for install, update, and runtime setup.
+- `mansu-1define` for a new product, app, repo, or major feature family.
+- `mansu-2plan` for requirements/spec, architecture, design direction, and roadmap.
+- `mansu-3build` for implementation through `mansu-tdd-total`.
+- `mansu-4verify` for tests, runtime checks, browser checks, and QA evidence.
+- `mansu-5review` for quality, architecture, design, security, and decision risk.
 - `mansu-debug` for unknown bugs and regressions.
-- `mansu-ship` for release readiness.
+- `mansu-6ship` for release readiness.
 
 Before updates, check source freshness without changing anything:
 
 ```text
-Use $mansu-setup source-check. Check whether Ouroboros, gstack, Oh My / OMO / OMC, addyosmani/agent-skills, VoltAgent/awesome-design-md, and Open Design are still aligned with Mansu's routing. Do not install, update, sync, or edit files. Report Green/Yellow/Red status and the next action that needs approval.
+Use $mansu-9setup source-check. Check whether Ouroboros, gstack, Oh My / OMO / OMC, addyosmani/agent-skills, VoltAgent/awesome-design-md, and Open Design are still aligned with Mansu's routing. Do not install, update, sync, or edit files. Report Green/Yellow/Red status and the next action that needs approval.
 ```
 
 When you decide to update:
 
 ```text
-Use $mansu-setup update. Update Mansu, install/update Ouroboros, gstack, and the matching Oh My adapter when needed and approved, prepare Open Design only when UI/design artifact work needs it or I explicitly approve it, sync Mansu skills, check Ouroboros, gstack, Oh My / OMO / OMC, addyosmani/agent-skills, VoltAgent/awesome-design-md, and Open Design source freshness, and report adapter compatibility with any blocked install steps.
+Use $mansu-9setup update. Update Mansu, install/update Ouroboros, gstack, and the matching Oh My adapter when needed and approved, prepare Open Design only when UI/design artifact work needs it or I explicitly approve it, sync Mansu skills, check Ouroboros, gstack, Oh My / OMO / OMC, addyosmani/agent-skills, VoltAgent/awesome-design-md, and Open Design source freshness, and report adapter compatibility with any blocked install steps.
 ```
 
 ### For Agents
 
 ```text
-If Mansu is not installed or may be stale, run mansu-setup first.
+If Mansu is not installed or may be stale, run mansu-9setup first.
 Read MANSU_PHILOSOPHY.md first.
 Then choose the correct mansu-* skill for the task.
 Do not invent a new workflow before checking the source skill map.
@@ -239,17 +241,18 @@ See [MANSU_PHILOSOPHY.md](./MANSU_PHILOSOPHY.md) for the full doctrine.
 
 | Skill | Use when | Core idea |
 | --- | --- | --- |
-| `mansu-help` | You are new, unsure what to do next, or need the safest Mansu route. | Beginner-friendly route helper |
-| `mansu-setup` | You need install, source health checks, update, runtime target detection, source tool setup, skill sync, repair, or adapter compatibility checks. | Runtime-target bootstrap and read-only check/update gate |
+| `mansu-0help` | You are new, unsure what to do next, or need the safest Mansu route. | Beginner-friendly route helper |
+| `mansu-0manual` | You want the visual HTML guide at `docs/mansu-manual.html`. | Beginner-friendly HTML manual |
+| `mansu-1define` | You are starting a new product, app, repo, or major feature family and need source-skill interview, requirements, acceptance criteria, and source-of-truth artifacts. | Define phase |
+| `mansu-2plan` | You need requirements/spec, architecture, design direction, phase roadmap, and current phase `PLAN.md`. | Plan phase |
+| `mansu-3build` | You are implementing a feature or refactor and need `mansu-tdd-total` slice execution. | Build phase |
+| `mansu-4verify` | You need tests, runtime checks, browser checks, QA evidence, or security/performance proof; passing verification continues into `mansu-5review` by default. | Verify phase |
+| `mansu-5review` | You need quality, maintainability, architecture, design, security, or decision-risk review. | Review phase |
+| `mansu-6ship` | Implementation is done and you need a ship/hold decision with health, review, QA, docs, PR/deploy/canary, and learning closeout. | Ship phase |
+| `mansu-9setup` | You need install, source health checks, update, runtime target detection, source tool setup, skill sync, repair, or adapter compatibility checks. | Runtime-target bootstrap and read-only check/update gate |
 | `mansu-source-curator` | Drift was confirmed and Mansu references/validators/manual/worklog must be refreshed. | Hidden source-reference maintenance |
-| `mansu-define` | You are starting a new product, app, repo, or major feature family and need source-skill interview, requirements, acceptance criteria, and source-of-truth artifacts. | Define phase |
-| `mansu-plan` | You need requirements/spec, architecture, design direction, phase roadmap, and current phase `PLAN.md`. | Plan phase |
 | `mansu-operating-model` | You are defining project behavior, role separation, evidence rules, `AGENTS.md`, or `CODING_RULES.md`. | Canonical doctrine and project-document templates |
-| `mansu-build` | You are implementing a feature or refactor and need `mansu-tdd-total` slice execution. | Build phase |
-| `mansu-verify` | You need tests, runtime checks, browser checks, QA evidence, or security/performance proof; passing verification continues into `mansu-review` by default. | Verify phase |
-| `mansu-review` | You need quality, maintainability, architecture, design, security, or decision-risk review. | Review phase |
 | `mansu-debug` | You need to reproduce, isolate, prove root cause, minimally fix, and regression-test a bug. | Debug route |
-| `mansu-ship` | Implementation is done and you need a ship/hold decision with health, review, QA, docs, PR/deploy/canary, and learning closeout. | Ship phase |
 | `mansu-project-start` | Compatibility alias for `mansu-define`. | Legacy kickoff route |
 | `mansu-tdd-total` | Default implementation engine under `mansu-build`. | Build engine |
 | `mansu-tdd-strict` | A risky slice benefits from a meaningful failing RED test. | Strict TDD slice loop |
@@ -257,23 +260,23 @@ See [MANSU_PHILOSOPHY.md](./MANSU_PHILOSOPHY.md) for the full doctrine.
 | `mansu-debug-rootcause` | Compatibility route under `mansu-debug`. | Root-cause-first debugger |
 | `mansu-web-verify` | Compatibility route under `mansu-verify` for real-user web checks. | Web verification orchestrator |
 | `mansu-ship-release` | Compatibility route under `mansu-ship`. | Release readiness gate |
-| `mansu-manual` | You want the visual HTML guide at `docs/mansu-manual.html`. | Beginner-friendly HTML manual |
+| `mansu-help` / `mansu-define` / `mansu-plan` / `mansu-build` / `mansu-verify` / `mansu-review` / `mansu-ship` / `mansu-setup` / `mansu-manual` | Legacy unnumbered names. | Compatibility aliases |
 
 ## Recommended Routing
 
-- New or unsure: `mansu-help`
-- Visual guide: `mansu-manual` or [docs/mansu-manual.html](./docs/mansu-manual.html)
-- Install, read-only source health check, update, runtime detection, skill sync, adapter compatibility: `mansu-setup`
+- New or unsure: `mansu-0help`
+- Visual guide: `mansu-0manual` or [docs/mansu-manual.html](./docs/mansu-manual.html)
+- Install, read-only source health check, update, runtime detection, skill sync, adapter compatibility: `mansu-9setup`
 - Internal source catalog/manual/validator maintenance after confirmed drift: `mansu-source-curator`
-- New project or major feature family: `mansu-define`, then `mansu-plan`
+- New project or major feature family: `mansu-1define`, then `mansu-2plan`
 - Project doctrine, `AGENTS.md`, `CODING_RULES.md`: `mansu-operating-model`
-- Feature or refactor implementation: `mansu-build`
-- Behavior proof, QA, browser/runtime verification, then default review handoff: `mansu-verify`
-- Quality, architecture, design, security, decision-risk review: `mansu-review`
+- Feature or refactor implementation: `mansu-3build`
+- Behavior proof, QA, browser/runtime verification, then default review handoff: `mansu-4verify`
+- Quality, architecture, design, security, decision-risk review: `mansu-5review`
 - High-risk slice with useful RED test: `mansu-tdd-strict`
 - Lower-risk slice where RED is artificial: `mansu-tdd-lite`
 - Bug, regression, stack trace, or "why is this broken?": `mansu-debug`
-- Ship-ready, PR, release docs, deploy/canary, learning closeout: `mansu-ship`
+- Ship-ready, PR, release docs, deploy/canary, learning closeout: `mansu-6ship`
 
 ## Trust & Verification
 
@@ -307,16 +310,18 @@ and `scripts/validate_mansu_installed_copies.sh`.
 - [CODE_CONSTRUCTION_ORDER.md](./mansu-operating-model/references/CODE_CONSTRUCTION_ORDER.md): current phase detection and dynamic routing to coding-order source skills
 - [PLAN.md](./PLAN.md): active phase execution plan. Whole-project roadmap and large feature order stay in spec/TDR/design docs.
 - [개발일지.md](./개발일지.md): chronological worklog
-- [mansu-help](./mansu-help/SKILL.md): route helper
-- [mansu-setup](./mansu-setup/SKILL.md): install/update/repair entry point
+- [mansu-0help](./mansu-0help/SKILL.md): primary numbered route helper
+- [mansu-9setup](./mansu-9setup/SKILL.md): primary numbered install/update/repair entry point
+- [mansu-0manual](./mansu-0manual/SKILL.md): primary numbered static HTML manual route
 - [mansu-source-curator](./mansu-source-curator/SKILL.md): internal source-reference maintenance
-- [mansu-define](./mansu-define/SKILL.md): Define phase
-- [mansu-plan](./mansu-plan/SKILL.md): Plan phase
-- [mansu-build](./mansu-build/SKILL.md): Build phase and `mansu-tdd-total` dispatcher
-- [mansu-verify](./mansu-verify/SKILL.md): Verify phase
-- [mansu-review](./mansu-review/SKILL.md): Review phase
+- [mansu-1define](./mansu-1define/SKILL.md): primary numbered Define phase
+- [mansu-2plan](./mansu-2plan/SKILL.md): primary numbered Plan phase
+- [mansu-3build](./mansu-3build/SKILL.md): primary numbered Build phase and `mansu-tdd-total` dispatcher
+- [mansu-4verify](./mansu-4verify/SKILL.md): primary numbered Verify phase
+- [mansu-5review](./mansu-5review/SKILL.md): primary numbered Review phase
 - [mansu-debug](./mansu-debug/SKILL.md): special root-cause route
-- [mansu-ship](./mansu-ship/SKILL.md): Ship phase
+- [mansu-6ship](./mansu-6ship/SKILL.md): primary numbered Ship phase
+- [mansu-help](./mansu-help/SKILL.md), [mansu-setup](./mansu-setup/SKILL.md), [mansu-define](./mansu-define/SKILL.md), [mansu-plan](./mansu-plan/SKILL.md), [mansu-build](./mansu-build/SKILL.md), [mansu-verify](./mansu-verify/SKILL.md), [mansu-review](./mansu-review/SKILL.md), [mansu-ship](./mansu-ship/SKILL.md), [mansu-manual](./mansu-manual/SKILL.md): compatibility implementation paths
 - [mansu-project-start](./mansu-project-start/SKILL.md): compatibility alias for Define
 - [mansu-tdd-total](./mansu-tdd-total/SKILL.md): build engine used by `mansu-build`
 - [mansu-tdd-strict](./mansu-tdd-strict/SKILL.md): strict TDD execution
@@ -324,7 +329,6 @@ and `scripts/validate_mansu_installed_copies.sh`.
 - [mansu-debug-rootcause](./mansu-debug-rootcause/SKILL.md): root-cause debugging
 - [mansu-web-verify](./mansu-web-verify/SKILL.md): web verification orchestrator
 - [mansu-ship-release](./mansu-ship-release/SKILL.md): release readiness and ship/hold decision
-- [mansu-manual](./mansu-manual/SKILL.md): static HTML manual route
 - [mansu-manual.html](./docs/mansu-manual.html): visual manual
 - [scripts](./scripts): structure validators
 

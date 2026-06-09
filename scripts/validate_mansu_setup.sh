@@ -196,7 +196,7 @@ assert_contains 'installs or updates Ouroboros, gstack, and the matching' "$READ
 assert_contains 'install/update Ouroboros, gstack, and the matching Oh My adapter' "$README_FILE"
 assert_contains 'prepare Open Design only when UI/design artifact work needs it or I explicitly approve it' "$README_FILE"
 assert_contains 'Open Design source freshness' "$README_FILE"
-assert_contains 'Use \$mansu-setup source-check' "$README_FILE"
+assert_contains 'Use \$mansu-9setup source-check' "$README_FILE"
 assert_contains 'Do not install, update, sync, or edit files' "$README_FILE"
 assert_not_contains '$HOME/.opencode/skills' "$README_FILE"
 assert_not_contains 'Codex example' "$README_FILE"

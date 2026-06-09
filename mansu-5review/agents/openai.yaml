@@ -1,0 +1,4 @@
+interface:
+  display_name: Mansu 5 Review
+  short_description: Review verified work before shipping.
+  default_prompt: Use $mansu-5review as the primary numbered route backed by mansu-review. Read mansu-review/SKILL.md. If review passes and verification evidence exists, tell the user to use mansu-6ship next.

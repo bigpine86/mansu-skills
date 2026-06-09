@@ -1,0 +1,4 @@
+interface:
+  display_name: Mansu 6 Ship
+  short_description: Decide ship or hold after review.
+  default_prompt: Use $mansu-6ship as the primary numbered route backed by mansu-ship. Read mansu-ship/SKILL.md and end with a clear ship/hold status.

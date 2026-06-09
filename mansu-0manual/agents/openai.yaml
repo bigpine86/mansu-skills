@@ -1,0 +1,4 @@
+interface:
+  display_name: Mansu 0 Manual
+  short_description: Open the numbered Mansu visual manual entry.
+  default_prompt: Use $mansu-0manual as the primary numbered route backed by mansu-manual. Read mansu-manual/SKILL.md and open the prebuilt HTML manual through its opener script.

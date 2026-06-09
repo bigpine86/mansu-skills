@@ -1,0 +1,4 @@
+interface:
+  display_name: Mansu 1 Define
+  short_description: Define what to build before planning.
+  default_prompt: Use $mansu-1define as the primary numbered route backed by mansu-define. Read mansu-define/SKILL.md, complete the definition gate, and if complete tell the user to use mansu-2plan next.

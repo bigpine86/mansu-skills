@@ -1,0 +1,4 @@
+interface:
+  display_name: Mansu 9 Setup
+  short_description: Install, update, sync, or check Mansu readiness.
+  default_prompt: Use $mansu-9setup as the primary numbered route backed by mansu-setup. Read mansu-setup/SKILL.md and handle install, update, source-check, sync, repair, or runtime readiness.

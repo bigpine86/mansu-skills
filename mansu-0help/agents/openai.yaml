@@ -1,0 +1,4 @@
+interface:
+  display_name: Mansu 0 Help
+  short_description: Choose the next numbered Mansu process step.
+  default_prompt: Use $mansu-0help as the primary numbered route backed by mansu-help. Read mansu-help/SKILL.md, classify the current situation, and recommend the next numbered Mansu route.
