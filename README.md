@@ -65,8 +65,8 @@ Oh My adapter, then verifies adapter compatibility.
 | Ship | Release it | Put the verified and reviewed work where users can use it, with release notes or usage guidance when needed. |
 
 ```bash
-git clone https://github.com/bigpine86/mansu-agentic-dev.git
-cd mansu-agentic-dev
+git clone https://github.com/bigpine86/mansu-skills.git
+cd mansu-skills
 
 # Example: Hermes + tmux + OpenCode runtime using OpenCode's global skill path.
 mkdir -p "$HOME/.config/opencode/skills/mansu-setup"

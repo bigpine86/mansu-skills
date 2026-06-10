@@ -39,7 +39,7 @@ It supports runtime targets such as Hermes, OpenCode, Codex, or Claude Code.
 ## Modes
 
 - `check`: report-only preflight; make no changes except harmless reads.
-- `install`: first bootstrap from a local or cloned `mansu-agentic-dev` repo, then install required source tools such as Ouroboros, gstack, and the matching Oh My adapter when safe.
+- `install`: first bootstrap from a local or cloned `mansu-skills` repo, then install required source tools such as Ouroboros, gstack, and the matching Oh My adapter when safe.
 - `update`: update Mansu, Ouroboros, gstack, installed source repos, and the matching Oh My adapter when the user asks for updates.
 - `source-check`: report whether Ouroboros, gstack, Oh My / OMO / OMC, addyosmani/agent-skills, VoltAgent/awesome-design-md, and Open Design source references look stale against installed repos/adapters; make no changes unless the user also asked for update.
 - `source-curate`: use `mansu-source-curator` when source skills changed and Mansu references, validators, or worklog must be updated.
@@ -186,7 +186,7 @@ stop only that adapter step and report the exact manual follow-up.
 
 Collect this before making changes:
 
-- current working directory and whether it is `mansu-agentic-dev`
+- current working directory and whether it is `mansu-skills`
 - detected runtime target and confidence
 - detected agent host and confidence
 - detected OS and shell family
@@ -226,7 +226,7 @@ Collect this before making changes:
 If no Mansu repo exists, clone the canonical repo:
 
 ```bash
-git clone https://github.com/bigpine86/mansu-agentic-dev.git
+git clone https://github.com/bigpine86/mansu-skills.git
 ```
 
 Then from the Mansu repo:
