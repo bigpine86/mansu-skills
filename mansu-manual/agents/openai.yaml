@@ -1,4 +1,4 @@
 interface:
   display_name: "Mansu Manual"
   short_description: "Open prebuilt Mansu HTML manual"
-  default_prompt: "Use $mansu-manual by running mansu-manual/scripts/open-manual.sh first, then report the OPENED path. This is the prebuilt beginner-friendly Korean HTML guide with Define/Plan/Build/Verify/Review/Ship lifecycle flow, mansu-debug as a special interrupt route, agent guidance, family-first skill catalog, when-to-use notes, and basic route examples."
+  default_prompt: "Use $mansu-manual by running mansu-manual/scripts/open-manual.sh first, then report the OPENED localhost URL or path. This is the prebuilt beginner-friendly Korean HTML guide with Define/Plan/Build/Verify/Review/Ship lifecycle flow, mansu-debug as a special interrupt route, agent guidance, family-first skill catalog, when-to-use notes, and basic route examples."

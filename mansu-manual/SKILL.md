@@ -12,7 +12,7 @@ static artifact that lives in `docs/mansu-manual.html`.
 
 ## Core promise
 
-- Open the single self-contained HTML manual when the environment supports local HTML.
+- Open the single self-contained HTML manual through a localhost URL when possible.
 - Open through `scripts/open-manual.sh` first; do not hand-roll shell/browser
   open logic when the script is available.
 - If opening is unavailable, point the user to the exact manual path.
@@ -61,10 +61,11 @@ The manual lives at:
 docs/mansu-manual.html
 ```
 
-When the user asks for `mansu-manual`, open this file first when the environment
-supports opening local HTML. Then provide the path and a short explanation. If
-opening local HTML is unavailable, provide the exact path and say it was not
-opened.
+When the user asks for `mansu-manual`, open this file through the opener script
+first. The normal result should be a localhost URL such as
+`http://127.0.0.1:8765/mansu-manual.html`. Then provide the URL/path and a short
+explanation. If opening local HTML is unavailable, provide the exact path and
+say it was not opened.
 
 ## Opener script
 
@@ -79,15 +80,18 @@ The script supports both repo layout and installed runtime layout:
 - repo: `docs/mansu-manual.html`
 - installed skill: `mansu-manual/docs/mansu-manual.html`
 
-It prints `OPENED:{absolute-path}` when the manual was opened. If no local open
-command is available, it prints `OPEN_UNAVAILABLE:{absolute-path}` and exits 2.
+It starts or reuses a local `python3 -m http.server` bound to `127.0.0.1`, then
+opens the manual URL. It prints `OPENED:{url}` when the manual was opened. If no
+local open command is available, it prints `OPEN_UNAVAILABLE:{url-or-path}` and
+exits 2. If localhost serving is unavailable, it falls back to opening the
+absolute HTML path.
 
 ## Workflow
 
 1. Locate the Mansu repo root.
 2. Confirm `docs/mansu-manual.html` exists.
 3. Run `mansu-manual/scripts/open-manual.sh` when available.
-4. Report the manual path and what it contains.
+4. Report the `OPENED:` URL/path and what it contains.
 5. If the manual is stale, update the static HTML file directly as part of the
    same change that added or renamed a skill.
 6. Run `scripts/validate_mansu_manual.sh`.
