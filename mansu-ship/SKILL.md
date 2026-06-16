@@ -9,8 +9,8 @@ Use this skill when implementation has been verified and reviewed enough to make
 a release decision.
 
 If verification evidence or review/risk notes are missing, do not make a
-ship/hold claim yet; route back to `mansu-verify` or `mansu-review` and record
-which gate is missing.
+ship/hold claim yet; route back to public `mansu-4verify` or `mansu-5review`
+and record which gate is missing.
 
 ## Required references
 
@@ -41,6 +41,7 @@ End the response with a clear ship status.
 
 - If shipping is approved and completed, say the development process is complete
   for this release and name any follow-up monitoring or learning route.
-- If shipping is held, name the missing gate and route back to `mansu-verify`,
-  `mansu-review`, `mansu-build`, or `mansu-debug`.
+- If shipping is held, name the missing gate and route back to public
+  `mansu-4verify`, public `mansu-5review`, public `mansu-3build`, or
+  `mansu-debug`.
 - Do not leave the final state ambiguous.

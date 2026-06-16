@@ -15,6 +15,12 @@ It does not force every project to create every document. The right document set
 depends on risk, ambiguity, UI surface, architecture weight, and whether the work
 is a new project, a feature, a bug, or a release.
 
+This reference owns document lifecycle and artifact handoff. It does not own the
+coding phase loop, Build/Plan execution handoff, or source-skill pairing rules;
+use `CODE_CONSTRUCTION_ORDER.md` and `SOURCE_SKILL_COMPOSITION.md` for those.
+Phase `SKILL.md` files own immediate action rules and should point here only
+when durable document routing, verification order, or handoff detail is needed.
+
 ## Core Rule
 
 Use documents to reduce ambiguity before code, not to create ceremony.
@@ -66,6 +72,18 @@ If the path is not known yet, record the search locations checked and the
 suggested fallback path. "Follow project convention" by itself is not enough for
 future agents to resume smoothly.
 
+Generated plans under `.omo/` or other runtime work directories may be useful
+task evidence, but they are not canonical doctrine. Promote durable decisions
+into the owned project artifact, such as a spec, TDR, ADR, worklog, release doc,
+or active `PLAN.md`, before treating them as handoff truth.
+
+`.omo/*` is generated planning/evidence state, not a normal runtime source of
+truth and not public documentation. When a giant temporary plan is finished,
+archive it in place unless the user explicitly approves deletion, and move only
+the durable decisions into the canonical owner named by the document ownership
+map. `.omo/plans/*.md` remains allowed as an explicit active plan location when
+the user or runtime names that concrete plan path.
+
 ## Default Document Flow
 
 Recommended order for a new or major project:
@@ -85,19 +103,22 @@ Existing projects can enter the flow at the first missing or stale document.
 Bug fixes usually enter through root-cause notes, regression tests, `PLAN.md`,
 and worklog rather than the full design flow.
 
-For a new project or major feature family, use `mansu-define` and then
-`mansu-plan` as the public orchestrators over this document flow.
-`mansu-project-start` remains a compatibility alias for that kickoff path. The
-planning route should create only the needed artifacts, then hand off to
-`mansu-build`, which uses `mansu-tdd-total` as its phase-level build engine.
+For a new project or major feature family, use `mansu-1define` and then
+`mansu-2plan` as the public orchestrators over this document flow. The
+unnumbered `mansu-define` and `mansu-plan` names are backing implementations
+only. `mansu-project-start` remains a compatibility alias for that kickoff path.
+The planning route should create only the needed artifacts, then hand off to
+`mansu-3build`, whose backing implementation `mansu-build` uses
+`mansu-tdd-total` as its phase-level build engine.
 
 Large-grain feature order is decided before `PLAN.md`. For example, a web app may
 need a roadmap that orders menu structure, data model/API contracts, login,
 board, admin, UI system, deployment, and verification. That order belongs in the
 spec/TDR/design layer. `PLAN.md` is created from that roadmap for the active
 phase only. If no roadmap artifact names the ordered phase list and exactly one
-active phase, do not enter `mansu-build` / `mansu-tdd-total`; return to
-`mansu-define` / `mansu-plan`.
+active phase, do not enter numbered public `mansu-3build` or the backing
+`mansu-build` / `mansu-tdd-total` path; return to `mansu-1define` /
+`mansu-2plan`.
 
 ## Document Matrix
 
@@ -113,7 +134,7 @@ active phase, do not enter `mansu-build` / `mansu-tdd-total`; return to
 | Design brief / visual research note | UI direction is unclear because market, taste, competitors, positioning, or current visual patterns are unknown | Oh My `research` / `deepsearch`, addyosmani `source-driven-development`, Threads/Reddit/GitHub/product references | `gstack-plan-design-review` or `gstack-plan-ceo-review` when taste/product direction is risky | References inspected, selected direction, rejected directions, taste/positioning lessons, and source evidence are clear enough to choose a design route |
 | `DESIGN.md` or UI design doc | User-facing UI, visual system, or interaction model matters | Prefer Open Design when installed/approved for artifact generation; reference with VoltAgent/awesome-design-md; create/refine with `gstack-design-consultation`, `gstack-design-shotgun`, `gstack-plan-design-review`, addyosmani `frontend-ui-engineering` | `gstack-plan-design-review`, `gstack-design-review`, `gstack-browse`, `gstack-qa-only` | Visual atmosphere, color roles, typography, component rules, layout, depth/elevation, do/don't guardrails, responsive behavior, accessibility, agent prompt handoff, reference rationale, selected/rejected directions, and Open Design artifact/preview/export evidence are locked enough to implement |
 | ADR | A decision will be expensive to reverse | addyosmani `documentation-and-adrs` | `gstack-plan-eng-review`, `gstack-cso` for security decisions, `gstack-benchmark` for performance decisions | Context, decision, alternatives, consequences, and status are recorded in `docs/decisions/` or the repo's ADR convention |
-| `PLAN.md` | A current phase needs execution-ready slices | addyosmani `planning-and-task-breakdown`, `mansu-plan`, `mansu-build` / `mansu-tdd-total`, `CODE_CONSTRUCTION_ORDER.md` | `gstack-autoplan`, `gstack-plan-eng-review`, Metis/Momus-style critics, source-specific reviewers | Current phase goal, ordered vertical slices, acceptance criteria, impact files, validation, risks, mode decisions, and checkpoint rules are present |
+| `PLAN.md` | A current phase needs execution-ready slices | addyosmani `planning-and-task-breakdown`, numbered `mansu-2plan`, backing `mansu-build` / `mansu-tdd-total` under numbered `mansu-3build`, `CODE_CONSTRUCTION_ORDER.md` | `gstack-autoplan`, `gstack-plan-eng-review`, Metis/Momus-style critics, source-specific reviewers | Current phase goal, ordered vertical slices, acceptance criteria, impact files, validation, risks, mode decisions, and checkpoint rules are present |
 | Slice checkpoint | A slice finishes or pauses | `mansu-tdd-lite`, `mansu-tdd-strict`, checkpoint-equivalent source skill | review gate, QA gate, validation commands | Done, remaining risk, next starting point, commit/no-commit status, and updated `PLAN.md` are recorded |
 | Worklog / `개발일지.md` | Work has happened and should compound | `gstack-retro`, `gstack-learn`, Mansu checkpoint closeout | self-review against `PLAN.md`, source freshness notes | Historical decisions and actual flow are recorded without keeping completed detail active in `PLAN.md` |
 
@@ -121,7 +142,8 @@ For user-facing UI, choose the design source route before phase roadmap planning
 Do not let Mansu replace Open Design, VoltAgent/awesome-design-md, gstack design
 skills, Oh My research, or addyosmani source-driven/frontend skills with a
 Mansu-owned design questionnaire. If no design route is selected, block
-implementation handoff and return to `mansu-project-start`.
+implementation handoff and return to public `mansu-1define` or the
+`mansu-project-start` compatibility alias.
 | Verification report | Runtime behavior or user flow is claimed | `mansu-web-verify`, `gstack-browse`, `gstack-qa-only`, `gstack-benchmark`, `gstack-cso` | rerun relevant checks, screenshots, logs, security/perf evidence | What was tested, what passed, what failed, what was not tested, and remaining risk are explicit |
 | Release docs | Work is ready to ship or has shipped | `gstack-document-release`, addyosmani `documentation-and-adrs`, `shipping-and-launch` | `gstack-health`, `gstack-review`, `gstack-ship`, `gstack-canary` when deployed | README, changelog, architecture notes, release risk, and rollback/next steps match reality |
 
@@ -170,12 +192,17 @@ blocker remains unresolved.
 ## PLAN.md Boundary
 
 `PLAN.md` is the active phase execution document, not the whole project memory.
+It is not canonical Mansu doctrine, and generated `.omo` plans are not canonical
+doctrine either. `.omo/plans/*.md` can be the active phase execution document
+only when selected as a concrete plan path; otherwise `.omo` stays generated
+archive/evidence state.
 
 Use the project roadmap or TDR for the whole feature sequence. Use `PLAN.md` for
 the phase currently being executed.
 
-Before `mansu-build` / `mansu-tdd-total` starts, `PLAN.md` must name the active phase and link to
-the roadmap or phase-order artifact it was derived from.
+Before numbered public `mansu-3build` starts through the backing
+`mansu-build` / `mansu-tdd-total` path, `PLAN.md` must name the active phase and
+link to the roadmap or phase-order artifact it was derived from.
 
 Put into `PLAN.md`:
 

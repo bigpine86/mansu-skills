@@ -1,4 +1,4 @@
 interface:
   display_name: Mansu Verify
   short_description: Prove behavior with tests, runtime checks, browser QA, and evidence.
-  default_prompt: Use $mansu-verify to prove behavior with tests, runtime checks, browser QA, and QA evidence. If verification passes, continue directly into mansu-review by default; stop before review only when verification fails, evidence is missing, or the user explicitly defers review. End by reporting whether review was run or is the immediate next step.
+  default_prompt: Use $mansu-verify as the backing Verify implementation to prove behavior with tests, runtime checks, browser QA, and QA evidence. If verification passes, continue directly into public mansu-5review by default; stop before review only when verification fails, evidence is missing, or the user explicitly defers review. End by reporting whether review was run or is the immediate next step.

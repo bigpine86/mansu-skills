@@ -49,9 +49,9 @@ require_file "$SOURCE_CATALOG"
 require_absent_path "$ROOT_DIR/mansu-start/SKILL.md"
 require_absent_path "$ROOT_DIR/mansu-start/agents/openai.yaml"
 
-scenario "Given project kickoff is requested, When Mansu routes it, Then mansu-define is public and mansu-project-start remains compatibility kickoff"
+scenario "Given project kickoff is requested, When Mansu routes it, Then mansu-1define is public and mansu-project-start remains compatibility kickoff"
 require_contains "$PROJECT" '^name: mansu-project-start$' 'project-start skill name missing'
-require_contains "$PROJECT_YAML" 'Use \$mansu-project-start as a thin project-start orchestrator' 'project-start OpenAI prompt must be the direct kickoff route'
+require_contains "$PROJECT_YAML" 'run \$mansu-project-start as a thin project-start orchestrator' 'project-start OpenAI prompt must keep the compatibility kickoff route'
 require_absent "$PROJECT" 'mansu-start' 'project-start must not refer to the removed mansu-start alias'
 require_absent "$PROJECT_YAML" 'mansu-start' 'project-start OpenAI prompt must not refer to the removed mansu-start alias'
 
@@ -88,18 +88,20 @@ require_contains "$PROJECT" 'Phase list:' 'project-start report must include pha
 require_contains "$PROJECT" 'Active phase:' 'project-start report must include active phase'
 require_contains "$PROJECT_YAML" 'before calling \$mansu-tdd-total, create or update a repo-visible phase roadmap' 'OpenAI prompt must require phase roadmap before tdd-total'
 
-scenario "Given mansu-tdd-total is invoked directly, When the active plan path lacks active phase or roadmap link, Then it routes back to define/plan compatibility kickoff"
+scenario "Given mansu-tdd-total is invoked directly, When the active plan path lacks active phase or roadmap link, Then it routes back to the numbered define/plan public routes"
 require_contains "$TDD_TOTAL" 'project roadmap or phase order artifact' 'tdd-total must require roadmap artifact for project-started work'
 require_contains "$TDD_TOTAL" 'does not name an active phase plus its roadmap/phase-order artifact' 'tdd-total must detect missing active phase/roadmap'
-require_contains "$TDD_TOTAL" 'Route back to `mansu-project-start`' 'tdd-total must route back instead of implementing'
+require_contains "$TDD_TOTAL" 'Route back to public `mansu-1define` / `mansu-2plan`' 'tdd-total must route back to numbered define/plan instead of implementing'
+require_absent "$TDD_TOTAL" 'Route back to `mansu-project-start`' 'tdd-total must not route missing phase plans to legacy project-start'
 require_contains "$TDD_TOTAL" 'inspect it before rejecting it' 'tdd-total must inspect roadmap-style files before rejecting them'
 require_contains "$TDD_TOTAL" 'use that file as[[:space:]]*$' 'tdd-total must accept roadmap-style files when they are active phase plans'
 require_contains "$TDD_TOTAL_YAML" 'find the active plan path first' 'tdd-total OpenAI prompt must find active plan path first'
 require_contains "$TDD_TOTAL_YAML" '\.omo/plans/\*\.md' 'tdd-total OpenAI prompt must check OMO plan paths'
 require_contains "$TDD_TOTAL_YAML" 'do not claim no plan just because the filename differs' 'tdd-total OpenAI prompt must not reject plan by filename'
 require_contains "$TDD_TOTAL_YAML" 'roadmap/phase-order artifact' 'tdd-total OpenAI prompt must require roadmap/phase-order artifact'
-require_contains "$TDD_TOTAL_YAML" 'route back to \$mansu-project-start instead of implementing' 'tdd-total OpenAI prompt must route back to project-start'
-require_contains "$DOC_ORDER" 'Before `mansu-build` / `mansu-tdd-total` starts, `PLAN.md` must name the active phase' 'document router must enforce build/tdd-total preflight'
+require_contains "$TDD_TOTAL_YAML" 'route back to public mansu-1define / mansu-2plan instead of implementing' 'tdd-total OpenAI prompt must route missing phase plans to numbered define/plan'
+require_absent "$TDD_TOTAL_YAML" 'route back to \$mansu-project-start instead of implementing' 'tdd-total OpenAI prompt must not route missing phase plans to project-start'
+require_contains "$DOC_ORDER" 'Before numbered public `mansu-3build` starts through the backing' 'document router must enforce numbered build/tdd-total preflight'
 
 scenario "Given fallback conditions, When source routes are missing, Then Mansu records skipped route reasons instead of silently proceeding"
 require_contains "$PROJECT" 'Source skills skipped:' 'project-start report must record skipped source skills'

@@ -105,7 +105,8 @@ Legacy compatibility aliases:
 - `mansu-review` -> `mansu-5review`
 - `mansu-ship` -> `mansu-6ship`
 - `mansu-setup` -> `mansu-9setup`
-- `mansu-project-start` -> `mansu-1define`
+- `mansu-setting` -> `mansu-setup` (pure setup compatibility alias)
+- `mansu-project-start` -> `mansu-1define`, then `mansu-2plan` when planning is needed; keep it only as a legacy/specialized Zero-to-PLAN kickoff surface
 - `mansu-tdd-total` -> `mansu-3build`
 - `mansu-web-verify` -> `mansu-4verify`
 - `mansu-debug-rootcause` -> `mansu-debug`

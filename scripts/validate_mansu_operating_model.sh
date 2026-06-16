@@ -48,6 +48,22 @@ forbid_contains() {
   fi
 }
 
+forbid_stale_spine() {
+  local file="$1"
+  local message="$2"
+  forbid_contains "$file" 'Think[[:space:]]*->[[:space:]]*Plan[[:space:]]*->[[:space:]]*Build[[:space:]]*->[[:space:]]*Review[[:space:]]*->[[:space:]]*Test[[:space:]]*->[[:space:]]*Ship' "$message"
+}
+
+forbid_unnumbered_public_lifecycle_route() {
+  local file="$1"
+  forbid_contains "$file" 'Use[[:space:]]+`mansu-define`[[:space:]]+and[[:space:]]+then[[:space:]]+`mansu-plan`' 'source catalog exposes unnumbered define/plan as public guidance'
+  forbid_contains "$file" 'use[[:space:]]+`mansu-define`' 'source catalog exposes mansu-define as active public guidance'
+  forbid_contains "$file" 'Hand off to[[:space:]]+`mansu-build`' 'source catalog exposes mansu-build as active public handoff'
+  forbid_contains "$file" 'For non-trivial work,[[:space:]]+use[[:space:]]+`mansu-build`' 'source catalog exposes mansu-build as active public guidance'
+  forbid_contains "$file" 'Use[[:space:]]+`mansu-verify`' 'source catalog exposes mansu-verify as active public guidance'
+  forbid_contains "$file" 'Use[[:space:]]+`mansu-ship`' 'source catalog exposes mansu-ship as active public guidance'
+}
+
 require_file "$MODEL"
 require_file "$OPENAI_YAML"
 require_file "$DOCTRINE_REF"
@@ -91,6 +107,11 @@ require_contains "$DOCTRINE_REF" '^## Strict Mode Policy$' 'doctrine reference m
 require_contains "$DOCTRINE_REF" '^## Evidence And Ship Readiness$' 'doctrine reference missing Evidence And Ship Readiness section'
 require_contains "$DOCTRINE_REF" '^## Anti-Patterns$' 'doctrine reference missing Anti-Patterns section'
 require_contains "$DOCTRINE_REF" '^## Document Authority$' 'doctrine reference missing Document Authority section'
+require_contains "$DOCTRINE_REF" 'Define -> Plan -> Build -> Verify -> Review -> Ship' 'doctrine reference lost consolidated delivery spine'
+for reference_file in "$ROOT_DIR"/mansu-operating-model/references/*; do
+  [ -f "$reference_file" ] || continue
+  forbid_stale_spine "$reference_file" "stale old lifecycle spine leaked into operating model reference: $reference_file"
+done
 
 # Required concepts
 require_contains "$DOCTRINE_REF" 'Non-trivial work starts with planning' 'doctrine reference lost plan-first doctrine'
@@ -112,21 +133,30 @@ require_contains "$MODEL" 'Keep Mansu documents MECE' 'operating model lost MECE
 require_literal "$MODEL" '`references/AGENTS.md` | project-local first-hop router' 'operating model lost AGENTS ownership boundary'
 require_literal "$MODEL" '`references/SOURCE_SKILL_CATALOG.md` | source-family map' 'operating model lost source catalog ownership boundary'
 require_literal "$MODEL" '`references/DOCUMENT_CREATION_ORDER.md` | artifact router' 'operating model lost document router ownership boundary'
-require_literal "$MODEL" '`mansu-define/SKILL.md` | public Define phase route' 'operating model lost define ownership boundary'
-require_literal "$MODEL" '`mansu-plan/SKILL.md` | public Plan phase route' 'operating model lost plan ownership boundary'
-require_literal "$MODEL" '`mansu-build/SKILL.md` | public Build phase route' 'operating model lost build ownership boundary'
+require_literal "$MODEL" '`mansu-1define/SKILL.md` | public Define phase route' 'operating model lost numbered define ownership boundary'
+require_literal "$MODEL" '`mansu-2plan/SKILL.md` | public Plan phase route' 'operating model lost numbered plan ownership boundary'
+require_literal "$MODEL" '`mansu-3build/SKILL.md` | public Build phase route' 'operating model lost numbered build ownership boundary'
+require_literal "$MODEL" '`mansu-4verify/SKILL.md` | public Verify phase route' 'operating model lost numbered verify ownership boundary'
+require_literal "$MODEL" '`mansu-5review/SKILL.md` | public Review phase route' 'operating model lost numbered review ownership boundary'
+require_literal "$MODEL" '`mansu-6ship/SKILL.md` | numbered Ship phase route' 'operating model lost numbered ship ownership boundary'
+require_literal "$MODEL" '`mansu-define/SKILL.md` through `mansu-ship/SKILL.md` | compatibility/backing implementations for numbered lifecycle phase routes' 'operating model lost unnumbered compatibility/backing boundary'
 require_literal "$MODEL" '`mansu-project-start/SKILL.md` | compatibility Zero-to-PLAN workflow' 'operating model lost project-start compatibility boundary'
 require_contains "$MODEL" 'link to the owner and summarize only the routing' 'operating model lost anti-duplication linking rule'
 
 require_contains "$AGENTS_TEMPLATE" '^## Routing Contract$' 'AGENTS template missing routing contract'
 require_contains "$AGENTS_TEMPLATE" 'First-hop routes:' 'AGENTS template missing first-hop route map'
 require_contains "$AGENTS_TEMPLATE" 'unsure what to do next -> `mansu-help`' 'AGENTS template missing mansu-help route'
-require_contains "$AGENTS_TEMPLATE" 'new product, app, repo, major feature family' 'AGENTS template missing project-start route'
-require_contains "$AGENTS_TEMPLATE" 'current phase implementation or refactor with slices -> `mansu-build`' 'AGENTS template missing build route'
+require_contains "$AGENTS_TEMPLATE" 'new product, app, repo, major feature family.*-> `mansu-1define`, then `mansu-2plan`' 'AGENTS template missing define/plan route'
+require_contains "$AGENTS_TEMPLATE" 'current phase implementation or refactor with slices -> `mansu-3build`' 'AGENTS template missing build route'
+require_contains "$AGENTS_TEMPLATE" 'behavior proof, test evidence, QA, or browser/runtime verification -> `mansu-4verify`' 'AGENTS template missing verify route'
+require_contains "$AGENTS_TEMPLATE" 'quality, architecture, design, security, or decision-risk review -> `mansu-5review`' 'AGENTS template missing review route'
 require_contains "$AGENTS_TEMPLATE" 'unclear failure, regression, stack trace, or broken behavior -> `mansu-debug`' 'AGENTS template missing debug route'
-require_contains "$AGENTS_TEMPLATE" 'behavior proof, test evidence, QA, or browser/runtime verification -> `mansu-verify`' 'AGENTS template missing verify route'
-require_contains "$AGENTS_TEMPLATE" 'release readiness, commit/PR/release notes, ship-or-hold judgment -> `mansu-ship`' 'AGENTS template missing ship route'
+require_contains "$AGENTS_TEMPLATE" 'release readiness, commit/PR/release notes, ship-or-hold judgment -> `mansu-6ship`' 'AGENTS template missing ship route'
 require_contains "$AGENTS_TEMPLATE" 'source skill drift, source catalog refresh' 'AGENTS template missing source-curator route'
+require_contains "$AGENTS_TEMPLATE" 'Compatibility aliases and backing routes:' 'AGENTS template missing compatibility/backing route map'
+require_contains "$AGENTS_TEMPLATE" '`mansu-tdd-total` -> `mansu-3build` numbered route; backing implementation `mansu-build`' 'AGENTS template missing build backing route'
+require_contains "$AGENTS_TEMPLATE" '`mansu-web-verify` -> `mansu-4verify` numbered route; backing implementation `mansu-verify`' 'AGENTS template missing verify backing route'
+require_contains "$AGENTS_TEMPLATE" '`mansu-ship-release` -> `mansu-6ship` numbered route; backing implementation `mansu-ship`' 'AGENTS template missing ship backing route'
 require_contains "$AGENTS_TEMPLATE" 'source skill selection -> `mansu-operating-model/references/SOURCE_SKILL_CATALOG.md`' 'AGENTS template missing source catalog pointer'
 require_contains "$AGENTS_TEMPLATE" 'document/artifact order -> `mansu-operating-model/references/DOCUMENT_CREATION_ORDER.md`' 'AGENTS template missing document order pointer'
 require_contains "$AGENTS_TEMPLATE" 'project-local commands, paths, validation, dangerous surfaces -> `CODING_RULES.md`' 'AGENTS template missing coding rules pointer'
@@ -156,6 +186,11 @@ require_contains "$SOURCE_CATALOG" '^## addyosmani/agent-skills Capability Map$'
 require_contains "$SOURCE_CATALOG" '^## Mansu Composition Recipes$' 'source catalog missing composition recipes'
 require_contains "$SOURCE_CATALOG" '^### New Project / Zero-To-PLAN$' 'source catalog missing zero-to-PLAN recipe'
 require_contains "$SOURCE_CATALOG" '^### Source Refresh And Reference Curation$' 'source catalog missing source refresh recipe'
+require_contains "$SOURCE_CATALOG" 'Use public routes `mansu-1define` and then `mansu-2plan`' 'source catalog lost numbered define/plan public route guidance'
+require_contains "$SOURCE_CATALOG" 'Hand off to public route `mansu-3build`' 'source catalog lost numbered build public route guidance'
+require_contains "$SOURCE_CATALOG" 'Use public route `mansu-4verify`' 'source catalog lost numbered verify public route guidance'
+require_contains "$SOURCE_CATALOG" 'Use public route `mansu-6ship`' 'source catalog lost numbered ship public route guidance'
+forbid_unnumbered_public_lifecycle_route "$SOURCE_CATALOG"
 require_contains "$SOURCE_CATALOG" 'mansu-source-curator' 'source catalog lost curator route'
 require_contains "$SOURCE_CATALOG" 'mansu-project-start' 'source catalog lost project start route'
 require_contains "$SOURCE_CATALOG" 'mansu-ship-release' 'source catalog lost ship release route'
@@ -239,7 +274,7 @@ require_contains "$DOC_ORDER" '^## PLAN.md Boundary$' 'document creation router 
 require_contains "$DOC_ORDER" 'Large-grain feature order is decided before `PLAN.md`' 'document creation router lost roadmap before PLAN boundary'
 require_contains "$DOC_ORDER" 'Use the project roadmap or TDR for the whole feature sequence' 'document creation router lost roadmap vs PLAN boundary'
 require_contains "$DOC_ORDER" 'If no roadmap artifact names the ordered phase list and exactly one' 'document creation router lost phase roadmap gate'
-require_contains "$DOC_ORDER" 'Before `mansu-build` / `mansu-tdd-total` starts, `PLAN.md` must name the active phase' 'document creation router lost build/tdd-total phase preflight'
+require_contains "$DOC_ORDER" 'Before numbered public `mansu-3build` starts through the backing' 'document creation router lost numbered build phase preflight'
 require_contains "$DOC_ORDER" 'gstack-office-hours' 'document creation router lost office-hours source'
 require_contains "$DOC_ORDER" 'spec-driven-development' 'document creation router lost spec-driven source'
 require_contains "$DOC_ORDER" 'planning-and-task-breakdown' 'document creation router lost planning source'

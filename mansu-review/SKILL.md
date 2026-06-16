@@ -10,6 +10,10 @@ Use this skill when the implementation is ready for quality judgment.
 Review judges quality. Review is not QA, and it should not claim behavior works
 without verification evidence.
 
+Mansu Review does not invent refactoring judgment by itself. It routes
+refactoring and simplification questions to source review skills, then records
+their findings and decides the next Mansu route.
+
 ## Required references
 
 - `mansu-operating-model/references/SOURCE_SKILL_COMPOSITION.md`
@@ -19,7 +23,8 @@ without verification evidence.
 
 - Use addyosmani `code-review-and-quality`, `code-simplification`,
   `debugging-and-error-recovery`, and `doubt-driven-development`.
-- Use gstack `review`, `plan-eng-review`, `plan-design-review`,
+- Use gstack `review` as the primary diff/code review route for structural
+  issues and refactoring need; use `plan-eng-review`, `plan-design-review`,
   `design-review`, `investigate`, and `cso` for specialist critique.
 - Use OMO `review-work`, `remove-ai-slops`, `debugging`, and
   `comment-checker` when those execution habits fit the diff.
@@ -28,6 +33,9 @@ without verification evidence.
 
 - findings ordered by severity
 - architectural, design, security, maintainability, and decision risks
+- source-skill refactoring/simplification findings from gstack `review`,
+  addyosmani `code-simplification`, or OMO `remove-ai-slops`, including
+  duplicated logic, unclear ownership, over-complex code, dead code, and AI-slop
 - required fixes or route to `mansu-debug`
 - re-verification needed before ship
 
@@ -36,8 +44,8 @@ without verification evidence.
 End the response by saying what should happen next.
 
 - If Review passes and Verify evidence exists, tell the user the next step is
-  `mansu-ship`.
-- If Review finds required fixes with a clear path, route back to `mansu-build`
-  and then `mansu-verify`.
+  public `mansu-6ship`.
+- If Review finds required fixes with a clear path, route back to public
+  `mansu-3build` and then public `mansu-4verify`.
 - If Review finds an unknown-cause problem, route to `mansu-debug`.
 - Do not claim ship-ready when required fixes or re-verification remain.

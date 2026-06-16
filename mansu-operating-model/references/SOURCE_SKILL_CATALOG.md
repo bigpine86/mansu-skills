@@ -366,10 +366,11 @@ Ship, but Mansu still chooses the smallest safe route for the current work.
 
 ### New Project / Zero-To-PLAN
 
-Use `mansu-define` and then `mansu-plan` when the work starts from an idea, new
-repo, major product direction, architecture choice, UI system, or TDR-level
-ambiguity. `mansu-project-start` remains the compatibility alias for older
-kickoff prompts.
+Use public routes `mansu-1define` and then `mansu-2plan` when the work starts
+from an idea, new repo, major product direction, architecture choice, UI
+system, or TDR-level ambiguity. `mansu-project-start` remains the compatibility
+alias for older kickoff prompts; `mansu-define` and `mansu-plan` are backing
+implementation names only.
 
 The route is:
 
@@ -396,10 +397,12 @@ The route is:
    Expand only when risk or ambiguity asks for it; otherwise leave a small,
    repo-visible artifact and record why larger documents were skipped.
 7. Verify with `gstack-autoplan` and focused `gstack-plan-*` reviewers.
-8. Hand off to `mansu-build` only after the roadmap artifact, ordered phase
-   list, exactly one active phase, current phase ordered slices, gate mapping,
-   validation path, upstream artifacts, and open blockers are recorded.
-   `mansu-build` then uses `mansu-tdd-total` as its build engine.
+8. Hand off to public route `mansu-3build` only after the roadmap artifact,
+   ordered phase list, exactly one active phase, current phase ordered slices,
+   gate mapping, validation path, upstream artifacts, and open blockers are
+   recorded.
+   Backing implementation `mansu-build` then uses `mansu-tdd-total` as its
+   build engine.
 
 ### Source Refresh And Reference Curation
 
@@ -473,14 +476,15 @@ but it must not pretend the upstream tools all use the same filename.
 8. Record major irreversible or architectural choices as ADR-style notes when
    `documentation-and-adrs` applies.
 9. Only then derive the current phase's `PLAN.md` and vertical slice table.
-   If no phase roadmap exists, stop before `mansu-build` / `mansu-tdd-total`
-   and return to `mansu-define` / `mansu-plan`.
+   If no phase roadmap exists, stop before public route `mansu-3build` /
+   `mansu-tdd-total` and return to `mansu-1define` / `mansu-2plan`.
 
 ### Feature Or Refactor
 
 1. Mansu classifies `Quick / Standard / Heavy`.
-2. For non-trivial work, use `mansu-build`; it delegates to `mansu-tdd-total`
-   for slice planning and execution.
+2. For non-trivial work, use public route `mansu-3build`; backing
+   implementation `mansu-build` delegates to `mansu-tdd-total` for slice
+   planning and execution.
 3. Use `CODE_CONSTRUCTION_ORDER.md` to decide dependency graph, context pack,
    contract-first boundaries, and slice coding order.
 4. Planning may route through `gstack-office-hours`, `gstack-autoplan`, and
@@ -533,8 +537,8 @@ but it must not pretend the upstream tools all use the same filename.
 
 ### Web Verification
 
-1. Use `mansu-verify`; it delegates web/browser verification to
-   `mansu-web-verify`.
+1. Use public route `mansu-4verify`; backing implementation `mansu-verify`
+   delegates web/browser verification to `mansu-web-verify`.
 2. Use `gstack-browse` for direct interaction and screenshots.
 3. Use `gstack-qa-only` for report-only mode.
 4. Use `gstack-qa` only when fixes are approved.
@@ -543,12 +547,14 @@ but it must not pretend the upstream tools all use the same filename.
 
 ### Ship And Learn
 
-Use `mansu-ship` when implementation is complete enough to judge. It delegates
-release readiness to `mansu-ship-release`.
+Use public route `mansu-6ship` when implementation is complete enough to judge.
+Backing implementation `mansu-ship` delegates release readiness to
+`mansu-ship-release`.
 
 1. Use `gstack-health` before ship judgment.
 2. Use `gstack-review` for diff risk.
-3. Use `mansu-verify` / `mansu-web-verify`, `gstack-qa-only`, or project QA for runtime/user-flow evidence.
+3. Use public route `mansu-4verify` / `mansu-web-verify`, `gstack-qa-only`,
+   or project QA for runtime/user-flow evidence.
 4. Use `gstack-cso` or `gstack-benchmark` when security or performance risk is part of the claim.
 5. Use `gstack-ship` for PR/commit/push workflows when appropriate.
 6. Use `gstack-land-and-deploy` and `gstack-canary` for actual deployment.

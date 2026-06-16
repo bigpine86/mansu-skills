@@ -155,8 +155,8 @@ Before planning, confirm:
 
 If the work came from a new product/app/repo/major feature-family kickoff and
 the active plan does not name an active phase plus its roadmap/phase-order artifact,
-do not start implementation. Route back to `mansu-project-start` to create the
-phase roadmap and active phase plan first.
+do not start implementation. Route back to public `mansu-1define` / `mansu-2plan`
+to create or repair the definition, phase roadmap, and active phase plan first.
 
 If the active plan file contains the whole project roadmap instead of one active
 phase, inspect it before rejecting it. If it clearly marks the current or next

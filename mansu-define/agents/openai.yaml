@@ -1,4 +1,4 @@
 interface:
   display_name: Mansu Define
   short_description: Define project purpose, requirements, and source of truth before planning.
-  default_prompt: Use $mansu-define to define the project before planning or implementation. End by stating whether Define is complete; if complete, tell the user to use mansu-plan next, and never jump directly to mansu-build.
+  default_prompt: Use $mansu-define as the backing Define implementation before planning or implementation. For a new or fuzzy idea, discover and use Ouroboros interview first; if Ouroboros is missing, route to mansu-9setup in install mode, and if installed Ouroboros/runtime MCP integration is stale or broken, route to mansu-9setup in update mode before asking Mansu-owned definition questions. Label any non-Ouroboros definition as fallback. End by stating whether Define is complete; if complete, tell the user to use public mansu-2plan next, and never jump directly to public mansu-3build.

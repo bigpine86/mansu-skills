@@ -75,21 +75,21 @@ Choose the relevant Mansu path based on task character.
 First-hop routes:
 - unsure what to do next -> `mansu-help`
 - first install, stale tools, or unclear runtime/source readiness -> `mansu-setup`
-- new product, app, repo, major feature family, architecture direction, UI system, or TDR-style kickoff -> `mansu-define`, then `mansu-plan`
-- current phase implementation or refactor with slices -> `mansu-build`
-- behavior proof, test evidence, QA, or browser/runtime verification -> `mansu-verify`
-- quality, architecture, design, security, or decision-risk review -> `mansu-review`
+- new product, app, repo, major feature family, architecture direction, UI system, or TDR-style kickoff -> `mansu-1define`, then `mansu-2plan`
+- current phase implementation or refactor with slices -> `mansu-3build`
+- behavior proof, test evidence, QA, or browser/runtime verification -> `mansu-4verify`
+- quality, architecture, design, security, or decision-risk review -> `mansu-5review`
 - unclear failure, regression, stack trace, or broken behavior -> `mansu-debug`
-- release readiness, commit/PR/release notes, ship-or-hold judgment -> `mansu-ship`
+- release readiness, commit/PR/release notes, ship-or-hold judgment -> `mansu-6ship`
 - source skill drift, source catalog refresh, or Mansu reference maintenance -> `mansu-source-curator`
 - project doctrine, `AGENTS.md`, or `CODING_RULES.md` work -> `mansu-operating-model`
 
-Compatibility aliases:
-- `mansu-project-start` -> `mansu-define`
-- `mansu-tdd-total` -> `mansu-build`
-- `mansu-web-verify` -> `mansu-verify`
+Compatibility aliases and backing routes:
+- `mansu-project-start` -> `mansu-1define` numbered route; backing implementation `mansu-define`
+- `mansu-tdd-total` -> `mansu-3build` numbered route; backing implementation `mansu-build`
+- `mansu-web-verify` -> `mansu-4verify` numbered route; backing implementation `mansu-verify`
 - `mansu-debug-rootcause` -> `mansu-debug`
-- `mansu-ship-release` -> `mansu-ship`
+- `mansu-ship-release` -> `mansu-6ship` numbered route; backing implementation `mansu-ship`
 
 Reference maps:
 - source skill selection -> `mansu-operating-model/references/SOURCE_SKILL_CATALOG.md`
@@ -98,10 +98,10 @@ Reference maps:
 - project-local commands, paths, validation, dangerous surfaces -> `CODING_RULES.md`
 
 Examples:
-- new scoped implementation -> `mansu-build`
+- new scoped implementation -> `mansu-3build`
 - unclear failure or regression -> `mansu-debug`
-- runtime or browser behavior claim -> `mansu-verify`
-- high-assurance request -> `mansu-build` with strict mode through `mansu-tdd-total`, or block if strict prerequisites are unavailable
+- runtime or browser behavior claim -> `mansu-4verify`
+- high-assurance request -> `mansu-3build` with strict mode through `mansu-tdd-total`, or block if strict prerequisites are unavailable
 
 If the right path is unclear, classify the task before acting.
 

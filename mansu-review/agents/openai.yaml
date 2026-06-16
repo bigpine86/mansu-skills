@@ -1,4 +1,4 @@
 interface:
   display_name: Mansu Review
   short_description: Review quality, maintainability, safety, design, and decision risk.
-  default_prompt: Use $mansu-review to judge the verified change before ship. Review is not QA; route unknown issues to mansu-debug. End by naming the next route: mansu-ship if review passes, mansu-build then mansu-verify for clear fixes, or mansu-debug for unknown-cause problems.
+  default_prompt: Use $mansu-review as the backing Review implementation to judge the verified change before ship. Review is not QA; use source review routes such as gstack review, addyosmani code-simplification, or OMO remove-ai-slops to check whether refactoring or simplification is needed for duplicated logic, unclear ownership, over-complex code, dead code, or AI-slop; route unknown issues to mansu-debug. End by naming the next route: public mansu-6ship if review passes, public mansu-3build then public mansu-4verify for clear fixes, or mansu-debug for unknown-cause problems.

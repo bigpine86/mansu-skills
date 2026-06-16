@@ -9,6 +9,40 @@ PLAN="$ROOT_DIR/PLAN.md"
 LOCK="$ROOT_DIR/mansu-operating-model/references/SOURCE_SKILL_LOCK.json"
 MANUAL="$ROOT_DIR/docs/mansu-manual.html"
 
+fail() {
+  echo "FAIL: $1" >&2
+  exit 1
+}
+
+contains() {
+  local file="$1"
+  local pattern="$2"
+  grep -Eq "$pattern" "$file"
+}
+
+public_docs=("$README" "$README_KO" "$ROOT_DIR/mansu-0help/SKILL.md" "$HELP" "$MANUAL")
+lifecycle_routes=(mansu-1define mansu-2plan mansu-3build mansu-4verify mansu-5review mansu-6ship)
+lifecycle_impls=(mansu-define mansu-plan mansu-build mansu-verify mansu-review mansu-ship)
+
+for idx in "${!lifecycle_routes[@]}"; do
+  route="${lifecycle_routes[$idx]}"
+  implementation="${lifecycle_impls[$idx]}"
+  test -d "$ROOT_DIR/$route"
+  test -f "$ROOT_DIR/$route/SKILL.md"
+  test -f "$ROOT_DIR/$route/agents/openai.yaml"
+  test -d "$ROOT_DIR/$implementation"
+  test -f "$ROOT_DIR/$implementation/SKILL.md"
+done
+
+for file in "${public_docs[@]}"; do
+  for route in "${lifecycle_routes[@]}"; do
+    contains "$file" "$route" || fail "public docs must include numbered lifecycle route $route: $file"
+  done
+  if grep -Ein '(merge|combine|collapse).*(mansu-1define|mansu-2plan|mansu-3build|mansu-4verify|mansu-5review|mansu-6ship|six numbered|lifecycle).*(single|one|unified)|((single|one|unified).*(merge|combine|collapse).*(lifecycle|phase route))' "$file" >/dev/null; then
+    fail "public docs must not instruct merging the six lifecycle routes: $file"
+  fi
+done
+
 for route in mansu-0help mansu-1define mansu-2plan mansu-3build mansu-4verify mansu-5review mansu-debug mansu-6ship mansu-9setup mansu-0manual; do
   test -f "$ROOT_DIR/$route/SKILL.md"
   test -f "$ROOT_DIR/$route/agents/openai.yaml"
@@ -42,6 +76,12 @@ check_numbered_route mansu-4verify mansu-verify
 check_numbered_route mansu-5review mansu-review
 check_numbered_route mansu-6ship mansu-ship
 check_numbered_route mansu-9setup mansu-setup
+
+contains "$README" 'mansu-project-start.*compatibility-only alias' || fail 'README must classify mansu-project-start as compatibility-only'
+contains "$README_KO" 'mansu-project-start.*compatibility-only alias|mansu-project-start.*compatibility alias' || fail 'README.ko must classify mansu-project-start as compatibility'
+contains "$HELP" 'mansu-project-start.*legacy/specialized Zero-to-PLAN kickoff surface' || fail 'help must keep mansu-project-start secondary'
+contains "$MANUAL" 'mansu-project-start.*compatibility alias' || fail 'manual must classify mansu-project-start as compatibility'
+! grep -E 'data-detail="project-start"|data-detail-card="project-start"|<td><code>Project Start</code></td>' "$MANUAL" >/dev/null || fail 'manual must not place mansu-project-start in the core lifecycle phase table'
 
 for route in mansu-define mansu-plan mansu-build mansu-verify mansu-review mansu-debug mansu-ship; do
   grep -q "$route" "$HELP"

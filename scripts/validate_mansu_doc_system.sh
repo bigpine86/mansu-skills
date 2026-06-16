@@ -35,6 +35,16 @@ contains() {
 [ -f "$CODE_ORDER" ] || fail "missing CODE_CONSTRUCTION_ORDER reference"
 [ -f "$FUTURE_BKIT" ] || fail "missing FUTURE_BKIT_IDEAS reference"
 
+contains "$AGENTS_TEMPLATE" 'new product, app, repo, major feature family.*`mansu-1define`, then `mansu-2plan`' || fail 'AGENTS should prefer numbered define/plan public routes'
+contains "$AGENTS_TEMPLATE" 'current phase implementation or refactor with slices -> `mansu-3build`' || fail 'AGENTS should prefer numbered build public route'
+contains "$AGENTS_TEMPLATE" 'behavior proof, test evidence, QA, or browser/runtime verification -> `mansu-4verify`' || fail 'AGENTS should prefer numbered verify public route'
+contains "$AGENTS_TEMPLATE" 'quality, architecture, design, security, or decision-risk review -> `mansu-5review`' || fail 'AGENTS should prefer numbered review public route'
+contains "$AGENTS_TEMPLATE" 'release readiness, commit/PR/release notes, ship-or-hold judgment -> `mansu-6ship`' || fail 'AGENTS should prefer numbered ship public route'
+contains "$AGENTS_TEMPLATE" 'Compatibility aliases and backing routes:' || fail 'AGENTS should label unnumbered lifecycle routes as compatibility/backing only'
+if grep -Eq '^- .*-> `mansu-(define|plan|build|verify|review|ship)`' "$AGENTS_TEMPLATE"; then
+  fail 'AGENTS should not use unnumbered lifecycle skills as first-hop public routes'
+fi
+
 contains "$README_FILE" 'mansu-operating-model' || fail 'README should mention mansu-operating-model'
 contains "$README_FILE" 'validate_mansu_operating_model\.sh' || fail 'README should mention validate_mansu_operating_model.sh'
 contains "$README_FILE" 'AGENTS\.md' || fail 'README should mention AGENTS template'
@@ -42,6 +52,9 @@ contains "$README_FILE" 'CODING_RULES\.md' || fail 'README should mention CODING
 contains "$DOCTRINE_REF" '^# Mansu Doctrine Reference$' || fail 'DOCTRINE reference should have canonical title'
 contains "$SOURCE_CATALOG" '^# Mansu Source Skill Catalog$' || fail 'SOURCE_SKILL_CATALOG should have canonical title'
 contains "$DOC_ORDER" '^# Mansu Document Creation Router$' || fail 'DOCUMENT_CREATION_ORDER should have canonical router title'
+contains "$DOC_ORDER" 'use `mansu-1define` and then' || fail 'DOCUMENT_CREATION_ORDER should prefer numbered define route'
+contains "$DOC_ORDER" '`mansu-2plan` as the public orchestrators' || fail 'DOCUMENT_CREATION_ORDER should prefer numbered plan route'
+contains "$DOC_ORDER" '`mansu-3build`, whose backing implementation `mansu-build`' || fail 'DOCUMENT_CREATION_ORDER should prefer numbered build route with backing implementation only'
 contains "$CODE_ORDER" '^# Mansu Code Construction Router$' || fail 'CODE_CONSTRUCTION_ORDER should have canonical router title'
 contains "$FUTURE_BKIT" '^# Future bkit Ideas For Mansu$' || fail 'FUTURE_BKIT_IDEAS should have canonical title'
 contains "$FUTURE_BKIT" 'not an active routing catalog' || fail 'FUTURE_BKIT_IDEAS should stay outside active routing'
@@ -54,6 +67,8 @@ contains "$README_FILE" 'mansu-project-start' || fail 'README should mention man
 contains "$README_FILE" 'mansu-ship-release' || fail 'README should mention mansu-ship-release'
 contains "$README_FILE" '^## Big Picture$' || fail 'README should include big picture model'
 contains "$README_FILE" 'Lifecycle phase spine' || fail 'README should mention lifecycle phase spine layer'
+contains "$README_FILE" 'mansu-1define.*mansu-2plan.*mansu-3build.*mansu-4verify.*mansu-5review.*mansu-6ship' || fail 'README should keep numbered public lifecycle spine'
+contains "$README_FILE" 'mansu-project-start.*compatibility-only alias' || fail 'README should keep mansu-project-start as compatibility-only'
 contains "$README_FILE" 'Project definition / memory source' || fail 'README should mention project definition and memory layer'
 contains "$README_FILE" 'Implementation actor' || fail 'README should mention implementation actor layer'
 contains "$README_FILE" 'project roadmap/phase order' || fail 'README should preserve project roadmap/phase order boundary'
@@ -70,6 +85,8 @@ contains "$README_FILE" '\[한국어\]\(\./README\.ko\.md\)' || fail 'README sho
 contains "$README_KO_FILE" '\[English\]\(\./README\.md\)' || fail 'Korean README should link English README'
 contains "$README_KO_FILE" '최고의 자동화는 모든 것을 직접 만드는 데서 오지 않습니다' || fail 'Korean README should preserve Mansu philosophy'
 contains "$README_KO_FILE" '대표 route이지 고정 의존성이 아닙니다' || fail 'Korean README should keep source routes representative'
+contains "$README_KO_FILE" 'mansu-1define.*mansu-2plan.*mansu-3build.*mansu-4verify.*mansu-5review.*mansu-6ship' || fail 'Korean README should keep numbered public lifecycle spine'
+contains "$README_KO_FILE" 'mansu-project-start.*compatibility-only alias|mansu-project-start.*compatibility alias' || fail 'Korean README should keep mansu-project-start as compatibility'
 contains "$README_KO_FILE" '현재 phase의 active execution plan' || fail 'Korean README should keep PLAN.md scoped to active phase execution'
 contains "$README_KO_FILE" 'MANSU_COMPARE_INSTALLED=1 scripts/validate_mansu_installed_copies\.sh /Users/hansol/\.codex/skills' || fail 'Korean README should document installed copy comparison command'
 contains "$README_KO_FILE" '더 이상 소스에 없는 `mansu-\*` 스킬' || fail 'Korean README should document obsolete installed skill detection'
@@ -121,6 +138,27 @@ for pattern in "${deny_patterns[@]}"; do
     fail "unverified design source leaked into active Mansu docs: $pattern"
   fi
 done
+
+omo_public_files=(
+  "$README_FILE"
+  "$README_KO_FILE"
+  "$ROOT_DIR/mansu-0help/SKILL.md"
+  "$ROOT_DIR/mansu-help/SKILL.md"
+  "$ROOT_DIR/mansu-manual/SKILL.md"
+  "$ROOT_DIR/docs/mansu-manual.html"
+)
+
+for file in "${omo_public_files[@]}"; do
+  [ -f "$file" ] || continue
+  if grep -Ein '\.omo/(plans/)?\*?\.?md?.*(canonical doctrine|public runtime source|normal runtime source of truth)|((canonical doctrine|public runtime source|normal runtime source of truth).*)\.omo/(plans/)?\*?\.?md?' "$file" >/dev/null; then
+    fail ".omo plans must not be presented as canonical/public runtime source in public docs: $file"
+  fi
+done
+
+contains "$ROOT_DIR/mansu-plan/SKILL.md" '\.omo/plans/\*\.md' || fail 'mansu-plan should allow explicit OMO active plan paths'
+contains "$ROOT_DIR/mansu-build/SKILL.md" '\.omo/plans/\*\.md' || fail 'mansu-build should allow explicit OMO active plan paths'
+contains "$ROOT_DIR/mansu-plan/SKILL.md" 'does not make `\.omo/\*` canonical doctrine' || fail 'mansu-plan should keep OMO non-doctrine boundary'
+contains "$ROOT_DIR/mansu-build/SKILL.md" 'not canonical doctrine' || fail 'build skill should keep OMO non-doctrine boundary'
 
 stale_route_files=(
   "$README_FILE"

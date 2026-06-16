@@ -158,7 +158,7 @@ judgment.
 
 Mansu follows this delivery spine:
 
-**Think -> Plan -> Build -> Review -> Test -> Ship -> Reflect**
+**Define -> Plan -> Build -> Verify -> Review -> Ship**
 
 Operationally:
 
@@ -174,6 +174,11 @@ Operationally:
 10. checkpoint / commit-or-record-no-commit
 11. ship or hold
 12. retro / learn
+
+Define includes the thinking, intake, classification, and product-direction
+work needed before planning. Verify owns behavior proof and QA evidence before
+Review judges quality and risk. Retro and learning remain expected closeout
+activities, but they are not a seventh public lifecycle phase.
 
 This spine is mandatory for heavy work, expected for standard work, and
 compressible only for quick work.

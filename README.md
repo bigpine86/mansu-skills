@@ -55,6 +55,10 @@ Oh My adapter, then verifies adapter compatibility.
 
 `Define -> Plan -> Build -> Verify -> Review -> Ship`
 
+The public lifecycle spine is locked to six separate numbered routes:
+`mansu-1define -> mansu-2plan -> mansu-3build -> mansu-4verify -> mansu-5review -> mansu-6ship`.
+Compatibility aliases such as `mansu-project-start` and legacy unnumbered names do not replace, merge, rename, or hide these public phase routes.
+
 | Phase | Plain meaning | Explanation |
 | --- | --- | --- |
 | Define | Decide what to build | Clarify the problem, needed features, scope, and finish line. |
@@ -253,7 +257,6 @@ See [MANSU_PHILOSOPHY.md](./MANSU_PHILOSOPHY.md) for the full doctrine.
 | `mansu-source-curator` | Drift was confirmed and Mansu references/validators/manual/worklog must be refreshed. | Hidden source-reference maintenance |
 | `mansu-operating-model` | You are defining project behavior, role separation, evidence rules, `AGENTS.md`, or `CODING_RULES.md`. | Canonical doctrine and project-document templates |
 | `mansu-debug` | You need to reproduce, isolate, prove root cause, minimally fix, and regression-test a bug. | Debug route |
-| `mansu-project-start` | Compatibility alias for `mansu-define`. | Legacy kickoff route |
 | `mansu-tdd-total` | Default implementation engine under `mansu-build`. | Build engine |
 | `mansu-tdd-strict` | A risky slice benefits from a meaningful failing RED test. | Strict TDD slice loop |
 | `mansu-tdd-lite` | A slice still needs planning, review, QA, checkpoint, and commit, but forced RED would be artificial. | Relaxed RED, not relaxed quality |
@@ -261,6 +264,14 @@ See [MANSU_PHILOSOPHY.md](./MANSU_PHILOSOPHY.md) for the full doctrine.
 | `mansu-web-verify` | Compatibility route under `mansu-verify` for real-user web checks. | Web verification orchestrator |
 | `mansu-ship-release` | Compatibility route under `mansu-ship`. | Release readiness gate |
 | `mansu-help` / `mansu-define` / `mansu-plan` / `mansu-build` / `mansu-verify` / `mansu-review` / `mansu-ship` / `mansu-setup` / `mansu-manual` | Legacy unnumbered names. | Compatibility aliases |
+
+Compatibility/admin surfaces:
+
+- `mansu-setting` is a pure legacy alias to `mansu-setup`; public setup guidance
+  should use `mansu-9setup`.
+- `mansu-project-start` remains available for legacy or specialized
+  Zero-to-PLAN kickoff requests; public lifecycle guidance should use
+  `mansu-1define`, then `mansu-2plan`.
 
 ## Recommended Routing
 
@@ -322,7 +333,8 @@ and `scripts/validate_mansu_installed_copies.sh`.
 - [mansu-debug](./mansu-debug/SKILL.md): special root-cause route
 - [mansu-6ship](./mansu-6ship/SKILL.md): primary numbered Ship phase
 - [mansu-help](./mansu-help/SKILL.md), [mansu-setup](./mansu-setup/SKILL.md), [mansu-define](./mansu-define/SKILL.md), [mansu-plan](./mansu-plan/SKILL.md), [mansu-build](./mansu-build/SKILL.md), [mansu-verify](./mansu-verify/SKILL.md), [mansu-review](./mansu-review/SKILL.md), [mansu-ship](./mansu-ship/SKILL.md), [mansu-manual](./mansu-manual/SKILL.md): compatibility implementation paths
-- [mansu-project-start](./mansu-project-start/SKILL.md): compatibility alias for Define
+- [mansu-setting](./mansu-setting/SKILL.md): pure compatibility alias to `mansu-setup`
+- [mansu-project-start](./mansu-project-start/SKILL.md): compatibility-only alias for legacy kickoff; use `mansu-1define` in public lifecycle guidance
 - [mansu-tdd-total](./mansu-tdd-total/SKILL.md): build engine used by `mansu-build`
 - [mansu-tdd-strict](./mansu-tdd-strict/SKILL.md): strict TDD execution
 - [mansu-tdd-lite](./mansu-tdd-lite/SKILL.md): lite execution

@@ -5,6 +5,13 @@ This reference does not freeze one universal coding sequence.
 It helps Mansu decide which construction phase the current work is in, which
 source skill should be read, and what execution gates must remain true.
 
+This reference owns the phase loop and the Build/Plan handoff for coding work.
+It does not own document lifecycle, artifact handoff policy, or source-skill
+pairing decisions; use `DOCUMENT_CREATION_ORDER.md` and
+`SOURCE_SKILL_COMPOSITION.md` for those. Phase `SKILL.md` files own immediate
+action rules and call this reference only when the current task needs coding
+phase detection, slice order, or construction-loop invariants.
+
 Primary source family: `addyosmani/agent-skills`.
 
 Mansu reads the addyosmani lifecycle as the broad phase spine:
@@ -118,6 +125,10 @@ If the phase is ambiguous, read `using-agent-skills` first and classify the task
 Runtime readiness is resolved by `mansu-setup`. LazyCodex / OMO Codex plugin can
 be the Codex-side route for Oh My execution patterns, but it is not a phase source route and
 does not replace the source-skill composition in `SOURCE_SKILL_COMPOSITION.md`.
+
+`PLAN.md` may supply the current phase goal and slice table, but it is not
+canonical Mansu doctrine. Generated `.omo` plans may explain a task-local
+strategy, but durable phase rules belong here or in the phase `SKILL.md` file.
 
 ## Router Loop
 

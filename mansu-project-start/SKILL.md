@@ -1,12 +1,18 @@
 ---
 name: mansu-project-start
-description: Zero-to-PLAN project kickoff workflow for Mansu. Use for new products, apps, repos, major feature families, architecture direction, UI systems, and phase planning.
+description: Zero-to-PLAN project kickoff workflow for legacy/specialized Mansu project-start calls. Public lifecycle guidance should prefer `mansu-1define`, then `mansu-2plan`.
 ---
 
-# Mansu Project Start
+# Mansu Project Start Compatibility Route
 
-Use this skill before implementation when the work is still bigger than a
-single feature slice.
+This route remains available for legacy or specialized Zero-to-PLAN kickoff
+requests. It is not a public lifecycle phase; user-facing route lists should
+prefer `mansu-1define`, then `mansu-2plan`.
+
+Use this skill only when the user explicitly invokes `$mansu-project-start`, or
+when an older workflow depends on that callable name. For normal new ideas,
+fuzzy discovery, new repos/products, and major feature families, route first to
+`mansu-1define`, then to `mansu-2plan`.
 
 This skill creates the project-level thinking layer: intent, research, spec,
 Ouroboros init/interview/PM/Seed/Ledger artifacts, TDR/architecture, UI direction when needed,
@@ -277,14 +283,21 @@ blocked until the roadmap and active phase are fixed.
 
 ## When to use
 
-Use for:
+Use only as an explicit legacy/specialized compatibility route for:
 
-- new repository or product from zero
-- major feature family
+- older workflows that call `$mansu-project-start` by name
+- user requests that explicitly ask for `$mansu-project-start`
+- compatibility kickoff reports that must preserve the historical
+  Zero-to-PLAN callable surface
 - architecture or technology stack choice
 - UI system or design direction
 - TDR/spec work before implementation
 - broad refactor where the current direction is unclear
+
+For normal new ideas, fuzzy discovery, new repos/products, major feature
+families, architecture direction, UI direction, TDR/spec work, or broad
+refactors, use `mansu-1define` first and then `mansu-2plan` unless the user
+explicitly asks for `$mansu-project-start` or an older workflow depends on it.
 
 Do not use for:
 

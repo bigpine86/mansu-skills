@@ -67,7 +67,15 @@ Do not default downward when classification is unclear.
 
 Mansu follows this spine:
 
-**Think -> Plan -> Build -> Review -> Test -> Ship -> Reflect**
+**Define -> Plan -> Build -> Verify -> Review -> Ship**
+
+The public lifecycle spine is:
+
+`mansu-1define -> mansu-2plan -> mansu-3build -> mansu-4verify -> mansu-5review -> mansu-6ship`
+
+The older thinking, critique, QA, checkpoint, and learning steps are internal
+operating interpretation inside that public six-phase spine, not a competing
+public lifecycle.
 
 Operationally:
 
@@ -157,6 +165,11 @@ interpretation, and ask only if the choice has real consequences.
 Keep Mansu documents MECE: each document owns one layer and links to other
 layers instead of copying their details.
 
+Phase `SKILL.md` files own immediate action rules for entering and running their
+phase. They should route to the canonical reference that owns durable lifecycle,
+handoff, construction-loop, or source-pairing detail instead of copying that
+detail inline.
+
 | Document | Owns | Must not own |
 | --- | --- | --- |
 | `README.md` / `README.ko.md` | public entry, install path, quick start, top-level skill list, links to canonical docs | full doctrine, source capability maps, document matrices, local project commands |
@@ -165,15 +178,17 @@ layers instead of copying their details.
 | `references/AGENTS.md` | project-local first-hop router and entry instructions | source capability details, validation commands, dangerous path details |
 | `references/CODING_RULES.md` | project-local runtime, commands, paths, validation, dangerous surfaces, ship checks | universal Mansu doctrine or source-family catalogs |
 | `references/SOURCE_SKILL_CATALOG.md` | source-family map, freshness policy, capability maps, composition recipes | project-local commands or full document matrix |
-| `references/DOCUMENT_CREATION_ORDER.md` | artifact router, document paths, creation order, verification order, handoff requirements | source-family capability maps or implementation sequence details |
-| `references/CODE_CONSTRUCTION_ORDER.md` | coding phase detection, construction order, dependency slicing, contracts, safe defaults | project kickoff doctrine or document matrix |
-| `mansu-define/SKILL.md` | public Define phase route, source-skill interview selection, source-of-truth handoff | full source catalog, full document matrix, slice implementation |
-| `mansu-plan/SKILL.md` | public Plan phase route, requirements/spec, architecture, design direction, implementation roadmap | full source catalog, full document matrix, slice implementation |
-| `mansu-build/SKILL.md` | public Build phase route and `mansu-tdd-total` dispatch boundary | direct lite/strict executor internals |
-| `mansu-verify/SKILL.md` | public Verify phase route and evidence expectations | quality-review judgment or release decision |
-| `mansu-review/SKILL.md` | public Review phase route and risk judgment | behavior proof or release operations |
+| `references/DOCUMENT_CREATION_ORDER.md` | artifact router, document lifecycle, document paths, creation order, verification order, artifact handoff requirements | source-family capability maps, implementation sequence details, or phase-loop governance |
+| `references/CODE_CONSTRUCTION_ORDER.md` | phase-loop governance, coding phase detection, Build/Plan handoff, construction order, dependency slicing, contracts, safe defaults | project kickoff doctrine, document lifecycle, or document matrix |
+| `references/SOURCE_SKILL_COMPOSITION.md` | source-skill pairing and overlap choices for the current phase | document lifecycle, artifact handoff, phase-loop governance, or project-local runtime setup |
+| `mansu-1define/SKILL.md` | public Define phase route, source-skill interview selection, source-of-truth handoff | full source catalog, full document matrix, slice implementation |
+| `mansu-2plan/SKILL.md` | public Plan phase route, requirements/spec, architecture, design direction, implementation roadmap | full source catalog, full document matrix, slice implementation |
+| `mansu-3build/SKILL.md` | public Build phase route and `mansu-tdd-total` dispatch boundary | direct lite/strict executor internals |
+| `mansu-4verify/SKILL.md` | public Verify phase route and evidence expectations | quality-review judgment or release decision |
+| `mansu-5review/SKILL.md` | public Review phase route and risk judgment | behavior proof or release operations |
 | `mansu-debug/SKILL.md` | public root-cause route and `mansu-debug-rootcause` dispatch boundary | planned feature implementation |
-| `mansu-ship/SKILL.md` | public Ship phase route and `mansu-ship-release` dispatch boundary | source catalog or local runtime setup |
+| `mansu-6ship/SKILL.md` | numbered Ship phase route; dispatch boundary for `mansu-ship-release` | source catalog or local runtime setup |
+| `mansu-define/SKILL.md` through `mansu-ship/SKILL.md` | compatibility/backing implementations for numbered lifecycle phase routes | phase-route ownership or independent lifecycle spine |
 | `mansu-project-start/SKILL.md` | compatibility Zero-to-PLAN workflow, minimum gate, route selection, handoff report | full source catalog, full document matrix, slice implementation |
 | `docs/mansu-manual.html` | human-facing visual summary, lightweight route map, skill catalog UI | canonical source truth or validator-only policy |
 
@@ -190,7 +205,27 @@ decision needed in the current document.
 - `references/AGENTS.md`: project router template that points contributors toward Mansu doctrine and local rules.
 - `references/CODING_RULES.md`: project-local operating manual template for runtime choices, commands, validation, dangerous surfaces, and ship criteria.
 
-Load only the reference needed for the current task.
+Runtime reading path: normal agents load only the reference needed for the
+current task. Use `DOCUMENT_CREATION_ORDER.md` for document lifecycle and
+artifact handoff, `CODE_CONSTRUCTION_ORDER.md` for the phase loop and
+Build/Plan handoff, and `SOURCE_SKILL_COMPOSITION.md` only for source-skill
+pairing. `PLAN.md` and generated `.omo` plans may guide a current task, but they
+are not canonical Mansu doctrine.
+
+## Generated planning state boundary
+
+`.omo/*` is generated planning and evidence state. It is not canonical Mansu
+doctrine, not a normal runtime source of truth, and not public documentation.
+
+Durable decisions from `.omo/plans/*.md`, `.omo/drafts/*.md`, or giant temporary
+plans must be promoted into the owning document before they become operating
+policy. Treat older generated plans as archive after promotion. Do not delete
+`.omo` state as part of normal doctrine cleanup unless the user explicitly
+approves that cleanup.
+
+This boundary does not remove explicit active plan path support:
+`.omo/plans/*.md` may still be a concrete plan path when the user or runtime
+names it as the active plan for the current task.
 
 ## Project document templates
 

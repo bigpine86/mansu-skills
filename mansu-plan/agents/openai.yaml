@@ -1,4 +1,4 @@
 interface:
   display_name: Mansu Plan
   short_description: Create requirements, architecture, design direction, and implementation roadmap.
-  default_prompt: Use $mansu-plan to turn the defined project into a phase roadmap and current phase execution plan. Prefer PLAN.md, but support Plan.md, .codex/plans/*.md, .omo/plans/*.md, or a concrete plan path the user referenced. End by stating whether Plan is complete; if complete, tell the user to use mansu-build next.
+  default_prompt: Use $mansu-plan as the backing Plan implementation to turn the defined project into a phase roadmap and current phase execution plan. For a new repo/app or Python project without established dependency setup, include an environment setup slice and prefer uv/.venv when appropriate; for existing feature work, follow the repo's current package manager and environment conventions. Prefer PLAN.md, but support Plan.md, .codex/plans/*.md, .omo/plans/*.md, or a concrete plan path the user referenced. End by stating whether Plan is complete; if complete, tell the user to use public mansu-3build next.
