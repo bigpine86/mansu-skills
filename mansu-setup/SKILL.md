@@ -97,11 +97,11 @@ Do not infer adapter requirements from runtime target detection alone.
 
 Choose the skill target from the detected runtime target and host first:
 
-| Runtime target | Host | Skill target | Adapter expectation | Fallback behavior |
+| Runtime target | Host | Skill target | Adapter expectation | If unavailable |
 | --- | --- | --- | --- | --- |
 | Hermes | OpenCode in tmux when detected | OpenCode global `~/.config/opencode/skills` or project `.opencode/skills` | `omo` optional compatibility tooling | continue with Mansu + gstack checks; report adapter as skipped/missing if unavailable |
 | OpenCode | `opencode` | OpenCode global `~/.config/opencode/skills` or project `.opencode/skills` | `omo` optional compatibility tooling | continue with Mansu + gstack checks; report adapter status separately |
-| Codex | `codex` | `$HOME/.codex/skills` | LazyCodex / OMO Codex plugin (`omo@sisyphuslabs`) preferred inside the Oh My family; `omx` fallback compatibility tooling | continue with Mansu + gstack checks; only block adapter work if explicitly requested |
+| Codex | `codex` | `$HOME/.codex/skills` | LazyCodex / OMO Codex plugin (`omo@sisyphuslabs`) for Codex-side Oh My routes; `omx` as legacy compatibility tooling when present | continue with Mansu + gstack checks; only block adapter work if explicitly requested |
 | Claude Code | `claude-code` | `$HOME/.claude/skills` when present | `omc` optional compatibility tooling | continue with Mansu + gstack checks; report manual follow-up if layout is unclear |
 | Unknown | `unknown` | do not write automatically | none | run `check`, report manual target, and avoid guessing |
 
@@ -120,7 +120,7 @@ step as `blocked by unverified install recipe` and continue with safe checks.
 | --- | --- | --- |
 | Ouroboros / `ouroboros` | user-level CLI plus runtime MCP/setup integration | If missing, prefer the official installer `curl -fsSL https://raw.githubusercontent.com/Q00/ouroboros/main/scripts/install.sh \| bash` when shell/network policy allows; otherwise use `uv tool install 'ouroboros-ai[all]'`, `pipx install 'ouroboros-ai[mcp]'`, or `pip install ouroboros-ai` depending on available Python tooling. After install or update, run `ouroboros setup --runtime <detected-runtime>` when the runtime is supported, otherwise run `ouroboros setup` and report runtime ambiguity. Mansu-setup only prepares Ouroboros; it must not run `ooo auto`, `ooo interview`, or project creation commands. |
 | gstack | `$HOME/.gstack/repos/gstack` | If missing, clone `https://github.com/garrytan/gstack.git`; if present and clean, fast-forward update; then run `./setup --host <detected-host>` when the host is known, otherwise run `./setup` and report the host ambiguity. |
-| LazyCodex / OMO Codex plugin | Codex runtime plugin marketplace/cache | For Codex, prefer installed `omo@sisyphuslabs` over legacy `omx` when `codex plugin list` reports installed/enabled and the plugin hook/MCP entrypoints run. If missing and the user approved install/update, clone `https://github.com/code-yeongyu/lazycodex.git` with submodules into a local Codex plugin source, verify `.agents/plugins/marketplace.json`, `plugins/omo/.codex-plugin/plugin.json`, `plugins/omo/hooks/hooks.json`, and `plugins/omo/.mcp.json`, run `npm install` plus the needed build/install steps, add the local marketplace, then `codex plugin add omo@sisyphuslabs`. Disable or report telemetry hooks unless the user explicitly accepts them. |
+| LazyCodex / OMO Codex plugin | Codex runtime plugin marketplace/cache | For Codex, check installed `omo@sisyphuslabs` as the Codex-side Oh My route when `codex plugin list` reports installed/enabled and the plugin hook/MCP entrypoints run. If missing and the user approved install/update, clone `https://github.com/code-yeongyu/lazycodex.git` with submodules into a local Codex plugin source, verify `.agents/plugins/marketplace.json`, `plugins/omo/.codex-plugin/plugin.json`, `plugins/omo/hooks/hooks.json`, and `plugins/omo/.mcp.json`, run `npm install` plus the needed build/install steps, add the local marketplace, then `codex plugin add omo@sisyphuslabs`. Disable or report telemetry hooks unless the user explicitly accepts them. |
 | Oh My Codex / `omx` | Codex runtime | If missing, install `oh-my-codex` with `uv tool install oh-my-codex` when `uv` exists, otherwise use an available Python tool installer such as `pipx`; on update prefer `uv tool upgrade oh-my-codex`, then run `omx-setup` or `omx --update` when available. |
 | Oh My OpenCode / `omo` | Hermes or OpenCode runtime | If missing, install `oh-my-opencode` with `npm install -g oh-my-opencode` when Node/npm is available; on update run the same global npm install and then verify `omo` exists. |
 | Oh My Claude / `omc` | Claude Code runtime | Prefer the currently documented Claude Code plugin install route for OMC; if the current OMC install command cannot be verified in the local/runtime docs, do not guess a package name. Report the exact missing install recipe as the blocker for this adapter only. |
@@ -147,7 +147,7 @@ Treat adapters as runtime-matched compatibility tooling layered on top of the ru
 | Runtime target | Compatibility adapter | Notes |
 | --- | --- | --- |
 | Hermes | `omo` / Oh My OpenCode when installed | Hermes may run cleanly without an adapter; verify presence before using it |
-| Codex | LazyCodex / OMO Codex plugin (`omo@sisyphuslabs`) first, then `omx` / Oh My Codex | LazyCodex is the highest-priority Oh My route for Codex when installed/enabled/healthy; `omx` is fallback compatibility tooling |
+| Codex | LazyCodex / OMO Codex plugin (`omo@sisyphuslabs`) plus `omx` / Oh My Codex compatibility check when present | LazyCodex / OMO is the Codex-side Oh My route when installed/enabled/healthy; `omx` is legacy compatibility tooling |
 | OpenCode | `omo` / Oh My OpenCode when installed | Optional compatibility tooling for OpenCode flows |
 | Claude Code | `omc` / Oh My Claude when installed | Optional compatibility tooling for Claude flows |
 | Unknown | none | report required manual follow-up |
@@ -235,7 +235,7 @@ Then from the Mansu repo:
 2. Detect runtime target, host, and OS, then choose the target skill directory.
 3. Install or update Ouroboros using the source tool install policy.
 4. Install or update gstack using the source tool install policy.
-5. Install the matching Oh My adapter for the detected runtime when safe; for Codex, prefer LazyCodex / OMO Codex plugin before `omx`.
+5. Install the matching Oh My adapter for the detected runtime when safe; for Codex, check LazyCodex / OMO Codex plugin and legacy `omx` compatibility separately.
 6. Check addyosmani/agent-skills as a source-reference family; clone/update a local reference only when coding-order workflows need it or the user asks.
 7. Check VoltAgent/awesome-design-md as a design-reference family; clone/update a local reference only when UI/design workflows need it or the user asks.
 8. Check Open Design as a callable design-artifact source route; clone/update and
@@ -260,7 +260,7 @@ When the user asks to update:
 2. Re-detect runtime target, host, OS, and selected skill directory.
 3. Install Ouroboros if missing; otherwise update it with the official installer/package manager path, then run `ouroboros setup` for the selected runtime when safe.
 4. Install gstack if missing; otherwise update it with gstack's update flow or a safe `fetch` plus `merge --ff-only`, then run its setup for the selected host.
-5. Install the matching Oh My adapter if missing; otherwise update it with the runtime-specific package manager and run its update/setup command when available. For Codex, check or update LazyCodex / OMO Codex plugin first and treat `omx` as fallback.
+5. Install the matching Oh My adapter if missing; otherwise update it with the runtime-specific package manager and run its update/setup command when available. For Codex, check or update LazyCodex / OMO Codex plugin and report legacy `omx` compatibility separately.
 6. Check Ouroboros and Oh My / OMO / OMC source skill freshness separately from runtime detection.
 7. Check addyosmani/agent-skills freshness when installed or when coding-order workflows are requested.
 8. Check VoltAgent/awesome-design-md freshness when installed, when UI/design workflows are requested, or when the design reference catalog is being curated.

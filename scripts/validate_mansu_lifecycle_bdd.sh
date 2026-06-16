@@ -115,7 +115,7 @@ require_contains "$AGENTS_TEMPLATE" 'current phase implementation or refactor wi
 require_contains "$AGENTS_TEMPLATE" 'Compatibility aliases:' 'AGENTS must record compatibility alias map'
 require_contains "$DOC_ORDER" 'use `mansu-define` and then[[:space:]]*$' 'document order must prefer define/plan'
 require_contains "$DOC_ORDER" 'then hand off to[[:space:]]*$' 'document order must describe build handoff'
-require_contains "$SOURCE_COMPOSITION" 'LazyCodex is runtime transport' 'composition must keep LazyCodex runtime-only'
+require_contains "$SOURCE_COMPOSITION" 'LazyCodex is the Codex-side route for OMO execution patterns' 'composition must keep LazyCodex runtime-only'
 require_contains "$SOURCE_COMPOSITION" 'must not appear as a phase source' 'composition must ban LazyCodex as phase source'
 
 scenario "Given ulw-loop evidence exists locally, Then repo ignore prevents evidence from polluting commits"

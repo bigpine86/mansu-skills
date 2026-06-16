@@ -68,5 +68,5 @@ grep -q 'mansu-ship-release.*mansu-6ship' "$HELP"
 
 grep -q 'Wave 6: Manual Finalization' "$PLAN"
 grep -q '"kind": "runtime_transport"' "$LOCK"
-grep -q 'LazyCodex is runtime transport' "$README"
-grep -q 'LazyCodex는 runtime transport' "$README_KO"
+grep -q 'LazyCodex is the Codex-side OMO route' "$README"
+grep -q 'LazyCodex는 Codex에서 OMO 실행 패턴을 쓸 때 확인하는 경로' "$README_KO"

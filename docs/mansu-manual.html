@@ -1152,7 +1152,7 @@
 		              <ul class="route-list">
 		                <li>Ouroboros <code>setup/help</code><em>프로젝트 생명주기 도구를 현재 런타임에서 쓸 수 있게 준비합니다.</em></li>
 		                <li>gstack <code>setup/update</code><em>전문가 역할, QA, 리뷰, 배포 게이트 스킬을 설치하거나 갱신합니다.</em></li>
-		                <li>Oh My adapter <code>omx</code>/<code>omo</code>/<code>omc</code><em>Codex, OpenCode, Claude Code 같은 실행 환경에 맞는 Oh My 계열 호출 방식을 맞춥니다.</em></li>
+		                <li>Oh My adapter <code>omx</code>/<code>omo</code>/<code>omc</code><em>Codex, OpenCode, Claude Code 같은 실행 환경에서 Oh My 계열 경로를 쓸 수 있는지 확인합니다.</em></li>
 		                <li>addyosmani/agent-skills reference check<em>코딩 순서와 문서/품질 흐름에 참고할 공개 스킬 원천을 최신으로 봅니다.</em></li>
 		              </ul>
 		            </div>
@@ -1408,7 +1408,7 @@
                   <strong>내부에서 하는 일</strong>
                   <ul class="route-list">
                     <li>환경 감지<em>런타임, 호스트, OS, 스킬 경로를 확인합니다.</em></li>
-                    <li>어댑터 매핑<em>Codex 실행은 검증된 LazyCodex / OMO에 먼저 맡기고, 없으면 <code>omx</code>로 fallback합니다. OpenCode/Hermes는 <code>omo</code>, Claude Code는 <code>omc</code>를 맞춥니다.</em></li>
+                    <li>어댑터 매핑<em>Codex에서는 검증된 LazyCodex / OMO를 확인하고 legacy <code>omx</code> 호환성도 별도로 봅니다. OpenCode/Hermes는 <code>omo</code>, Claude Code는 <code>omc</code>를 맞춥니다.</em></li>
                     <li>Source Health Check<em><code>source-check</code>는 Ouroboros, gstack, Oh My, agent-skills, 디자인 레퍼런스를 읽기 전용으로 확인합니다.</em></li>
                     <li>설치/업데이트 실행<em>사용자가 명시적으로 승인한 경우에만 설치, 업데이트, sync를 진행합니다.</em></li>
                   </ul>
@@ -1698,7 +1698,7 @@
 
             <div class="agent-note" data-agent-rule="runtime-aware-setup">
               <h3>3. 설치는 실행 환경에 맞춘다</h3>
-              <p><code>mansu-9setup</code>은 런타임, 에이전트 호스트, OS를 먼저 확인합니다. Codex 실행은 검증된 LazyCodex / OMO에 먼저 맡기고, 없으면 <code>omx</code>로 fallback합니다. OpenCode/Hermes는 <code>omo</code>, Claude Code는 <code>omc</code>를 맞는 adapter로 봅니다.</p>
+              <p><code>mansu-9setup</code>은 런타임, 에이전트 호스트, OS를 먼저 확인합니다. Codex에서는 검증된 LazyCodex / OMO를 확인하고 legacy <code>omx</code> 호환성도 별도로 봅니다. OpenCode/Hermes는 <code>omo</code>, Claude Code는 <code>omc</code>를 맞는 adapter로 봅니다.</p>
               <p>확신이 낮으면 추측 설치하지 말고 check/report 또는 사용자 확인으로 멈춥니다.</p>
             </div>
 
@@ -1746,7 +1746,7 @@
       <section class="tab-panel" id="panel-catalog" data-manual-panel="catalog">
         <div class="catalog-card">
           <h2>스킬 카탈로그</h2>
-          <p class="micro">Mansu가 현재 조합할 수 있는 스킬 지도입니다. gstack, Ouroboros, Oh My, agent-skills, Open Design, 디자인 레퍼런스를 원천별로 묶고, 그 안에서 역할별로 다시 나눴습니다. <code>mansu-9setup</code>은 런타임/호스트/OS를 확인한 뒤 Codex에서는 검증된 LazyCodex / OMO를 우선하고 <code>omx</code>를 fallback으로 둡니다. OpenCode/Hermes는 <code>omo</code>, Claude Code는 <code>omc</code>를 맞는 adapter로 준비합니다.</p>
+          <p class="micro">Mansu가 현재 조합할 수 있는 스킬 지도입니다. gstack, Ouroboros, Oh My, agent-skills, Open Design, 디자인 레퍼런스를 원천별로 묶고, 그 안에서 역할별로 다시 나눴습니다. <code>mansu-9setup</code>은 런타임/호스트/OS를 확인한 뒤 Codex에서는 검증된 LazyCodex / OMO와 legacy <code>omx</code> 호환성을 확인합니다. OpenCode/Hermes는 <code>omo</code>, Claude Code는 <code>omc</code>를 맞는 adapter로 준비합니다.</p>
           <div class="catalog-meta">
             <span>Mansu 매뉴얼 스냅샷: 2026-06-08</span>
             <span>Source lock checked: 2026-06-08</span>
@@ -1907,12 +1907,12 @@
 
                 <div class="source-family" data-source-family="oh-my">
                   <h3>Oh My / OMO / OMC</h3>
-                  <p>런타임별 adapter와 research, ralph, ultrawork, debug 같은 실행 패턴을 제공합니다. Codex 실행은 검증된 LazyCodex / OMO에 먼저 맡깁니다.</p>
+                  <p>런타임별 adapter와 research, ralph, ultrawork, debug 같은 실행 패턴을 제공합니다. Codex에서는 검증된 LazyCodex / OMO를 확인합니다.</p>
                   <div class="source-groups">
                     <div class="source-group">
                       <h4>런타임 adapter</h4>
                       <div class="catalog-items">
-                        <button class="catalog-item" type="button" data-catalog-name="Oh My adapters" data-catalog-family="Oh My / OMO / OMC > adapter" data-catalog-role="Codex는 검증된 LazyCodex / OMO를 우선하고 omx를 fallback으로 둡니다. OpenCode/Hermes는 omo, Claude Code는 omc로 맞는 adapter를 준비합니다." data-catalog-when="mansu-setup이 runtime을 감지한 뒤 필요한 adapter를 설치/업데이트할 때 씁니다."><code>LazyCodex / OMO / omx / omc</code><small>런타임 어댑터</small></button>
+                        <button class="catalog-item" type="button" data-catalog-name="Oh My adapters" data-catalog-family="Oh My / OMO / OMC > adapter" data-catalog-role="Codex는 검증된 LazyCodex / OMO와 legacy omx 호환성을 확인합니다. OpenCode/Hermes는 omo, Claude Code는 omc로 맞는 adapter를 준비합니다." data-catalog-when="mansu-setup이 runtime을 감지한 뒤 필요한 adapter를 설치/업데이트할 때 씁니다."><code>LazyCodex / OMO / omx / omc</code><small>런타임 어댑터</small></button>
                       </div>
                     </div>
                     <div class="source-group">
@@ -1980,7 +1980,7 @@
                 <p>내 컴퓨터가 Codex인지, OpenCode/Hermes인지, Claude Code인지 확인하고 맞는 Oh My adapter를 준비합니다. Codex에서는 LazyCodex / OMO를 우선 확인합니다.</p>
                 <div class="catalog-items">
                   <button class="catalog-item" type="button" data-catalog-name="Runtime detection" data-catalog-family="mansu-setup" data-catalog-role="런타임, 에이전트 호스트, OS를 먼저 확인합니다. 증거가 부족하면 함부로 추측하지 않고 점검 리포트 또는 사용자 확인으로 빠집니다." data-catalog-when="처음 설치, 업데이트, 다른 도구 환경으로 옮겼을 때 가장 먼저 작동합니다."><code>runtime/host/OS detect</code><small>환경 확인</small></button>
-                  <button class="catalog-item" type="button" data-catalog-name="Codex adapter: LazyCodex / OMO" data-catalog-family="Oh My adapter" data-catalog-role="Codex runtime에서는 실행을 검증된 LazyCodex / OMO Codex plugin에 먼저 맡기고, 없거나 불안정하면 omx로 fallback합니다." data-catalog-when="Codex에서 Mansu와 Oh My 계열 실행 패턴을 같이 쓰고 싶을 때 준비됩니다."><code>Codex -> LazyCodex / OMO</code><small>omx fallback</small></button>
+                  <button class="catalog-item" type="button" data-catalog-name="Codex adapter: LazyCodex / OMO" data-catalog-family="Oh My adapter" data-catalog-role="Codex runtime에서는 검증된 LazyCodex / OMO Codex plugin과 legacy omx 호환성을 확인합니다." data-catalog-when="Codex에서 Mansu와 Oh My 계열 실행 패턴을 같이 쓰고 싶을 때 준비됩니다."><code>Codex -> LazyCodex / OMO</code><small>legacy omx</small></button>
                   <button class="catalog-item" type="button" data-catalog-name="OpenCode/Hermes adapter: omo" data-catalog-family="Oh My adapter" data-catalog-role="OpenCode 또는 Hermes runtime에서는 Oh My OpenCode, 즉 omo를 맞는 adapter로 준비합니다." data-catalog-when="OpenCode/Hermes에서 Oh My 계열 스킬을 쓰고 싶을 때 준비됩니다."><code>OpenCode/Hermes -> omo</code><small>Oh My OpenCode</small></button>
                   <button class="catalog-item" type="button" data-catalog-name="Claude Code adapter: omc" data-catalog-family="Oh My adapter" data-catalog-role="Claude Code runtime에서는 Oh My Claude, 즉 omc를 맞는 adapter로 봅니다. 설치법이 불확실하면 package 이름을 추측하지 않고 blocker로 보고합니다." data-catalog-when="Claude Code에서 Mansu를 쓰거나 Claude용 Oh My 경로가 필요할 때 확인합니다."><code>Claude Code -> omc</code><small>Oh My Claude</small></button>
                 </div>

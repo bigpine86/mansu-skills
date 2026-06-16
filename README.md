@@ -173,7 +173,7 @@ detects the current development phase and routes to the relevant addyosmani/agen
 
 Design work prefers Open Design as the callable design-artifact route when installed or explicitly approved. Mansu runs the Open Design CLI/lifecycle commands, records the artifact evidence, then uses VoltAgent/awesome-design-md as a `DESIGN.md` reference source and gstack design/QA gates for critique and verification.
 
-LazyCodex is runtime transport for Codex/OMO execution. It is not a Mansu source skill family and does not replace Define -> Plan -> Build -> Verify -> Review -> Ship routing.
+LazyCodex is the Codex-side OMO route for Oh My execution patterns. It is not a Mansu source skill family and does not replace Define -> Plan -> Build -> Verify -> Review -> Ship routing.
 
 ## Big Picture
 

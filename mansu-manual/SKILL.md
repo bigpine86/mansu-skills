@@ -46,7 +46,7 @@ skills, read enough of the manual to confirm:
 - the `에이전트 안내` tab exists and explains Mansu's routing posture
 - the `Mansu Skill` tab exists and lists top-level lifecycle skills: `mansu-1define`, `mansu-2plan`, `mansu-3build`, `mansu-4verify`, `mansu-5review`, `mansu-debug`, and `mansu-6ship`
 - the `스킬 카탈로그` tab exists and is grouped by source family first, then purpose
-- the runtime adapter mapping is visible: Codex -> LazyCodex / OMO with `omx` fallback, OpenCode/Hermes -> `omo`, Claude Code -> `omc`
+- the runtime adapter mapping is visible: Codex -> LazyCodex / OMO plus legacy `omx` compatibility, OpenCode/Hermes -> `omo`, Claude Code -> `omc`
 - the development process tab still points beginners to `mansu-0help` first
 
 Do not parse the whole HTML when targeted checks are enough. When the user

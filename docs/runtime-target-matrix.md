@@ -1,6 +1,6 @@
 # Runtime Target Matrix
 
-이 문서는 Mansu를 현재 런타임에 설치/동기화할 때 어떤 skill target과 fallback을 써야 하는지 정리한 운영 기준입니다.
+이 문서는 Mansu를 현재 런타임에 설치/동기화할 때 어떤 skill target과 adapter 상태를 봐야 하는지 정리한 운영 기준입니다.
 
 ## 목적
 - `mansu-setup`가 어떤 runtime/host를 먼저 식별해야 하는지 명확히 한다.
@@ -9,11 +9,11 @@
 
 ## Matrix
 
-| Runtime target | Host clue | Primary skill target | Adapter expectation | Fallback behavior |
+| Runtime target | Host clue | Primary skill target | Adapter expectation | If unavailable |
 | --- | --- | --- | --- | --- |
 | Hermes | `hermes`, `.hermes`, tmux + OpenCode session | OpenCode global `~/.config/opencode/skills` or project `.opencode/skills` | `omo` optional | Mansu + gstack checks 계속 진행, adapter는 skipped/missing으로 보고 |
 | OpenCode | `opencode`, `.opencode` | OpenCode global `~/.config/opencode/skills` or project `.opencode/skills` | `omo` optional | skill sync 우선, adapter 상태는 별도 보고 |
-| Codex | `codex`, `.codex` | `$HOME/.codex/skills` | LazyCodex / OMO Codex plugin (`omo@sisyphuslabs`) preferred when verified; `omx` fallback | adapter가 없어도 install/update는 계속, adapter 작업만 별도 후속 |
+| Codex | `codex`, `.codex` | `$HOME/.codex/skills` | LazyCodex / OMO Codex plugin (`omo@sisyphuslabs`) when verified; legacy `omx` compatibility when present | adapter가 없어도 install/update는 계속, adapter 작업만 별도 후속 |
 | Claude Code | `claude`, `.claude` | `$HOME/.claude/skills` when present | `omc` optional | layout가 불명확하면 `check` 모드로 멈추고 manual target 보고 |
 | Unknown | weak or conflicting signals | do not write automatically | none | `check` 모드로 전환, candidate path와 근거만 보고 |
 

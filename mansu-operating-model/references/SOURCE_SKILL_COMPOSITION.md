@@ -15,7 +15,7 @@ Mansu does not choose one source family forever. It chooses the source skill tha
 best fits the current phase, then keeps Mansu-owned gates, evidence, and final
 judgment visible.
 
-LazyCodex is runtime transport for Codex. It may carry OMO execution modes, but
+LazyCodex is the Codex-side route for OMO execution patterns. It may carry OMO execution modes, but
 it must not appear as a phase source or replace Mansu's source-skill routing.
 
 ## Reference Layers
@@ -68,4 +68,4 @@ it must not appear as a phase source or replace Mansu's source-skill routing.
 - Review judges quality, maintainability, security, design risk, and decision risk.
 - Passing Verify hands off to Review by default; failed or incomplete Verify stops before Review.
 - Debug is a special route that can interrupt any phase when the cause is unknown.
-- LazyCodex is runtime transport and must not appear as a phase source.
+- LazyCodex is Codex-side OMO readiness and must not appear as a phase source.

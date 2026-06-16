@@ -188,7 +188,7 @@ Mansu가 좋아지는 방식은 단순합니다.
 Mansu가 Open Design CLI/lifecycle 명령을 직접 실행하고 산출물 증거를 기록합니다.
 그다음 VoltAgent/awesome-design-md를 `DESIGN.md` 참고 원천으로 삼아 프로젝트 고유의 분위기, 토큰, 컴포넌트, 반응형 규칙을 뽑고 gstack 디자인/QA gate로 검증합니다.
 
-LazyCodex는 runtime transport입니다. Codex에서 OMO 실행을 싣는 경로이지, Mansu의 source skill family나 Define -> Plan -> Build -> Verify -> Review -> Ship 라우팅을 대체하지 않습니다.
+LazyCodex는 Codex에서 OMO 실행 패턴을 쓸 때 확인하는 경로입니다. Mansu의 source skill family나 Define -> Plan -> Build -> Verify -> Review -> Ship 라우팅을 대체하지 않습니다.
 
 ## 큰 그림
 

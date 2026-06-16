@@ -23,7 +23,7 @@ grep -q 'Verify proves behavior' "$FILE"
 grep -q 'Review judges quality' "$FILE"
 grep -q 'continuous sequence by default when verification passes' "$FILE"
 grep -q 'Passing Verify hands off to Review by default' "$FILE"
-grep -q 'LazyCodex is runtime transport' "$FILE"
+grep -q 'LazyCodex is the Codex-side route for OMO execution patterns' "$FILE"
 grep -q 'must not appear as a phase source' "$FILE"
 
 grep -q 'SOURCE_SKILL_COMPOSITION.md' "$CATALOG"

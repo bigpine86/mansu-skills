@@ -49,7 +49,7 @@ flattening them.
   `od mcp install <agent>`. Mansu should route design artifact generation to
   Open Design instead of recreating its workflow.
 - Use Oh My / OMO / OMC as execution-mode language inside a phase. For Codex,
-  LazyCodex is runtime transport for OMO when verified and healthy; OmO /
+  LazyCodex is the Codex-side OMO route when verified and healthy; OmO /
   oh-my-openagent remains the core harness source for discipline agents,
   parallel orchestration, model routing, skills, and hooks.
 - Use gstack as the specialist team: CEO, design, engineering, DX, browser QA,
@@ -113,7 +113,7 @@ depends on the missing source.
 | Mansu | doctrine, classification, strictness, routing, evidence, checkpoint, worklog, final ship judgment | specialist craft implementation when a stronger source skill exists |
 | Ouroboros | project-definition interview, PM/Seed/Ledger artifacts, early acceptance criteria, spec source of truth | Mansu-specific routing, source comparison, role critique, slice gates, final implementation discipline |
 | gstack | role-based specialist gates, browser QA, design exploration, security, performance, ship/ops, learning | Mansu-specific doctrine or personal operating rules |
-| Oh My / OMO / OMC | execution modes, parallel work patterns, persistence, TDD/debug/research habits, lightweight orchestration language; for Codex, LazyCodex / OMO Codex plugin is the highest-priority runtime transport when installed and healthy | Mansu keeps routing/evidence/final judgment; Ouroboros keeps early definition; gstack keeps independent validation; design sources keep design artifacts and references |
+| Oh My / OMO / OMC | execution modes, parallel work patterns, persistence, TDD/debug/research habits, lightweight orchestration language; for Codex, LazyCodex / OMO Codex plugin is the Codex-side OMO route when installed and healthy | Mansu keeps routing/evidence/final judgment; Ouroboros keeps early definition; gstack keeps independent validation; design sources keep design artifacts and references |
 | addyosmani/agent-skills | senior-engineering SDLC sequence and phase skills across define, plan, build, verify, review, and ship | Mansu-specific strictness, project-local routing, runtime adapters |
 | Implementation actor | file edits, tests, integration, commits, concrete code changes | replacing Mansu's planning/routing/evidence responsibility |
 
@@ -123,7 +123,7 @@ Representative mapping:
 - Project definition / memory source: Ouroboros or source-curator-verified substitute.
 - Design reference source: VoltAgent/awesome-design-md or source-curator-verified substitute.
 - Design workflow source: Open Design or source-curator-verified substitute.
-- Execution-mode source: Oh My / OMO / OMC or source-curator-verified substitute. For Codex runtimes, prefer LazyCodex / OMO Codex plugin as runtime transport when available.
+- Execution-mode source: Oh My / OMO / OMC or source-curator-verified substitute. For Codex runtimes, use LazyCodex / OMO Codex plugin as the Codex-side OMO route when available.
 - Specialist team source: gstack or source-curator-verified substitute.
 - Implementation actor: Codex or the active coding agent.
 
@@ -143,9 +143,9 @@ Before Mansu composes source skills, preserve each family in its native role:
   artifact loop and let Mansu handle route choice, input framing, handoff, and
   verification.
 - Oh My / OMO / OMC: execution mode and persistence language; for Codex,
-  prefer LazyCodex / OMO Codex plugin over legacy `omx` when installed and
-  healthy, but do not use parallelism when slices have sequential dependencies
-  or shared write scope.
+  use LazyCodex / OMO Codex plugin when installed and healthy, and record
+  legacy `omx` only as compatibility tooling. Do not use parallelism when
+  slices have sequential dependencies or shared write scope.
 - gstack: independent specialist gates; do not treat builder self-review as a
   substitute for review, QA, security, performance, or ship gates.
 - Codex / active agent: implementation actor; do not let implementation replace
@@ -309,21 +309,21 @@ Use Oh My-style skills as execution-mode vocabulary and lightweight workflow
 patterns. Names may differ by runtime target; verify the installed skill path
 with `mansu-setup`.
 
-For Codex runtimes, treat LazyCodex / OMO Codex plugin (`omo@sisyphuslabs`,
-plugin name `omo`) as the highest-priority runtime transport inside the Oh My /
-OMO / OMC family when it is installed, enabled, and its hooks/MCP entrypoints
-are healthy. OmO / oh-my-openagent is the core harness source; LazyCodex is the
-Codex-facing thin distribution. Legacy `omx` remains a fallback compatibility
-route. In this split, LazyCodex / OMO drives Codex execution; Mansu owns routing,
-evidence, checkpoints, and final ship/hold judgment; Ouroboros shapes early
-goals, Seed, Ledger, and long-horizon direction, with Ouroboros execution opt-in
-only; gstack provides independent review, QA, design critique, security,
-performance, ship, and learning gates; Open Design creates design artifacts;
-VoltAgent/awesome-design-md provides `DESIGN.md` reference grammar.
+For Codex runtimes, LazyCodex / OMO Codex plugin (`omo@sisyphuslabs`, plugin
+name `omo`) is the Codex-side route for Oh My / OMO / OMC execution patterns
+when it is installed, enabled, and its hooks/MCP entrypoints are healthy.
+Oh-my-openagent is the core harness source; LazyCodex is the Codex-facing thin distribution.
+Legacy `omx` is compatibility tooling to check when present. In this split,
+LazyCodex / OMO carries Codex-side Oh My execution patterns; Mansu owns routing,
+evidence, checkpoints, and final ship/hold judgment; Ouroboros shapes early goals,
+Seed, Ledger, and long-horizon direction, with Ouroboros execution opt-in only;
+gstack provides independent review, QA, design critique,
+security, performance, ship, and learning gates; Open Design creates design
+artifacts; VoltAgent/awesome-design-md provides `DESIGN.md` reference grammar.
 
 | Capability | Source skills | Route when |
 | --- | --- | --- |
-| Codex runtime transport | LazyCodex / OMO Codex plugin carrying `start-work`, `ulw-plan`, `ulw-loop`, `rules`, `lsp`, `comment-checker`, `remove-ai-slops`, `programming`, `debugging`, `frontend-ui-ux`, `refactor`, `review-work` | Codex runtime has `omo@sisyphuslabs` installed and enabled; use before legacy `omx` for Oh My execution modes, but do not treat LazyCodex as a Mansu source skill family |
+| Codex-side Oh My route | LazyCodex / OMO Codex plugin carrying `start-work`, `ulw-plan`, `ulw-loop`, `rules`, `lsp`, `comment-checker`, `remove-ai-slops`, `programming`, `debugging`, `frontend-ui-ux`, `refactor`, `review-work` | Codex runtime has `omo@sisyphuslabs` installed and enabled; use it for Oh My execution modes, but do not treat LazyCodex as a Mansu source skill family |
 | End-to-end build mode | `autopilot` | full user story or feature needs systematic plan-execute-verify |
 | Large parallel work | `ultrawork`, `ultrapilot`, `team`, `swarm` | independent file/module slices can run in parallel without conflicts |
 | Persistent completion | `ralph` | task must not stop at partial success and needs retry loops |

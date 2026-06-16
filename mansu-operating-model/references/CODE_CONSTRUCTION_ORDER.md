@@ -115,8 +115,8 @@ Before coding, decide the current phase from evidence:
 
 If the phase is ambiguous, read `using-agent-skills` first and classify the task.
 
-Runtime transport is resolved by `mansu-setup`. LazyCodex / OMO Codex plugin can
-be the preferred Codex runtime transport, but it is not a phase source route and
+Runtime readiness is resolved by `mansu-setup`. LazyCodex / OMO Codex plugin can
+be the Codex-side route for Oh My execution patterns, but it is not a phase source route and
 does not replace the source-skill composition in `SOURCE_SKILL_COMPOSITION.md`.
 
 ## Router Loop
