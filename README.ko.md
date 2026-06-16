@@ -114,7 +114,7 @@ Mansu는 현재 개발 진행 상태를 보고 다음에 필요한 작업을 자
 - `mansu-1define`: 새 제품, 앱, 레포, 큰 기능군의 목적/요구사항/성공 기준 정의
 - `mansu-2plan`: Requirements/Spec, Architecture, Design Direction, Implementation Roadmap
 - `mansu-3build`: `mansu-tdd-total`을 통한 기능 구현과 리팩토링
-- `mansu-4verify`: 테스트, runtime/browser 확인, QA evidence
+- `mansu-4verify`: BDD-style Given/When/Then, runtime/browser 확인, QA evidence
 - `mansu-5review`: 품질, 구조, 디자인, 보안, decision risk 검토
 - `mansu-debug`: 원인 불명 버그와 회귀 분석
 - `mansu-6ship`: release readiness 판단
@@ -263,14 +263,14 @@ slice N+1은 slice N이 validation, review, QA, checkpoint, log, commit 또는 n
 | `mansu-1define` | 새 제품, 앱, 레포, 큰 기능군의 목적, 사용자, 문제, 요구사항, 성공 기준, source of truth를 잡을 때 | Define phase |
 | `mansu-2plan` | Requirements/Spec, Architecture, Design Direction, Implementation Roadmap과 phase-level `PLAN.md`가 필요할 때 | Plan phase |
 | `mansu-3build` | 기능/리팩토링을 `mansu-tdd-total` slice로 구현할 때 | Build phase |
-| `mansu-4verify` | 테스트, runtime/browser 확인, QA evidence, 보안/성능 증명이 필요할 때. 통과하면 기본적으로 `mansu-5review`로 이어집니다. | Verify phase |
+| `mansu-4verify` | 테스트, runtime/browser 확인, QA evidence, BDD-style Given/When/Then 증거, 보안/성능 증명이 필요할 때. 통과하면 기본적으로 `mansu-5review`로 이어집니다. | Verify phase |
 | `mansu-5review` | 품질, 유지보수성, 구조, 디자인, 보안, decision risk를 검토할 때 | Review phase |
 | `mansu-6ship` | ship/hold 판단, PR, release docs, deploy/canary, learning closeout이 필요할 때 | Ship phase |
 | `mansu-9setup` | 설치, 읽기 전용 source health check, 업데이트, runtime 감지, source tool setup, skill sync, repair, adapter compatibility가 필요할 때 | bootstrap/check/update gate |
 | `mansu-source-curator` | drift가 확인되어 Mansu reference, validator, manual, worklog를 갱신해야 할 때 | 내부 source-reference maintenance |
 | `mansu-operating-model` | 프로젝트 행동양식, role separation, evidence rule, `AGENTS.md`, `CODING_RULES.md`를 정할 때 | canonical doctrine |
 | `mansu-debug` | 버그를 재현, 격리, 원인 증명, 최소 수정, 회귀 검증할 때 | Debug route |
-| `mansu-tdd-total` | `mansu-build` 아래의 기본 구현 엔진 | build engine |
+| `mansu-tdd-total` | `mansu-build` 아래의 기본 구현 엔진. active phase 증거가 없으면 `mansu-1define` / `mansu-2plan`으로 되돌립니다. | build engine |
 | `mansu-tdd-strict` | 위험한 slice에 의미 있는 RED test가 필요할 때 | strict TDD loop |
 | `mansu-tdd-lite` | 계획, review, QA, checkpoint는 필요하지만 RED test가 억지스러울 때 | relaxed RED, not quality |
 | `mansu-debug-rootcause` | `mansu-debug` 아래의 compatibility route | root-cause debugger |
@@ -292,7 +292,7 @@ Compatibility/admin surfaces:
 - 새 프로젝트 또는 큰 기능군: `mansu-1define`, 그다음 `mansu-2plan`
 - project doctrine, `AGENTS.md`, `CODING_RULES.md`: `mansu-operating-model`
 - 기능/리팩토링 구현: `mansu-3build`
-- 동작 증명, QA, browser/runtime 검증, 그다음 기본 review handoff: `mansu-4verify`
+- 동작 증명, BDD-style Given/When/Then QA, browser/runtime 검증, 그다음 기본 review handoff: `mansu-4verify`
 - 품질, 구조, 디자인, 보안, decision-risk review: `mansu-5review`
 - 위험하고 RED test가 유용한 slice: `mansu-tdd-strict`
 - RED가 억지스러운 낮은 위험 slice: `mansu-tdd-lite`

@@ -986,7 +986,7 @@
             <tr>
               <td><code>Verify</code></td>
               <td>검증</td>
-              <td>만든 기능이 의도한 대로 동작하는지 확인하는 단계입니다. 버튼, 입력값, 저장, 조회, 오류 상황 등을 직접 테스트합니다. 통과하면 기본적으로 Review로 이어집니다.</td>
+              <td>만든 기능이 의도한 대로 동작하는지 확인하는 단계입니다. 버튼, 입력값, 저장, 조회, 오류 상황 등을 Given/When/Then 형태와 실제 증거로 확인합니다. 통과하면 기본적으로 Review로 이어집니다.</td>
             </tr>
             <tr>
               <td><code>Review</code></td>
@@ -1254,7 +1254,7 @@
 
 		          <div class="detail-card" data-detail-card="verify">
 		            <h3>$mansu-4verify</h3>
-			            <p>구현이 실제로 맞는지 테스트, 런타임, 브라우저, QA evidence로 증명합니다. 통과하면 기본적으로 <code>mansu-5review</code>를 이어 실행합니다.</p>
+			            <p>구현이 실제로 맞는지 BDD-style Given/When/Then, 테스트, 런타임, 브라우저, QA evidence로 증명합니다. 통과하면 기본적으로 <code>mansu-5review</code>를 이어 실행합니다.</p>
 		            <div class="source-routes">
 		              <strong>조합하는 원천</strong>
 		              <ul class="route-list">
@@ -1267,7 +1267,7 @@
 		              </ul>
 		            </div>
 	            <ul>
-		              <li>테스트, 실행 결과, 브라우저 확인을 증거로 남깁니다.</li>
+		              <li>Given/When/Then 시나리오와 테스트, 실행 결과, 브라우저 확인을 증거로 남깁니다.</li>
 			              <li>수정 없이 현재 동작을 먼저 증명합니다.</li>
 		              <li>검증이 통과하면 <code>mansu-5review</code>로 이어가고, 실패하거나 증거가 부족하면 멈춥니다.</li>
 	              <li>문제를 재현 가능한 형태로 정리하고 필요하면 <code>mansu-debug</code>로 넘깁니다.</li>
@@ -1336,7 +1336,7 @@
                   <article class="skill-card mansu-skill-card" id="mansu-1define" data-mansu-detail="mansu-define" role="button" tabindex="0" aria-pressed="false"><strong><code>$mansu-1define</code></strong><p>목적, 사용자, 문제, 요구사항, 성공 기준을 source skill로 정의합니다.</p></article>
                   <article class="skill-card mansu-skill-card" id="mansu-2plan" data-mansu-detail="mansu-plan" role="button" tabindex="0" aria-pressed="false"><strong><code>$mansu-2plan</code></strong><p>Requirements/Spec, Architecture, Design Direction, Roadmap을 만듭니다.</p></article>
                   <article class="skill-card mansu-skill-card" id="mansu-3build" data-mansu-detail="mansu-build" role="button" tabindex="0" aria-pressed="false"><strong><code>$mansu-3build</code></strong><p><code>mansu-tdd-total</code>을 기본 엔진으로 현재 phase를 구현합니다.</p></article>
-                  <article class="skill-card mansu-skill-card" id="mansu-4verify" data-mansu-detail="mansu-verify" role="button" tabindex="0" aria-pressed="false"><strong><code>$mansu-4verify</code></strong><p>테스트, 브라우저, 런타임, QA evidence로 동작을 증명합니다.</p></article>
+                  <article class="skill-card mansu-skill-card" id="mansu-4verify" data-mansu-detail="mansu-verify" role="button" tabindex="0" aria-pressed="false"><strong><code>$mansu-4verify</code></strong><p>BDD-style Given/When/Then, 테스트, 브라우저, 런타임, QA evidence로 동작을 증명합니다.</p></article>
                   <article class="skill-card mansu-skill-card" id="mansu-5review" data-mansu-detail="mansu-review" role="button" tabindex="0" aria-pressed="false"><strong><code>$mansu-5review</code></strong><p>품질, 구조, 디자인, 보안, 의사결정 리스크를 검토합니다.</p></article>
                   <article class="skill-card mansu-skill-card" id="mansu-6ship" data-mansu-detail="mansu-ship" role="button" tabindex="0" aria-pressed="false"><strong><code>$mansu-6ship</code></strong><p>검증과 리뷰 뒤 ship/hold, PR, 배포, 학습 마감을 판단합니다.</p></article>
                   <article class="skill-card mansu-skill-card" id="mansu-9setup" data-mansu-detail="mansu-setup" role="button" tabindex="0" aria-pressed="false"><strong><code>$mansu-9setup</code></strong><p>설치, 업데이트, 런타임, 원천 도구 상태를 먼저 확인합니다.</p></article>
@@ -1469,7 +1469,7 @@
               </div>
               <div class="mansu-detail-card" data-mansu-detail-card="mansu-build">
                 <h3>$mansu-3build</h3>
-                <p>현재 phase 실행 계획이 있을 때 실제 구현으로 들어가는 phase 스킬입니다. <code>PLAN.md</code>, <code>Plan.md</code>, <code>.codex/plans/*.md</code>, <code>.omo/plans/*.md</code>, 사용자가 가리킨 계획 파일을 모두 후보로 봅니다. 내부 구현 엔진은 기존 <code>mansu-tdd-total</code>입니다.</p>
+                <p>현재 phase 실행 계획이 있을 때 실제 구현으로 들어가는 phase 스킬입니다. <code>PLAN.md</code>, <code>Plan.md</code>, <code>.codex/plans/*.md</code>, <code>.omo/plans/*.md</code>, 사용자가 가리킨 계획 파일을 모두 후보로 봅니다. 실행 가능한 active phase plan이 없으면 먼저 <code>mansu-1define</code>/<code>mansu-2plan</code>으로 돌아갑니다. 내부 구현 엔진은 기존 <code>mansu-tdd-total</code>입니다.</p>
                 <ul>
                   <li>목적: 계획된 phase를 sequential vertical slice로 구현합니다.</li>
                   <li>언제: 구현/리팩토링 요청이 있고 current phase 계획이 준비됐을 때 씁니다.</li>
@@ -1479,9 +1479,9 @@
               </div>
               <div class="mansu-detail-card" data-mansu-detail-card="mansu-verify">
                 <h3>$mansu-4verify</h3>
-                <p>동작이 실제로 맞는지 증거로 확인하는 phase 스킬입니다. 검증이 통과하면 기본적으로 <code>mansu-5review</code>로 이어지고, 웹 검증은 기존 <code>mansu-web-verify</code> route를 호환 경로로 씁니다.</p>
+                <p>동작이 실제로 맞는지 Given/When/Then 시나리오와 관찰 가능한 pass/fail 증거로 확인하는 phase 스킬입니다. 검증이 통과하면 기본적으로 <code>mansu-5review</code>로 이어지고, 웹 검증은 기존 <code>mansu-web-verify</code> route를 호환 경로로 씁니다.</p>
                 <ul>
-                  <li>목적: 테스트, runtime/browser, QA evidence로 동작을 증명합니다.</li>
+                  <li>목적: 테스트, runtime/browser, QA evidence와 BDD-style Given/When/Then으로 동작을 증명합니다.</li>
                   <li>언제: 구현 후 review/ship 전에 사실 확인이 필요할 때 씁니다.</li>
                   <li>주요 결과: pass/fail evidence, untested risk, review handoff가 남습니다.</li>
                 </ul>
@@ -1557,7 +1557,7 @@
               </div>
               <div class="mansu-detail-card" data-mansu-detail-card="mansu-tdd-total">
                 <h3>$mansu-tdd-total</h3>
-                <p>구현 작업의 기본 진입점으로, slice 전략과 실행 모드를 자동으로 고르는 오케스트레이터입니다.</p>
+                <p>구현 작업의 기본 진입점으로, slice 전략과 실행 모드를 자동으로 고르는 오케스트레이터입니다. active phase evidence가 없으면 구현하지 않고 <code>mansu-1define</code> / <code>mansu-2plan</code>으로 되돌립니다.</p>
                 <div class="source-routes">
                   <strong>내부에서 하는 일</strong>
                   <ul class="route-list">
@@ -1568,6 +1568,7 @@
                 </div>
                 <ul>
                   <li>목적: 아무 구현이나 바로 시작하지 않고, 계획과 slice를 기준으로 안전하게 진행합니다.</li>
+                  <li>계획이 부족하면 <code>mansu-project-start</code>가 아니라 <code>mansu-1define</code>/<code>mansu-2plan</code>으로 돌아갑니다.</li>
                   <li>언제: 실제 코딩을 시작할 때 기본값으로 씁니다.</li>
                   <li>주요 결과: slice table과 실행 로그가 남고, 어떤 모드로 갔는지도 추적됩니다.</li>
                 </ul>

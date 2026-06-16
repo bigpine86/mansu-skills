@@ -102,7 +102,7 @@ Mansu will classify your situation and route you to the right next skill:
 - `mansu-1define` for a new product, app, repo, or major feature family.
 - `mansu-2plan` for requirements/spec, architecture, design direction, and roadmap.
 - `mansu-3build` for implementation through `mansu-tdd-total`.
-- `mansu-4verify` for tests, runtime checks, browser checks, and QA evidence.
+- `mansu-4verify` for BDD-style Given/When/Then checks, runtime checks, browser checks, and QA evidence.
 - `mansu-5review` for quality, architecture, design, security, and decision risk.
 - `mansu-debug` for unknown bugs and regressions.
 - `mansu-6ship` for release readiness.
@@ -250,14 +250,14 @@ See [MANSU_PHILOSOPHY.md](./MANSU_PHILOSOPHY.md) for the full doctrine.
 | `mansu-1define` | You are starting a new product, app, repo, or major feature family and need source-skill interview, requirements, acceptance criteria, and source-of-truth artifacts. | Define phase |
 | `mansu-2plan` | You need requirements/spec, architecture, design direction, phase roadmap, and current phase `PLAN.md`. | Plan phase |
 | `mansu-3build` | You are implementing a feature or refactor and need `mansu-tdd-total` slice execution. | Build phase |
-| `mansu-4verify` | You need tests, runtime checks, browser checks, QA evidence, or security/performance proof; passing verification continues into `mansu-5review` by default. | Verify phase |
+| `mansu-4verify` | You need tests, runtime checks, browser checks, QA evidence, BDD-style Given/When/Then proof, or security/performance proof; passing verification continues into `mansu-5review` by default. | Verify phase |
 | `mansu-5review` | You need quality, maintainability, architecture, design, security, or decision-risk review. | Review phase |
 | `mansu-6ship` | Implementation is done and you need a ship/hold decision with health, review, QA, docs, PR/deploy/canary, and learning closeout. | Ship phase |
 | `mansu-9setup` | You need install, source health checks, update, runtime target detection, source tool setup, skill sync, repair, or adapter compatibility checks. | Runtime-target bootstrap and read-only check/update gate |
 | `mansu-source-curator` | Drift was confirmed and Mansu references/validators/manual/worklog must be refreshed. | Hidden source-reference maintenance |
 | `mansu-operating-model` | You are defining project behavior, role separation, evidence rules, `AGENTS.md`, or `CODING_RULES.md`. | Canonical doctrine and project-document templates |
 | `mansu-debug` | You need to reproduce, isolate, prove root cause, minimally fix, and regression-test a bug. | Debug route |
-| `mansu-tdd-total` | Default implementation engine under `mansu-build`. | Build engine |
+| `mansu-tdd-total` | Default implementation engine under `mansu-build`; if active phase evidence is missing, route back to `mansu-1define` / `mansu-2plan`. | Build engine |
 | `mansu-tdd-strict` | A risky slice benefits from a meaningful failing RED test. | Strict TDD slice loop |
 | `mansu-tdd-lite` | A slice still needs planning, review, QA, checkpoint, and commit, but forced RED would be artificial. | Relaxed RED, not relaxed quality |
 | `mansu-debug-rootcause` | Compatibility route under `mansu-debug`. | Root-cause-first debugger |
@@ -282,7 +282,7 @@ Compatibility/admin surfaces:
 - New project or major feature family: `mansu-1define`, then `mansu-2plan`
 - Project doctrine, `AGENTS.md`, `CODING_RULES.md`: `mansu-operating-model`
 - Feature or refactor implementation: `mansu-3build`
-- Behavior proof, QA, browser/runtime verification, then default review handoff: `mansu-4verify`
+- Behavior proof, BDD-style Given/When/Then QA, browser/runtime verification, then default review handoff: `mansu-4verify`
 - Quality, architecture, design, security, decision-risk review: `mansu-5review`
 - High-risk slice with useful RED test: `mansu-tdd-strict`
 - Lower-risk slice where RED is artificial: `mansu-tdd-lite`
