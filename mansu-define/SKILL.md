@@ -17,6 +17,12 @@ For a new product, app, repo, major feature family, or fuzzy idea, Ouroboros is
 the default project-definition route. Do not present Ouroboros interview as an
 optional "if MCP exists" path in user-facing updates.
 
+User-provided idea notes do not satisfy the interview gate. If the user writes
+one line, three lines, a rough feature list, or a short product brief and then
+invokes `mansu-1define` or `mansu-define`, treat that text as seed context for
+Ouroboros `interview`; do not mark Define complete, jump to planning, or replace
+the interview with Mansu-owned questions just because the brief sounds clear.
+
 Before asking Mansu-owned definition questions:
 
 1. Load/discover the Ouroboros interview route through the active runtime.
@@ -32,6 +38,12 @@ Before asking Mansu-owned definition questions:
 Fallback definition without Ouroboros is allowed only after the setup/update
 path was attempted or explicitly declined, and it must be labeled as fallback.
 Do not silently replace Ouroboros interview with Mansu-owned questions.
+
+Skipping the Ouroboros interview is allowed only when current, repo-visible
+definition artifacts already exist, such as an Ouroboros Seed/Ledger or an
+equivalent source-of-truth definition, and the user is asking to continue from
+that existing definition. In that case, cite the artifact evidence before
+proceeding.
 
 ## Required references
 
