@@ -16,6 +16,11 @@ This is the user-facing numbered route. Read and follow the compatibility implem
 - Next route: choose the correct numbered Mansu skill and give the user the
   exact next command.
 - Public lifecycle spine: `mansu-1define -> mansu-2plan -> mansu-3build -> mansu-4verify -> mansu-5review -> mansu-6ship`
+- New product and UI/user-facing starts: recommend `mansu-1define` first.
+  Define runs Ouroboros before any design-context work, records the design intent seed,
+  then routes UI/user-facing scope to source-skill design-context
+  interview. `mansu-2plan` consumes that handoff into `DESIGN.md`, design
+  direction, approved artifacts, and roadmap.
 - Compatibility aliases such as `mansu-project-start` must not replace, merge,
   rename, or hide the six separate numbered public phase routes.
 - Hide legacy setup/kickoff surfaces from primary lifecycle guidance:

@@ -8,15 +8,22 @@ description: Execute the current phase through Mansu TDD slices while preserving
 Use this skill when a current phase execution plan exists and the user wants
 implementation, refactoring, or code changes.
 
-The active plan is a role, not a literal filename. Prefer `PLAN.md`, but also
-recognize `Plan.md`, `.codex/plans/*.md`, `.omo/plans/*.md`, or a concrete plan
-path the user just referenced. Do not say "no plan" until these candidates have
-been checked.
+The build input hierarchy is `Feature Priority / MVP Cut -> Project Phase Roadmap -> Phase Plan -> Slice`.
+Build reads the Project Phase Roadmap for phase order, exit criteria, and the
+roadmap link/section, then executes only the active Phase Plan's slice table.
 
-Before non-trivial implementation, read the active plan and any linked
-roadmap, spec, TDR, or design direction it names. If those linked artifacts
-change the current phase, slice boundaries, validation gates, or risk profile,
-update the active phase plan before editing code.
+The active Phase Plan is a role, not a literal filename. Discovery precedence:
+use a concrete user-provided path first; otherwise find active Phase Plan
+role/marker discovery signals in `PLAN.md`, `Plan.md`, `.codex/plans/*.md`,
+`.omo/plans/*.md`, or linked planning docs. Do not say "no plan" until these candidates have
+been checked, and do not reject a valid active Phase Plan only because the
+filename is not `PLAN.md`.
+
+Before non-trivial implementation, read the active Phase Plan and its linked
+Project Phase Roadmap before any linked spec, TDR, or design direction it names.
+If those linked artifacts change the current phase, slice boundaries,
+validation gates, or risk profile, update the active Phase Plan before editing
+code.
 
 `.omo/plans/*.md` support is explicit active plan path support only. `.omo/*`
 remains generated planning/evidence state, not canonical doctrine,
@@ -25,18 +32,14 @@ user-facing documentation, or a normal runtime source of truth.
 `mansu-build` preserves the existing `mansu-tdd-total` behavior as the default
 implementation engine.
 
-If the active plan is missing, incomplete, or only contains a whole-project
-roadmap without a current/next phase, do not implement; route back to public
-`mansu-1define` / `mansu-2plan` so the active phase, slice boundaries,
-validation gates, and source skill handoff are created first.
+If the active Phase Plan is missing, incomplete, or lacks a slice table for the
+current/next phase, do not implement; route back to public `mansu-1define` /
+`mansu-2plan` so the active phase, slice boundaries, validation gates, and
+source skill handoff are created first.
 
-If a roadmap-style file already names the current or next phase and contains
-execution-ready slice boundaries and validation gates, treat that file as the
-active phase plan even when it is not named `PLAN.md`. Do not reject a valid plan
-only because the filename is `.omo/plans/{slug}.md`.
-
-Do not implement from a whole-project roadmap that lacks an active phase and
-slice table.
+Do not implement from a Project Phase Roadmap alone. A roadmap can point to or
+contain the active Phase Plan, but Build may execute only after role/marker
+discovery identifies one active Phase Plan with an execution-ready slice table.
 
 ## Required references
 

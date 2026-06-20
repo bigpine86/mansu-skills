@@ -952,6 +952,7 @@
           <div>
             <h2>개발 프로세스</h2>
             <p>Mansu의 개발 프로세스는 AI 에이전트가 더 자율적으로 코드를 만들 수 있도록 일을 정의, 계획, 구현, 검증, 리뷰, 배포 순서로 나누는 흐름입니다. 원인 불명 문제가 생기면 <code>mansu-debug</code>로 잠시 멈춰 원인을 먼저 찾습니다.</p>
+            <p>새 제품이나 UI/user-facing 작업은 <code>mansu-1define</code>이 Ouroboros를 먼저 실행한 뒤 디자인 문맥 인터뷰로 이어지고, <code>mansu-2plan</code>이 그 handoff를 <code>DESIGN.md</code>, design direction, artifact 기준으로 바꿉니다.</p>
           </div>
           <div class="intro-note">
             <strong>시작점</strong>
@@ -971,12 +972,12 @@
             <tr>
               <td><code>Define</code></td>
               <td>정의</td>
-              <td>무엇을 만들지 정하는 단계입니다. 해결하려는 문제, 필요한 기능, 만들 범위, 완료 기준을 명확히 합니다.</td>
+              <td>무엇을 만들지 정하는 단계입니다. 해결하려는 문제, 후보 기능, 만들 범위, 우선순위 신호, 완료 기준을 명확히 합니다. Ouroboros를 먼저 실행하고, UI/user-facing scope가 있으면 source-skill 디자인 문맥 인터뷰와 design intent seed handoff를 남깁니다.</td>
             </tr>
             <tr>
               <td><code>Plan</code></td>
               <td>계획</td>
-              <td>정의한 내용을 실제 작업으로 나누는 단계입니다. 어떤 기능부터 만들지, 어떤 방식으로 구현할지, 필요한 작업 순서를 정합니다.</td>
+              <td>기능 우선순위와 MVP/later를 정한 뒤 Project Phase Roadmap, 현재 Phase Plan, Slice 순서를 만듭니다. Define handoff를 <code>DESIGN.md</code>, design direction, artifact 기준, 구현 순서로 바꿉니다.</td>
             </tr>
             <tr>
               <td><code>Build</code></td>
@@ -1033,7 +1034,7 @@
             <div>
               <span class="pill">Define</span>
               <h3>무엇을 만들지 정의한다</h3>
-              <p>해결하려는 문제, 필요한 기능, 만들 범위, 완료 기준을 명확히 합니다.</p>
+              <p>해결하려는 문제, 후보 기능, 만들 범위, 우선순위 신호, 완료 기준을 명확히 합니다.</p>
               <p><strong>사용:</strong> <code>$mansu-1define</code></p>
             </div>
             <div class="phase-command">
@@ -1046,7 +1047,7 @@
             <div>
               <span class="pill">Plan</span>
               <h3>작업 순서를 정한다</h3>
-              <p>어떤 기능부터 만들지, 어떤 방식으로 구현할지, 필요한 작업 순서를 정합니다.</p>
+              <p>Feature Priority / MVP Cut에서 Project Phase Roadmap, Phase Plan, Slice로 내려가는 순서를 정합니다.</p>
               <p><strong>사용:</strong> <code>$mansu-2plan</code></p>
             </div>
             <div class="phase-command">
@@ -1168,11 +1169,13 @@
 	          <div class="detail-card" data-detail-card="define">
 		            <h3>$mansu-1define</h3>
 			            <p>큰 작업을 시작하기 전에 목적, 사용자, 문제, 성공 기준, source of truth를 잡습니다. 정의가 끝나면 다음 단계로 <code>mansu-2plan</code>을 안내합니다.</p>
+			            <p>Define은 Ouroboros-first입니다. Ouroboros interview/PM/Seed로 definition을 먼저 만든 뒤 UI/user-facing scope가 있으면 source-skill 디자인 문맥 인터뷰, 즉 design-context interview로 라우팅하고, <code>mansu-2plan</code>에 넘길 design intent seed를 기록합니다.</p>
 		            <div class="source-routes">
 		              <strong>조합하는 원천</strong>
 		              <ul class="route-list">
 			                <li>addyosmani lifecycle <code>Define</code><em>전체 개발 프로세스의 첫 단계로, 구현 전에 무엇을 만들지 고정합니다.</em></li>
 			                <li>Ouroboros <code>interview</code>/<code>pm</code>/<code>seed</code>/<code>brownfield</code><em>초기 정의 phase 안에서 목적, 제품 정의, 장기 기억, 기존 코드베이스 파악을 깊게 만듭니다.</em></li>
+			                <li><code>gstack-design-consultation</code><em>UI/user-facing scope가 있으면 기본 source-skill design-context interview로 디자인 맥락을 잡습니다.</em></li>
 			                <li><code>gstack-office-hours</code><em>사용자, 문제, wedge, MVP가 진짜인지 창업자 관점으로 압축합니다.</em></li>
 			                <li>Oh My <code>research</code>/<code>deepsearch</code><em>해당 phase 안에서 Threads, Reddit, GitHub, 실제 레포를 뒤져 참고 프로젝트와 인사이트를 찾습니다.</em></li>
 			              </ul>
@@ -1180,6 +1183,7 @@
 		            <ul>
 		              <li>사용자의 아이디어와 실제 문제를 분리합니다.</li>
 		              <li>목표 사용자, 성공 기준, 제약, source of truth를 정리합니다.</li>
+		              <li>UI가 있으면 디자인 문맥 인터뷰를 거치고, <code>DESIGN.md</code>는 만들지 않은 채 design intent seed와 handoff만 남깁니다.</li>
 		              <li>기존 코드가 있으면 brownfield로 현재 상태를 읽습니다.</li>
 	              <li>구현하지 않고 <code>mansu-2plan</code>으로 넘깁니다.</li>
 	            </ul>
@@ -1189,6 +1193,10 @@
 		          <div class="detail-card" data-detail-card="plan">
 		            <h3>$mansu-2plan</h3>
 			            <p>정의된 프로젝트를 요구사항, 아키텍처, 디자인 방향, 구현 로드맵, 현재 phase 실행 계획으로 바꿉니다. 계획이 끝나면 다음 단계로 <code>mansu-3build</code>를 안내합니다.</p>
+			            <p>Plan은 Define의 design intent seed와 디자인 문맥 handoff를 받아 <code>DESIGN.md</code>, design direction, 승인된 artifact 기준으로 정리합니다.</p>
+			            <p>공식 계층은 <code>Feature Priority / MVP Cut -&gt; Project Phase Roadmap -&gt; Phase Plan -&gt; Slice</code>입니다. 우선순위가 MVP를 고르고, roadmap은 큰 phase와 exit criteria를 정하고, Phase Plan은 현재 phase 하나를 자세히 잡고, Slice는 Build가 실행합니다.</p>
+			            <p>Plan tier는 깊이를 정합니다. Quick Plan은 작고 위험 낮은 변경, Standard Plan은 일반 기능 작업, Heavy Plan은 새 앱이나 큰 기능군, 불명확한 아키텍처, 고위험 작업에 씁니다.</p>
+			            <p>대략적인 outline만으로는 완료되지 않습니다. 입력 근거, 기능 우선순위, 아키텍처/인터페이스 결정, 디자인/환경 계획, phase별 exit criteria, 현재 phase의 vertical slice와 검증 명령까지 있어야 Build로 넘깁니다.</p>
 			            <div class="source-routes">
 			              <strong>조합하는 원천</strong>
 			              <ul class="route-list">
@@ -1199,12 +1207,13 @@
 			              </ul>
 			            </div>
 		            <ul>
-		              <li>Requirements/Spec → Architecture → Design Direction → Implementation Roadmap 순서로 잡습니다.</li>
-		              <li>큰 phase map과 정확히 하나의 현재/다음 phase를 고릅니다.</li>
-	              <li>활성 계획은 <code>PLAN.md</code>뿐 아니라 <code>.omo/plans/*.md</code> 같은 경로도 인정합니다.</li>
+		              <li>Feature Priority / MVP Cut → Project Phase Roadmap → Phase Plan → Slice 순서로 계획 깊이를 내립니다.</li>
+		              <li>UI/user-facing scope의 디자인 handoff를 <code>DESIGN.md</code>와 design artifact 방향으로 구체화합니다.</li>
+		              <li>기능 목록, 우선순위 근거, MVP/later 구분을 만든 뒤 큰 phase map과 정확히 하나의 현재/다음 phase를 고릅니다.</li>
+	              <li>active plan 우선순위는 사용자가 가리킨 구체 경로 → <code>PLAN.md</code> → <code>Plan.md</code> → <code>.codex/plans/*.md</code> → <code>.omo/plans/*.md</code>입니다. 한 번에 하나만 active plan으로 선택합니다.</li>
 	              <li>slice boundaries, validation gates, risks를 명확히 한 뒤 <code>mansu-3build</code>로 넘깁니다.</li>
 	            </ul>
-	            <div class="artifact-list"><span>산출물: phase map</span><span>산출물: design direction</span><span>산출물: active phase execution plan</span></div>
+	            <div class="artifact-list"><span>산출물: feature priority</span><span>산출물: phase map</span><span>산출물: design direction</span><span>산출물: active phase execution plan</span></div>
 	          </div>
 
 		          <div class="detail-card" data-detail-card="build">
@@ -1221,7 +1230,7 @@
 			              </ul>
 			            </div>
 		            <ul>
-		              <li><code>PLAN.md</code>, <code>Plan.md</code>, <code>.codex/plans/*.md</code>, <code>.omo/plans/*.md</code>, 사용자가 가리킨 계획 파일을 먼저 찾습니다.</li>
+		              <li>active plan 우선순위는 사용자가 가리킨 구체 경로 → <code>PLAN.md</code> → <code>Plan.md</code> → <code>.codex/plans/*.md</code> → <code>.omo/plans/*.md</code>입니다.</li>
 		              <li>파일명이 다르다는 이유만으로 계획이 없다고 말하지 않습니다.</li>
 		              <li>작업을 순차 vertical slice로 나눕니다.</li>
 	              <li>각 slice의 완료 조건, 영향 파일, 테스트 기준, 위험 요소를 정합니다.</li>
@@ -1329,18 +1338,22 @@
           <div class="catalog-layout mansu-layout">
             <div class="catalog-list">
               <div class="catalog-family-block">
-                <h3>직접 호출하는 스킬</h3>
-                <p>각 스킬이 무엇을 위해 존재하는지, 내부에서 무엇을 조합하는지, 어떤 결과를 남기는지 확인합니다.</p>
+                <h3>번호가 붙은 주요 직접 호출 스킬</h3>
+                <p>자율적인 agentic software development를 진행할 때 직접 부르는 기본 route입니다. 각 스킬이 무엇을 위해 존재하는지, 내부에서 무엇을 조합하는지, 어떤 결과를 남기는지 확인합니다.</p>
                 <div class="skill-grid">
                   <article class="skill-card mansu-skill-card is-active" id="mansu-0help" data-mansu-detail="mansu-help" role="button" tabindex="0" aria-pressed="true"><strong><code>$mansu-0help</code></strong><p>현재 작업을 분류하고 바로 쓸 Mansu 스킬을 고릅니다.</p></article>
-                  <article class="skill-card mansu-skill-card" id="mansu-1define" data-mansu-detail="mansu-define" role="button" tabindex="0" aria-pressed="false"><strong><code>$mansu-1define</code></strong><p>목적, 사용자, 문제, 요구사항, 성공 기준을 source skill로 정의합니다.</p></article>
-                  <article class="skill-card mansu-skill-card" id="mansu-2plan" data-mansu-detail="mansu-plan" role="button" tabindex="0" aria-pressed="false"><strong><code>$mansu-2plan</code></strong><p>Requirements/Spec, Architecture, Design Direction, Roadmap을 만듭니다.</p></article>
+                  <article class="skill-card mansu-skill-card" id="mansu-1define" data-mansu-detail="mansu-define" role="button" tabindex="0" aria-pressed="false"><strong><code>$mansu-1define</code></strong><p>Ouroboros로 먼저 정의하고 UI/user-facing scope는 디자인 문맥 인터뷰로 넘깁니다.</p></article>
+                  <article class="skill-card mansu-skill-card" id="mansu-2plan" data-mansu-detail="mansu-plan" role="button" tabindex="0" aria-pressed="false"><strong><code>$mansu-2plan</code></strong><p>Feature Priority, Project Phase Roadmap, Phase Plan, Slice, <code>DESIGN.md</code> 방향을 만듭니다.</p></article>
                   <article class="skill-card mansu-skill-card" id="mansu-3build" data-mansu-detail="mansu-build" role="button" tabindex="0" aria-pressed="false"><strong><code>$mansu-3build</code></strong><p><code>mansu-tdd-total</code>을 기본 엔진으로 현재 phase를 구현합니다.</p></article>
                   <article class="skill-card mansu-skill-card" id="mansu-4verify" data-mansu-detail="mansu-verify" role="button" tabindex="0" aria-pressed="false"><strong><code>$mansu-4verify</code></strong><p>BDD-style Given/When/Then, 테스트, 브라우저, 런타임, QA evidence로 동작을 증명합니다.</p></article>
                   <article class="skill-card mansu-skill-card" id="mansu-5review" data-mansu-detail="mansu-review" role="button" tabindex="0" aria-pressed="false"><strong><code>$mansu-5review</code></strong><p>품질, 구조, 디자인, 보안, 의사결정 리스크를 검토합니다.</p></article>
                   <article class="skill-card mansu-skill-card" id="mansu-6ship" data-mansu-detail="mansu-ship" role="button" tabindex="0" aria-pressed="false"><strong><code>$mansu-6ship</code></strong><p>검증과 리뷰 뒤 ship/hold, PR, 배포, 학습 마감을 판단합니다.</p></article>
                   <article class="skill-card mansu-skill-card" id="mansu-9setup" data-mansu-detail="mansu-setup" role="button" tabindex="0" aria-pressed="false"><strong><code>$mansu-9setup</code></strong><p>설치, 업데이트, 런타임, 원천 도구 상태를 먼저 확인합니다.</p></article>
                   <article class="skill-card mansu-skill-card" id="mansu-0manual" data-mansu-detail="mansu-manual" role="button" tabindex="0" aria-pressed="false"><strong><code>$mansu-0manual</code></strong><p>이 HTML 매뉴얼 위치를 알려주고 내용을 설명합니다.</p></article>
+                </div>
+                <h3>보조/호환 route</h3>
+                <p>아래 스킬은 관리자, compatibility, specialized route입니다. 새 프로젝트나 일반 개발 흐름은 번호가 붙은 주요 route를 기준으로 선택합니다.</p>
+                <div class="skill-grid" data-route-tier="support-compatibility">
                   <article class="skill-card mansu-skill-card" id="mansu-help" data-mansu-detail="mansu-help" role="button" tabindex="0" aria-pressed="false"><strong><code>$mansu-help</code></strong><p><code>mansu-0help</code>의 compatibility alias입니다.</p></article>
                   <article class="skill-card mansu-skill-card" id="mansu-setup" data-mansu-detail="mansu-setup" role="button" tabindex="0" aria-pressed="false"><strong><code>$mansu-setup</code></strong><p><code>mansu-9setup</code>의 compatibility alias입니다.</p></article>
                   <article class="skill-card mansu-skill-card" id="mansu-source-curator" data-mansu-detail="mansu-source-curator" role="button" tabindex="0" aria-pressed="false"><strong><code>$mansu-source-curator</code></strong><p>drift 확인 후 Mansu 레퍼런스 지도를 갱신합니다.</p></article>
@@ -1449,27 +1462,30 @@
               </div>
               <div class="mansu-detail-card" data-mansu-detail-card="mansu-define">
                 <h3>$mansu-1define</h3>
-                <p>새 제품, 앱, 레포, 큰 기능군을 구현 전에 정의하는 phase 스킬입니다. Mansu가 질문을 직접 꾸며내기보다 addyosmani <code>interview-me</code>, Ouroboros interview/pm/seed, gstack office-hours를 상황에 맞게 연결합니다.</p>
+                <p>새 제품, 앱, 레포, 큰 기능군을 구현 전에 정의하는 phase 스킬입니다. Mansu가 질문을 직접 꾸며내기보다 Ouroboros interview/pm/seed를 먼저 실행하고, 필요한 경우 addyosmani <code>interview-me</code>와 gstack office-hours를 상황에 맞게 연결합니다.</p>
+                <p>UI/user-facing scope가 보이면 Define은 source-skill 디자인 문맥 인터뷰로 라우팅합니다. 기본은 <code>gstack-design-consultation</code>이며, 여러 방향 비교는 <code>gstack-design-shotgun</code>, critique는 <code>gstack-plan-design-review</code>가 맡습니다. Define은 <code>DESIGN.md</code>를 만들지 않고 design intent seed와 handoff만 남깁니다.</p>
                 <ul>
                   <li>목적: 사용자, 문제, 성공 기준, 요구사항, non-goal, source of truth를 잡습니다.</li>
                   <li>언제: 아이디어가 흐릿하거나, 새 프로젝트/큰 기능군을 시작할 때 씁니다.</li>
-                  <li>주요 결과: 정의 산출물, acceptance criteria, <code>AGENTS.md</code>/<code>CODING_RULES.md</code> 후보, <code>mansu-2plan</code> handoff가 남습니다.</li>
+                  <li>주요 결과: 정의 산출물, acceptance criteria, design intent seed, <code>AGENTS.md</code>/<code>CODING_RULES.md</code> 후보, <code>mansu-2plan</code> handoff가 남습니다.</li>
                 </ul>
                 <div class="artifact-list"><span>산출물: definition brief</span><span>산출물: acceptance criteria</span><span>산출물: source-of-truth handoff</span></div>
               </div>
               <div class="mansu-detail-card" data-mansu-detail-card="mansu-plan">
                 <h3>$mansu-2plan</h3>
-                <p>정의된 프로젝트를 <code>Requirements/Spec → Architecture → Design Direction → Implementation Roadmap</code> 순서로 실행 가능한 계획으로 바꿉니다.</p>
+                <p>정의된 프로젝트를 <code>Feature Priority / MVP Cut → Project Phase Roadmap → Phase Plan → Slice</code> 계층으로 실행 가능한 계획으로 바꿉니다.</p>
+                <p>Quick Plan은 작고 위험 낮은 변경, Standard Plan은 일반 기능 작업, Heavy Plan은 새 앱이나 큰 기능군, 불명확한 아키텍처, 고위험 작업에 씁니다.</p>
+                <p>Define에서 넘어온 디자인 handoff가 있으면 Plan이 <code>DESIGN.md</code>, design direction, 승인된 design artifact 기준으로 정리합니다.</p>
                 <ul>
-                  <li>목적: 전체 phase map과 현재 phase execution plan을 만듭니다.</li>
+                  <li>목적: 기능 목록, 우선순위 근거, MVP/later 구분, Project Phase Roadmap, 현재 Phase Plan, Slice 기준을 만듭니다.</li>
                   <li>언제: 구현 전에 스펙, 구조, 디자인 방향, 큰 순서를 잡아야 할 때 씁니다.</li>
-                  <li>주요 결과: requirements/spec, architecture notes, design direction, implementation roadmap이 남습니다.</li>
+                  <li>주요 결과: requirements/spec, feature priority, MVP/later split, Project Phase Roadmap, Phase Plan, Slice table, architecture notes, <code>DESIGN.md</code>, design direction, design artifacts가 남습니다.</li>
                 </ul>
-                <div class="artifact-list"><span>산출물: phase map</span><span>산출물: design direction</span><span>산출물: active phase execution plan</span></div>
+                <div class="artifact-list"><span>산출물: feature priority</span><span>산출물: phase map</span><span>산출물: design direction</span><span>산출물: active phase execution plan</span></div>
               </div>
               <div class="mansu-detail-card" data-mansu-detail-card="mansu-build">
                 <h3>$mansu-3build</h3>
-                <p>현재 phase 실행 계획이 있을 때 실제 구현으로 들어가는 phase 스킬입니다. <code>PLAN.md</code>, <code>Plan.md</code>, <code>.codex/plans/*.md</code>, <code>.omo/plans/*.md</code>, 사용자가 가리킨 계획 파일을 모두 후보로 봅니다. 실행 가능한 active phase plan이 없으면 먼저 <code>mansu-1define</code>/<code>mansu-2plan</code>으로 돌아갑니다. 내부 구현 엔진은 기존 <code>mansu-tdd-total</code>입니다.</p>
+                <p>현재 phase 실행 계획이 있을 때 실제 구현으로 들어가는 phase 스킬입니다. active plan 우선순위는 사용자가 가리킨 구체 경로 → <code>PLAN.md</code> → <code>Plan.md</code> → <code>.codex/plans/*.md</code> → <code>.omo/plans/*.md</code>이며, 한 번에 하나만 선택합니다. 실행 가능한 active phase plan이 없으면 먼저 <code>mansu-1define</code>/<code>mansu-2plan</code>으로 돌아갑니다. 내부 구현 엔진은 기존 <code>mansu-tdd-total</code>입니다.</p>
                 <ul>
                   <li>목적: 계획된 phase를 sequential vertical slice로 구현합니다.</li>
                   <li>언제: 구현/리팩토링 요청이 있고 current phase 계획이 준비됐을 때 씁니다.</li>
@@ -1716,13 +1732,14 @@
               <h3>4. 프로젝트 시작은 큰 설계부터</h3>
               <p><code>mansu-1define</code>은 목적, 사용자, 요구사항, 성공 기준, source of truth를 잡고, <code>mansu-2plan</code>은 spec/TDR, UI 방향, project roadmap/phase order와 현재 phase를 정합니다. <code>mansu-project-start</code>는 명시 호출이나 오래된 workflow를 위한 legacy/specialized compatibility alias route입니다.</p>
               <p>구현 handoff 전에는 목적, 사용자/문제, 근거, 가정, 방향, 순서, 실행 연결이라는 Zero-to-PLAN minimum gate를 통과해야 합니다. 위험이 작으면 짧게 기록하고, 위험이 크면 리서치/spec/TDR/DESIGN/ADR로 확장합니다.</p>
-              <p>초기 정의는 Ouroboros interview/pm/seed로 깊게 만들고, phase 안 리서치는 Oh My research, 비평과 검증은 gstack office-hours/autoplan/plan-*로 조합합니다.</p>
-              <p>전체 기능 순서는 spec/TDR/design layer에 남기고, <code>PLAN.md</code>는 현재 phase의 실행 문서로 둡니다. 그 phase의 세부 slice, 구현, review, QA, checkpoint는 <code>mansu-3build</code>가 맡고 내부 구현 엔진으로 <code>mansu-tdd-total</code>을 사용합니다.</p>
+              <p>초기 정의는 Ouroboros interview/pm/seed로 깊게 만들고, UI/user-facing scope가 있으면 source-skill 디자인 문맥 인터뷰를 이어서 실행합니다. 기본 디자인 route는 <code>gstack-design-consultation</code>이고, Define은 design intent seed만 남기며 <code>DESIGN.md</code>와 artifact 방향은 <code>mansu-2plan</code>이 만듭니다.</p>
+              <p>phase 안 리서치는 Oh My research, 비평과 검증은 gstack office-hours/autoplan/plan-*로 조합합니다.</p>
+              <p>기능 목록, 우선순위 근거, MVP/later 구분, 전체 기능 순서는 spec/TDR/design layer에 남기고, <code>PLAN.md</code>는 현재 phase의 실행 문서로 둡니다. 그 phase의 세부 slice, 구현, review, QA, checkpoint는 <code>mansu-3build</code>가 맡고 내부 구현 엔진으로 <code>mansu-tdd-total</code>을 사용합니다.</p>
             </div>
 
             <div class="agent-note" data-agent-rule="total-before-implementation">
               <h3>5. 구현은 build에서 시작한다</h3>
-              <p>사용자가 구현을 원하고 현재 phase 실행 계획이 있으면 기본은 <code>mansu-3build</code>입니다. <code>PLAN.md</code>만 보지 말고 <code>Plan.md</code>, <code>.codex/plans/*.md</code>, <code>.omo/plans/*.md</code>, 사용자가 가리킨 계획 파일까지 확인합니다.</p>
+              <p>사용자가 구현을 원하고 현재 phase 실행 계획이 있으면 기본은 <code>mansu-3build</code>입니다. active plan 우선순위는 사용자가 가리킨 구체 경로 → <code>PLAN.md</code> → <code>Plan.md</code> → <code>.codex/plans/*.md</code> → <code>.omo/plans/*.md</code>이며, 파일명이 다르다는 이유만으로 계획이 없다고 말하지 않습니다.</p>
               <p><code>mansu-3build</code>가 내부 엔진으로 <code>mansu-tdd-total</code>을 사용해 계획을 비평하고 순차 vertical slice를 만든 뒤 각 slice를 lite/strict로 연결합니다.</p>
               <ul>
                 <li>다음 slice는 이전 slice가 닫힌 뒤 시작합니다.</li>
@@ -2025,7 +2042,7 @@
 
               <div class="catalog-section">
                 <h3>디자인 / UI</h3>
-                <p>디자인 방향, 시안, HTML 구현, 시각 QA를 담당합니다.</p>
+                <p>디자인 방향, 시안, HTML 구현, 시각 QA를 담당합니다. UI/user-facing scope는 Define의 Ouroboros definition 뒤 디자인 문맥 인터뷰로 들어오고, Plan이 그 handoff를 <code>DESIGN.md</code>와 artifact 방향으로 정리합니다.</p>
                 <div class="catalog-items">
                   <button class="catalog-item" type="button" data-catalog-name="Open Design artifact workflow" data-catalog-family="Open Design" data-catalog-role="설치/승인된 경우 Mansu가 직접 CLI/lifecycle 명령을 실행해 디자인 artifact, preview, export를 만듭니다." data-catalog-when="UI 방향을 실제 볼 수 있는 artifact로 빠르게 만들어 검증하고 싶을 때 씁니다." data-catalog-process="Mansu가 brief를 정리하고 Open Design을 호출한 뒤 artifact 경로를 DESIGN.md/PLAN.md/gstack 검증으로 연결합니다." data-catalog-output="design artifact, preview/export evidence, anti-AI-slop findings"><code>Open Design</code><small>디자인 artifact route</small></button>
                   <button class="catalog-item" type="button" data-catalog-name="VoltAgent/awesome-design-md DESIGN.md references" data-catalog-family="VoltAgent/awesome-design-md" data-catalog-role="DESIGN.md 작성 기준과 여러 제품의 시각 시스템 레퍼런스를 제공합니다." data-catalog-when="디자인 방향을 잡기 전에 참고할 시각 문법과 문서 구조가 필요할 때 씁니다." data-catalog-process="여러 reference를 비교해 복사할 브랜드가 아니라 프로젝트에 맞는 디자인 원칙을 뽑습니다." data-catalog-output="DESIGN.md 초안/갱신, 색/타이포/컴포넌트/반응형 기준"><code>VoltAgent/awesome-design-md</code><small>DESIGN.md 레퍼런스</small></button>

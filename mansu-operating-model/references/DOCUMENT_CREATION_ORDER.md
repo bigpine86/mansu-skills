@@ -107,15 +107,21 @@ For a new project or major feature family, use `mansu-1define` and then
 `mansu-2plan` as the public orchestrators over this document flow. The
 unnumbered `mansu-define` and `mansu-plan` names are backing implementations
 only. `mansu-project-start` remains a compatibility alias for that kickoff path.
-The planning route should create only the needed artifacts, then hand off to
+`mansu-1define` owns Ouroboros-first definition and records any post-Ouroboros
+design intent seed/handoff. `mansu-2plan` consumes that handoff and owns
+feature priority/MVP cut, `DESIGN.md` creation/refinement, design artifacts,
+design direction, and the roadmap. The planning route should create only the
+needed artifacts, then hand off to
 `mansu-3build`, whose backing implementation `mansu-build` uses
 `mansu-tdd-total` as its phase-level build engine.
 
-Large-grain feature order is decided before `PLAN.md`. For example, a web app may
-need a roadmap that orders menu structure, data model/API contracts, login,
-board, admin, UI system, deployment, and verification. That order belongs in the
-spec/TDR/design layer. `PLAN.md` is created from that roadmap for the active
-phase only. If no roadmap artifact names the ordered phase list and exactly one
+Feature priority is decided before `PLAN.md`. For example, a web app may need a
+feature inventory that separates must-have, later, dependency-first, risky, and
+learning-first work before it orders menu structure, data model/API contracts,
+login, board, admin, UI system, deployment, and verification. The priority
+rationale and large-grain feature order belong in the spec/TDR/design layer.
+`PLAN.md` is created from that roadmap for the active phase only. If no roadmap
+artifact names the prioritized feature list, ordered phase list, and exactly one
 active phase, do not enter numbered public `mansu-3build` or the backing
 `mansu-build` / `mansu-tdd-total` path; return to `mansu-1define` /
 `mansu-2plan`.
@@ -130,18 +136,21 @@ active phase, do not enter numbered public `mansu-3build` or the backing
 | gstack design doc | The problem or wedge needs shaping | `gstack-office-hours` | `gstack-plan-ceo-review`, `gstack-autoplan` when plan exists | Problem, status quo, target user, constraints, approaches, recommended direction, and success criteria exist |
 | Research notes | Tech, market, reference, or library choice depends on outside facts | Oh My `research` / `deepsearch`, addyosmani `source-driven-development` | `gstack-plan-eng-review`, `gstack-plan-design-review`, `gstack-plan-devex-review` depending on domain | Sources are named, freshness is checked, tradeoffs are compared, and recommendations are actionable |
 | Spec | Requirements are ambiguous or the work crosses modules | addyosmani `spec-driven-development` | `gstack-autoplan`, focused `gstack-plan-*` review | Objective, stack, commands, project structure, code style, testing strategy, boundaries, success criteria, and open questions are written |
-| Project design / TDR layer | Architecture, data, API, UI system, or phase order matters | `gstack-office-hours`, Oh My `planner`, addyosmani `spec-driven-development`, `api-and-interface-design` | `gstack-autoplan`, then focused `gstack-plan-ceo-review`, `gstack-plan-design-review`, `gstack-plan-eng-review`, `gstack-plan-devex-review` | Product shape, feature groups, domain model, architecture, data/API boundaries, tech stack, secret handling, UI direction, build strategy, roadmap, risks, and non-goals are clear |
+| Project design / TDR layer | Architecture, data, API, UI system, feature priority, or phase order matters | `gstack-office-hours`, Oh My `planner`, addyosmani `spec-driven-development`, `api-and-interface-design` | `gstack-autoplan`, then focused `gstack-plan-ceo-review`, `gstack-plan-design-review`, `gstack-plan-eng-review`, `gstack-plan-devex-review` | Product shape, feature groups, priority rationale, MVP/later split, domain model, architecture, data/API boundaries, tech stack, secret handling, UI direction, build strategy, Project Phase Roadmap, risks, and non-goals are clear |
+| Project Phase Roadmap | Big phases, phase order, and phase exit criteria must guide more than one implementation phase | numbered `mansu-2plan`, addyosmani `planning-and-task-breakdown`, project design / TDR layer | `gstack-autoplan`, focused `gstack-plan-*` review | Feature Priority / MVP Cut is repeated, phases are ordered, each phase has exit criteria, and exactly one active phase is named |
 | Design brief / visual research note | UI direction is unclear because market, taste, competitors, positioning, or current visual patterns are unknown | Oh My `research` / `deepsearch`, addyosmani `source-driven-development`, Threads/Reddit/GitHub/product references | `gstack-plan-design-review` or `gstack-plan-ceo-review` when taste/product direction is risky | References inspected, selected direction, rejected directions, taste/positioning lessons, and source evidence are clear enough to choose a design route |
-| `DESIGN.md` or UI design doc | User-facing UI, visual system, or interaction model matters | Prefer Open Design when installed/approved for artifact generation; reference with VoltAgent/awesome-design-md; create/refine with `gstack-design-consultation`, `gstack-design-shotgun`, `gstack-plan-design-review`, addyosmani `frontend-ui-engineering` | `gstack-plan-design-review`, `gstack-design-review`, `gstack-browse`, `gstack-qa-only` | Visual atmosphere, color roles, typography, component rules, layout, depth/elevation, do/don't guardrails, responsive behavior, accessibility, agent prompt handoff, reference rationale, selected/rejected directions, and Open Design artifact/preview/export evidence are locked enough to implement |
+| `DESIGN.md` or UI design doc | User-facing UI, visual system, or interaction model matters; public `mansu-2plan` consumes the Define design intent seed/handoff and owns this artifact | Prefer Open Design when installed/approved for artifact generation; reference with VoltAgent/awesome-design-md; create/refine with `gstack-design-consultation`, `gstack-design-shotgun`, `gstack-plan-design-review`, addyosmani `frontend-ui-engineering`; `gstack-design-consultation` may create or contribute to `DESIGN.md`, but that is source capability under Plan ownership | `gstack-plan-design-review`, `gstack-design-review`, `gstack-browse`, `gstack-qa-only` | Visual atmosphere, color roles, typography, component rules, layout, depth/elevation, do/don't guardrails, responsive behavior, accessibility, agent prompt handoff, reference rationale, selected/rejected directions, and Open Design artifact/preview/export evidence are locked enough to implement |
 | ADR | A decision will be expensive to reverse | addyosmani `documentation-and-adrs` | `gstack-plan-eng-review`, `gstack-cso` for security decisions, `gstack-benchmark` for performance decisions | Context, decision, alternatives, consequences, and status are recorded in `docs/decisions/` or the repo's ADR convention |
-| `PLAN.md` | A current phase needs execution-ready slices | addyosmani `planning-and-task-breakdown`, numbered `mansu-2plan`, backing `mansu-build` / `mansu-tdd-total` under numbered `mansu-3build`, `CODE_CONSTRUCTION_ORDER.md` | `gstack-autoplan`, `gstack-plan-eng-review`, Metis/Momus-style critics, source-specific reviewers | Current phase goal, ordered vertical slices, acceptance criteria, impact files, validation, risks, mode decisions, and checkpoint rules are present |
-| Slice checkpoint | A slice finishes or pauses | `mansu-tdd-lite`, `mansu-tdd-strict`, checkpoint-equivalent source skill | review gate, QA gate, validation commands | Done, remaining risk, next starting point, commit/no-commit status, and updated `PLAN.md` are recorded |
+| Phase Plan (`PLAN.md` or active plan artifact) | One active phase needs execution-ready slices | addyosmani `planning-and-task-breakdown`, numbered `mansu-2plan`, backing `mansu-build` / `mansu-tdd-total` under numbered `mansu-3build`, `CODE_CONSTRUCTION_ORDER.md` | `gstack-autoplan`, `gstack-plan-eng-review`, Metis/Momus-style critics, source-specific reviewers | Current phase goal, link to Project Phase Roadmap, detailed approach, ordered Slice table, acceptance criteria, impact files, validation, risks, mode decisions, and checkpoint rules are present |
+| Slice checkpoint | A Slice finishes or pauses | `mansu-tdd-lite`, `mansu-tdd-strict`, checkpoint-equivalent source skill | review gate, QA gate, validation commands | Done, remaining risk, next starting point, commit/no-commit status, and updated active Phase Plan are recorded |
 | Worklog / `개발일지.md` | Work has happened and should compound | `gstack-retro`, `gstack-learn`, Mansu checkpoint closeout | self-review against `PLAN.md`, source freshness notes | Historical decisions and actual flow are recorded without keeping completed detail active in `PLAN.md` |
 
 For user-facing UI, choose the design source route before phase roadmap planning.
 Do not let Mansu replace Open Design, VoltAgent/awesome-design-md, gstack design
 skills, Oh My research, or addyosmani source-driven/frontend skills with a
-Mansu-owned design questionnaire. If no design route is selected, block
+Mansu-owned design questionnaire. Define may only record the design intent seed
+and route evidence after Ouroboros; `mansu-2plan` creates/refines `DESIGN.md`,
+design artifacts, design direction, and roadmap. If no design route is selected, block
 implementation handoff and return to public `mansu-1define` or the
 `mansu-project-start` compatibility alias.
 | Verification report | Runtime behavior or user flow is claimed | `mansu-web-verify`, `gstack-browse`, `gstack-qa-only`, `gstack-benchmark`, `gstack-cso` | rerun relevant checks, screenshots, logs, security/perf evidence | What was tested, what passed, what failed, what was not tested, and remaining risk are explicit |
@@ -196,6 +205,12 @@ It is not canonical Mansu doctrine, and generated `.omo` plans are not canonical
 doctrine either. `.omo/plans/*.md` can be the active phase execution document
 only when selected as a concrete plan path; otherwise `.omo` stays generated
 archive/evidence state.
+
+The hierarchy is `Feature Priority / MVP Cut -> Project Phase Roadmap -> Phase Plan -> Slice`. Feature Priority / MVP Cut lives in Define/product-purpose output
+and is repeated in the Project Phase Roadmap. The Project Phase Roadmap lives in
+the project roadmap, TDR, or design/spec layer and owns big phases plus exit
+criteria. The Phase Plan lives in `PLAN.md` or the selected active plan artifact
+and owns one active phase's approach plus Slice table. A Slice lives as a row or task inside that active Phase Plan and is the unit `mansu-3build` executes.
 
 Use the project roadmap or TDR for the whole feature sequence. Use `PLAN.md` for
 the phase currently being executed.

@@ -21,6 +21,18 @@ assert_not_contains() {
   ! grep -q "$pattern" "$file"
 }
 
+assert_contains_regex() {
+  local pattern="$1"
+  local file="$2"
+  grep -Eq "$pattern" "$file"
+}
+
+assert_not_contains_regex() {
+  local pattern="$1"
+  local file="$2"
+  ! grep -Eiq "$pattern" "$file"
+}
+
 assert_count_ge() {
   local pattern="$1"
   local file="$2"
@@ -121,6 +133,9 @@ grep -q 'Gowun Batang' "$HTML_FILE"
 grep -q -- '--font-body' "$HTML_FILE"
 grep -q -- '--font-display' "$HTML_FILE"
 grep -q 'Mansu의 개발 프로세스는 AI 에이전트가 더 자율적으로 코드를 만들 수 있도록 일을 정의, 계획, 구현, 검증, 리뷰, 배포 순서로 나누는 흐름입니다' "$HTML_FILE"
+grep -q 'Ouroboros를 먼저 실행한 뒤 디자인 문맥 인터뷰' "$HTML_FILE"
+grep -q 'Ouroboros.*design-context' "$HTML_FILE"
+grep -q 'design intent seed' "$HTML_FILE"
 grep -q '각 단계가 끝나면 다음에 쓸 Mansu 스킬을 마지막에 안내합니다' "$HTML_FILE"
 grep -q '정의가 끝나면 다음 단계로 <code>mansu-2plan</code>을 안내합니다' "$HTML_FILE"
 grep -q '계획이 끝나면 다음 단계로 <code>mansu-3build</code>를 안내합니다' "$HTML_FILE"
@@ -128,7 +143,32 @@ grep -q '구현이 끝나면 다음 단계로 <code>mansu-4verify</code>를 안�
 grep -q '리뷰가 통과하면 다음 단계로 <code>mansu-6ship</code>을 안내합니다' "$HTML_FILE"
 grep -q '<table class="lifecycle-table" aria-label="Mansu development lifecycle explanation">' "$HTML_FILE"
 grep -q '<td><code>Define</code></td>' "$HTML_FILE"
-grep -q '<td>무엇을 만들지 정하는 단계입니다. 해결하려는 문제, 필요한 기능, 만들 범위, 완료 기준을 명확히 합니다.</td>' "$HTML_FILE"
+grep -q '해결하려는 문제' "$HTML_FILE"
+grep -q '후보 기능' "$HTML_FILE"
+grep -q '우선순위 신호' "$HTML_FILE"
+grep -q '완료 기준' "$HTML_FILE"
+grep -q '디자인 문맥 인터뷰' "$HTML_FILE"
+grep -q 'DESIGN.md' "$HTML_FILE"
+grep -q 'design direction' "$HTML_FILE"
+grep -q 'artifact' "$HTML_FILE"
+grep -q 'Feature Priority / MVP Cut' "$HTML_FILE"
+grep -q 'Project Phase Roadmap' "$HTML_FILE"
+grep -q 'Phase Plan' "$HTML_FILE"
+grep -q 'Slice' "$HTML_FILE"
+grep -q 'Quick Plan' "$HTML_FILE"
+grep -q 'Standard Plan' "$HTML_FILE"
+grep -q 'Heavy Plan' "$HTML_FILE"
+grep -q '사용자가 가리킨 구체 경로' "$HTML_FILE"
+grep -q '<code>PLAN.md</code>' "$HTML_FILE"
+grep -q '<code>Plan.md</code>' "$HTML_FILE"
+grep -Fq '<code>.codex/plans/*.md</code>' "$HTML_FILE"
+grep -Fq '<code>.omo/plans/*.md</code>' "$HTML_FILE"
+grep -q '파일명이 다르다는 이유만으로 계획이 없다고 말하지 않습니다' "$HTML_FILE"
+assert_not_contains_regex 'Heavy Plan[^<.\n]{0,200}ulw-plan|ulw-plan[^<.\n]{0,200}Heavy Plan|default[^<.\n]{0,120}ulw-plan|ulw-plan[^<.\n]{0,120}default' "$HTML_FILE"
+grep -q 'feature priority' "$HTML_FILE"
+grep -q 'MVP/later' "$HTML_FILE"
+grep -q '대략적인 outline만으로는 완료되지 않습니다' "$HTML_FILE"
+grep -q 'phase별 exit criteria' "$HTML_FILE"
 grep -q '<td>만든 기능이 의도한 대로 동작하는지 확인하는 단계입니다. 버튼, 입력값, 저장, 조회, 오류 상황 등을 Given/When/Then 형태와 실제 증거로 확인합니다. 통과하면 기본적으로 Review로 이어집니다.</td>' "$HTML_FILE"
 grep -q '원인 불명 문제가 생기면 <code>mansu-debug</code>로 잠시 멈춰 원인을 먼저 찾습니다' "$HTML_FILE"
 grep -q 'class="phase is-interrupt" data-detail="debug" role="button" tabindex="0" aria-pressed="false"' "$HTML_FILE"
@@ -145,6 +185,11 @@ grep -q '<pre>mansu-4verify</pre>' "$HTML_FILE"
 grep -q '<pre>mansu-5review</pre>' "$HTML_FILE"
 grep -q '<pre>mansu-6ship</pre>' "$HTML_FILE"
 grep -q 'mansu-1define.*mansu-2plan.*mansu-3build.*mansu-4verify.*mansu-5review.*mansu-6ship' "$HTML_FILE"
+grep -q 'Define은 Ouroboros-first입니다' "$HTML_FILE"
+grep -q 'gstack-design-consultation' "$HTML_FILE"
+grep -q 'DESIGN.md.*design direction' "$HTML_FILE"
+grep -q 'Project Phase Roadmap' "$HTML_FILE"
+grep -q 'Phase Plan' "$HTML_FILE"
 grep -q 'BDD-style Given/When/Then, 테스트, 브라우저, 런타임, QA evidence' "$HTML_FILE"
 grep -q '<pre>mansu-9setup</pre>' "$HTML_FILE"
 ! grep -q 'copy-paste prompt' "$HTML_FILE"
@@ -181,6 +226,9 @@ grep -q 'data-agent-rule="manual-is-maintenance-artifact"' "$HTML_FILE"
 grep -A2 'data-agent-rule="route-source-skills"' "$HTML_FILE" | grep -q '직접 흉내 내지 말고 연결한다'
 grep -A2 'data-agent-rule="runtime-aware-setup"' "$HTML_FILE" | grep -q '설치는 실행 환경에 맞춘다'
 grep -A2 'data-agent-rule="project-start-before-code"' "$HTML_FILE" | grep -q '프로젝트 시작은 큰 설계부터'
+grep -A5 'data-agent-rule="project-start-before-code"' "$HTML_FILE" | grep -q '디자인 문맥 인터뷰'
+grep -A5 'data-agent-rule="project-start-before-code"' "$HTML_FILE" | grep -q 'design intent seed'
+grep -A5 'data-agent-rule="project-start-before-code"' "$HTML_FILE" | grep -q 'DESIGN.md'
 grep -A3 'data-agent-rule="total-before-implementation"' "$HTML_FILE" | grep -q '구현은 build에서 시작한다'
 grep -A2 'data-agent-rule="root-cause-before-fix"' "$HTML_FILE" | grep -q '버그는 원인 전 수정 금지'
 grep -A2 'data-agent-rule="user-language-report"' "$HTML_FILE" | grep -q '마지막 보고는 사용자 언어로'
@@ -243,7 +291,12 @@ grep -q 'id="panel-mansu-skill"' "$HTML_FILE"
 grep -q 'id="panel-agents"' "$HTML_FILE"
 grep -q 'id="panel-catalog"' "$HTML_FILE"
 grep -q '<h2>Mansu Skill</h2>' "$HTML_FILE"
-grep -q '직접 호출하는 스킬' "$HTML_FILE"
+grep -q '번호가 붙은 주요 직접 호출 스킬' "$HTML_FILE"
+grep -q '보조/호환 route' "$HTML_FILE"
+grep -q 'data-route-tier="support-compatibility"' "$HTML_FILE"
+grep -q 'active plan 우선순위' "$HTML_FILE"
+grep -q '사용자가 가리킨 구체 경로' "$HTML_FILE"
+grep -q '한 번에 하나만 active plan' "$HTML_FILE"
 grep -q 'data-mansu-detail="mansu-help"' "$HTML_FILE"
 grep -q 'id="mansu-0help"' "$HTML_FILE"
 grep -q 'id="mansu-1define"' "$HTML_FILE"

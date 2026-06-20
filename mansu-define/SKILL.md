@@ -39,6 +39,32 @@ Fallback definition without Ouroboros is allowed only after the setup/update
 path was attempted or explicitly declined, and it must be labeled as fallback.
 Do not silently replace Ouroboros interview with Mansu-owned questions.
 
+## Post-Ouroboros design-context gate
+
+After Ouroboros interview or cited existing definition evidence completes, check
+whether the scope includes user-facing UI, product experience, visible workflow,
+interaction design, brand/content surfaces, onboarding, dashboard, website, app,
+or other customer/user-facing behavior.
+
+If user-facing UI/product scope is present, route to a source-skill
+design-context interview before public `mansu-2plan`.
+
+The default installed route is `gstack-design-consultation`.
+
+Use `gstack-design-shotgun` only when the work needs multiple visible directions,
+Open Design only for approved artifact or prototype work, OMO research/deepsearch
+only when external design context is needed, and `gstack-plan-design-review` only
+for critique of an existing design direction.
+
+Define records a design intent seed and route evidence for handoff only:
+audience, product surface, desired feel, constraints, examples, risks, and the
+source-skill route used or blocked. DESIGN.md remains owned by mansu-2plan;
+Define must not create, rewrite, or claim ownership of `DESIGN.md`.
+
+Do not create a Mansu-owned design questionnaire. If design context is needed,
+use the source-skill design-context interview route and record only the design
+intent seed/handoff evidence.
+
 Skipping the Ouroboros interview is allowed only when current, repo-visible
 definition artifacts already exist, such as an Ouroboros Seed/Ledger or an
 equivalent source-of-truth definition, and the user is asking to continue from
@@ -48,8 +74,16 @@ proceeding.
 ## Required references
 
 - `mansu-operating-model/references/SOURCE_SKILL_COMPOSITION.md`
-- `mansu-operating-model/references/SOURCE_SKILL_CATALOG.md`
-- `mansu-operating-model/references/DOCUMENT_CREATION_ORDER.md`
+
+## Conditional references
+
+- Read `mansu-operating-model/references/SOURCE_SKILL_CATALOG.md` only when
+  the source route is ambiguous, missing, stale, newly added, or conflicts with
+  installed skills.
+- Read `mansu-operating-model/references/DOCUMENT_CREATION_ORDER.md` only when
+  Define must create, locate, or update artifacts such as `AGENTS.md`,
+  `CODING_RULES.md`, spec/TDR/DESIGN handoff notes, or other source-of-truth
+  docs.
 
 ## Source skill route
 
@@ -58,6 +92,8 @@ proceeding.
   definition.
 - Use addyosmani `interview-me`, `idea-refine`, and `spec-driven-development`
   for crisp clarification, requirements, and acceptance criteria.
+- Use gstack `gstack-design-consultation` after Ouroboros when user-facing
+  UI/product scope needs design-context interview before public `mansu-2plan`.
 - Use gstack `office-hours` or `plan-ceo-review` when product wedge, value,
   audience, or strategic direction is weak.
 
@@ -66,8 +102,11 @@ proceeding.
 Produce or update only the definition layer:
 
 - purpose, user, problem, success signal, non-goals, constraints
-- requirements and acceptance criteria
+- feature candidates, requirements, acceptance criteria, and priority signals
+  such as must-have, later, dependency, risk, user value, and uncertainty
 - source-of-truth notes or links to Ouroboros Seed/Ledger output
+- design intent seed and source design-context route evidence when user-facing
+  UI/product scope is present
 - `AGENTS.md` and `CODING_RULES.md` candidates when the project needs operating rules
 - handoff notes for public `mansu-2plan`
 

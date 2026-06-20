@@ -1,4 +1,4 @@
 interface:
   display_name: Mansu 3 Build
   short_description: Build the active phase through slices.
-  default_prompt: Use $mansu-3build as the primary numbered route backed by mansu-build. Read mansu-build/SKILL.md, implement only from a valid active phase plan, and if implementation is complete tell the user to use mansu-4verify next.
+  default_prompt: Use $mansu-3build as the primary numbered route backed by mansu-build. Read mansu-build/SKILL.md, then follow Project Phase Roadmap -> active Phase Plan -> slice table: read the linked Project Phase Roadmap first, use user-provided path first or role/marker discovery in PLAN.md, Plan.md, .codex/plans/*.md, .omo/plans/*.md, and linked planning docs to find the active Phase Plan, and implement only the active Phase Plan slice table. Do not implement from a Project Phase Roadmap alone. If implementation is complete tell the user to use mansu-4verify next.

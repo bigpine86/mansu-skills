@@ -92,7 +92,7 @@ skills own specialized execution.
 | Mansu phase | Internal order | Source route |
 | --- | --- | --- |
 | Define | Idea intake -> User/problem interview -> Requirements -> Acceptance criteria -> Source-of-truth seed | Ouroboros `interview`, `pm`, `seed`, `brownfield`; addyosmani `interview-me`, `idea-refine`, `spec-driven-development`; gstack `office-hours`, `plan-ceo-review` |
-| Plan | Requirements/Spec -> Architecture -> Design Direction -> Implementation Roadmap | addyosmani `spec-driven-development`, `planning-and-task-breakdown`, `api-and-interface-design`, `source-driven-development`; OMO `ulw-plan`; gstack `autoplan`, `plan-ceo-review`, `plan-eng-review`, `plan-devex-review` |
+| Plan | Requirements/Spec -> Feature Priority/MVP Cut -> Project Phase Roadmap -> active Phase Plan -> Slice table handoff | addyosmani `spec-driven-development`, `planning-and-task-breakdown`, `api-and-interface-design`, `source-driven-development`; gstack `autoplan`, `plan-ceo-review`, `plan-eng-review`, `plan-devex-review` |
 | Plan design gate | Reference discovery -> Design system/artifact -> Variant exploration -> Plan-stage design review -> Implementation handoff | OMO research/deepsearch when available; Open Design for callable artifacts; VoltAgent/awesome-design-md for `DESIGN.md`; gstack `design-consultation`, `design-shotgun`, `plan-design-review`, `design-html`; addyosmani `frontend-ui-engineering` |
 | Build | Context pack -> Contract/source verification -> Slice plan -> Implement -> Local validation -> Checkpoint | `mansu-tdd-total` as the internal build engine under `mansu-build`; OMO `start-work`, `programming`, `ulw-loop`, `lsp` as execution habits; addyosmani `context-engineering`, `source-driven-development`, `incremental-implementation`, `test-driven-development`; gstack `guard`, `careful`, `checkpoint` |
 | Verify | Test evidence -> Runtime/browser evidence -> QA report -> Security/perf checks when relevant -> Review handoff | addyosmani `test-driven-development`, `browser-testing-with-devtools`, `security-and-hardening`, `performance-optimization`; gstack `qa-only`, `qa`, `browse`, `health`, `cso`, `benchmark`; Ouroboros `qa`, `evaluate`; OMO `review-work` |
@@ -129,6 +129,9 @@ does not replace the source-skill composition in `SOURCE_SKILL_COMPOSITION.md`.
 `PLAN.md` may supply the current phase goal and slice table, but it is not
 canonical Mansu doctrine. Generated `.omo` plans may explain a task-local
 strategy, but durable phase rules belong here or in the phase `SKILL.md` file.
+
+The official Mansu planning hierarchy is `Feature Priority / MVP Cut -> Project Phase Roadmap -> Phase Plan -> Slice`. The Project Phase Roadmap owns big phases,
+phase order, and exit criteria. The active Phase Plan owns one current phase's detailed approach and ordered Slice table. Build reads the Project Phase Roadmap first to understand phase context, then executes only the active Phase Plan's Slices.
 
 ## Router Loop
 

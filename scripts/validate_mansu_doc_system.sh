@@ -24,6 +24,21 @@ contains() {
   grep -Eq "$pattern" "$file"
 }
 
+forbid() {
+  local file="$1"
+  local pattern="$2"
+  ! grep -Eiq "$pattern" "$file"
+}
+
+require_public_plan_discovery() {
+  local file="$1"
+  local label="$2"
+  contains "$file" 'PLAN\.md' || fail "$label should mention PLAN.md as an active-plan candidate"
+  contains "$file" 'Plan\.md' || fail "$label should mention Plan.md as an active-plan candidate"
+  contains "$file" '\.codex/plans/\*\.md' || fail "$label should mention .codex plan candidates"
+  contains "$file" '\.omo/plans/\*\.md' || fail "$label should mention .omo plan candidates"
+}
+
 [ -f "$README_FILE" ] || fail "missing README.md"
 [ -f "$README_KO_FILE" ] || fail "missing README.ko.md"
 [ -f "$PHILOSOPHY_FILE" ] || fail "missing MANSU_PHILOSOPHY.md"
@@ -68,6 +83,24 @@ contains "$README_FILE" 'mansu-ship-release' || fail 'README should mention mans
 contains "$README_FILE" '^## Big Picture$' || fail 'README should include big picture model'
 contains "$README_FILE" 'Lifecycle phase spine' || fail 'README should mention lifecycle phase spine layer'
 contains "$README_FILE" 'mansu-1define.*mansu-2plan.*mansu-3build.*mansu-4verify.*mansu-5review.*mansu-6ship' || fail 'README should keep numbered public lifecycle spine'
+contains "$README_FILE" 'Ouroboros.*design-context' || fail 'README should explain Ouroboros-first design-context handoff'
+contains "$README_FILE" 'design intent seed' || fail 'README should mention Define design intent seed'
+contains "$README_FILE" 'Plan owns' || fail 'README should identify Plan ownership'
+contains "$README_FILE" 'feature priority' || fail 'README should mention feature priority'
+contains "$README_FILE" 'DESIGN\.md' || fail 'README should mention Plan-created DESIGN.md'
+contains "$README_FILE" 'feature inventory' || fail 'README should mention feature inventory'
+contains "$README_FILE" 'MVP/later' || fail 'README should mention MVP/later split'
+contains "$README_FILE" 'priority rationale' || fail 'README should mention priority rationale'
+contains "$README_FILE" 'Feature Priority / MVP Cut' || fail 'README should document Feature Priority / MVP Cut'
+contains "$README_FILE" 'Project Phase Roadmap' || fail 'README should document Project Phase Roadmap'
+contains "$README_FILE" 'Phase Plan' || fail 'README should document Phase Plan'
+contains "$README_FILE" 'Slice' || fail 'README should document Slice'
+contains "$README_FILE" 'Quick Plan' || fail 'README should document Quick Plan'
+contains "$README_FILE" 'Standard Plan' || fail 'README should document Standard Plan'
+contains "$README_FILE" 'Heavy Plan' || fail 'README should document Heavy Plan'
+forbid "$README_FILE" 'Heavy Plan[^.\n]{0,200}ulw-plan|ulw-plan[^.\n]{0,200}Heavy Plan|default[^.\n]{0,120}ulw-plan|ulw-plan[^.\n]{0,120}default' || fail 'README should not make ulw-plan a default Plan route'
+contains "$README_FILE" 'rough outline' || fail 'README should reject shallow plan completion'
+contains "$README_KO_FILE" 'outline' || fail 'Korean README should reject shallow plan completion'
 contains "$README_FILE" 'BDD-style Given/When/Then' || fail 'README should mention BDD-style Verify evidence'
 contains "$README_FILE" 'active phase evidence is missing, route back to `mansu-1define` / `mansu-2plan`' || fail 'README should mention tdd-total numbered fallback'
 contains "$README_FILE" 'mansu-project-start.*compatibility-only alias' || fail 'README should keep mansu-project-start as compatibility-only'
@@ -88,6 +121,20 @@ contains "$README_KO_FILE" '\[English\]\(\./README\.md\)' || fail 'Korean README
 contains "$README_KO_FILE" '최고의 자동화는 모든 것을 직접 만드는 데서 오지 않습니다' || fail 'Korean README should preserve Mansu philosophy'
 contains "$README_KO_FILE" '대표 route이지 고정 의존성이 아닙니다' || fail 'Korean README should keep source routes representative'
 contains "$README_KO_FILE" 'mansu-1define.*mansu-2plan.*mansu-3build.*mansu-4verify.*mansu-5review.*mansu-6ship' || fail 'Korean README should keep numbered public lifecycle spine'
+contains "$README_KO_FILE" '디자인.*인터뷰' || fail 'Korean README should explain design-context interview'
+contains "$README_KO_FILE" 'design intent seed' || fail 'Korean README should mention Define design intent seed'
+contains "$README_KO_FILE" '기능 목록' || fail 'Korean README should mention feature list'
+contains "$README_KO_FILE" 'MVP/later' || fail 'Korean README should mention MVP/later split'
+contains "$README_KO_FILE" '우선순위 근거' || fail 'Korean README should mention priority rationale'
+contains "$README_KO_FILE" 'Feature Priority / MVP Cut' || fail 'Korean README should document Feature Priority / MVP Cut'
+contains "$README_KO_FILE" 'Project Phase Roadmap' || fail 'Korean README should document Project Phase Roadmap'
+contains "$README_KO_FILE" 'Phase Plan' || fail 'Korean README should document Phase Plan'
+contains "$README_KO_FILE" 'Slice' || fail 'Korean README should document Slice'
+contains "$README_KO_FILE" 'Quick Plan' || fail 'Korean README should document Quick Plan'
+contains "$README_KO_FILE" 'Standard Plan' || fail 'Korean README should document Standard Plan'
+contains "$README_KO_FILE" 'Heavy Plan' || fail 'Korean README should document Heavy Plan'
+forbid "$README_KO_FILE" 'Heavy Plan[^.\n]{0,200}ulw-plan|ulw-plan[^.\n]{0,200}Heavy Plan|default[^.\n]{0,120}ulw-plan|ulw-plan[^.\n]{0,120}default' || fail 'Korean README should not make ulw-plan a default Plan route'
+contains "$README_KO_FILE" 'DESIGN\.md' || fail 'Korean README should mention Plan-created DESIGN.md'
 contains "$README_KO_FILE" 'BDD-style Given/When/Then' || fail 'Korean README should mention BDD-style Verify evidence'
 contains "$README_KO_FILE" 'active phase 증거가 없으면 `mansu-1define` / `mansu-2plan`으로 되돌립니다' || fail 'Korean README should mention tdd-total numbered fallback'
 contains "$README_KO_FILE" 'mansu-project-start.*compatibility-only alias|mansu-project-start.*compatibility alias' || fail 'Korean README should keep mansu-project-start as compatibility'
@@ -158,6 +205,26 @@ for file in "${omo_public_files[@]}"; do
     fail ".omo plans must not be presented as canonical/public runtime source in public docs: $file"
   fi
 done
+
+contains "$ROOT_DIR/docs/mansu-manual.html" 'Ouroboros.*design-context' || fail 'manual should explain Ouroboros-first design-context handoff'
+contains "$ROOT_DIR/docs/mansu-manual.html" '디자인.*인터뷰' || fail 'manual should include Korean design interview guidance'
+contains "$ROOT_DIR/docs/mansu-manual.html" 'design intent seed' || fail 'manual should mention Define design intent seed'
+contains "$ROOT_DIR/docs/mansu-manual.html" 'DESIGN\.md' || fail 'manual should mention Plan-created DESIGN.md'
+contains "$ROOT_DIR/docs/mansu-manual.html" 'Feature Priority / MVP Cut' || fail 'manual should document Feature Priority / MVP Cut'
+contains "$ROOT_DIR/docs/mansu-manual.html" 'Project Phase Roadmap' || fail 'manual should document Project Phase Roadmap'
+contains "$ROOT_DIR/docs/mansu-manual.html" 'Phase Plan' || fail 'manual should document Phase Plan'
+contains "$ROOT_DIR/docs/mansu-manual.html" 'Slice' || fail 'manual should document Slice'
+contains "$ROOT_DIR/docs/mansu-manual.html" 'Quick Plan' || fail 'manual should document Quick Plan'
+contains "$ROOT_DIR/docs/mansu-manual.html" 'Standard Plan' || fail 'manual should document Standard Plan'
+contains "$ROOT_DIR/docs/mansu-manual.html" 'Heavy Plan' || fail 'manual should document Heavy Plan'
+require_public_plan_discovery "$ROOT_DIR/docs/mansu-manual.html" 'manual'
+contains "$ROOT_DIR/docs/mansu-manual.html" '파일명이 다르다는 이유만으로 계획이 없다고 말하지 않습니다' || fail 'manual should not reject active plans only because the filename differs'
+forbid "$ROOT_DIR/docs/mansu-manual.html" 'Heavy Plan[^<.\n]{0,200}ulw-plan|ulw-plan[^<.\n]{0,200}Heavy Plan|default[^<.\n]{0,120}ulw-plan|ulw-plan[^<.\n]{0,120}default' || fail 'manual should not make ulw-plan a default Plan route'
+contains "$ROOT_DIR/mansu-help/SKILL.md" 'Ouroboros first' || fail 'mansu-help should route Define through Ouroboros first'
+contains "$ROOT_DIR/mansu-help/SKILL.md" 'design-context interview' || fail 'mansu-help should route UI scope to design-context interview'
+contains "$ROOT_DIR/mansu-help/SKILL.md" 'design intent seed' || fail 'mansu-help should mention Define design intent seed'
+contains "$ROOT_DIR/mansu-help/SKILL.md" 'DESIGN\.md' || fail 'mansu-help should keep DESIGN.md in Plan handoff'
+require_public_plan_discovery "$ROOT_DIR/mansu-help/SKILL.md" 'mansu-help'
 
 contains "$ROOT_DIR/mansu-plan/SKILL.md" '\.omo/plans/\*\.md' || fail 'mansu-plan should allow explicit OMO active plan paths'
 contains "$ROOT_DIR/mansu-build/SKILL.md" '\.omo/plans/\*\.md' || fail 'mansu-build should allow explicit OMO active plan paths'

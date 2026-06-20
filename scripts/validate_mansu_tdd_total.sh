@@ -4,9 +4,49 @@ set -euo pipefail
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 FILE="$ROOT_DIR/mansu-tdd-total/SKILL.md"
 OPENAI_YAML="$ROOT_DIR/mansu-tdd-total/agents/openai.yaml"
+PLAN="$ROOT_DIR/mansu-plan/SKILL.md"
+PLAN_OPENAI="$ROOT_DIR/mansu-plan/agents/openai.yaml"
+
+fail() {
+  echo "$1" >&2
+  exit 1
+}
+
+require_contains() {
+  local file="$1"
+  local pattern="$2"
+  local message="$3"
+  grep -Eq "$pattern" "$file" || fail "$message"
+}
+
+require_terms() {
+  local file="$1"
+  local message="$2"
+  shift 2
+  perl -0ne '
+    BEGIN {
+      our @terms = @ARGV;
+      @ARGV = ();
+    }
+    my $text = lc($_);
+    for my $term (@terms) {
+      exit 1 if index($text, lc($term)) < 0;
+    }
+  ' "$@" < "$file" || fail "$message"
+}
+
+forbid_default_ulw_plan_route() {
+  local file="$1"
+  local message="$2"
+  if perl -0ne 'exit(/(?:Mansu\s+Plan|Quick\s+Plan|Standard\s+Plan|Heavy\s+Plan|Plan)[^\n.]{0,200}(?:default[^\n.]{0,80}`ulw-plan`|`ulw-plan`[^\n.]{0,80}default)/i ? 0 : 1)' "$file"; then
+    fail "$message"
+  fi
+}
 
 test -f "$FILE"
 test -f "$OPENAI_YAML"
+test -f "$PLAN"
+test -f "$PLAN_OPENAI"
 
 grep -q '^## Core promise$' "$FILE"
 grep -q '^## Shared invariants$' "$FILE"
@@ -31,19 +71,28 @@ grep -q 'mansu-tdd-lite' "$FILE"
 grep -q 'mansu-tdd-strict' "$FILE"
 grep -q 'PLAN.md' "$FILE"
 grep -q '.omo/plans/\*.md' "$FILE"
-grep -q 'concrete plan path the user just' "$FILE"
-grep -q 'project roadmap or phase order artifact' "$FILE"
-grep -q 'does not name an active phase plus its roadmap/phase-order artifact' "$FILE"
+grep -q 'user-provided path first' "$FILE"
+grep -q 'role/marker discovery' "$FILE"
+require_terms "$OPENAI_YAML" 'tdd-total prompt lost active plan discovery contract' 'active Phase Plan' 'role/marker discovery'
+require_terms "$PLAN" 'mansu-plan lost plan tier contract' 'Quick Plan' 'Standard Plan' 'Heavy Plan'
+require_terms "$PLAN_OPENAI" 'mansu-plan prompt lost plan tier contract' 'Quick Plan' 'Standard Plan' 'Heavy Plan'
+forbid_default_ulw_plan_route "$PLAN" 'mansu-plan reintroduced ulw-plan as a default Plan route'
+forbid_default_ulw_plan_route "$PLAN_OPENAI" 'mansu-plan prompt reintroduced ulw-plan as a default Plan route'
+grep -q 'Project Phase Roadmap' "$FILE"
+grep -q 'active Phase Plan' "$FILE"
+grep -q 'slice table' "$FILE"
+require_contains "$FILE" 'active phase' 'tdd-total must identify active phase contract language'
+require_contains "$FILE" 'Project Phase Roadmap' 'tdd-total must name Project Phase Roadmap contract'
 grep -q 'Route back to public `mansu-1define` / `mansu-2plan`' "$FILE"
 ! grep -q 'Route back to `mansu-project-start`' "$FILE"
-grep -q 'contains the whole project roadmap instead of one active' "$FILE"
-grep -q 'inspect it before rejecting it' "$FILE"
-grep -q 'use that file as' "$FILE"
-grep -q 'find the active plan path first' "$OPENAI_YAML"
-grep -q '.omo/plans/\*.md' "$OPENAI_YAML"
-grep -q 'do not claim no plan just because the filename differs' "$OPENAI_YAML"
-grep -q 'roadmap/phase-order artifact' "$OPENAI_YAML"
-grep -Fq 'route back to public mansu-1define / mansu-2plan instead of implementing' "$OPENAI_YAML"
+require_contains "$FILE" 'Project Phase Roadmap alone' 'tdd-total must reject roadmap-only execution'
+require_contains "$FILE" 'marked active Phase Plan' 'tdd-total must allow marked active Phase Plan discovery'
+require_contains "$FILE" 'execution-ready slice table' 'tdd-total must require execution-ready slice table'
+require_terms "$OPENAI_YAML" 'tdd-total prompt lost explicit active-plan path priority' 'active Phase Plan' 'explicit' 'user-provided path'
+require_terms "$OPENAI_YAML" 'tdd-total prompt lost OMO plan path discovery' '.omo/plans/*.md'
+require_terms "$OPENAI_YAML" 'tdd-total prompt lost non-PLAN.md handling' 'PLAN.md' 'candidate' 'not a requirement' 'filename differs'
+require_terms "$OPENAI_YAML" 'tdd-total prompt lost phase hierarchy contract' 'Project Phase Roadmap' 'active Phase Plan' 'slice table'
+require_terms "$OPENAI_YAML" 'tdd-total prompt lost roadmap-only rejection contract' 'Project Phase Roadmap alone' 'route back' 'mansu-1define' 'mansu-2plan'
 ! grep -Fq 'route back to $mansu-project-start instead of implementing' "$OPENAI_YAML"
 grep -q '개발일지.md' "$FILE"
 grep -q 'per-slice mode' "$FILE"
@@ -105,7 +154,8 @@ grep -q 'reason and fallback critique when using the fallback' "$FILE"
 grep -q 'real critic agents, helper sessions, or external critique tools' "$FILE"
 grep -q 'historical agent names or tools are unavailable' "$FILE"
 grep -q 'strict prerequisites are unavailable in the current runtime' "$FILE"
-grep -q 'record the mapping in `PLAN.md`' "$FILE"
+grep -q 'record the mapping in the active Phase Plan' "$FILE"
+grep -q 'PLAN.md` is only one common' "$FILE"
 grep -q 'Do not lock the execution-ready plan or start implementation while an expected critic is still pending' "$FILE"
 grep -q 'Do not declare a critic unavailable merely because it is slower' "$FILE"
 grep -q 'If a critic fails or times out' "$FILE"
@@ -154,7 +204,7 @@ grep -q '\[NS-FINAL-QA\]' "$FILE"
 grep -q '\[NS-FINAL-REVIEW\]' "$FILE"
 grep -q '\[NS-FINAL-HEALTH\]' "$FILE"
 grep -q '\[NS-RISKS\]' "$FILE"
-grep -q '`PLAN.md` contains the Planner / Critics / Synthesizer role mapping' "$FILE"
+grep -q 'The active Phase Plan contains the Planner / Critics / Synthesizer role mapping' "$FILE"
 grep -q 'If real critic agents were not used for non-trivial work, the fallback reason' "$FILE"
 grep -q 'Every slice has mode, rationale, validation path, Oh My execution mode, gstack' "$FILE"
 grep -q 'Every closed slice has review, QA, checkpoint/state handoff, and commit status' "$FILE"
@@ -184,15 +234,15 @@ grep -q 'create a final release/docs commit only when final docs' "$FILE"
 grep -q 'if per-slice commits were skipped or deferred, create the final implementation commit' "$FILE"
 grep -q 'what could not be verified, remaining risks, and any follow-up checks needed' "$FILE"
 
-grep -q 'short_description: "End-to-end TDD orchestrator that plans, slices, executes, and verifies"' "$OPENAI_YAML"
-grep -q 'default_prompt: "Use \$mansu-tdd-total end to end' "$OPENAI_YAML"
-grep -q 'attempt real critic agents for non-trivial work when safely available' "$OPENAI_YAML"
-grep -q 'map the required Oh My modes ralph and tdd plus core gstack gates' "$OPENAI_YAML"
-grep -q 'gstack-review, gstack-qa-only/gstack-browse, gstack-qa, gstack-context-save, gstack-context-restore, and gstack-health' "$OPENAI_YAML"
-grep -q 'mark strict-prerequisite-missing slices blocked instead of downgrading them' "$OPENAI_YAML"
-grep -q 'run every unblocked slice sequentially through the mapped gates plus commit' "$OPENAI_YAML"
-grep -q 'project-level verification, final commit accounting, remaining risks, follow-up checks, and the no-skip completion checklist' "$OPENAI_YAML"
-grep -q 'Do not claim completion if any required evidence is missing' "$OPENAI_YAML"
+require_terms "$OPENAI_YAML" 'tdd-total OpenAI metadata lost orchestration role' 'short_description' 'TDD' 'plans' 'slices' 'verifies'
+require_terms "$OPENAI_YAML" 'tdd-total OpenAI prompt lost end-to-end invocation' 'default_prompt' '$mansu-tdd-total' 'end to end'
+require_terms "$OPENAI_YAML" 'tdd-total OpenAI prompt lost critic gate contract' 'critic' 'non-trivial' 'safely available'
+require_terms "$OPENAI_YAML" 'tdd-total OpenAI prompt lost mode mapping contract' 'ralph' 'tdd' 'gstack'
+require_terms "$OPENAI_YAML" 'tdd-total OpenAI prompt lost core gstack gate contract' 'gstack-review' 'gstack-qa-only' 'gstack-browse' 'gstack-qa' 'gstack-context-save' 'gstack-context-restore' 'gstack-health'
+require_terms "$OPENAI_YAML" 'tdd-total OpenAI prompt lost strict prerequisite contract' 'strict-prerequisite-missing' 'blocked' 'downgrading'
+require_terms "$OPENAI_YAML" 'tdd-total OpenAI prompt lost sequential slice gate contract' 'unblocked slice' 'sequential' 'mapped gates' 'commit'
+require_terms "$OPENAI_YAML" 'tdd-total OpenAI prompt lost closeout evidence contract' 'project-level verification' 'final commit accounting' 'remaining risks' 'follow-up checks' 'no-skip'
+require_terms "$OPENAI_YAML" 'tdd-total OpenAI prompt lost incomplete-evidence guard' 'completion' 'required evidence' 'missing'
 
 if grep -q 'Hermes/OpenCode orchestration' "$FILE" || grep -q 'Hermes + OpenCode session' "$FILE"; then
   echo "mansu-tdd-total should stay runtime-neutral" >&2

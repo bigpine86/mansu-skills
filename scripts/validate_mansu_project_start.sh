@@ -5,6 +5,88 @@ ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 FILE="$ROOT_DIR/mansu-project-start/SKILL.md"
 OPENAI_YAML="$ROOT_DIR/mansu-project-start/agents/openai.yaml"
 
+require_terms() {
+  local file="$1"
+  local message="$2"
+  shift 2
+  perl -0ne '
+    BEGIN {
+      our @terms = @ARGV;
+      @ARGV = ();
+    }
+    my $text = lc($_);
+    for my $term (@terms) {
+      exit 1 if index($text, lc($term)) < 0;
+    }
+  ' "$@" < "$file" || {
+    echo "FAIL: $message" >&2
+    exit 1
+  }
+}
+
+require_ordered_terms() {
+  local file="$1"
+  local message="$2"
+  shift 2
+  perl -0ne '
+    BEGIN {
+      our @terms = @ARGV;
+      @ARGV = ();
+    }
+    my $pos = 0;
+    for my $term (@terms) {
+      my $idx = index(lc($_), lc($term), $pos);
+      exit 1 if $idx < 0;
+      $pos = $idx + length($term);
+    }
+  ' "$@" < "$file" || {
+    echo "FAIL: $message" >&2
+    exit 1
+  }
+}
+
+forbid_terms() {
+  local file="$1"
+  local message="$2"
+  shift 2
+  perl -0ne '
+    BEGIN {
+      our @terms = @ARGV;
+      @ARGV = ();
+    }
+    my $text = lc($_);
+    for my $term (@terms) {
+      exit 0 if index($text, lc($term)) < 0;
+    }
+    exit 1;
+  ' "$@" < "$file" || {
+    echo "FAIL: $message" >&2
+    exit 1
+  }
+}
+
+forbid_ordered_terms() {
+  local file="$1"
+  local message="$2"
+  shift 2
+  perl -0ne '
+    BEGIN {
+      our @terms = @ARGV;
+      @ARGV = ();
+    }
+    my $pos = 0;
+    for my $term (@terms) {
+      my $idx = index(lc($_), lc($term), $pos);
+      exit 0 if $idx < 0;
+      $pos = $idx + length($term);
+    }
+    exit 1;
+  ' "$@" < "$file" || {
+    echo "FAIL: $message" >&2
+    exit 1
+  }
+}
+
 test -f "$FILE"
 test -f "$OPENAI_YAML"
 
@@ -201,34 +283,30 @@ grep -q 'mansu-tdd-total' "$FILE"
 grep -q '^interface:$' "$OPENAI_YAML"
 grep -q 'display_name: "Mansu Project Start"' "$OPENAI_YAML"
 grep -q 'short_description: "Legacy/specialized compatibility route"' "$OPENAI_YAML"
-grep -q 'default_prompt: "Use \$mansu-project-start' "$OPENAI_YAML"
-grep -q 'only as a legacy/specialized compatibility route' "$OPENAI_YAML"
-grep -q 'For normal use, including new starts, vague ideas, or broad feature definition, prefer \$mansu-1define, then \$mansu-2plan' "$OPENAI_YAML"
-grep -q 'older workflow depends on that callable name' "$OPENAI_YAML"
-grep -q 'When this compatibility route is used, run \$mansu-project-start as a thin project-start orchestrator' "$OPENAI_YAML"
-! grep -q 'When this compatibility route is used, Use \$mansu-project-start' "$OPENAI_YAML"
-! grep -q 'Zero-to-PLAN project kickoff' "$OPENAI_YAML"
-! grep -q 'For normal discovery, new starts, vague ideas, or broad feature definition' "$OPENAI_YAML"
-! grep -q 'for a new or fuzzy project' "$OPENAI_YAML"
-! grep -q 'Use \$mansu-project-start as a thin project-start orchestrator: for a new or fuzzy project' "$OPENAI_YAML"
-grep -q 'thin project-start orchestrator' "$OPENAI_YAML"
-grep -q 'check `ooo` / `ouroboros` first' "$OPENAI_YAML"
-grep -q 'route early definition to `ouroboros init start` / `ouroboros-interview`, PM, Seed, or brownfield' "$OPENAI_YAML"
-grep -q 'Open Design as a callable design-artifact route when installed/approved' "$OPENAI_YAML"
-grep -q 'VoltAgent/awesome-design-md as DESIGN.md reference-only input' "$OPENAI_YAML"
-grep -q 'avoid duplicating selected source logic' "$OPENAI_YAML"
-grep -q 'for user-facing UI, choose a design source route before phase roadmap planning' "$OPENAI_YAML"
-grep -q 'if UI is in scope but no design route was selected' "$OPENAI_YAML"
-grep -q 'Ouroboros skipped reason' "$OPENAI_YAML"
-grep -q 'satisfy the minimum gate before handoff' "$OPENAI_YAML"
-grep -q 'purpose, user/problem, evidence, assumptions, direction, order, and execution bridge' "$OPENAI_YAML"
-grep -q 'source artifacts' "$OPENAI_YAML"
-grep -q 'keep source artifacts, research, spec, TDR, DESIGN.md/design direction, and project roadmap outside PLAN.md' "$OPENAI_YAML"
-grep -q 'before calling \$mansu-tdd-total, create or update a repo-visible phase roadmap' "$OPENAI_YAML"
-grep -q 'exactly one active phase' "$OPENAI_YAML"
-grep -q 'derive the current phase execution-ready PLAN.md from that active phase only' "$OPENAI_YAML"
-grep -q 'Implementation handoff: blocked' "$OPENAI_YAML"
-grep -q 'ordered slices, validation path, gate mapping, and mansu-tdd-total mode hints' "$OPENAI_YAML"
-grep -q 'hand that phase to \$mansu-tdd-total for slice-level planning, implementation, review, QA, and checkpoint' "$OPENAI_YAML"
+require_terms "$OPENAI_YAML" 'project-start OpenAI prompt lost legacy compatibility route contract' '$mansu-project-start' 'legacy' 'specialized' 'compatibility route'
+require_ordered_terms "$OPENAI_YAML" 'project-start OpenAI prompt lost normal-use public route order' 'normal use' 'new starts' '$mansu-1define' '$mansu-2plan'
+require_terms "$OPENAI_YAML" 'project-start OpenAI prompt lost older workflow compatibility condition' 'older workflow' 'callable name'
+require_terms "$OPENAI_YAML" 'project-start OpenAI prompt lost thin orchestrator contract' '$mansu-project-start' 'thin' 'project-start' 'orchestrator'
+forbid_ordered_terms "$OPENAI_YAML" 'project-start OpenAI prompt reintroduced compatibility route capitalization regression' 'When this compatibility route' 'Use $mansu-project-start'
+forbid_terms "$OPENAI_YAML" 'project-start OpenAI prompt reintroduced Zero-to-PLAN positioning' 'Zero-to-PLAN' 'project kickoff'
+forbid_terms "$OPENAI_YAML" 'project-start OpenAI prompt reintroduced normal discovery legacy route' 'normal discovery' 'vague ideas' 'broad feature definition'
+forbid_terms "$OPENAI_YAML" 'project-start OpenAI prompt reintroduced fuzzy-project default route' 'new or fuzzy project' '$mansu-project-start'
+require_terms "$OPENAI_YAML" 'project-start OpenAI prompt lost Ouroboros availability check' 'check' 'ooo' 'ouroboros' 'first'
+require_terms "$OPENAI_YAML" 'project-start OpenAI prompt lost early definition source routes' 'route early definition' 'ouroboros init start' 'ouroboros-interview' 'PM' 'Seed' 'brownfield'
+require_terms "$OPENAI_YAML" 'project-start OpenAI prompt lost design artifact route distinction' 'Open Design' 'callable' 'design-artifact' 'installed' 'approved'
+require_terms "$OPENAI_YAML" 'project-start OpenAI prompt lost DESIGN.md reference route distinction' 'VoltAgent/awesome-design-md' 'DESIGN.md' 'reference-only'
+require_terms "$OPENAI_YAML" 'project-start OpenAI prompt lost source route non-duplication boundary' 'avoid' 'duplicating' 'selected source logic'
+require_terms "$OPENAI_YAML" 'project-start OpenAI prompt lost UI design route gate' 'user-facing UI' 'design source route' 'phase roadmap planning'
+require_terms "$OPENAI_YAML" 'project-start OpenAI prompt lost missing design route block' 'UI' 'scope' 'no design route' 'blocked'
+require_terms "$OPENAI_YAML" 'project-start OpenAI prompt lost Ouroboros skipped reason report field' 'Ouroboros' 'skipped reason'
+require_terms "$OPENAI_YAML" 'project-start OpenAI prompt lost minimum gate before handoff' 'minimum gate' 'handoff'
+require_terms "$OPENAI_YAML" 'project-start OpenAI prompt lost minimum gate dimensions' 'purpose' 'user/problem' 'evidence' 'assumptions' 'direction' 'order' 'execution bridge'
+require_terms "$OPENAI_YAML" 'project-start OpenAI prompt lost source artifact boundary' 'source artifacts' 'research' 'spec' 'TDR' 'DESIGN.md' 'design direction' 'project roadmap' 'outside PLAN.md'
+require_terms "$OPENAI_YAML" 'project-start OpenAI prompt lost phase roadmap preflight' '$mansu-tdd-total' 'repo-visible' 'phase roadmap'
+require_terms "$OPENAI_YAML" 'project-start OpenAI prompt lost active phase cardinality' 'exactly one' 'active phase'
+require_terms "$OPENAI_YAML" 'project-start OpenAI prompt lost current phase execution plan derivation' 'current phase' 'execution-ready' 'PLAN.md' 'active phase'
+require_terms "$OPENAI_YAML" 'project-start OpenAI prompt lost blocked implementation handoff report' 'Implementation handoff' 'blocked'
+require_terms "$OPENAI_YAML" 'project-start OpenAI prompt lost active phase slice table fields' 'ordered slices' 'validation path' 'gate mapping' 'mansu-tdd-total' 'mode hints'
+require_terms "$OPENAI_YAML" 'project-start OpenAI prompt lost tdd-total phase handoff boundary' '$mansu-tdd-total' 'slice-level planning' 'implementation' 'review' 'QA' 'checkpoint'
 
 echo "mansu-project-start structure OK"

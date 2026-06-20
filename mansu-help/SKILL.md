@@ -74,6 +74,21 @@ Choose the smallest safe route that fits.
 If none fits, say the closest route and what extra information would change the
 recommendation.
 
+For new product, app, repo, or major feature-family starts, explain the public
+route in this order:
+
+- `mansu-1define` runs Ouroboros first for project definition, memory, Seed, and
+  the design intent seed.
+- If the scope is UI/user-facing, `mansu-1define` then routes to a source-skill
+  design-context interview before planning. The default installed route is
+  `gstack-design-consultation`; use `gstack-design-shotgun` only for multiple
+  visible directions and `gstack-plan-design-review` only for critique.
+- `mansu-2plan` consumes that handoff and creates or refines `DESIGN.md`,
+  design direction, approved design artifacts, roadmap, and phase plan.
+- Keep compatibility aliases secondary. Do not recommend `mansu-project-start`
+  as the public new-project route unless the user explicitly invoked that legacy
+  surface.
+
 ## Beginner shortcuts
 
 Use these shortcuts when the user gives only a vague sentence:
@@ -152,7 +167,7 @@ Use $mansu-9setup source-check. Ouroboros, gstack, Oh My / OMO / OMC, addyosmani
 Project start:
 
 ```text
-Use $mansu-1define. 방금 생긴 웹앱/앱 아이디어를 프로젝트로 정의하고 싶어. addyosmani interview-me, Ouroboros interview/PM/Seed, gstack office-hours 중 지금 상황에 맞는 source skill을 골라 먼저 질문과 정의를 진행해줘. Mansu가 자체 질문으로 대신 시작하지 말고, source skill을 못 쓰는 경우에만 이유를 기록한 fallback으로 진행해줘. 구현은 아직 시작하지 마.
+Use $mansu-1define. 방금 생긴 웹앱/앱 아이디어를 프로젝트로 정의하고 싶어. Ouroboros interview/PM/Seed를 먼저 실행해 목적, 사용자, 문제, 성공 기준, design intent seed를 잡아줘. UI/user-facing scope가 있으면 구현이나 Plan으로 가지 말고 source skill 디자인 문맥 인터뷰로 라우팅해줘. 기본은 gstack-design-consultation이고, 여러 시안 비교는 gstack-design-shotgun, 계획 비평은 gstack-plan-design-review를 조건부로 써줘. DESIGN.md와 design artifact는 mansu-2plan handoff에서 만들거나 정리하고, mansu-project-start는 public route로 추천하지 마. 구현은 아직 시작하지 마.
 ```
 
 Implementation:

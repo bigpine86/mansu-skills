@@ -11,6 +11,11 @@ DOC_ORDER="$ROOT_DIR/mansu-operating-model/references/DOCUMENT_CREATION_ORDER.md
 CODE_ORDER="$ROOT_DIR/mansu-operating-model/references/CODE_CONSTRUCTION_ORDER.md"
 AGENTS_TEMPLATE="$ROOT_DIR/mansu-operating-model/references/AGENTS.md"
 CODING_RULES_TEMPLATE="$ROOT_DIR/mansu-operating-model/references/CODING_RULES.md"
+PLAN_SKILL="$ROOT_DIR/mansu-plan/SKILL.md"
+PLAN_OPENAI="$ROOT_DIR/mansu-plan/agents/openai.yaml"
+BUILD_SKILL="$ROOT_DIR/mansu-build/SKILL.md"
+BUILD_OPENAI="$ROOT_DIR/mansu-build/agents/openai.yaml"
+TDD_TOTAL="$ROOT_DIR/mansu-tdd-total/SKILL.md"
 
 fail() {
   echo "FAIL: $1" >&2
@@ -64,6 +69,27 @@ forbid_unnumbered_public_lifecycle_route() {
   forbid_contains "$file" 'Use[[:space:]]+`mansu-ship`' 'source catalog exposes mansu-ship as active public guidance'
 }
 
+forbid_project_start_primary_route() {
+  local file="$1"
+  forbid_contains "$file" 'During `mansu-project-start`|zero-to-PLAN kickoff route|Ouroboros project-definition work.*mansu-project-start' 'source catalog or plan presents mansu-project-start as the primary zero-to-PLAN route'
+}
+
+forbid_default_ulw_plan_route() {
+  local file="$1"
+  local message="$2"
+  if perl -0ne 'exit(/(?:Mansu\s+Plan|Quick\s+Plan|Standard\s+Plan|Heavy\s+Plan|Plan)[^\n.]{0,200}(?:default[^\n.]{0,80}`ulw-plan`|`ulw-plan`[^\n.]{0,80}default)/i ? 0 : 1)' "$file"; then
+    fail "$message"
+  fi
+}
+
+require_plan_tiers() {
+  local file="$1"
+  local label="$2"
+  require_contains "$file" 'Quick Plan' "$label lost Quick Plan tier"
+  require_contains "$file" 'Standard Plan' "$label lost Standard Plan tier"
+  require_contains "$file" 'Heavy Plan' "$label lost Heavy Plan tier"
+}
+
 require_file "$MODEL"
 require_file "$OPENAI_YAML"
 require_file "$DOCTRINE_REF"
@@ -73,6 +99,11 @@ require_file "$DOC_ORDER"
 require_file "$CODE_ORDER"
 require_file "$AGENTS_TEMPLATE"
 require_file "$CODING_RULES_TEMPLATE"
+require_file "$PLAN_SKILL"
+require_file "$PLAN_OPENAI"
+require_file "$BUILD_SKILL"
+require_file "$BUILD_OPENAI"
+require_file "$TDD_TOTAL"
 
 model_lines="$(wc -l < "$MODEL" | tr -d ' ')"
 [ "$model_lines" -lt 500 ] || fail "operating model SKILL.md should stay under 500 lines; move detail into references"
@@ -142,6 +173,14 @@ require_literal "$MODEL" '`mansu-6ship/SKILL.md` | numbered Ship phase route' 'o
 require_literal "$MODEL" '`mansu-define/SKILL.md` through `mansu-ship/SKILL.md` | compatibility/backing implementations for numbered lifecycle phase routes' 'operating model lost unnumbered compatibility/backing boundary'
 require_literal "$MODEL" '`mansu-project-start/SKILL.md` | compatibility Zero-to-PLAN workflow' 'operating model lost project-start compatibility boundary'
 require_contains "$MODEL" 'link to the owner and summarize only the routing' 'operating model lost anti-duplication linking rule'
+require_plan_tiers "$PLAN_SKILL" 'mansu-plan'
+require_plan_tiers "$PLAN_OPENAI" 'mansu-plan OpenAI prompt'
+require_contains "$BUILD_SKILL" 'role/marker discovery' 'build lost role/marker active Phase Plan discovery'
+require_contains "$BUILD_OPENAI" 'role/marker discovery' 'build OpenAI prompt lost role/marker active Phase Plan discovery'
+require_contains "$TDD_TOTAL" 'role/marker discovery' 'tdd-total lost role/marker active Phase Plan discovery'
+forbid_default_ulw_plan_route "$SOURCE_CATALOG" 'source catalog reintroduced ulw-plan as a default Plan route'
+forbid_default_ulw_plan_route "$CODE_ORDER" 'code construction router reintroduced ulw-plan as a default Plan route'
+forbid_default_ulw_plan_route "$PLAN_SKILL" 'mansu-plan reintroduced ulw-plan as a default Plan route'
 
 require_contains "$AGENTS_TEMPLATE" '^## Routing Contract$' 'AGENTS template missing routing contract'
 require_contains "$AGENTS_TEMPLATE" 'First-hop routes:' 'AGENTS template missing first-hop route map'
@@ -191,11 +230,13 @@ require_contains "$SOURCE_CATALOG" 'Hand off to public route `mansu-3build`' 'so
 require_contains "$SOURCE_CATALOG" 'Use public route `mansu-4verify`' 'source catalog lost numbered verify public route guidance'
 require_contains "$SOURCE_CATALOG" 'Use public route `mansu-6ship`' 'source catalog lost numbered ship public route guidance'
 forbid_unnumbered_public_lifecycle_route "$SOURCE_CATALOG"
+forbid_project_start_primary_route "$SOURCE_CATALOG"
+forbid_project_start_primary_route "$ROOT_DIR/PLAN.md"
 require_contains "$SOURCE_CATALOG" 'mansu-source-curator' 'source catalog lost curator route'
 require_contains "$SOURCE_CATALOG" 'mansu-project-start' 'source catalog lost project start route'
 require_contains "$SOURCE_CATALOG" 'mansu-ship-release' 'source catalog lost ship release route'
 require_contains "$SOURCE_CATALOG" 'Zero-to-PLAN minimum gate: purpose, user/problem' 'source catalog lost Zero-to-PLAN gate'
-require_contains "$SOURCE_CATALOG" 'evidence, assumptions, direction, order, and execution bridge' 'source catalog lost Zero-to-PLAN gate fields'
+require_contains "$SOURCE_CATALOG" 'evidence, assumptions, feature priority, direction, order, and execution' 'source catalog lost Zero-to-PLAN gate fields'
 require_contains "$SOURCE_CATALOG" 'Expand only when risk or ambiguity asks for it' 'source catalog lost flexible expansion rule'
 require_contains "$SOURCE_CATALOG" 'GitHub, Reddit, and Threads' 'source catalog lost community/source research route'
 require_contains "$SOURCE_CATALOG" 'official/current docs' 'source catalog lost evidence-ranked official-source rule'
@@ -217,6 +258,10 @@ require_contains "$SOURCE_CATALOG" 'user-facing UI must pass through a design ro
 require_contains "$SOURCE_CATALOG" 'Mansu should not substitute its own' 'source catalog lost no-Mansu-design-questionnaire rule'
 require_contains "$SOURCE_CATALOG" 'Default design route stack' 'source catalog lost design route order'
 require_contains "$SOURCE_CATALOG" 'gstack-design-consultation` as the default design-system route' 'source catalog lost greenfield design consultation default'
+require_contains "$SOURCE_CATALOG" 'design intent seed/handoff' 'source catalog lost Define-to-Plan design handoff boundary'
+require_contains "$SOURCE_CATALOG" 'mansu-2plan` consumes that' 'source catalog lost Plan consumes design handoff rule'
+require_contains "$SOURCE_CATALOG" 'owns `DESIGN\.md` creation/refinement, design artifacts, design' 'source catalog lost Plan-owned DESIGN.md boundary'
+require_contains "$SOURCE_CATALOG" 'source capability, not a move' 'source catalog lost source capability vs Mansu phase ownership boundary'
 require_contains "$SOURCE_CATALOG" 'Oh My / OMO `research` or `deepsearch` before or' 'source catalog lost conditional design research route'
 require_contains "$SOURCE_CATALOG" 'Use addyosmani `source-driven-development` when source projects' 'source catalog lost source-driven design route'
 require_contains "$SOURCE_CATALOG" 'Use `gstack-design-shotgun` when multiple visible candidate directions' 'source catalog lost design shotgun route'
@@ -245,6 +290,8 @@ require_contains "$SOURCE_CATALOG" 'oh-my-openagent is the core harness source' 
 require_contains "$SOURCE_CATALOG" 'thin distribution' 'source catalog lost LazyCodex distribution boundary'
 require_contains "$SOURCE_CATALOG" 'Codex-side OMO route' 'source catalog lost LazyCodex Codex-side OMO scope'
 require_contains "$SOURCE_CATALOG" 'do not treat LazyCodex as a Mansu source skill family' 'source catalog lost LazyCodex source-family boundary'
+require_contains "$SOURCE_CATALOG" 'Mansu does not use OMO `ulw-plan` as a default Plan route' 'source catalog lost ulw-plan default-route prohibition'
+require_contains "$SOURCE_CATALOG" 'only when the user explicitly invokes' 'source catalog lost ulw-plan explicit invocation whitelist'
 require_contains "$SOURCE_CATALOG" 'legacy `omx` is compatibility tooling' 'source catalog lost omx compatibility route'
 require_contains "$SOURCE_CATALOG" 'carries Codex-side Oh My execution patterns' 'source catalog lost LazyCodex execution role'
 require_contains "$SOURCE_CATALOG" 'Mansu owns routing' 'source catalog lost Mansu role split'
@@ -271,9 +318,15 @@ require_contains "$DOC_ORDER" '^## Locator Reference Map$' 'document creation ro
 require_contains "$DOC_ORDER" '^## Document Matrix$' 'document creation router missing document matrix'
 require_contains "$DOC_ORDER" '^## Verification Order$' 'document creation router missing verification order'
 require_contains "$DOC_ORDER" '^## PLAN.md Boundary$' 'document creation router missing PLAN boundary'
-require_contains "$DOC_ORDER" 'Large-grain feature order is decided before `PLAN.md`' 'document creation router lost roadmap before PLAN boundary'
+require_contains "$DOC_ORDER" 'Feature priority is decided before `PLAN.md`' 'document creation router lost feature priority before PLAN boundary'
+require_contains "$DOC_ORDER" 'Feature Priority / MVP Cut -> Project Phase Roadmap -> Phase Plan -> Slice' 'document creation router lost official planning hierarchy'
+require_contains "$DOC_ORDER" 'Project Phase Roadmap lives in' 'document creation router lost Project Phase Roadmap ownership'
+require_contains "$DOC_ORDER" 'Phase Plan lives in `PLAN\.md`' 'document creation router lost Phase Plan ownership'
+require_contains "$DOC_ORDER" 'A Slice lives as a row or task inside that active Phase Plan' 'document creation router lost Slice ownership'
+require_contains "$DOC_ORDER" 'prioritized feature list, ordered phase list, and exactly one' 'document creation router lost feature priority roadmap gate'
 require_contains "$DOC_ORDER" 'Use the project roadmap or TDR for the whole feature sequence' 'document creation router lost roadmap vs PLAN boundary'
-require_contains "$DOC_ORDER" 'If no roadmap artifact names the ordered phase list and exactly one' 'document creation router lost phase roadmap gate'
+require_contains "$DOC_ORDER" 'artifact names the prioritized feature list' 'document creation router lost phase roadmap gate'
+require_contains "$DOC_ORDER" 'active phase, do not enter numbered public `mansu-3build`' 'document creation router lost numbered build block after roadmap gate'
 require_contains "$DOC_ORDER" 'Before numbered public `mansu-3build` starts through the backing' 'document creation router lost numbered build phase preflight'
 require_contains "$DOC_ORDER" 'gstack-office-hours' 'document creation router lost office-hours source'
 require_contains "$DOC_ORDER" 'spec-driven-development' 'document creation router lost spec-driven source'
@@ -293,6 +346,9 @@ require_contains "$DOC_ORDER" 'selected direction, rejected directions' 'documen
 require_contains "$DOC_ORDER" 'Open Design artifact / preview / export' 'document creation router lost Open Design artifact handoff'
 require_contains "$DOC_ORDER" 'Visual atmosphere, color roles, typography, component rules' 'document creation router lost DESIGN.md exit criteria'
 require_contains "$DOC_ORDER" 'choose the design source route before phase roadmap planning' 'document creation router lost design route before roadmap rule'
+require_contains "$DOC_ORDER" 'design intent seed/handoff' 'document creation router lost Define design seed handoff'
+require_contains "$DOC_ORDER" '`mansu-2plan` creates/refines `DESIGN\.md`' 'document creation router lost Plan-owned DESIGN.md creation rule'
+require_contains "$DOC_ORDER" 'gstack-design-consultation` may create or contribute to `DESIGN\.md`' 'document creation router lost gstack source capability wording'
 require_contains "$DOC_ORDER" 'Mansu-owned design questionnaire' 'document creation router lost design-route-not-questionnaire guardrail'
 require_contains "$DOC_ORDER" 'modern/minimal' 'document creation router lost weak DESIGN.md red flag'
 require_contains "$DOC_ORDER" 'docs/specs/\{feature-slug\}\.md' 'document creation router lost default spec path'
@@ -315,6 +371,11 @@ require_contains "$CODE_ORDER" 'when Verify passes, continue into Review by defa
 require_contains "$CODE_ORDER" 'Review handoff' 'code construction router lost verify review handoff output'
 require_contains "$CODE_ORDER" '수정/개선.*Review -> Build -> Verify' 'code construction router lost review/build/verify loop mapping'
 require_contains "$CODE_ORDER" '^## Phase Detection$' 'code construction router missing phase detection'
+require_contains "$CODE_ORDER" 'Feature Priority / MVP Cut -> Project Phase Roadmap -> Phase Plan -> Slice' 'code construction router lost official planning hierarchy'
+require_contains "$CODE_ORDER" 'Build reads the Project Phase Roadmap first' 'code construction router lost roadmap-before-phase-plan rule'
+require_contains "$CODE_ORDER" 'active Phase Plan.*ordered Slice table' 'code construction router lost active phase plan slice rule'
+forbid_default_ulw_plan_route "$CODE_ORDER" 'code construction router reintroduced ulw-plan as a default Plan route'
+forbid_contains "$CODE_ORDER" 'Complex implementation:.*ulw-plan' 'code construction router reintroduced ulw-plan into complex implementation route'
 require_contains "$CODE_ORDER" '^## Router Loop$' 'code construction router missing router loop'
 require_contains "$CODE_ORDER" '^## Mansu Invariants$' 'code construction router missing Mansu invariants'
 require_contains "$CODE_ORDER" '^## Dynamic Construction Checklist$' 'code construction router missing dynamic checklist'

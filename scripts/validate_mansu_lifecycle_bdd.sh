@@ -5,6 +5,7 @@ ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 
 DEFINE="$ROOT_DIR/mansu-define/SKILL.md"
 PLAN="$ROOT_DIR/mansu-plan/SKILL.md"
+PLAN_OPENAI="$ROOT_DIR/mansu-plan/agents/openai.yaml"
 BUILD="$ROOT_DIR/mansu-build/SKILL.md"
 VERIFY="$ROOT_DIR/mansu-verify/SKILL.md"
 REVIEW="$ROOT_DIR/mansu-review/SKILL.md"
@@ -17,6 +18,7 @@ VERIFY_PUBLIC="$ROOT_DIR/mansu-4verify/SKILL.md"
 REVIEW_PUBLIC="$ROOT_DIR/mansu-5review/SKILL.md"
 SHIP_PUBLIC="$ROOT_DIR/mansu-6ship/SKILL.md"
 BUILD_OPENAI="$ROOT_DIR/mansu-build/agents/openai.yaml"
+BUILD_PUBLIC_OPENAI="$ROOT_DIR/mansu-3build/agents/openai.yaml"
 VERIFY_OPENAI="$ROOT_DIR/mansu-verify/agents/openai.yaml"
 REVIEW_OPENAI="$ROOT_DIR/mansu-review/agents/openai.yaml"
 DEBUG_OPENAI="$ROOT_DIR/mansu-debug/agents/openai.yaml"
@@ -49,6 +51,54 @@ require_absent() {
   ! grep -Eq "$pattern" "$file" || fail "$message"
 }
 
+forbid_default_ulw_plan_route() {
+  local file="$1"
+  local message="$2"
+  if perl -0ne '
+    my $text = $_;
+    $text =~ s/Heavy Plan(?:(?!\n\n).)*?\bnever\s+defaults\s+to\s+`ulw-plan`\.?//sig;
+    exit($text =~ /(?:Mansu\s+Plan|Quick\s+Plan|Standard\s+Plan|Heavy\s+Plan|Plan)[^\n.]{0,200}(?:default[^\n.]{0,80}`ulw-plan`|`ulw-plan`[^\n.]{0,80}default)/i ? 0 : 1);
+  ' "$file"; then
+    fail "$message"
+  fi
+
+  if perl -ne '
+    BEGIN { $bad = 0; }
+    if (/`?ulw-plan`?/i
+      && !/only when the user literally invokes/i
+      && !/external planning artifact/i
+      && !/explicit OMO planning/i
+      && !/explicit request for OMO/i
+      && !/allowed only for literal user invocation/i
+      && !/never\s+defaults\s+to\s+`?ulw-plan`?/i
+      && !/do not trigger OMO\s+`?ulw-plan`?/i
+      && !/not public doctrine/i) {
+      $bad = 1;
+    }
+    END { exit($bad ? 0 : 1); }
+  ' "$file"; then
+    fail "$message"
+  fi
+}
+
+require_ordered_terms() {
+  local file="$1"
+  local message="$2"
+  shift 2
+  perl -0ne '
+    BEGIN {
+      our @terms = @ARGV;
+      @ARGV = ();
+    }
+    my $pos = 0;
+    for my $term (@terms) {
+      my $idx = index(lc($_), lc($term), $pos);
+      exit 1 if $idx < 0;
+      $pos = $idx + length($term);
+    }
+  ' "$@" < "$file" || fail "$message"
+}
+
 scenario() {
   printf 'SCENARIO: %s\n' "$1"
 }
@@ -70,8 +120,53 @@ require_contains "$DEFINE" 'Do not start implementation' 'define must block impl
 require_contains "$DEFINE_PUBLIC" 'Next route when complete: `mansu-2plan`' 'public define must hand off to numbered plan route'
 require_contains "$DEFINE_PUBLIC" 'Compatibility implementation: `mansu-define`' 'numbered define route must label unnumbered define as compatibility implementation'
 
+scenario "Given Ouroboros finds user-facing product scope, Then Define routes design context before Plan without owning DESIGN.md"
+require_contains "$DEFINE" '^## Post-Ouroboros design-context gate$' 'define must have a post-Ouroboros design-context gate'
+require_contains "$DEFINE" 'user-facing UI/product scope is present' 'define must detect user-facing UI/product scope after Ouroboros'
+require_contains "$DEFINE" 'design-context interview before public `mansu-2plan`' 'define must route design context before numbered plan'
+require_contains "$DEFINE" 'default installed' 'define must identify the default installed design-context route'
+require_contains "$DEFINE" 'gstack-design-consultation' 'define must name gstack-design-consultation'
+require_contains "$DEFINE" 'gstack-design-shotgun' 'define must keep design-shotgun route'
+require_contains "$DEFINE" 'Open Design' 'define must keep Open Design route'
+require_contains "$DEFINE" 'gstack-plan-design-review' 'define must keep design review route'
+require_contains "$DEFINE" 'critique' 'define must name critique purpose'
+require_contains "$DEFINE" 'design intent seed' 'define must record design intent seed'
+require_contains "$DEFINE" 'route evidence' 'define must record route evidence'
+require_contains "$DEFINE" 'DESIGN.md.*mansu-2plan' 'define must keep DESIGN.md owned by plan'
+require_contains "$DEFINE" 'not create.*DESIGN.md' 'define must not create DESIGN.md'
+require_contains "$DEFINE" 'Do not create a Mansu-owned design questionnaire' 'define must not replace source design interview with Mansu questionnaire'
+require_contains "$DEFINE" 'source-skill design-context interview route' 'define must use a source-skill design-context interview'
+require_contains "$DEFINE" 'intent seed/handoff evidence' 'define must hand off design intent without owning artifacts'
+require_contains "$DEFINE" 'Ouroboros' 'define source route must preserve Ouroboros ordering'
+require_contains "$DEFINE" 'design-context route evidence' 'define outputs must include design-context route evidence'
+require_contains "$ROOT_DIR/mansu-define/agents/openai.yaml" 'source-skill design-context interview' 'define OpenAI prompt must route design context through source skill'
+require_contains "$ROOT_DIR/mansu-define/agents/openai.yaml" 'public mansu-2plan' 'define OpenAI prompt must route before numbered plan'
+require_contains "$ROOT_DIR/mansu-define/agents/openai.yaml" 'gstack-design-consultation' 'define OpenAI prompt must name default installed design route'
+require_contains "$ROOT_DIR/mansu-define/agents/openai.yaml" 'design intent seed' 'define OpenAI prompt must record design seed'
+require_contains "$ROOT_DIR/mansu-define/agents/openai.yaml" 'route evidence' 'define OpenAI prompt must record route evidence'
+require_contains "$ROOT_DIR/mansu-define/agents/openai.yaml" 'DESIGN.md.*mansu-2plan' 'define OpenAI prompt must keep DESIGN.md in plan'
+require_contains "$ROOT_DIR/mansu-define/agents/openai.yaml" 'Mansu-owned design questionnaire' 'define OpenAI prompt must ban Mansu-owned design questionnaire'
+require_contains "$ROOT_DIR/mansu-1define/agents/openai.yaml" 'source-skill design-context interview' 'public define OpenAI prompt must route design context through source skill'
+require_contains "$ROOT_DIR/mansu-1define/agents/openai.yaml" 'mansu-2plan' 'public define OpenAI prompt must route before numbered plan'
+require_contains "$ROOT_DIR/mansu-1define/agents/openai.yaml" 'gstack-design-consultation' 'public define OpenAI prompt must name default installed design route'
+require_contains "$ROOT_DIR/mansu-1define/agents/openai.yaml" 'design intent seed' 'public define OpenAI prompt must record design seed'
+require_contains "$ROOT_DIR/mansu-1define/agents/openai.yaml" 'handoff evidence' 'public define OpenAI prompt must record handoff evidence'
+require_contains "$ROOT_DIR/mansu-1define/agents/openai.yaml" 'DESIGN.md.*mansu-2plan' 'public define OpenAI prompt must keep DESIGN.md in plan'
+require_contains "$ROOT_DIR/mansu-1define/agents/openai.yaml" 'Mansu-owned design questionnaire' 'public define OpenAI prompt must ban Mansu-owned design questionnaire'
+
 scenario "Given definition outputs exist, When Mansu plans, Then design direction and current phase execution plan are required before Build"
-require_contains "$PLAN" 'Requirements/Spec -> Architecture -> Design Direction -> Implementation Roadmap' 'plan must preserve internal order'
+require_ordered_terms "$PLAN" 'plan must preserve official planning hierarchy' 'Feature Priority / MVP Cut' 'Project Phase Roadmap' 'Phase Plan' 'Slice'
+require_absent "$ROOT_DIR/PLAN.md" 'Requirements/Spec -> Architecture -> Design Direction -> Implementation Roadmap' 'PLAN.md reintroduced old Plan order'
+forbid_default_ulw_plan_route "$ROOT_DIR/PLAN.md" 'PLAN.md must not make ulw-plan a default Plan route'
+require_contains "$PLAN" 'Quick Plan' 'plan must define Quick Plan tier'
+require_contains "$PLAN" 'Standard Plan' 'plan must define Standard Plan tier'
+require_contains "$PLAN" 'Heavy Plan' 'plan must define Heavy Plan tier'
+require_contains "$PLAN_OPENAI" 'Quick Plan' 'plan OpenAI prompt must define Quick Plan tier'
+require_contains "$PLAN_OPENAI" 'Standard Plan' 'plan OpenAI prompt must define Standard Plan tier'
+require_contains "$PLAN_OPENAI" 'Heavy Plan' 'plan OpenAI prompt must define Heavy Plan tier'
+forbid_default_ulw_plan_route "$PLAN" 'plan must not make ulw-plan a default Plan route'
+forbid_default_ulw_plan_route "$PLAN_OPENAI" 'plan OpenAI prompt must not make ulw-plan a default Plan route'
+require_contains "$PLAN" 'feature inventory, priority rationale, MVP/later split' 'plan must require feature priority evidence'
 require_contains "$PLAN" 'environment/dependency setup plan when needed' 'plan must include conditional environment setup planning'
 require_contains "$PLAN" 'Prefer `uv` for Python' 'plan must prefer uv for new Python setup when appropriate'
 require_contains "$PLAN" 'Do not add a new `uv` environment just because planning is happening' 'plan must not force uv onto existing projects'
@@ -84,27 +179,42 @@ require_contains "$PLAN_PUBLIC" 'Compatibility implementation: `mansu-plan`' 'pu
 
 scenario "Given Build is invoked without a current phase plan, Then Mansu blocks implementation and routes back to Define/Plan"
 require_contains "$BUILD" 'current phase execution plan exists' 'build must require active phase execution plan'
-require_contains "$BUILD" 'The active plan is a role, not a literal filename' 'build must not treat PLAN.md as the only plan filename'
+require_contains "$BUILD" 'Project Phase Roadmap -> Phase Plan -> Slice' 'build must name roadmap-to-phase-to-slice hierarchy'
+require_contains "$BUILD" 'active Phase Plan is a role, not a literal filename' 'build must not treat PLAN.md as the only plan filename'
+require_contains "$BUILD" 'user-provided path first' 'build must prefer user-provided plan paths'
+require_contains "$BUILD" 'role/marker discovery' 'build must use role/marker discovery for phase plans'
 require_contains "$BUILD" '\.omo/plans/\*\.md' 'build must search OMO plan paths'
-require_contains "$BUILD" 'Before non-trivial implementation, read the active plan and any linked' 'build must read linked artifacts before non-trivial work'
-require_contains "$BUILD" 'roadmap, spec, TDR, or design direction' 'build must name linked roadmap/spec/TDR/design artifacts'
-require_contains "$BUILD" 'update the active phase plan before editing code' 'build must update stale active plan before coding'
+require_contains "$BUILD" 'read the active Phase Plan and its linked' 'build must read linked artifacts before non-trivial work'
+require_contains "$BUILD" 'Project Phase Roadmap before any linked spec, TDR, or design direction' 'build must read roadmap before spec/TDR/design artifacts'
+require_contains "$BUILD" 'update the active Phase Plan before editing' 'build must update stale active plan before coding'
 require_contains "$BUILD" 'Do not say "no plan" until these candidates have' 'build must check plan candidates before claiming no plan'
 require_contains "$BUILD" 'been checked' 'build must finish the no-plan candidate check instruction'
 require_contains "$BUILD" 'route back to' 'build must route missing plan backward'
 require_contains "$BUILD_PUBLIC" 'route back to `mansu-1define` /' 'public build must route missing plan back to numbered define route'
 require_contains "$BUILD_PUBLIC" '`mansu-2plan`' 'public build must route missing plan back to numbered plan route'
 require_contains "$BUILD_PUBLIC" 'Compatibility implementation: `mansu-build`' 'public build must label unnumbered build as compatibility implementation'
-require_contains "$BUILD" 'Do not reject a valid plan' 'build must not reject valid OMO plan filename'
-require_contains "$BUILD" 'only because the filename is `\.omo/plans/\{slug\}\.md`' 'build must name the OMO slug filename case'
-require_contains "$BUILD" 'Do not implement from a whole-project roadmap that lacks an active phase' 'build must reject roadmap without active phase'
+require_contains "$BUILD" 'do not reject a valid active Phase Plan only' 'build must not reject valid phase plan filename'
+require_contains "$BUILD" 'filename is not `PLAN\.md`' 'build must name non-PLAN filename case'
+require_ordered_terms "$BUILD" 'build must reject roadmap-only implementation' 'do not implement' 'project phase roadmap' 'alone'
+require_contains "$BUILD" 'execution-ready slice table' 'build must require a slice table before implementation'
 require_contains "$BUILD" 'If implementation for the active phase is complete, tell the user the next' 'build must route complete implementation to verify'
-require_contains "$BUILD_OPENAI" 'active phase execution plan exists' 'build OpenAI prompt must require active phase execution plan'
+require_contains "$BUILD_OPENAI" 'active Phase Plan exists' 'build OpenAI prompt must require active phase plan'
+require_contains "$BUILD_OPENAI" 'Project Phase Roadmap -> Phase Plan -> Slice' 'build OpenAI prompt must name roadmap-to-slice hierarchy'
+require_contains "$BUILD_OPENAI" 'role/marker discovery' 'build OpenAI prompt must use role/marker discovery'
 require_contains "$BUILD_OPENAI" '\.omo/plans/\*\.md' 'build OpenAI prompt must search OMO plan paths'
-require_contains "$BUILD_OPENAI" 'do not claim no plan just because the filename differs' 'build OpenAI prompt must not reject plan by filename'
-require_contains "$BUILD_OPENAI" 'Before non-trivial implementation, read the active plan and any linked roadmap/spec/TDR/design direction' 'build OpenAI prompt must read linked artifacts before non-trivial work'
-require_contains "$BUILD_OPENAI" 'route back to public mansu-1define / mansu-2plan' 'backing build OpenAI prompt must route missing plan to numbered public routes'
-require_contains "$BUILD_OPENAI" 'Do not implement from a whole-project roadmap that lacks an active phase' 'build OpenAI prompt must reject roadmap without active phase'
+require_ordered_terms "$BUILD_OPENAI" 'build OpenAI prompt must not reject plan by filename' 'filename' 'differs'
+require_ordered_terms "$BUILD_OPENAI" 'build OpenAI prompt must read active phase plan before linked roadmap artifacts' 'non-trivial implementation' 'active phase plan' 'linked project phase roadmap'
+require_ordered_terms "$BUILD_OPENAI" 'backing build OpenAI prompt must route missing plan to numbered public routes' 'missing' 'route back' 'mansu-1define' 'mansu-2plan'
+require_ordered_terms "$BUILD_OPENAI" 'build OpenAI prompt must reject roadmap-only implementation' 'do not implement' 'project phase roadmap' 'alone'
+require_ordered_terms "$BUILD_PUBLIC_OPENAI" 'public build OpenAI prompt must name roadmap-to-active-phase-to-slice hierarchy' 'project phase roadmap' 'active phase plan' 'slice table'
+require_ordered_terms "$BUILD_PUBLIC_OPENAI" 'public build OpenAI prompt must read linked roadmap first' 'read' 'linked project phase roadmap' 'first'
+require_contains "$BUILD_PUBLIC_OPENAI" 'user-provided path first' 'public build OpenAI prompt must prefer user-provided plan paths'
+require_contains "$BUILD_PUBLIC_OPENAI" 'role/marker discovery' 'public build OpenAI prompt must use role/marker discovery'
+require_contains "$BUILD_PUBLIC_OPENAI" 'Plan\.md' 'public build OpenAI prompt must include Plan.md candidate'
+require_contains "$BUILD_PUBLIC_OPENAI" '\.codex/plans/\*\.md' 'public build OpenAI prompt must include Codex plan path candidates'
+require_contains "$BUILD_PUBLIC_OPENAI" '\.omo/plans/\*\.md' 'public build OpenAI prompt must search OMO plan paths'
+require_ordered_terms "$BUILD_PUBLIC_OPENAI" 'public build OpenAI prompt must execute only active phase plan slices' 'only' 'active phase plan' 'slice table'
+require_ordered_terms "$BUILD_PUBLIC_OPENAI" 'public build OpenAI prompt must reject roadmap-only implementation' 'do not implement' 'project phase roadmap' 'alone'
 
 scenario "Given verification and review are separate gates, Then Verify proves behavior and Review judges quality"
 require_contains "$VERIFY" 'Verify proves behavior' 'verify must state behavior proof role'

@@ -26,7 +26,7 @@ remains responsible for making sure the overall workflow actually finishes.
 - Synthesize one execution-ready plan before any slice starts.
 - Split the work into vertical slices.
 - Choose `mansu-tdd-lite` or `mansu-tdd-strict` for each slice.
-- Record the per-slice mode decision and rationale in `PLAN.md`.
+- Record the per-slice mode decision and rationale in the active Phase Plan.
 - Execute every unblocked slice in order through the selected skill.
 - Persist in a Ralph-style loop until all slices are closed, blocked with a recorded reason, or explicitly stopped by the user.
 - Run final project-level verification, worklog update, and commit accounting after the slices are complete.
@@ -40,7 +40,7 @@ These rules do not change between `lite` and `strict`:
 - Define completion conditions, impact files, risks, and validation path for every slice.
 - Run review, QA, checkpoint, and commit for each slice.
 - Do not start the next slice until the current slice is fully closed.
-- Keep `PLAN.md` current.
+- Keep the active Phase Plan current.
 - Record completed work in `개발일지.md` or the project worklog.
 - Do not use `lite` as permission to lower work quality.
 - Treat missing review, QA, checkpoint, worklog, or commit evidence as an open slice, not as a finished slice.
@@ -101,8 +101,10 @@ Do not run `gstack-ship` from this TDD loop by default. Hand release and PR
 workflow to `mansu-ship-release` when the implementation work is complete.
 
 If the gstack gate is unavailable, use a project-standard equivalent only when
-it is separately invoked, produces evidence, and is recorded in `PLAN.md` or the
-worklog. A builder saying "I reviewed it" is not enough.
+it is separately invoked, produces evidence, and is recorded in the active Phase
+Plan or worklog. Locate the active Phase Plan by explicit path, role, or marker;
+`PLAN.md` is only one common filename candidate.
+A builder saying "I reviewed it" is not enough.
 
 Commit policy:
 
@@ -112,7 +114,7 @@ Commit policy:
   override and mark the slice `commit-deferred` instead of fully closed until
   final commit accounting resolves it.
 - Use a final release/docs commit only for final docs, version, changelog, or when the project policy explicitly deferred slice commits.
-- If any commit is deferred, record the no-commit reason, remaining diff scope, and next owner in `PLAN.md` or the worklog.
+- If any commit is deferred, record the no-commit reason, remaining diff scope, and next owner in the active Phase Plan or the worklog.
 
 The only core difference is the RED test requirement:
 
@@ -141,11 +143,13 @@ Use this skill when:
 Before planning, confirm:
 
 - the repository has `git` and write access
-- there is an active plan path: prefer `PLAN.md`, but also recognize `Plan.md`,
-  `.codex/plans/*.md`, `.omo/plans/*.md`, or a concrete plan path the user just
-  referenced
-- for project-started work, the active plan names the active phase and links to
-  a project roadmap or phase order artifact when they are separate
+- there is an active Phase Plan path: use a concrete user-provided path first;
+  otherwise use role/marker discovery in `PLAN.md`, `Plan.md`,
+  `.codex/plans/*.md`, `.omo/plans/*.md`, or linked planning docs
+- for project-started work, the active Phase Plan names the active phase and
+  links to the Project Phase Roadmap when they are separate
+- the Project Phase Roadmap is read first for phase order and exit criteria
+  before executing the active Phase Plan slice table
 - there is a completed-work log path, preferably `개발일지.md` when the project uses Korean worklogs
 - review, QA, checkpoint, and commit gates are available or have clear project equivalents
 - if the current host supports subagents, helper sessions, or external critic tools, there is a usable path for real critic review before implementation
@@ -154,16 +158,17 @@ Before planning, confirm:
 - `mansu-tdd-strict` prerequisites are available before assigning strict slices
 
 If the work came from a new product/app/repo/major feature-family kickoff and
-the active plan does not name an active phase plus its roadmap/phase-order artifact,
+the active Phase Plan does not name an active phase plus its Project Phase Roadmap,
 do not start implementation. Route back to public `mansu-1define` / `mansu-2plan`
 to create or repair the definition, phase roadmap, and active phase plan first.
 
-If the active plan file contains the whole project roadmap instead of one active
-phase, inspect it before rejecting it. If it clearly marks the current or next
-phase and contains execution-ready slices and validation gates, use that file as
-the active phase plan. If it only lists the whole roadmap, split it: keep the
-roadmap in the spec/TDR/design layer, then derive a phase-only execution plan
-before slice execution.
+Do not implement from a Project Phase Roadmap alone. If a roadmap file or section
+points to the active Phase Plan, follow that link after reading the roadmap. If a
+roadmap-style file also contains a marked active Phase Plan role and an
+execution-ready slice table for exactly one current/next phase, use only that
+active Phase Plan slice table. If it only lists the whole roadmap, split it: keep
+the Project Phase Roadmap in the spec/TDR/design layer, then derive a phase-only
+execution plan before slice execution.
 
 An equivalent review, QA, or checkpoint gate must be separately invoked, produce
 status/evidence, and be distinguishable from the builder's self-summary.
@@ -205,14 +210,15 @@ For non-trivial work, prefer actual independent critic agents, helper sessions,
 or external critic tools when the runtime can provide them safely. If exact
 historical agent names or tools are unavailable, map the available runtime
 roles, tools, sessions, or perspectives to these three responsibilities and
-record the mapping in `PLAN.md`.
+record the mapping in the active Phase Plan. `PLAN.md` is only one common
+filename candidate during role/marker discovery, not the required plan path.
 
 ## Real critic agent gate
 
 If actual critic sub-agents, helper sessions, or external critic tools are started, their outputs become
 planning-gate inputs.
 
-- Record the critic names, responsibilities, and status in `PLAN.md`.
+- Record the critic names, responsibilities, and status in the active Phase Plan.
 - While critics run, continue only non-overlapping discovery or code reading.
 - Do not lock the execution-ready plan or start implementation while an expected critic is still pending.
 - Do not declare a critic unavailable merely because it is slower than local
@@ -263,7 +269,7 @@ If any of these are unknown, mark the gap explicitly instead of pretending the p
 7. Apply the code construction router from `mansu-operating-model/references/CODE_CONSTRUCTION_ORDER.md`: detect the current construction phase, read the relevant source skill when needed, and extract phase-specific actions.
 8. Split the work into vertical slices by feature, behavior, or user flow.
 9. Assign each slice a mode: `lite`, `strict`, or `blocked`.
-10. Record the role mapping, critic status, execution-ready plan, slice table, and mode decisions in `PLAN.md`.
+10. Record the role mapping, critic status, execution-ready plan, slice table, and mode decisions in the active Phase Plan.
 11. Start execution automatically after the plan gate passes; pause only for explicit approval gates, risky actions, or unresolved blockers.
 12. Continue the sequential slice loop until every unblocked slice is closed.
 13. Run final closeout verification and commit accounting.
@@ -334,7 +340,7 @@ A slice is fully closed only when:
 - its delegated skill's close criteria are satisfied
 - validation is complete
 - review, QA, and checkpoint are complete
-- `PLAN.md` reflects the current status and next starting point
+- the active Phase Plan reflects the current status and next starting point
 - `개발일지.md` or the project worklog is updated when used
 - commit status is resolved: strict slices have a slice commit, while lite slices
   have a commit or explicit no-commit reason; strict no-commit exceptions require
@@ -355,12 +361,12 @@ Do not claim the Mansu TDD Total workflow is complete until this checklist is
 filled. Missing evidence means the work is still open, even if the code appears
 to work.
 
-- `[NS-PLAN-ROLES]` `PLAN.md` contains the Planner / Critics / Synthesizer role mapping.
+- `[NS-PLAN-ROLES]` The active Phase Plan contains the Planner / Critics / Synthesizer role mapping.
 - `[NS-REAL-CRITICS]` If real critic agents were used, their names, responsibilities, and outcomes
   are recorded.
 - `[NS-CRITIC-FALLBACK]` If real critic agents were not used for non-trivial work, the fallback reason
   is recorded.
-- `[NS-PLAN-SLICES]` `PLAN.md` contains an execution-ready plan and a slice table.
+- `[NS-PLAN-SLICES]` The active Phase Plan contains an execution-ready plan and a slice table.
 - `[NS-SLICE-CARDS]` Every slice has mode, rationale, validation path, Oh My execution mode, gstack
   gate path, close criteria, and worklog note.
 - `[NS-SLICE-STATUS]` Every unblocked slice is either closed or has a recorded blocker.
@@ -369,7 +375,7 @@ to work.
 - `[NS-STRICT-COMMIT]` Strict slices have per-slice commit evidence, or an explicit policy override is
   recorded as `commit-deferred` and resolved during final commit accounting.
 - `[NS-GATE-EXCEPTIONS]` Every skipped or replaced gate has a reason and an equivalent evidence path.
-- `[NS-NEXT-POINT]` `PLAN.md` shows the current status and next starting point.
+- `[NS-NEXT-POINT]` The active Phase Plan shows the current status and next starting point.
 - `[NS-WORKLOG]` `개발일지.md` or the project worklog records completed work when the project uses one.
 - `[NS-FINAL-BUILD]` Final project-level build/test/type/lint or the project equivalent has run, or
   the reason it could not run is recorded.
@@ -390,7 +396,7 @@ even when the explanatory wording changes.
 ## Mode-change rules
 
 - Escalate from lite to strict if validation reveals hidden behavior risk, architecture churn, or a natural failing RED test.
-- Downgrade from strict to lite only before implementation starts and only with a written rationale in `PLAN.md`.
+- Downgrade from strict to lite only before implementation starts and only with a written rationale in the active Phase Plan.
 - If a slice expands beyond its completion conditions, stop and re-plan that slice before continuing.
 - If the plan keeps changing during execution, return to this skill and re-dispatch the remaining slices.
 
@@ -401,10 +407,10 @@ When all slices are complete:
 - run the project-level build/test/type/lint suite that is relevant to the repo
 - run final QA or browser verification when user-visible behavior changed
 - run a final diff review or equivalent project review gate when code changed
-- keep only active follow-up items in `PLAN.md`
+- keep only active follow-up items in the active Phase Plan
 - move completed multi-slice detail into `개발일지.md` or the project worklog
 - include the final slice modes and validation results in the worklog
 - create a final release/docs commit only when final docs, version, changelog, or deferred-commit policy requires it; otherwise record that per-slice commits already cover the code changes
 - if per-slice commits were skipped or deferred, create the final implementation commit after final verification unless the user or project policy forbids it
 - report what was verified, what could not be verified, remaining risks, and any follow-up checks needed
-- avoid leaving the same completed work fully expanded in both `PLAN.md` and `개발일지.md`
+- avoid leaving the same completed work fully expanded in both the active Phase Plan and `개발일지.md`

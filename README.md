@@ -59,10 +59,17 @@ The public lifecycle spine is locked to six separate numbered routes:
 `mansu-1define -> mansu-2plan -> mansu-3build -> mansu-4verify -> mansu-5review -> mansu-6ship`.
 Compatibility aliases such as `mansu-project-start` and legacy unnumbered names do not replace, merge, rename, or hide these public phase routes.
 
+Define is Ouroboros-first. `mansu-1define` starts with Ouroboros interview/PM/Seed style definition and records a design intent seed instead of inventing a Mansu-owned design questionnaire. When that definition reveals a UI, user-facing product, or visible workflow, Define then routes to a source-skill design-context interview, with `gstack-design-consultation` as the default installed route and `gstack-design-shotgun` / `gstack-plan-design-review` used only when their specific critique or direction role fits.
+
+Plan owns feature priority and the design artifact boundary. `mansu-2plan` consumes the Define handoff and turns it into a feature inventory, MVP/later split, priority rationale, `DESIGN.md`, design direction, implementation roadmap, and any approved design artifacts; Define only records the intent, evidence, and handoff needed for Plan.
+The Plan hierarchy is `Feature Priority / MVP Cut -> Project Phase Roadmap -> Phase Plan -> Slice`: priority chooses the MVP, the roadmap orders project phases with exit criteria, the Phase Plan details exactly one active phase, and Slices are the units Build executes.
+Plan tiers control depth. Quick Plan is for a small low-risk change, Standard Plan is for normal feature work, and Heavy Plan is for new apps, major feature families, unclear architecture, or high-risk work using addyosmani planning/spec/API sources plus gstack critique when useful.
+`mansu-2plan` is not complete with a rough outline. It must include input evidence, feature priority, architecture/interface decisions, design/environment planning, phase exit criteria, current-phase vertical slices, and validation commands before Build handoff.
+
 | Phase | Plain meaning | Explanation |
 | --- | --- | --- |
-| Define | Decide what to build | Clarify the problem, needed features, scope, and finish line. |
-| Plan | Turn it into work | Decide what to build first, how to implement it, and the order of tasks. |
+| Define | Decide what to build | Clarify the problem, candidate features, scope, priority signals, and finish line through Ouroboros first; UI/user-facing scope then gets a source-skill design-context interview and design intent seed handoff. |
+| Plan | Turn it into work | Decide feature priority, MVP/later split, Project Phase Roadmap, active Phase Plan, and Slice order, including turning the design handoff into `DESIGN.md`, design direction, and approved artifacts. |
 | Build | Make it | Write code, build screens, store data, and implement behavior. |
 | Verify | Check that it works | Test buttons, inputs, save/load paths, error cases, browser behavior, and other real usage. Passing verification continues into Review by default. |
 | Review | Check the result | Look for complexity, missed requirements, weak UX, risky code, and maintainability problems. |
@@ -99,8 +106,8 @@ mansu-0help
 Mansu will classify your situation and route you to the right next skill:
 
 - `mansu-9setup` for install, update, and runtime setup.
-- `mansu-1define` for a new product, app, repo, or major feature family.
-- `mansu-2plan` for requirements/spec, architecture, design direction, and roadmap.
+- `mansu-1define` for a new product, app, repo, or major feature family; it runs Ouroboros first, records feature candidates and priority signals, then routes UI/user-facing scope through source-skill design-context interview before Plan.
+- `mansu-2plan` for requirements/spec, Feature Priority / MVP Cut, Project Phase Roadmap, active Phase Plan, Slices, architecture, `DESIGN.md`, design direction, and artifacts from that handoff.
 - `mansu-3build` for implementation through `mansu-tdd-total`.
 - `mansu-4verify` for BDD-style Given/When/Then checks, runtime checks, browser checks, and QA evidence.
 - `mansu-5review` for quality, architecture, design, security, and decision risk.
@@ -247,8 +254,8 @@ See [MANSU_PHILOSOPHY.md](./MANSU_PHILOSOPHY.md) for the full doctrine.
 | --- | --- | --- |
 | `mansu-0help` | You are new, unsure what to do next, or need the safest Mansu route. | Beginner-friendly route helper |
 | `mansu-0manual` | You want the visual HTML guide at `docs/mansu-manual.html`. | Beginner-friendly HTML manual |
-| `mansu-1define` | You are starting a new product, app, repo, or major feature family and need source-skill interview, requirements, acceptance criteria, and source-of-truth artifacts. | Define phase |
-| `mansu-2plan` | You need requirements/spec, architecture, design direction, phase roadmap, and current phase `PLAN.md`. | Plan phase |
+| `mansu-1define` | You are starting a new product, app, repo, or major feature family and need source-skill interview, feature candidates, priority signals, requirements, acceptance criteria, and source-of-truth artifacts. | Define phase |
+| `mansu-2plan` | You need requirements/spec, Feature Priority / MVP Cut, Project Phase Roadmap, active Phase Plan, Slices, architecture, and design direction. Use Quick Plan, Standard Plan, or Heavy Plan depth based on risk. | Plan phase |
 | `mansu-3build` | You are implementing a feature or refactor and need `mansu-tdd-total` slice execution. | Build phase |
 | `mansu-4verify` | You need tests, runtime checks, browser checks, QA evidence, BDD-style Given/When/Then proof, or security/performance proof; passing verification continues into `mansu-5review` by default. | Verify phase |
 | `mansu-5review` | You need quality, maintainability, architecture, design, security, or decision-risk review. | Review phase |
@@ -279,7 +286,7 @@ Compatibility/admin surfaces:
 - Visual guide: `mansu-0manual` or [docs/mansu-manual.html](./docs/mansu-manual.html)
 - Install, read-only source health check, update, runtime detection, skill sync, adapter compatibility: `mansu-9setup`
 - Internal source catalog/manual/validator maintenance after confirmed drift: `mansu-source-curator`
-- New project or major feature family: `mansu-1define`, then `mansu-2plan`
+- New project or major feature family: `mansu-1define`, then `mansu-2plan`; UI/user-facing scope gets Ouroboros definition before design-context interview, and Plan turns the design intent seed into `DESIGN.md` / design direction / artifacts
 - Project doctrine, `AGENTS.md`, `CODING_RULES.md`: `mansu-operating-model`
 - Feature or refactor implementation: `mansu-3build`
 - Behavior proof, BDD-style Given/When/Then QA, browser/runtime verification, then default review handoff: `mansu-4verify`

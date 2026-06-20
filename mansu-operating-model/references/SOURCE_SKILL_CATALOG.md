@@ -248,19 +248,26 @@ Open Design is different from VoltAgent/awesome-design-md:
 - gstack owns independent design critique, browser evidence, and visual QA.
 - Mansu owns source choice, CLI execution approval, handoff, and final evidence.
 
-During `mansu-project-start`, user-facing UI must pass through a design route
-selection before phase roadmap planning. Mansu should not substitute its own
-design questionnaire for these routes. Use design/taste research when direction
-is unclear, Open Design when artifact generation is needed and available,
-VoltAgent/awesome-design-md for `DESIGN.md` structure, and gstack design skills
-for exploration and critique.
+During the public `mansu-1define` -> `mansu-2plan` lifecycle, user-facing UI must pass through a design route selection before phase roadmap planning.
+Mansu should not substitute its own design questionnaire for these routes. Use
+design/taste research when direction is unclear, Open Design when artifact
+generation is needed and available, VoltAgent/awesome-design-md for `DESIGN.md`
+structure, and gstack design skills for exploration and critique.
+
+In the public lifecycle, `mansu-1define` owns Ouroboros-first definition and can
+record a post-Ouroboros design intent seed/handoff. `mansu-2plan` consumes that
+handoff and owns `DESIGN.md` creation/refinement, design artifacts, design
+direction, and the roadmap. Source skills such as `gstack-design-consultation`
+may create or contribute to `DESIGN.md`; that is source capability, not a move
+of Mansu phase ownership out of Plan.
 
 Default design route stack:
 
 1. For a greenfield UI with no design system or `DESIGN.md`, use
    `gstack-design-consultation` as the default design-system route. It
    understands the product, researches the landscape when needed, proposes the
-   design system, and creates `DESIGN.md`.
+   design system, and can create or contribute to `DESIGN.md` under the
+   Plan-owned lifecycle boundary.
 2. When taste, market position, competitors, or live product references are
    genuinely unclear, use Oh My / OMO `research` or `deepsearch` before or
    inside the consultation.
@@ -320,6 +327,10 @@ Seed, Ledger, and long-horizon direction, with Ouroboros execution opt-in only;
 gstack provides independent review, QA, design critique,
 security, performance, ship, and learning gates; Open Design creates design
 artifacts; VoltAgent/awesome-design-md provides `DESIGN.md` reference grammar.
+Mansu does not use OMO `ulw-plan` as a default Plan route. `ulw-plan` is allowed
+only when the user explicitly invokes `$omo:ulw-plan`, `omo:ulw-plan`,
+`ulw-plan`, or asks for OMO ultrawork planning, and in the OMO/LazyCodex
+capability description below.
 
 | Capability | Source skills | Route when |
 | --- | --- | --- |
@@ -374,10 +385,11 @@ implementation names only.
 
 The route is:
 
-1. Define purpose, user, current workaround, desired outcome, non-goals, and
-   success signal.
+1. Define purpose, user, current workaround, desired outcome, non-goals,
+   candidate features, priority signals, and success signal.
    This must satisfy the Zero-to-PLAN minimum gate: purpose, user/problem,
-   evidence, assumptions, direction, order, and execution bridge.
+   evidence, assumptions, feature priority, direction, order, and execution
+   bridge.
 2. Use the addyosmani lifecycle as the phase map: define/spec first, then plan,
    build, verify, review, and ship only when the previous phase has enough
    evidence.
@@ -386,6 +398,8 @@ The route is:
    init/interview/PM/Seed/Ledger route first to create upstream definition artifacts.
    If skipped, record the explicit skipped reason and label any Mansu-only
    kickoff as fallback.
+   For user-facing UI or product scope, record a design intent seed and source
+   route handoff after Ouroboros; do not create `DESIGN.md` in Define.
 4. Research references using evidence-ranked sources: official/current docs and
    source files first for technical truth; GitHub, Reddit, and Threads for
    adoption, pain, taste, and implementation signals with dates recorded.
@@ -398,9 +412,9 @@ The route is:
    repo-visible artifact and record why larger documents were skipped.
 7. Verify with `gstack-autoplan` and focused `gstack-plan-*` reviewers.
 8. Hand off to public route `mansu-3build` only after the roadmap artifact,
-   ordered phase list, exactly one active phase, current phase ordered slices,
-   gate mapping, validation path, upstream artifacts, and open blockers are
-   recorded.
+   prioritized feature list, MVP/later split, ordered phase list, exactly one
+   active phase, current phase ordered slices, gate mapping, validation path,
+   upstream artifacts, and open blockers are recorded.
    Backing implementation `mansu-build` then uses `mansu-tdd-total` as its
    build engine.
 
@@ -465,9 +479,12 @@ but it must not pretend the upstream tools all use the same filename.
 4. Run source-aware research with Oh My `research` / `deepsearch` patterns and
    addyosmani `source-driven-development`; include GitHub, Reddit, Threads, and
    official docs when freshness matters.
-5. Draft or update the design/spec/blueprint layer: product shape, feature groups, domain model,
-   architecture, data/API boundaries, technology stack, secret/API-key handling,
-   UI/UX direction, build strategy, phase roadmap, risks, and non-goals.
+5. Draft or update the design/spec/blueprint layer: product shape, feature
+   groups, feature priority, MVP/later split, domain model, architecture,
+   data/API boundaries, technology stack, secret/API-key handling, UI/UX
+   direction, build strategy, phase roadmap, risks, and non-goals.
+   Plan consumes any Define design intent seed and owns `DESIGN.md`
+   creation/refinement, design artifacts, design direction, and roadmap.
 6. Review that layer with `gstack-autoplan` so CEO, design, engineering, and
    DX perspectives all pass over it.
 7. Deepen weak areas with focused `gstack-plan-ceo-review`,
@@ -509,9 +526,11 @@ but it must not pretend the upstream tools all use the same filename.
    Mansu. Mansu runs the needed CLI commands, records the Open Design skill,
    design system, preview/export path, and keeps the result as evidence.
 6. If the project has no current design source, inspect VoltAgent/awesome-design-md
-   references and create or update `DESIGN.md` with visual atmosphere, color
-   roles, typography, component rules, layout, elevation, do/don't guardrails,
-   responsive behavior, and agent prompt handoff.
+   references and create or update `DESIGN.md` inside public `mansu-2plan` with
+   visual atmosphere, color roles, typography, component rules, layout,
+   elevation, do/don't guardrails, responsive behavior, and agent prompt
+   handoff. `gstack-design-consultation` may create or contribute to this file,
+   but Plan owns the durable artifact and handoff.
 7. Use `gstack-plan-design-review` before implementation.
 8. Use `gstack-design-consultation` or `gstack-design-shotgun` when Open Design
    is unavailable, when visual alternatives are needed, or when Mansu needs
