@@ -1,4 +1,4 @@
 interface:
   display_name: Mansu 9 Setup
   short_description: Install, update, sync, or check Mansu readiness.
-  default_prompt: Use $mansu-9setup as the primary numbered route backed by mansu-setup. Read mansu-setup/SKILL.md and handle install, update, source-check, sync, repair, or runtime readiness.
+  default_prompt: Use $mansu-9setup as the primary numbered route backed by mansu-setup. Read mansu-setup/SKILL.md; if mansu-setup/SKILL.md is missing, stale, or unreadable, bootstrap from the canonical repo https://github.com/bigpine86/mansu-skills.git by finding or cloning it into $HOME/.mansu/repos/mansu-skills, then read that checkout's mansu-setup/SKILL.md. For Codex, register and refresh Mansu skills by syncing every top-level mansu-* directory into $HOME/.codex/skills/<skill-name>, treating older registered Codex copies as stale Mansu-owned copies to replace from the checkout, then run installed-copy validation. Handle install, update, source-check, sync, repair, or runtime readiness.

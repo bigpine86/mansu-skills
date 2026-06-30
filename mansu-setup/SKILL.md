@@ -20,9 +20,14 @@ It supports runtime targets such as Hermes, OpenCode, Codex, or Claude Code.
 
 ## Core promise
 
-- Find the local Mansu repo and canonical branch.
+- Find the local Mansu repo and canonical branch. If the repo is missing, clone
+  the canonical repo `https://github.com/bigpine86/mansu-skills.git` into
+  `$HOME/.mansu/repos/mansu-skills` before continuing.
 - Detect the current runtime target, agent host, and operating system before choosing paths or commands.
-- Sync `mansu-*` skills into the correct runtime skill directory.
+- Register/sync `mansu-*` skills into the correct runtime skill directory. For
+  Codex, the registration target is `$HOME/.codex/skills/<skill-name>`.
+- Treat older registered runtime copies of Mansu-owned skills as stale and
+  replace them from the current checkout after validation.
 - Install or update required source tools: runtime skill dir, git, Ouroboros, and gstack.
 - Check source skill freshness for Ouroboros, gstack, Oh My / OMO / OMC, addyosmani/agent-skills style skills, and VoltAgent/awesome-design-md design references.
 - Check and, when explicitly approved, prepare Open Design as a callable
@@ -228,7 +233,8 @@ Collect this before making changes:
 If no Mansu repo exists, clone the canonical repo:
 
 ```bash
-git clone https://github.com/bigpine86/mansu-skills.git
+mkdir -p "$HOME/.mansu/repos"
+git clone https://github.com/bigpine86/mansu-skills.git "$HOME/.mansu/repos/mansu-skills"
 ```
 
 Then from the Mansu repo:
@@ -250,6 +256,10 @@ Then from the Mansu repo:
 10. Run `scripts/validate_mansu_manual.sh` and `scripts/validate_mansu_skills.sh` in the repo before syncing runtime copies.
 11. Create the selected runtime skill directory if missing and safe.
 12. Sync every top-level `mansu-*` directory into `<runtime-skill-dir>/<skill-name>`.
+    For Codex, this means registering the skills under
+    `$HOME/.codex/skills/<skill-name>`. Existing Mansu-owned directories there
+    are stale registration copies and should be replaced from the current
+    checkout, while unrelated user skills must not be touched.
 13. Copy `docs/mansu-manual.html` into `<runtime-skill-dir>/mansu-manual/docs/mansu-manual.html` so the installed manual skill has its HTML artifact.
 14. Refresh gstack and Oh My source skill links/copies into the selected runtime target after their installers run.
 15. Do not copy `.git`, unrelated root docs, or non-skill files into individual skill folders. The manual HTML is the only root-doc exception.
@@ -261,7 +271,11 @@ Then from the Mansu repo:
 
 When the user asks to update:
 
-1. Check Mansu repo status. If clean, update with `git pull --ff-only`; if dirty, stop and report.
+1. Locate the Mansu repo. If it is missing, clone the canonical repo
+   `https://github.com/bigpine86/mansu-skills.git` into
+   `$HOME/.mansu/repos/mansu-skills` and continue from that checkout. If the
+   repo exists and is clean, update with `git pull --ff-only`; if dirty, stop
+   and report.
 2. Re-detect runtime target, host, OS, and selected skill directory.
 3. Install Ouroboros if missing; otherwise update it with the official installer/package manager path, then run `ouroboros setup` for the selected runtime when safe. For Codex, run `ouroboros setup --runtime codex --mcp-mode auto --non-interactive` and verify `mcp__ouroboros.ouroboros_interview` is discoverable before relying on `mansu-1define`.
 4. Install gstack if missing; otherwise update it with gstack's update flow or a safe `fetch` plus `merge --ff-only`, then run its setup for the selected host.
@@ -274,7 +288,7 @@ When the user asks to update:
 10. If source skills changed in a way that affects Mansu routing, use `mansu-source-curator` to update `SOURCE_SKILL_CATALOG.md`, `SOURCE_SKILL_LOCK.json`, document/code-order references, validators, and worklog before relying on the new assumptions.
 11. Confirm `docs/mansu-manual.html` still matches the updated routing assumptions; if runtime/source routing changed, update it before syncing.
 12. Re-run `scripts/validate_mansu_manual.sh` and `scripts/validate_mansu_skills.sh`.
-13. Sync all top-level `mansu-*` directories into the selected runtime skill directory only after source curation and validation pass.
+13. Sync all top-level `mansu-*` directories into the selected runtime skill directory only after source curation and validation pass. For Codex, explicitly register/refresh them under `$HOME/.codex/skills/<skill-name>` so old installed versions are replaced by the current checkout.
 14. Copy `docs/mansu-manual.html` into `<runtime-skill-dir>/mansu-manual/docs/mansu-manual.html` whenever the manual changed or runtime copies are refreshed.
 15. Refresh gstack skill links from the installed gstack repo into the selected runtime skill directory.
 16. Refresh Oh My / OMO / OMC source skill links or copies after the matching source is installed and the selected runtime target expects it.
@@ -304,7 +318,12 @@ the Open Design callable route check was skipped.
 
 Use repair when the source repos look correct but local runtime skills are missing or stale.
 
+- If the Mansu repo cannot be found, clone
+  `https://github.com/bigpine86/mansu-skills.git` into
+  `$HOME/.mansu/repos/mansu-skills` before repairing runtime copies.
 - Re-copy local `mansu-*` skill folders from the Mansu repo.
+- For Codex, repair means re-registering all top-level `mansu-*` directories
+  into `$HOME/.codex/skills/<skill-name>` and replacing stale Mansu-owned copies.
 - Recreate missing gstack skill symlinks from the gstack repo if gstack exists.
 - Recreate missing Oh My / OMO / OMC source skill links only when the matching source exists and the runtime target expects it.
 - If Ouroboros, gstack, or the matching Oh My adapter is missing during repair, report that repair needs `install` mode rather than silently skipping the tool.
