@@ -135,6 +135,9 @@ Before Mansu composes source skills, preserve each family in its native role:
   into a fixed universal script when the current task needs a smaller route.
 - Ouroboros: definition, Seed/Ledger, and continuity; do not reduce it to a
   generic planning prompt or let it execute autonomously unless the user asked.
+- ULW deep interview / `ulw-plan`: plan-density support after definition; do not
+  let it replace the Ouroboros definition interview or become the default Mansu
+  Plan route without explicit OMO planning invocation.
 - VoltAgent/awesome-design-md: `DESIGN.md` reference grammar and taste library;
   do not copy a brand blindly or treat a reference file as the product's final
   visual identity.
@@ -171,6 +174,12 @@ project definition that Mansu can critique and slice.
 | Session resume/status | `status`, `resume-session`, `cancel` | an existing Ouroboros session must be inspected, resumed, or stopped |
 | Autonomous continuation | `evolve`, `ralph`, non-`--skip-run` `auto` | only when the user explicitly wants Ouroboros to continue beyond definition; otherwise Mansu translates the output into phases and slices first |
 | Team publishing | `publish` | a Seed should become GitHub Issues after Mansu confirms boundaries |
+
+Ouroboros interview is the first definition interview for new or fuzzy work.
+ULW deep interview and gstack interview-like routes may ask excellent questions,
+but their Mansu roles are different: ULW deep interview densifies planning after
+definition, while gstack pressure-tests product, design, engineering, DX, and
+ship judgment. Do not swap those roles without recording a fallback reason.
 
 ## gstack Capability Map
 
@@ -351,6 +360,12 @@ capability description below.
 | Memory/logging | `note`, `learner`, `hud`, `configure-notifications` | session notes, reusable patterns, progress HUD, completion notifications |
 | Fast small work | `eco` | low-risk quick fix where full Mansu spine would be overkill |
 
+ULW deep interview belongs in the Plan layer, not the Define layer. If the user
+explicitly invoked OMO ultrawork planning, public `mansu-2plan` may use that
+interview output to deepen requirements, phase boundaries, slice ordering,
+risks, and validation gates. Public `mansu-1define` still uses Ouroboros first
+for purpose, user, constraints, Seed/Ledger, and acceptance criteria.
+
 ## addyosmani/agent-skills Capability Map
 
 Use addyosmani-style skills as the broad development lifecycle and coding-order
@@ -404,6 +419,10 @@ The route is:
    kickoff as fallback.
    For user-facing UI or product scope, record a design intent seed and source
    route handoff after Ouroboros; do not create `DESIGN.md` in Define.
+   Do not substitute ULW deep interview or gstack interview-like consultation
+   for this definition gate. Use them later for planning density or expert
+   critique after the Ouroboros definition route has run or a current
+   repo-visible definition artifact has been cited.
 4. Research references using evidence-ranked sources: official/current docs and
    source files first for technical truth; GitHub, Reddit, and Threads for
    adoption, pain, taste, and implementation signals with dates recorded.

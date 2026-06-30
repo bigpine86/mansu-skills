@@ -73,6 +73,10 @@ Feature Priority / MVP Cut -> Project Phase Roadmap -> Phase Plan -> Slice
   `$omo:ulw-plan`, `omo:ulw-plan`, `ulw-plan`, or an explicit request for OMO
   ultrawork planning. Generic phrases such as "parallel planning", "staged
   planning", or "decompose the work" do not trigger OMO `ulw-plan`.
+- ULW deep interview is planning-density support, not project definition. Use
+  it only after consuming the Define handoff or cited definition artifact, then
+  reconcile its output into Feature Priority / MVP Cut, Project Phase Roadmap,
+  active Phase Plan, and Slice boundaries.
 - For user-facing UI/product work, route design through OMO research/deepsearch
   when available, Open Design, VoltAgent/awesome-design-md, gstack
   `gstack-design-consultation`, `gstack-design-shotgun`, and

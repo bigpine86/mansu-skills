@@ -49,6 +49,12 @@ Fallback definition without Ouroboros is allowed only after the setup/update or
 repair path was attempted or explicitly declined, and it must be labeled as fallback.
 Do not silently replace Ouroboros interview with Mansu-owned questions.
 
+Do not substitute ULW deep interview, OMO `ulw-plan`, gstack `office-hours`,
+`gstack-design-consultation`, or other interview-like source skills for this
+Ouroboros definition gate. Their questions can be valuable later, but their
+Mansu roles are planning density, product/design critique, or specialist
+consultation after the definition source is established.
+
 ## Post-Ouroboros design-context gate
 
 After Ouroboros interview or cited existing definition evidence completes, check
@@ -102,6 +108,8 @@ proceeding.
   definition.
 - Use addyosmani `interview-me`, `idea-refine`, and `spec-driven-development`
   for crisp clarification, requirements, and acceptance criteria.
+- Do not use ULW deep interview or OMO `ulw-plan` as a Define substitute; they
+  belong to public `mansu-2plan` only when explicit OMO planning was invoked.
 - Use gstack `gstack-design-consultation` after Ouroboros when user-facing
   UI/product scope needs design-context interview before public `mansu-2plan`.
 - Use gstack `office-hours` or `plan-ceo-review` when product wedge, value,

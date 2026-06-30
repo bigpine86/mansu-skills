@@ -118,6 +118,9 @@ require_contains "$DEFINE" 'do not require the `ooo` command' 'define must not r
 require_contains "$DEFINE" 'Do not run Claude Code adapter commands unless' 'define must not use Claude adapter commands from Codex'
 require_contains "$DEFINE" '`update`/`repair` mode' 'define must route broken MCP exposure to setup update or repair'
 require_contains "$DEFINE" 'Do not silently replace Ouroboros interview with Mansu-owned questions' 'define must not silently fallback from Ouroboros'
+require_contains "$DEFINE" 'Do not substitute ULW deep interview' 'define must not substitute ULW deep interview for Ouroboros definition'
+require_contains "$DEFINE" 'planning density, product/design critique, or specialist' 'define must describe ULW/gstack as later supporting roles'
+require_contains "$DEFINE" 'Do not use ULW deep interview or OMO `ulw-plan` as a Define substitute' 'define source route must keep ULW planning out of Define'
 require_contains "$DEFINE" 'Skipping the Ouroboros interview is allowed only when current, repo-visible' 'define must only skip Ouroboros with current artifact evidence'
 require_contains "$DEFINE" 'definition artifacts already exist' 'define must cite existing definition artifacts before skipping Ouroboros'
 require_contains "$DEFINE" 'Do not start implementation' 'define must block implementation'
@@ -125,6 +128,7 @@ require_contains "$DEFINE_PUBLIC" 'Next route when complete: `mansu-2plan`' 'pub
 require_contains "$DEFINE_PUBLIC" 'Compatibility implementation: `mansu-define`' 'numbered define route must label unnumbered define as compatibility implementation'
 require_contains "$ROOT_DIR/mansu-define/agents/openai.yaml" 'mcp__ouroboros\.ouroboros_interview' 'define OpenAI prompt must name the Codex Ouroboros MCP tool'
 require_contains "$ROOT_DIR/mansu-1define/agents/openai.yaml" 'mcp__ouroboros\.ouroboros_interview' 'public define OpenAI prompt must name the Codex Ouroboros MCP tool'
+require_contains "$ROOT_DIR/mansu-1define/agents/openai.yaml" 'Do not substitute ULW deep interview' 'public define OpenAI prompt must preserve interview role split'
 
 scenario "Given Ouroboros finds user-facing product scope, Then Define routes design context before Plan without owning DESIGN.md"
 require_contains "$DEFINE" '^## Post-Ouroboros design-context gate$' 'define must have a post-Ouroboros design-context gate'
@@ -172,6 +176,9 @@ require_contains "$PLAN_OPENAI" 'Standard Plan' 'plan OpenAI prompt must define 
 require_contains "$PLAN_OPENAI" 'Heavy Plan' 'plan OpenAI prompt must define Heavy Plan tier'
 forbid_default_ulw_plan_route "$PLAN" 'plan must not make ulw-plan a default Plan route'
 forbid_default_ulw_plan_route "$PLAN_OPENAI" 'plan OpenAI prompt must not make ulw-plan a default Plan route'
+require_contains "$PLAN" 'ULW deep interview is planning-density support, not project definition' 'plan must define ULW deep interview as Plan-layer support'
+require_contains "$PLAN" 'reconcile its output into Feature Priority / MVP Cut' 'plan must reconcile ULW output into Mansu planning hierarchy'
+require_contains "$PLAN_OPENAI" 'ULW deep interview is planning-density support after definition' 'plan OpenAI prompt must preserve ULW deep interview role boundary'
 require_contains "$PLAN" 'feature inventory, priority rationale, MVP/later split' 'plan must require feature priority evidence'
 require_contains "$PLAN" 'environment/dependency setup plan when needed' 'plan must include conditional environment setup planning'
 require_contains "$PLAN" 'Prefer `uv` for Python' 'plan must prefer uv for new Python setup when appropriate'

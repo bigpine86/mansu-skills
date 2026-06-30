@@ -99,6 +99,9 @@ grep -q 'do not require the `ooo` command' "$ROOT_DIR/mansu-define/SKILL.md"
 grep -q '`update`/`repair` mode' "$ROOT_DIR/mansu-define/SKILL.md"
 grep -q 'Ouroboros setup blocked reason:' "$ROOT_DIR/mansu-define/SKILL.md"
 grep -q 'Do not silently replace Ouroboros interview with Mansu-owned questions' "$ROOT_DIR/mansu-define/SKILL.md"
+grep -q 'Do not substitute ULW deep interview' "$ROOT_DIR/mansu-define/SKILL.md"
+grep -q 'planning density, product/design critique, or specialist' "$ROOT_DIR/mansu-define/SKILL.md"
+grep -q 'Do not use ULW deep interview or OMO `ulw-plan` as a Define substitute' "$ROOT_DIR/mansu-define/SKILL.md"
 grep -q '^## Post-Ouroboros design-context gate$' "$ROOT_DIR/mansu-define/SKILL.md"
 grep -q 'user-facing UI/product scope is present' "$ROOT_DIR/mansu-define/SKILL.md"
 grep -q 'design-context interview before public `mansu-2plan`' "$ROOT_DIR/mansu-define/SKILL.md"
@@ -118,10 +121,12 @@ require_terms "$ROOT_DIR/mansu-define/agents/openai.yaml" 'define OpenAI prompt 
 require_terms "$ROOT_DIR/mansu-define/agents/openai.yaml" 'define OpenAI prompt lost Codex Ouroboros MCP route' 'Codex' 'mcp__ouroboros.ouroboros_interview' 'initial_context' 'cwd'
 require_terms "$ROOT_DIR/mansu-define/agents/openai.yaml" 'define OpenAI prompt lost Claude adapter guard' 'do not run Claude' 'unless' 'Claude Code'
 require_terms "$ROOT_DIR/mansu-define/agents/openai.yaml" 'define OpenAI prompt lost short-idea seed contract' 'short' 'idea' 'seed context' 'Ouroboros'
+require_terms "$ROOT_DIR/mansu-define/agents/openai.yaml" 'define OpenAI prompt lost interview role split' 'Do not substitute ULW deep interview' 'Ouroboros definition gate' 'planning density'
 require_terms "$ROOT_DIR/mansu-define/agents/openai.yaml" 'define OpenAI prompt lost design source-route contract' 'design-context' 'mansu-2plan' 'gstack-design-consultation'
 require_terms "$ROOT_DIR/mansu-define/agents/openai.yaml" 'define OpenAI prompt lost design handoff contract' 'design intent seed' 'DESIGN.md' 'mansu-2plan'
 require_terms "$ROOT_DIR/mansu-define/agents/openai.yaml" 'define OpenAI prompt lost Mansu design questionnaire boundary' 'Mansu-owned' 'design questionnaire'
 require_terms "$ROOT_DIR/mansu-1define/agents/openai.yaml" 'public define OpenAI prompt lost short-idea seed contract' 'short' 'idea' 'seed context' 'Ouroboros'
+require_terms "$ROOT_DIR/mansu-1define/agents/openai.yaml" 'public define OpenAI prompt lost interview role split' 'Do not substitute ULW deep interview' 'Ouroboros definition gate'
 require_terms "$ROOT_DIR/mansu-1define/agents/openai.yaml" 'public define OpenAI prompt lost Codex Ouroboros MCP route' 'Codex' 'mcp__ouroboros.ouroboros_interview' 'initial_context' 'cwd'
 require_terms "$ROOT_DIR/mansu-1define/agents/openai.yaml" 'public define OpenAI prompt lost setup repair route' 'mansu-9setup' 'install' 'update' 'repair'
 require_terms "$ROOT_DIR/mansu-1define/agents/openai.yaml" 'public define OpenAI prompt lost design source-route contract' 'design-context' 'mansu-2plan' 'gstack-design-consultation'
@@ -140,6 +145,8 @@ require_literal "$ROOT_DIR/mansu-plan/SKILL.md" 'Standard Plan' 'plan skill lost
 require_literal "$ROOT_DIR/mansu-plan/SKILL.md" 'Heavy Plan' 'plan skill lost Heavy Plan tier'
 require_ordered_terms "$ROOT_DIR/mansu-plan/SKILL.md" 'plan skill lost hierarchy terms' 'Feature Priority' 'Project Phase Roadmap' 'Phase Plan' 'Slice'
 require_literal "$ROOT_DIR/mansu-plan/SKILL.md" 'OMO `ulw-plan` is allowed only for literal user invocation' 'plan skill lost explicit-use-only ulw-plan whitelist'
+require_literal "$ROOT_DIR/mansu-plan/SKILL.md" 'ULW deep interview is planning-density support, not project definition' 'plan skill lost ULW deep interview role boundary'
+require_terms "$ROOT_DIR/mansu-plan/SKILL.md" 'plan skill lost ULW reconciliation contract' 'reconcile' 'Feature Priority / MVP Cut' 'Project Phase Roadmap' 'Phase Plan' 'Slice'
 grep -q 'Generic phrases such as "parallel planning"' "$ROOT_DIR/mansu-plan/SKILL.md"
 forbid_contains "$ROOT_DIR/mansu-plan/SKILL.md" 'Use OMO.*ulw-plan|ulw-plan when decomposition|Heavy Plan.*ulw-plan|ulw-plan.*Heavy Plan' 'plan skill reintroduced default Plan-route ulw-plan'
 grep -q 'feature inventory, priority rationale, MVP/later split' "$ROOT_DIR/mansu-plan/SKILL.md"
@@ -168,6 +175,7 @@ require_terms "$ROOT_DIR/mansu-plan/agents/openai.yaml" 'plan OpenAI prompt lost
 require_terms "$ROOT_DIR/mansu-plan/agents/openai.yaml" 'plan OpenAI prompt lost Phase Plan concept' 'Phase' 'Plan'
 require_terms "$ROOT_DIR/mansu-plan/agents/openai.yaml" 'plan OpenAI prompt lost Slice guidance' 'Slice' 'acceptance criteria' 'impact' 'files'
 require_terms "$ROOT_DIR/mansu-plan/agents/openai.yaml" 'plan OpenAI prompt lost plan tier contract' 'Quick Plan' 'Standard Plan' 'Heavy Plan'
+require_terms "$ROOT_DIR/mansu-plan/agents/openai.yaml" 'plan OpenAI prompt lost ULW deep interview role boundary' 'ULW deep interview' 'planning-density support' 'after definition'
 require_terms "$ROOT_DIR/mansu-plan/agents/openai.yaml" 'plan OpenAI prompt lost quality gate contract' 'shallow' 'outline' 'exit criteria'
 forbid_contains "$ROOT_DIR/mansu-plan/agents/openai.yaml" 'Heavy Plan.*ulw-plan|ulw-plan.*Heavy Plan|default.*ulw-plan|ulw-plan.*default' 'plan OpenAI prompt reintroduced default Plan-route ulw-plan'
 require_terms "$ROOT_DIR/mansu-2plan/agents/openai.yaml" 'public plan OpenAI prompt lost Define handoff priority concepts' 'feature candidates' 'priority signals'
@@ -176,6 +184,7 @@ require_terms "$ROOT_DIR/mansu-2plan/agents/openai.yaml" 'public plan OpenAI pro
 require_terms "$ROOT_DIR/mansu-2plan/agents/openai.yaml" 'public plan OpenAI prompt lost Phase Plan concept' 'Phase' 'Plan'
 require_terms "$ROOT_DIR/mansu-2plan/agents/openai.yaml" 'public plan OpenAI prompt lost Slice guidance' 'Slice' 'acceptance criteria' 'impact' 'files'
 require_terms "$ROOT_DIR/mansu-2plan/agents/openai.yaml" 'public plan OpenAI prompt lost plan tier contract' 'Quick Plan' 'Standard Plan' 'Heavy Plan'
+require_terms "$ROOT_DIR/mansu-2plan/agents/openai.yaml" 'public plan OpenAI prompt lost ULW deep interview role boundary' 'ULW deep interview' 'planning-density support' 'not a substitute for Ouroboros definition'
 require_terms "$ROOT_DIR/mansu-2plan/agents/openai.yaml" 'public plan OpenAI prompt lost quality gate contract' 'shallow' 'outline' 'exit criteria'
 forbid_contains "$ROOT_DIR/mansu-2plan/agents/openai.yaml" 'Heavy Plan.*ulw-plan|ulw-plan.*Heavy Plan|default.*ulw-plan|ulw-plan.*default' 'public plan OpenAI prompt reintroduced default Plan-route ulw-plan'
 require_terms "$ROOT_DIR/mansu-plan/agents/openai.yaml" 'plan OpenAI prompt lost Python environment setup preference' 'Python' 'uv' '.venv' 'appropriate'
