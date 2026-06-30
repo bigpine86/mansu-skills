@@ -60,6 +60,11 @@ The public lifecycle spine is locked to six separate numbered routes:
 Compatibility aliases such as `mansu-project-start` and legacy unnumbered names do not replace, merge, rename, or hide these public phase routes.
 
 Define is Ouroboros-first. `mansu-1define` starts with Ouroboros interview/PM/Seed style definition and records a design intent seed instead of inventing a Mansu-owned design questionnaire. When that definition reveals a UI, user-facing product, or visible workflow, Define then routes to a source-skill design-context interview, with `gstack-design-consultation` as the default installed route and `gstack-design-shotgun` / `gstack-plan-design-review` used only when their specific critique or direction role fits.
+On Codex, that means discovering and using the Ouroboros MCP tool
+`mcp__ouroboros.ouroboros_interview` first. `mansu-setup install` / `update` /
+`repair` prepares this with
+`ouroboros setup --runtime codex --mcp-mode auto --non-interactive` when needed;
+legacy `ooo interview` or Claude adapter commands are not required for Codex.
 
 Plan owns feature priority and the design artifact boundary. `mansu-2plan` consumes the Define handoff and turns it into a feature inventory, MVP/later split, priority rationale, `DESIGN.md`, design direction, implementation roadmap, and any approved design artifacts; Define only records the intent, evidence, and handoff needed for Plan.
 The Plan hierarchy is `Feature Priority / MVP Cut -> Project Phase Roadmap -> Phase Plan -> Slice`: priority chooses the MVP, the roadmap orders project phases with exit criteria, the Phase Plan details exactly one active phase, and Slices are the units Build executes.

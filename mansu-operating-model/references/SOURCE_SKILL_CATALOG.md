@@ -164,7 +164,7 @@ project definition that Mansu can critique and slice.
 | PM / PRD definition | `pm` | product requirements or PM-style project definition is the needed artifact |
 | Seed / source-of-truth creation | `seed` or `auto --skip-run` | the project needs a durable definition before spec/TDR/PLAN |
 | Ledger / session continuity | Ouroboros Ledger/session artifacts | decisions and unanswered questions must survive across sessions |
-| Runtime integration | `ouroboros setup --runtime <target>` | Mansu-setup prepares the host before project-start uses Ouroboros |
+| Runtime integration | `ouroboros setup --runtime <target>`; for Codex `ouroboros setup --runtime codex --mcp-mode auto --non-interactive` | Mansu-setup prepares the host before public `mansu-1define` uses Ouroboros, and Codex must expose `mcp__ouroboros.ouroboros_interview` before Define falls back |
 | Execution from Seed | `run` | user explicitly wants Ouroboros to execute a Seed after Mansu has mapped gates/risks into PLAN |
 | Execution verdict | `evaluate`, `qa` | an Ouroboros execution or artifact needs independent quality evidence |
 | Stuck recovery | `unstuck` | the project is looping, blocked, or needs lateral alternatives |
@@ -393,9 +393,13 @@ The route is:
 2. Use the addyosmani lifecycle as the phase map: define/spec first, then plan,
    build, verify, review, and ship only when the previous phase has enough
    evidence.
-3. If the project is new or still fuzzy, check `ooo` / `ouroboros` before
-   Mansu drafts its own project questions. When available, use Ouroboros
-   init/interview/PM/Seed/Ledger route first to create upstream definition artifacts.
+3. If the project is new or still fuzzy, check the active runtime's Ouroboros
+   route before Mansu drafts its own project questions. In Codex, discover and
+   prefer `mcp__ouroboros.ouroboros_interview`; if MCP is not exposed, use the
+   current `ouroboros init` / `ouroboros pm` CLI or installed runtime skill
+   route. Treat `ooo interview` as legacy compatibility only, not a required
+   command. When available, use the Ouroboros init/interview/PM/Seed/Ledger
+   route first to create upstream definition artifacts.
    If skipped, record the explicit skipped reason and label any Mansu-only
    kickoff as fallback.
    For user-facing UI or product scope, record a design intent seed and source
@@ -471,9 +475,10 @@ but it must not pretend the upstream tools all use the same filename.
 1. Start from the addyosmani lifecycle phase map. Use `idea-refine` and
    `spec-driven-development` to decide whether the work is still in Define, is
    ready for Plan, or needs more source context before Build.
-2. Use Ouroboros `init start` / `interview`, `pm`, `seed`, or `brownfield` when the early
-   definition phase needs durable purpose, Seed/Ledger continuity, or existing
-   repo understanding.
+2. Use the Codex-discovered `mcp__ouroboros.ouroboros_interview` tool first, or
+   Ouroboros `init` / `pm` / `seed` / `brownfield` when the early definition
+   phase needs durable purpose, Seed/Ledger continuity, or existing repo
+   understanding.
 3. Shape product intent with `gstack-office-hours` when demand, wedge, MVP, or
    scope needs founder-style pressure testing.
 4. Run source-aware research with Oh My `research` / `deepsearch` patterns and

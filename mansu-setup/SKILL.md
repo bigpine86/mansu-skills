@@ -118,7 +118,7 @@ step as `blocked by unverified install recipe` and continue with safe checks.
 
 | Tool family | Install target | Install / update rule |
 | --- | --- | --- |
-| Ouroboros / `ouroboros` | user-level CLI plus runtime MCP/setup integration | If missing, prefer the official installer `curl -fsSL https://raw.githubusercontent.com/Q00/ouroboros/main/scripts/install.sh \| bash` when shell/network policy allows; otherwise use `uv tool install 'ouroboros-ai[all]'`, `pipx install 'ouroboros-ai[mcp]'`, or `pip install ouroboros-ai` depending on available Python tooling. After install or update, run `ouroboros setup --runtime <detected-runtime>` when the runtime is supported, otherwise run `ouroboros setup` and report runtime ambiguity. Mansu-setup only prepares Ouroboros; it must not run `ooo auto`, `ooo interview`, or project creation commands. |
+| Ouroboros / `ouroboros` | user-level CLI plus runtime MCP/setup integration | If missing, prefer the official installer `curl -fsSL https://raw.githubusercontent.com/Q00/ouroboros/main/scripts/install.sh \| bash` when shell/network policy allows; otherwise use `uv tool install 'ouroboros-ai[all]'`, `pipx install 'ouroboros-ai[mcp]'`, or `pip install ouroboros-ai` depending on available Python tooling. After install or update, run `ouroboros setup --runtime <detected-runtime>` when the runtime is supported; for Codex prefer `ouroboros setup --runtime codex --mcp-mode auto --non-interactive` so the MCP entry is exposed without overwriting user-managed config, otherwise run `ouroboros setup` and report runtime ambiguity. Mansu-setup only prepares Ouroboros; it must not run `ouroboros init`, `ouroboros pm`, `ooo auto`, `ooo interview`, or project creation commands. |
 | gstack | `$HOME/.gstack/repos/gstack` | If missing, clone `https://github.com/garrytan/gstack.git`; if present and clean, fast-forward update; then run `./setup --host <detected-host>` when the host is known, otherwise run `./setup` and report the host ambiguity. |
 | LazyCodex / OMO Codex plugin | Codex runtime plugin marketplace/cache | For Codex, check installed `omo@sisyphuslabs` as the Codex-side Oh My route when `codex plugin list` reports installed/enabled and the plugin hook/MCP entrypoints run. If missing and the user approved install/update, clone `https://github.com/code-yeongyu/lazycodex.git` with submodules into a local Codex plugin source, verify `.agents/plugins/marketplace.json`, `plugins/omo/.codex-plugin/plugin.json`, `plugins/omo/hooks/hooks.json`, and `plugins/omo/.mcp.json`, run `npm install` plus the needed build/install steps, add the local marketplace, then `codex plugin add omo@sisyphuslabs`. Disable or report telemetry hooks unless the user explicitly accepts them. |
 | Oh My Codex / `omx` | Codex runtime | If missing, install `oh-my-codex` with `uv tool install oh-my-codex` when `uv` exists, otherwise use an available Python tool installer such as `pipx`; on update prefer `uv tool upgrade oh-my-codex`, then run `omx-setup` or `omx --update` when available. |
@@ -202,7 +202,9 @@ Collect this before making changes:
 - `node --version` and `npm --version` when available
 - `pipx --version` when available
 - `ouroboros --version` when available
-- Ouroboros setup status, runtime integration status, and whether `ooo` commands are available
+- Ouroboros setup status, runtime integration status, whether Codex can discover
+  `mcp__ouroboros.ouroboros_interview`, and whether legacy `ooo` commands are
+  available
 - matching adapter expectation and whether LazyCodex / OMO Codex plugin, `omx`, `omo`, or `omc` is actually available
 - `uv tool list` when available
 - gstack repo path, `VERSION`, and installed `gstack-*` skill links
@@ -233,7 +235,10 @@ Then from the Mansu repo:
 
 1. Confirm the branch is `main` or explain why it is not.
 2. Detect runtime target, host, and OS, then choose the target skill directory.
-3. Install or update Ouroboros using the source tool install policy.
+3. Install or update Ouroboros using the source tool install policy. For Codex,
+   run `ouroboros setup --runtime codex --mcp-mode auto --non-interactive` when
+   safe, then verify the active runtime can discover
+   `mcp__ouroboros.ouroboros_interview`.
 4. Install or update gstack using the source tool install policy.
 5. Install the matching Oh My adapter for the detected runtime when safe; for Codex, check LazyCodex / OMO Codex plugin and legacy `omx` compatibility separately.
 6. Check addyosmani/agent-skills as a source-reference family; clone/update a local reference only when coding-order workflows need it or the user asks.
@@ -258,7 +263,7 @@ When the user asks to update:
 
 1. Check Mansu repo status. If clean, update with `git pull --ff-only`; if dirty, stop and report.
 2. Re-detect runtime target, host, OS, and selected skill directory.
-3. Install Ouroboros if missing; otherwise update it with the official installer/package manager path, then run `ouroboros setup` for the selected runtime when safe.
+3. Install Ouroboros if missing; otherwise update it with the official installer/package manager path, then run `ouroboros setup` for the selected runtime when safe. For Codex, run `ouroboros setup --runtime codex --mcp-mode auto --non-interactive` and verify `mcp__ouroboros.ouroboros_interview` is discoverable before relying on `mansu-1define`.
 4. Install gstack if missing; otherwise update it with gstack's update flow or a safe `fetch` plus `merge --ff-only`, then run its setup for the selected host.
 5. Install the matching Oh My adapter if missing; otherwise update it with the runtime-specific package manager and run its update/setup command when available. For Codex, check or update LazyCodex / OMO Codex plugin and report legacy `omx` compatibility separately.
 6. Check Ouroboros and Oh My / OMO / OMC source skill freshness separately from runtime detection.
@@ -303,6 +308,12 @@ Use repair when the source repos look correct but local runtime skills are missi
 - Recreate missing gstack skill symlinks from the gstack repo if gstack exists.
 - Recreate missing Oh My / OMO / OMC source skill links only when the matching source exists and the runtime target expects it.
 - If Ouroboros, gstack, or the matching Oh My adapter is missing during repair, report that repair needs `install` mode rather than silently skipping the tool.
+- If the Ouroboros CLI exists but Codex cannot discover
+  `mcp__ouroboros.ouroboros_interview`, run the Codex runtime setup command
+  `ouroboros setup --runtime codex --mcp-mode auto --non-interactive` when safe,
+  then re-check MCP discovery. If it is still missing, report `Ouroboros Codex
+  MCP integration not exposed` and route back to `mansu-9setup update` rather
+  than allowing `mansu-1define` to invent its own interview.
 - Re-check addyosmani/agent-skills phase names against `CODE_CONSTRUCTION_ORDER.md`; do not copy them unless explicitly requested.
 - Verify `gstack-context-save` and `gstack-context-restore` are present after refresh.
 - Re-run Mansu validation.

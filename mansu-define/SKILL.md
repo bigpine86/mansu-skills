@@ -26,17 +26,27 @@ the interview with Mansu-owned questions just because the brief sounds clear.
 Before asking Mansu-owned definition questions:
 
 1. Load/discover the Ouroboros interview route through the active runtime.
-2. If the route is available, start Ouroboros `interview` first and let it
-   generate the definition questions.
-3. If the route is missing or broken, route to `mansu-9setup` in `install` mode
-   when Ouroboros is missing, or `mansu-9setup` in `update` mode when the
-   installed Ouroboros/runtime MCP integration is stale or broken.
-4. If setup is blocked by network, package-manager, permission, or runtime
+   In Codex, use tool discovery for `ouroboros interview` first and prefer the
+   MCP tool `mcp__ouroboros.ouroboros_interview` when it is exposed. Start the
+   interview with `initial_context` set to the user's idea text and `cwd` set to
+   the current project directory.
+2. If the MCP tool is not exposed but the local CLI exists, use the current
+   Ouroboros CLI route for definition (`ouroboros init`, `ouroboros pm`, or the
+   installed `ouroboros-interview`/runtime skill route). Treat legacy `ooo
+   interview` wording as compatibility only; do not require the `ooo` command.
+3. Do not run Claude Code adapter commands unless the detected runtime target or
+   host is actually Claude Code. In Codex, Claude plugin or `omc` failures are
+   adapter warnings, not a reason to abandon Ouroboros.
+4. If the route is missing or broken, route to public `mansu-9setup` in
+   `install` mode when Ouroboros is missing, or public `mansu-9setup` in
+   `update`/`repair` mode when the installed Ouroboros/runtime MCP integration
+   is stale, not exposed, or failing.
+5. If setup is blocked by network, package-manager, permission, or runtime
    limits, record `Ouroboros setup blocked reason:` and ask only the smallest
    bridging question needed to keep the user unblocked.
 
-Fallback definition without Ouroboros is allowed only after the setup/update
-path was attempted or explicitly declined, and it must be labeled as fallback.
+Fallback definition without Ouroboros is allowed only after the setup/update or
+repair path was attempted or explicitly declined, and it must be labeled as fallback.
 Do not silently replace Ouroboros interview with Mansu-owned questions.
 
 ## Post-Ouroboros design-context gate
