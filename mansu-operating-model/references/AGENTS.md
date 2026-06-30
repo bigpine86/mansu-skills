@@ -74,7 +74,7 @@ Choose the relevant Mansu path based on task character.
 
 First-hop routes:
 - unsure what to do next -> `mansu-help`
-- first install, stale tools, or unclear runtime/source readiness -> `mansu-setup`
+- first install, stale tools, or unclear runtime/source readiness -> `mansu-9setup`
 - new product, app, repo, major feature family, architecture direction, UI system, or TDR-style kickoff -> `mansu-1define`, then `mansu-2plan`
 - current phase implementation or refactor with slices -> `mansu-3build`
 - behavior proof, test evidence, QA, or browser/runtime verification -> `mansu-4verify`
@@ -85,6 +85,7 @@ First-hop routes:
 - project doctrine, `AGENTS.md`, or `CODING_RULES.md` work -> `mansu-operating-model`
 
 Compatibility aliases and backing routes:
+- `mansu-setup` -> backing implementation for `mansu-9setup`
 - `mansu-project-start` -> `mansu-1define` numbered route; backing implementation `mansu-define`
 - `mansu-tdd-total` -> `mansu-3build` numbered route; backing implementation `mansu-build`
 - `mansu-web-verify` -> `mansu-4verify` numbered route; backing implementation `mansu-verify`

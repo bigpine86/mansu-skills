@@ -11,7 +11,7 @@ Mansu does not try to reinvent the world's best agent skills.
 It studies, verifies, and orchestrates them so beginners can move from "I want to build something" to plan, code, QA, release, and learning with evidence.
 
 As the source skills improve, Mansu improves with them.
-`mansu-setup source-check` checks the source ecosystem first, and `mansu-source-curator` updates Mansu's internal map only after drift is confirmed and approved.
+`mansu-9setup source-check` checks the source ecosystem first, and `mansu-source-curator` updates Mansu's internal map only after drift is confirmed and approved.
 That is how Mansu keeps absorbing better project-start, planning, coding, design, QA, debug, and release patterns without surprising the user.
 
 Install Mansu. Say `mansu-0help`. Let it choose the route. Finish with evidence.
@@ -61,8 +61,8 @@ Compatibility aliases such as `mansu-project-start` and legacy unnumbered names 
 
 Define is Ouroboros-first. `mansu-1define` starts with Ouroboros interview/PM/Seed style definition and records a design intent seed instead of inventing a Mansu-owned design questionnaire. When that definition reveals a UI, user-facing product, or visible workflow, Define then routes to a source-skill design-context interview, with `gstack-design-consultation` as the default installed route and `gstack-design-shotgun` / `gstack-plan-design-review` used only when their specific critique or direction role fits.
 On Codex, that means discovering and using the Ouroboros MCP tool
-`mcp__ouroboros.ouroboros_interview` first. `mansu-setup install` / `update` /
-`repair` prepares this with
+`mcp__ouroboros.ouroboros_interview` first. `mansu-9setup install` / `update` /
+`repair` prepares this through backing `mansu-setup` with
 `ouroboros setup --runtime codex --mcp-mode auto --non-interactive` when needed;
 legacy `ooo interview` or Claude adapter commands are not required for Codex.
 
@@ -171,7 +171,7 @@ Mansu owns:
 Specialized execution should stay with the best matching source skill whenever possible.
 The source skill map lives in `mansu-operating-model/references/SOURCE_SKILL_CATALOG.md`.
 Composition rules for overlapping source skills live in `mansu-operating-model/references/SOURCE_SKILL_COMPOSITION.md`.
-`mansu-setup` must keep checking Ouroboros, gstack, Oh My / OMO / OMC, addyosmani/agent-skills, VoltAgent/awesome-design-md, and Open Design source freshness.
+`mansu-9setup` must keep checking Ouroboros, gstack, Oh My / OMO / OMC, addyosmani/agent-skills, VoltAgent/awesome-design-md, and Open Design source freshness through backing `mansu-setup`.
 
 This creates the Mansu flywheel:
 
@@ -360,7 +360,9 @@ and `scripts/validate_mansu_installed_copies.sh`.
 
 - Mansu works best when a task needs planning, source-skill routing, implementation discipline, and verification.
 - For tiny edits, use the fastest direct path. For product, architecture, UI, debugging, or release work, use the matching Mansu route.
-- Before important work, run `mansu-setup` if your local skills may be stale.
+- Before important work, run `mansu-9setup check` if your local skills may be
+  stale; use `mansu-9setup update` or `mansu-9setup repair` when it reports
+  drift or stale registered copies.
 - `mansu-*` does not replace great tools. It helps compose them into one safer agentic software development workflow.
 
 ## Status

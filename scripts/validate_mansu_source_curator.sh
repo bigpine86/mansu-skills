@@ -50,6 +50,8 @@ assert_contains '^## Required report$' "$FILE"
 # Source coverage.
 assert_contains 'gstack' "$FILE"
 assert_contains 'Ouroboros' "$FILE"
+assert_contains 'mcp__ouroboros\.ouroboros_interview' "$FILE"
+assert_contains 'record `ooo` only as legacy compatibility evidence' "$FILE"
 assert_contains 'Oh My / OMO / OMC' "$FILE"
 assert_contains 'addyosmani/agent-skills' "$FILE"
 assert_contains 'VoltAgent/awesome-design-md' "$FILE"

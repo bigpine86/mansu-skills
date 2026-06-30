@@ -15,7 +15,7 @@ fuzzy discovery, new repos/products, and major feature families, route first to
 `mansu-1define`, then to `mansu-2plan`.
 
 This skill creates the project-level thinking layer: intent, research, spec,
-Ouroboros init/interview/PM/Seed/Ledger artifacts, TDR/architecture, UI direction when needed,
+Ouroboros interview/PM/Seed/Ledger artifacts, TDR/architecture, UI direction when needed,
 operating rules, project roadmap/phase order, and the first phase-level
 `PLAN.md`.
 
@@ -27,7 +27,8 @@ checkpoint.
 ## Core promise
 
 - Start from purpose, user, desired outcome, and non-goals.
-- Use Ouroboros as the default project-definition engine when `mansu-setup` has prepared it and the work begins from a vague or high-level idea.
+- Use Ouroboros as the default project-definition engine when `mansu-9setup`
+  has prepared it and the work begins from a vague or high-level idea.
 - Find and inspect relevant current references before locking direction.
 - Use official/source files first for technical facts; use GitHub, Reddit, and
   Threads for adoption, taste, patterns, and market signal with dates recorded.
@@ -61,20 +62,28 @@ Mansu's posture is a thin project-start orchestrator:
 
 If a preferred source route is unavailable, Mansu may do a lightweight fallback
 kickoff, but it must label that as fallback and recommend `mansu-setup install`
-or `mansu-setup update` when setup is the blocker.
+or `mansu-setup update` only as backing implementation routes. Public guidance
+should recommend `mansu-9setup install`, `mansu-9setup repair`, or
+`mansu-9setup update` when setup is the blocker.
 
 ## Mandatory Ouroboros-first rule
 
 For a new product, app, repo, major feature family, or fuzzy idea, Mansu must not
-start by inventing its own interview. It must first check whether `ooo` or
-`ouroboros` is available and route early definition to Ouroboros:
+start by inventing its own interview. It must first check Codex
+`mcp__ouroboros.ouroboros_interview` or the current `ouroboros` route and send
+early definition to Ouroboros:
 
-1. Run or invoke `ouroboros init start` / `ouroboros-interview` for unclear
-   user/problem/scope.
-2. Use Ouroboros `pm` when product/PRD framing is the next best artifact.
-3. Use Ouroboros `seed` or `auto --skip-run` when the idea must become a durable
+1. In Codex, call `tool_search` for `ouroboros interview mcp` and invoke
+   `mcp__ouroboros.ouroboros_interview` when exposed, passing the user's idea as
+   `initial_context` and the current project directory as `cwd`.
+2. Outside Codex or when MCP is unavailable, use the current Ouroboros interview
+   route such as `ouroboros-interview`, `ouroboros init`, or `ouroboros pm`.
+   Treat `ooo interview` and `ouroboros init start` wording as legacy
+   compatibility, not as required commands.
+3. Use Ouroboros `pm` when product/PRD framing is the next best artifact.
+4. Use Ouroboros `seed` or `auto --skip-run` when the idea must become a durable
    source-of-truth before planning.
-4. Use Ouroboros `brownfield` before user questions when an existing repo needs
+5. Use Ouroboros `brownfield` before user questions when an existing repo needs
    context.
 
 Mansu may ask at most one bridging question before Ouroboros, and only when it is
@@ -82,8 +91,10 @@ needed to choose between `init`/interview, `pm`, `seed`, and `brownfield`.
 
 If Ouroboros is missing, broken, or unsuitable, do not silently continue as if
 Mansu owned the interview. Record `Ouroboros skipped reason`, label the kickoff
-as fallback, and route to `mansu-setup install/update` unless the user explicitly
-asks to continue without Ouroboros.
+as fallback, and route to `mansu-9setup install/repair/update` unless the user
+explicitly asks to continue without Ouroboros.
+Public guidance should use `mansu-9setup install`, `mansu-9setup repair`, or
+`mansu-9setup update`; `mansu-setup` remains the backing implementation.
 
 ## Project-start route selector
 
@@ -101,14 +112,14 @@ Mansu should run the required CLI commands directly.
 
 | Situation | Prefer this source route | Mansu responsibility after it returns |
 | --- | --- | --- |
-| First-time setup or unclear source readiness | `mansu-setup`; Ouroboros `setup` / `welcome` / `help` when Ouroboros is the chosen route | repair setup before project planning |
+| First-time setup or unclear source readiness | `mansu-9setup`; backing `mansu-setup`; Ouroboros `setup` / `welcome` / `help` when Ouroboros is the chosen route | repair setup before project planning |
 | Existing repo needs context before questions | Ouroboros `brownfield`; addyosmani `context-engineering` | use discovered repo facts to avoid asking the user factual/codebase questions |
-| Vague idea, unclear user/problem/scope | `ouroboros init start` / `ouroboros-interview`; `gstack-office-hours`; addyosmani `idea-refine` | route only human-decision questions to the user; record session IDs/artifacts and open questions |
+| Vague idea, unclear user/problem/scope | Codex `mcp__ouroboros.ouroboros_interview`; current Ouroboros interview/PM route; `gstack-office-hours`; addyosmani `idea-refine` | route only human-decision questions to the user; record session IDs/artifacts and open questions |
 | Product/PRD-style definition is needed | Ouroboros `pm`; addyosmani `spec-driven-development` | treat PM/spec output as upstream product artifact before TDR/PLAN |
 | Requirements need crystallizing into source-of-truth | Ouroboros `seed`; Ouroboros `auto --skip-run` when full convergence is useful | stop at definition artifacts; do not start implementation from project-start |
 | Reference research should drive direction | Oh My `research` / `deepsearch`; addyosmani `source-driven-development` | record evidence, dates, source URLs, and extracted architecture/design lessons |
 | Architecture, stack, API, or DX needs critique | `gstack-autoplan`; focused `gstack-plan-*`; addyosmani `api-and-interface-design` | resolve critique into locked decisions and risks |
-| UI direction needs exploration | `mansu-setup source-check` when readiness is unclear; Oh My `research` / `deepsearch`; addyosmani `source-driven-development`; Open Design when installed/approved; VoltAgent/awesome-design-md `DESIGN.md` reference only, not an execution route; `gstack-plan-design-review`; `gstack-design-consultation`; `gstack-design-shotgun` | gather visual/taste references before artifact generation when needed; route artifact generation to Open Design when available; then convert decisions into `DESIGN.md` or the project's design artifact |
+| UI direction needs exploration | `mansu-9setup source-check` when readiness is unclear; Oh My `research` / `deepsearch`; addyosmani `source-driven-development`; Open Design when installed/approved; VoltAgent/awesome-design-md `DESIGN.md` reference only, not an execution route; `gstack-plan-design-review`; `gstack-design-consultation`; `gstack-design-shotgun` | gather visual/taste references before artifact generation when needed; route artifact generation to Open Design when available; then convert decisions into `DESIGN.md` or the project's design artifact |
 | Existing source session must continue | Ouroboros `status` / `resume-session`; gstack context restore when applicable | restore the right session and preserve IDs/paths in handoff |
 | Execution quality needs independent verdict | Ouroboros `evaluate` / `qa`; `gstack-qa-only`; `gstack-review` | use as evidence, then map remaining risks to Mansu gates |
 | Project is stuck or looping | Ouroboros `unstuck`; gstack CEO/eng review; Oh My planning critique | preserve alternatives and unresolved assumptions before choosing a path |
@@ -117,8 +128,9 @@ Mansu should run the required CLI commands directly.
 
 Default for a new project:
 
-1. Check `ooo` / `ouroboros` availability before drafting any Mansu-owned
-   project questions. If missing setup blocks Ouroboros, route to `mansu-setup`
+1. Check Codex `mcp__ouroboros.ouroboros_interview` or current `ouroboros`
+   availability before drafting any Mansu-owned project questions. If missing
+   setup blocks Ouroboros, route to `mansu-9setup`
    or the chosen source's setup/help route instead of doing a silent fallback.
 2. If the repo already exists, gather brownfield/context facts before asking the user.
 3. If the idea is fuzzy, prefer Ouroboros init/interview/pm/seed/brownfield first.
@@ -312,7 +324,7 @@ Load only what the current phase needs.
 | Need | Source route |
 | --- | --- |
 | Problem and wedge | `gstack-office-hours`, addyosmani `idea-refine` |
-| Project definition seed | Ouroboros init/PM/Seed/Ledger flows such as `ouroboros init start`, `ouroboros pm`, `ouroboros seed` / `ouroboros-auto --skip-run`, or legacy `ooo` wrappers when available |
+| Project definition seed | Codex `mcp__ouroboros.ouroboros_interview`; Ouroboros interview/PM/Seed/Ledger flows such as `ouroboros pm`, `ouroboros seed` / `ouroboros-auto --skip-run`; legacy `ooo` wrappers only when already available |
 | Spec and requirements | addyosmani `spec-driven-development` |
 | Reference research | Oh My `research` / `deepsearch`, addyosmani `source-driven-development` |
 | Product/design/eng/DX critique | `gstack-autoplan`, then focused `gstack-plan-*` reviews |

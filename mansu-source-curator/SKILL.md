@@ -61,7 +61,7 @@ fresh; it must not clone source-skill workflows into Mansu.
 
 | Source family | Check | Update when requested | Mansu references to review |
 | --- | --- | --- | --- |
-| Ouroboros | installed `ouroboros` / `ooo` commands, package version, runtime setup status, Seed/Ledger/project-definition docs or skills | official installer or safe Python tool update, then `ouroboros setup --runtime <target>` when supported | `SOURCE_SKILL_CATALOG.md`, `mansu-setup`, `mansu-project-start`, document-order references, validators |
+| Ouroboros | installed `ouroboros` command, Codex `mcp__ouroboros.ouroboros_interview` exposure, package version, runtime setup status, Seed/Ledger/project-definition docs or skills; record `ooo` only as legacy compatibility evidence | official installer or safe Python tool update, then `ouroboros setup --runtime <target>` when supported | `SOURCE_SKILL_CATALOG.md`, `mansu-setup`, `mansu-project-start`, document-order references, validators |
 | gstack | installed repo, `VERSION`, `.agents/skills/gstack-*` names, notable skill docs | `gstack-upgrade` skill or safe `git fetch` + fast-forward path | `SOURCE_SKILL_CATALOG.md`, `DOCUMENT_CREATION_ORDER.md`, `mansu-setup`, validators |
 | Oh My / OMO / OMC | installed adapter command, skill directories, execution-mode names | matching adapter update only when installed or requested | `SOURCE_SKILL_CATALOG.md`, TDD/debug/web verify docs, runtime wording |
 | addyosmani/agent-skills | local clone if present, otherwise GitHub contents/API, skill names and phase semantics | safe fast-forward local clone only; do not install into runtime skills by default | `SOURCE_SKILL_CATALOG.md`, `DOCUMENT_CREATION_ORDER.md`, `CODE_CONSTRUCTION_ORDER.md`, TDD docs |

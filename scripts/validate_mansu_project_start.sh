@@ -128,9 +128,12 @@ grep -q 'delegate fuzzy project definition to Ouroboros first when it is availab
 grep -q '^## Mandatory Ouroboros-first rule$' "$FILE"
 grep -q 'Mansu must not' "$FILE"
 grep -q 'start by inventing its own interview' "$FILE"
-grep -q 'check whether `ooo` or' "$FILE"
-grep -q 'route early definition to Ouroboros' "$FILE"
-grep -q '`ouroboros init start` / `ouroboros-interview` for unclear' "$FILE"
+grep -q 'mcp__ouroboros\.ouroboros_interview' "$FILE"
+grep -q 'current `ouroboros` route' "$FILE"
+grep -q 'send[[:space:]]*$' "$FILE"
+grep -q 'early definition to Ouroboros' "$FILE"
+grep -q 'call `tool_search` for `ouroboros interview mcp`' "$FILE"
+grep -q 'Treat `ooo interview` and `ouroboros init start` wording as legacy' "$FILE"
 grep -q 'Use Ouroboros `pm`' "$FILE"
 grep -q 'Use Ouroboros `seed` or `auto --skip-run`' "$FILE"
 grep -q 'Use Ouroboros `brownfield` before user questions' "$FILE"
@@ -150,7 +153,8 @@ grep -q 'Open Design (`nexu-io/open-design`) is different' "$FILE"
 grep -q 'callable design-artifact source route' "$FILE"
 grep -q 'Mansu should run the required CLI commands' "$FILE"
 grep -q 'Ouroboros `brownfield`; addyosmani `context-engineering`' "$FILE"
-grep -q '`ouroboros init start` / `ouroboros-interview`; `gstack-office-hours`; addyosmani `idea-refine`' "$FILE"
+grep -q 'Codex `mcp__ouroboros\.ouroboros_interview`; current Ouroboros interview/PM route' "$FILE"
+grep -q '`gstack-office-hours`; addyosmani `idea-refine`' "$FILE"
 grep -q 'gstack-office-hours' "$FILE"
 grep -q 'addyosmani `idea-refine`' "$FILE"
 grep -q 'Ouroboros `pm`' "$FILE"
@@ -200,8 +204,9 @@ grep -q 'Ouroboros' "$FILE"
 grep -q 'Seed/Ledger' "$FILE"
 grep -q 'Ouroboros `auto --skip-run`' "$FILE"
 grep -q 'do not start implementation from project-start' "$FILE"
-grep -q 'Check `ooo` / `ouroboros` availability before drafting any Mansu-owned' "$FILE"
-grep -q 'If missing setup blocks Ouroboros' "$FILE"
+grep -q 'Check Codex `mcp__ouroboros\.ouroboros_interview` or current `ouroboros`' "$FILE"
+grep -q 'route to `mansu-9setup`' "$FILE"
+grep -q 'setup blocks Ouroboros' "$FILE"
 grep -q 'prefer Ouroboros init/interview/pm/seed/brownfield first' "$FILE"
 grep -q 'record why Ouroboros was skipped' "$FILE"
 grep -q 'Only after source artifacts are clear and the project roadmap names the major' "$FILE"
@@ -291,8 +296,10 @@ forbid_ordered_terms "$OPENAI_YAML" 'project-start OpenAI prompt reintroduced co
 forbid_terms "$OPENAI_YAML" 'project-start OpenAI prompt reintroduced Zero-to-PLAN positioning' 'Zero-to-PLAN' 'project kickoff'
 forbid_terms "$OPENAI_YAML" 'project-start OpenAI prompt reintroduced normal discovery legacy route' 'normal discovery' 'vague ideas' 'broad feature definition'
 forbid_terms "$OPENAI_YAML" 'project-start OpenAI prompt reintroduced fuzzy-project default route' 'new or fuzzy project' '$mansu-project-start'
-require_terms "$OPENAI_YAML" 'project-start OpenAI prompt lost Ouroboros availability check' 'check' 'ooo' 'ouroboros' 'first'
-require_terms "$OPENAI_YAML" 'project-start OpenAI prompt lost early definition source routes' 'route early definition' 'ouroboros init start' 'ouroboros-interview' 'PM' 'Seed' 'brownfield'
+require_terms "$OPENAI_YAML" 'project-start OpenAI prompt lost Ouroboros availability check' 'tool_search' 'ouroboros interview mcp' 'mcp__ouroboros.ouroboros_interview'
+require_terms "$OPENAI_YAML" 'project-start OpenAI prompt lost early definition source routes' 'route early definition' 'ouroboros-interview' 'PM' 'Seed' 'brownfield'
+require_terms "$OPENAI_YAML" 'project-start OpenAI prompt lost legacy Ouroboros wording boundary' 'ooo interview' 'ouroboros init start' 'legacy compatibility wording only'
+require_terms "$OPENAI_YAML" 'project-start OpenAI prompt lost public setup route' '$mansu-9setup' 'repair/update'
 require_terms "$OPENAI_YAML" 'project-start OpenAI prompt lost design artifact route distinction' 'Open Design' 'callable' 'design-artifact' 'installed' 'approved'
 require_terms "$OPENAI_YAML" 'project-start OpenAI prompt lost DESIGN.md reference route distinction' 'VoltAgent/awesome-design-md' 'DESIGN.md' 'reference-only'
 require_terms "$OPENAI_YAML" 'project-start OpenAI prompt lost source route non-duplication boundary' 'avoid' 'duplicating' 'selected source logic'
