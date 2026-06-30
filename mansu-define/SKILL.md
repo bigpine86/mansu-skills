@@ -26,10 +26,11 @@ the interview with Mansu-owned questions just because the brief sounds clear.
 Before asking Mansu-owned definition questions:
 
 1. Load/discover the Ouroboros interview route through the active runtime.
-   In Codex, use tool discovery for `ouroboros interview` first and prefer the
-   MCP tool `mcp__ouroboros.ouroboros_interview` when it is exposed. Start the
-   interview with `initial_context` set to the user's idea text and `cwd` set to
-   the current project directory.
+   In Codex, call `tool_search` for `ouroboros interview mcp` first. If it
+   exposes `mcp__ouroboros.ouroboros_interview`, invoke that tool immediately;
+   do not merely say that the route was checked or continue with Mansu-owned
+   questions. Start the interview with `initial_context` set to the user's idea
+   text and `cwd` set to the current project directory.
 2. If the MCP tool is not exposed but the local CLI exists, use the current
    Ouroboros CLI route for definition (`ouroboros init`, `ouroboros pm`, or the
    installed `ouroboros-interview`/runtime skill route). Treat legacy `ooo
@@ -39,8 +40,12 @@ Before asking Mansu-owned definition questions:
    adapter warnings, not a reason to abandon Ouroboros.
 4. If the route is missing or broken, route to public `mansu-9setup` in
    `install` mode when Ouroboros is missing, or public `mansu-9setup` in
-   `update`/`repair` mode when the installed Ouroboros/runtime MCP integration
-   is stale, not exposed, or failing.
+   `repair` mode first when the installed Ouroboros/runtime MCP integration is
+   stale, not exposed, or failing. This is still the `update`/`repair` route:
+   repair handles broken Codex exposure first, and `update` is used only when
+   repair reports the installed source/tooling is stale. `mansu-9setup repair`
+   must run the Codex Ouroboros setup command and then re-check `tool_search`
+   before Define is allowed to ask fallback questions.
 5. If setup is blocked by network, package-manager, permission, or runtime
    limits, record `Ouroboros setup blocked reason:` and ask only the smallest
    bridging question needed to keep the user unblocked.
@@ -48,6 +53,9 @@ Before asking Mansu-owned definition questions:
 Fallback definition without Ouroboros is allowed only after the setup/update or
 repair path was attempted or explicitly declined, and it must be labeled as fallback.
 Do not silently replace Ouroboros interview with Mansu-owned questions.
+In Codex, a fallback is not valid until `tool_search` failed to expose
+`mcp__ouroboros.ouroboros_interview` after the repair/setup attempt, or the user
+explicitly declined that repair.
 
 Do not substitute ULW deep interview, OMO `ulw-plan`, gstack `office-hours`,
 `gstack-design-consultation`, or other interview-like source skills for this

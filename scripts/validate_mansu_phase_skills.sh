@@ -92,11 +92,16 @@ grep -q '^## Conditional references$' "$ROOT_DIR/mansu-define/SKILL.md"
 grep -q 'SOURCE_SKILL_CATALOG.md` only when' "$ROOT_DIR/mansu-define/SKILL.md"
 grep -q 'DOCUMENT_CREATION_ORDER.md` only when' "$ROOT_DIR/mansu-define/SKILL.md"
 require_terms "$ROOT_DIR/mansu-define/SKILL.md" 'define lost setup install route' 'route to public `mansu-9setup`' '`install` mode' 'Ouroboros is missing'
-require_terms "$ROOT_DIR/mansu-define/SKILL.md" 'define lost setup update/repair route' 'public `mansu-9setup`' '`update`/`repair` mode' 'MCP integration'
+require_terms "$ROOT_DIR/mansu-define/SKILL.md" 'define lost setup update/repair route' 'public `mansu-9setup`' '`update`/`repair` route' 'MCP integration'
 grep -q 'mcp__ouroboros\.ouroboros_interview' "$ROOT_DIR/mansu-define/SKILL.md"
+grep -q 'call `tool_search` for `ouroboros interview mcp` first' "$ROOT_DIR/mansu-define/SKILL.md"
+grep -q 'invoke that tool immediately' "$ROOT_DIR/mansu-define/SKILL.md"
+grep -q 'must run the Codex' "$ROOT_DIR/mansu-define/SKILL.md"
+grep -q 'then re-check `tool_search`' "$ROOT_DIR/mansu-define/SKILL.md"
+grep -q 'fallback is not valid until `tool_search` failed' "$ROOT_DIR/mansu-define/SKILL.md"
 grep -q 'Do not run Claude Code adapter commands unless' "$ROOT_DIR/mansu-define/SKILL.md"
 grep -q 'do not require the `ooo` command' "$ROOT_DIR/mansu-define/SKILL.md"
-grep -q '`update`/`repair` mode' "$ROOT_DIR/mansu-define/SKILL.md"
+grep -q '`update`/`repair` route' "$ROOT_DIR/mansu-define/SKILL.md"
 grep -q 'Ouroboros setup blocked reason:' "$ROOT_DIR/mansu-define/SKILL.md"
 grep -q 'Do not silently replace Ouroboros interview with Mansu-owned questions' "$ROOT_DIR/mansu-define/SKILL.md"
 grep -q 'Do not substitute ULW deep interview' "$ROOT_DIR/mansu-define/SKILL.md"
@@ -119,6 +124,7 @@ grep -q 'If Define is complete, tell the user the next step is .*`mansu-2plan`' 
 require_terms "$ROOT_DIR/mansu-define/agents/openai.yaml" 'define OpenAI prompt lost next public route' 'complete' 'mansu-2plan'
 require_terms "$ROOT_DIR/mansu-define/agents/openai.yaml" 'define OpenAI prompt lost Ouroboros-first contract' 'Ouroboros' 'interview' 'first'
 require_terms "$ROOT_DIR/mansu-define/agents/openai.yaml" 'define OpenAI prompt lost Codex Ouroboros MCP route' 'Codex' 'mcp__ouroboros.ouroboros_interview' 'initial_context' 'cwd'
+require_terms "$ROOT_DIR/mansu-define/agents/openai.yaml" 'define OpenAI prompt lost direct tool_search invocation contract' 'tool_search' 'immediately invoke' 'do not merely describe the check'
 require_terms "$ROOT_DIR/mansu-define/agents/openai.yaml" 'define OpenAI prompt lost Claude adapter guard' 'do not run Claude' 'unless' 'Claude Code'
 require_terms "$ROOT_DIR/mansu-define/agents/openai.yaml" 'define OpenAI prompt lost short-idea seed contract' 'short' 'idea' 'seed context' 'Ouroboros'
 require_terms "$ROOT_DIR/mansu-define/agents/openai.yaml" 'define OpenAI prompt lost interview role split' 'Do not substitute ULW deep interview' 'Ouroboros definition gate' 'planning density'
@@ -128,6 +134,7 @@ require_terms "$ROOT_DIR/mansu-define/agents/openai.yaml" 'define OpenAI prompt 
 require_terms "$ROOT_DIR/mansu-1define/agents/openai.yaml" 'public define OpenAI prompt lost short-idea seed contract' 'short' 'idea' 'seed context' 'Ouroboros'
 require_terms "$ROOT_DIR/mansu-1define/agents/openai.yaml" 'public define OpenAI prompt lost interview role split' 'Do not substitute ULW deep interview' 'Ouroboros definition gate'
 require_terms "$ROOT_DIR/mansu-1define/agents/openai.yaml" 'public define OpenAI prompt lost Codex Ouroboros MCP route' 'Codex' 'mcp__ouroboros.ouroboros_interview' 'initial_context' 'cwd'
+require_terms "$ROOT_DIR/mansu-1define/agents/openai.yaml" 'public define OpenAI prompt lost direct tool_search invocation contract' 'tool_search' 'immediately invoke' 'do not merely describe the check'
 require_terms "$ROOT_DIR/mansu-1define/agents/openai.yaml" 'public define OpenAI prompt lost setup repair route' 'mansu-9setup' 'install' 'update' 'repair'
 require_terms "$ROOT_DIR/mansu-1define/agents/openai.yaml" 'public define OpenAI prompt lost design source-route contract' 'design-context' 'mansu-2plan' 'gstack-design-consultation'
 require_terms "$ROOT_DIR/mansu-1define/agents/openai.yaml" 'public define OpenAI prompt lost design handoff contract' 'design intent seed' 'DESIGN.md' 'mansu-2plan'

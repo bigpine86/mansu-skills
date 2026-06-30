@@ -311,9 +311,12 @@ Use repair when the source repos look correct but local runtime skills are missi
 - If the Ouroboros CLI exists but Codex cannot discover
   `mcp__ouroboros.ouroboros_interview`, run the Codex runtime setup command
   `ouroboros setup --runtime codex --mcp-mode auto --non-interactive` when safe,
-  then re-check MCP discovery. If it is still missing, report `Ouroboros Codex
-  MCP integration not exposed` and route back to `mansu-9setup update` rather
-  than allowing `mansu-1define` to invent its own interview.
+  then re-check MCP discovery with `tool_search` for `ouroboros interview mcp`.
+  If it is exposed, report that `mansu-1define` can call
+  `mcp__ouroboros.ouroboros_interview` directly. If it is still missing, report
+  `Ouroboros Codex MCP integration not exposed` and route back to
+  `mansu-9setup update` rather than allowing `mansu-1define` to invent its own
+  interview.
 - Re-check addyosmani/agent-skills phase names against `CODE_CONSTRUCTION_ORDER.md`; do not copy them unless explicitly requested.
 - Verify `gstack-context-save` and `gstack-context-restore` are present after refresh.
 - Re-run Mansu validation.
